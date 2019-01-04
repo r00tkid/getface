@@ -10,12 +10,13 @@ RUN apt-get update && apt-get -y install gcc nodejs npm libxml2-dev libxslt1-dev
 RUN pip install lxml gevent psycopg2-binary gunicorn
 
 # SSH preparations
-RUN mkdir -p /home/root/.ssh && chmod 0700 /home/root/.ssh
-COPY ./project/get-face.key /home/root/.ssh/id_rsa
-COPY ./project/get-face.pub /home/root/.ssh/id_rsa.pub
-RUN chmod 0600 /home/root/.ssh/id_rsa && chmod 0600 /home/root/.ssh/id_rsa.pub
-RUN echo "IdentityFile ~/.ssh/id_rsa" >> /etc/ssh/ssh_config
-RUN ssh-keyscan bitbucket.org > /home/root/.ssh/known_hosts
+RUN mkdir -p ~/.ssh && chmod 0700 ~/.ssh
+COPY ./project/get-face.key /root/.ssh/id_rsa
+COPY ./project/get-face.pub /root/.ssh/id_rsa.pub
+RUN chmod 0600 ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa.pub
+RUN echo "    IdentityFile ~/.ssh/id_rsa" >> /etc/ssh/ssh_config
+
+#
 
 WORKDIR /var/www/get-face/project
 RUN pip install -r requirements.txt
@@ -26,4 +27,5 @@ RUN npm i && npm run build
 WORKDIR /var/www/get-face
 RUN ./django collectstatic --noinput
 
+RUN ssh-keyscan -t rsa bitbucket.org > /root/.ssh/known_hosts
 EXPOSE 8090
