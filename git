@@ -1,1 +1,3 @@
-yes
+#!/usr/bin/env bash
+#work with git through ssh
+docker exec -i getface-stage git $@

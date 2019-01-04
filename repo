@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-#work with git through ssh
-docker exec -i getface-stage bash -c "git $@"
-
-# ssh-add ./project/get-face.key

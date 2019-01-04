@@ -16,8 +16,6 @@ COPY ./project/get-face.pub /root/.ssh/id_rsa.pub
 RUN chmod 0600 ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa.pub
 RUN echo "    IdentityFile ~/.ssh/id_rsa" >> /etc/ssh/ssh_config
 
-#
-
 WORKDIR /var/www/get-face/project
 RUN pip install -r requirements.txt
 
@@ -28,4 +26,6 @@ WORKDIR /var/www/get-face
 RUN ./django collectstatic --noinput
 
 RUN ssh-keyscan -t rsa bitbucket.org > /root/.ssh/known_hosts
+RUN git remote set-url origin git@bitbucket.org:GetFace/get-face.git
+
 EXPOSE 8090
