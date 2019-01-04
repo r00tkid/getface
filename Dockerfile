@@ -6,7 +6,7 @@ ADD . /var/www/get-face
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 RUN apt-get update && apt-get -y install gcc nodejs npm libxml2-dev libxslt1-dev libxslt-dev \
-                                          python-lxml pgloader build-essential git openssh-server
+                                          python-lxml pgloader build-essential git openssh-server nano
 RUN pip install lxml gevent psycopg2-binary gunicorn
 
 # SSH preparations
@@ -27,5 +27,7 @@ RUN ./django collectstatic --noinput
 
 RUN ssh-keyscan -t rsa bitbucket.org > /root/.ssh/known_hosts
 RUN git remote set-url origin git@bitbucket.org:GetFace/get-face.git
+RUN git config --global user.name "GetFace"
+RUN git congig --global user.email "getface.development@gmail.com"
 
 EXPOSE 8090
