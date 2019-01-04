@@ -1,0 +1,10 @@
+.idea
+node_modules
+*.pyc
+
+npm-debug.log
+yarn-error.log
+mix-manifest.json
+
+static/*
+!static/.gitkeep

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+exec 2> /dev/null
+
+for file in log/*.log; do
+    {
+        # Try to clear file
+        cat /dev/null > $file && echo "Log [$file] has been cleared!"
+
+        # Echo if command fail
+    } || echo "File [$file] has not been cleared. Maybe you need more permissions?";
+done

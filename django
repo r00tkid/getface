@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#check python (global) installation and try to execute manage.py with it
+
+if [[ -x "$(command -v python37)" ]]; then
+    # Check if python 3.7 altinstall exists
+    python37 manage.py $@
+elif [[ -x "$(command -v python3.7)" ]]; then
+    # Sometimes altinstall builds with a dot
+    python3.7 manage.py $@
+elif [[ -x "$(command -v python3)" ]]; then
+    # Standard python3 binary
+    python3 manage.py $@
+elif [[ -x "$(command -v python)" ]]; then
+    # If version below 3 this part going to bee failed
+    python manage.py $@
+else
+    echo "Does python installed and ugo+x? Try to use ./manage.py instead or run script manually."
+fi
