@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 #work with git through ssh
-docker exec -i getface-stage ssh-agent bash -c "	
-	printf 'getface-e074f7a\n' | ssh-add ./project/get-face.key
-	git $@
-"
+docker exec -i getface-stage git $@
+
+# printf 'getface-e074f7a\n' | ssh-add ./project/get-face.key
