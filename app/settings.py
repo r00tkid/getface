@@ -48,7 +48,9 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework_jwt',
-    'post.apps.PostConfig',
+    'authentication.apps.AuthenticationConfig',
+    'company.apps.CompanyConfig',
+    'agenda.apps.AgendaConfig',
 ]
 
 LOGGING = {
