@@ -9,6 +9,13 @@ class Company(models.Model):
         verbose_name="Название компании"
     )
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Компания"
+        verbose_name_plural = "Компании"
+
 
 # Create your models here.
 class Worker(models.Model):
@@ -51,3 +58,10 @@ class Worker(models.Model):
 
     def email(self):
         return self.user.email
+
+    def __str__(self):
+        return "%s %s" % (self.first_name, self.last_name)
+
+    class Meta:
+        verbose_name = "Работник"
+        verbose_name_plural = "Работники"
