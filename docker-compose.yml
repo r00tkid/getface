@@ -22,7 +22,9 @@ services:
     volumes:
       - ./:/var/www/get-face
     command: >
-      bash -c "gunicorn app.wsgi -c /var/www/get-face/app/gunicorn.py --worker-class gevent --timeout 30 --graceful-timeout 20"
+      bash -c "gunicorn app.wsgi -c /var/www/get-face/app/gunicorn.py --worker-class gevent --timeout 30 --graceful-timeout 20 &&
+              cd /var/www/get-face &&
+              ./set-git"
     environment:
       - DJANGO_SETTINGS_MODULE=app.settings
     restart: always
