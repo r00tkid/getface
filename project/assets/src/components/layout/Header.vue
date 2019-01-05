@@ -1,27 +1,61 @@
 <template>
-    <v-toolbar app>
-        <!--<v-toolbar-side-icon @click.stop="true"></v-toolbar-side-icon>-->
-
-        <v-btn icon :to="{name: 'home'}">
-            <v-icon>home</v-icon>
-        </v-btn>
-
-        <v-toolbar-title class="mr-5 align-center">
-            <span class="title font-weight-bold">{{ title }}</span>
-        </v-toolbar-title>
+    <v-toolbar
+            class="abn-header"
+    >
+        <v-flex xs2>
+            <v-select
+                    class="kill-select mt-1"
+                    flat
+                    :items="companies"
+                    solo
+                    v-model="defaultCompany"
+            ></v-select>
+        </v-flex>
 
         <v-spacer></v-spacer>
+        <v-flex xs3>
+            <v-text-field
+                    class="mt-1 normal-border"
+                    single-line
+                    flat
+                    solo
+                    label="Поиск"
+                    append-icon="search"
+            ></v-text-field>
+        </v-flex>
+        <v-spacer></v-spacer>
+        <v-icon
+                x-large
+                color="grey lighten-1"
+                class="rotate90"
+        >
+            battery_std
+        </v-icon>
+        <v-spacer></v-spacer>
+        <v-btn large outline color="grey">12 Дней</v-btn>
+        <v-btn large color="purple lighten-1 white--text">Оплатить</v-btn>
+        <v-spacer></v-spacer>
 
-        <v-btn icon :to="{name: 'home'}" v-if="isUser()">
-            <v-icon>person</v-icon>
-        </v-btn>
-        <v-btn icon :to="{name: 'auth.login'}" v-else>
-            <v-icon>lock_open</v-icon>
-        </v-btn>
+        <v-badge left class="mr-5">
+            <!--<span slot="badge">6</span>-->
+            <v-icon
+                    large
+                    color="grey lighten-1"
+            >
+                notification_important
+            </v-icon>
+        </v-badge>
 
-        <v-btn icon @click.stop="toggleAside" v-if="isUser()">
-            <v-icon>menu</v-icon>
-        </v-btn>
+        <v-flex xs1>
+            <v-select
+                    class="kill-select"
+                    flat
+                    :items="items"
+                    solo
+                    v-model="defaultLang"
+            ></v-select>
+        </v-flex>
+
     </v-toolbar>
 </template>
 
@@ -30,7 +64,18 @@
         name: "abn-header",
         data() {
             return {
+                defaultCompany: 'Company 1',
+                defaultLang: 'ENG',
                 title: "Haze",
+                items: [
+                    "RUS",
+                    "ENG"
+                ],
+                companies: [
+                    'Company 1',
+                    'Company 2',
+                    'Company 3',
+                ]
             };
         },
         methods: {
@@ -44,3 +89,31 @@
         computed: {},
     }
 </script>
+
+<style>
+
+    /**
+    todo HELLO THIS IS GLOBAL CSS IN HEADER
+     */
+
+    .kill-select > .v-input__control > .v-input__slot {
+        background-color: rgba(0, 0, 0, 0) !important;
+    }
+
+    .kill-height > .v-input__control > .v-input__slot {
+        min-height: 36px!important; /* 36px because normal button has the same height. Logic. Believe me */
+    }
+
+    .normal-border > .v-input__control > .v-input__slot {
+        border: 1px grey solid;
+    }
+
+    .rotate90 {
+        transform: rotateZ(90deg);
+    }
+
+    .abn-header {
+        align-self: center;
+        width: 80%;
+    }
+</style>
