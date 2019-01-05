@@ -28,6 +28,6 @@ RUN ./django collectstatic --noinput
 RUN ssh-keyscan -t rsa bitbucket.org > /root/.ssh/known_hosts
 RUN git remote set-url origin git@bitbucket.org:GetFace/get-face.git
 RUN git config --global user.name "GetFace"
-RUN git congig --global user.email "getface.development@gmail.com"
+RUN git config --global user.email "getface.development@gmail.com"
 
 EXPOSE 8090
