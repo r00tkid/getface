@@ -26,7 +26,9 @@ WORKDIR /var/www/get-face
 RUN ./django collectstatic --noinput
 
 RUN ssh-keyscan -t rsa bitbucket.org > /root/.ssh/known_hosts
-RUN git remote set-url origin git@bitbucket.org:GetFace/get-face.git
+RUN ssh-agent bash -c "ssh-add ~/.ssh/id_rsa"
+RUN git remote rm origin
+RUN git remote add origin git@bitbucket.org:GetFace/get-face.git
 RUN git config --global user.name "GetFace"
 RUN git config --global user.email "getface.development@gmail.com"
 
