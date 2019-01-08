@@ -4,9 +4,35 @@ from django.contrib.auth.models import User
 
 class Company(models.Model):
     name = models.CharField(
-        null=False,
+        verbose_name="Название компании",
         max_length=200,
-        verbose_name="Название компании"
+        null=False,
+    )
+
+    address = models.CharField(
+        verbose_name="Адрес компании",
+        max_length=512,
+        null=False,
+    )
+
+    phone = models.CharField(
+        verbose_name="Телефон",
+        max_length=32,
+        null=True,
+        blank=True,
+    )
+
+    email = models.CharField(
+        verbose_name="Почтовый ящик",
+        max_length=255,
+        null=False,
+    )
+
+    owner = models.ForeignKey(
+        User,
+        verbose_name="Владелец",
+        on_delete=models.DO_NOTHING,
+        null=False
     )
 
     def __str__(self):
@@ -39,8 +65,8 @@ class Worker(models.Model):
         User,
         on_delete=models.CASCADE,
         verbose_name="Физический пользователь",
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
     )
 
     company = models.ForeignKey(
@@ -53,14 +79,16 @@ class Worker(models.Model):
 
     is_manager = models.BooleanField(
         verbose_name="Менеджер",
-        default=0,
+        default=False,
     )
 
     def email(self):
-        return self.user.email
+        return self.user.email if self.user_id else ""
 
     def __str__(self):
-        return "%s %s" % (self.first_name, self.last_name)
+        return "%s %s" % (self.last_name, self.first_name) + (
+            " (" + self.user.username + ")" if self.user_id else ""
+        )
 
     class Meta:
         verbose_name = "Работник"
