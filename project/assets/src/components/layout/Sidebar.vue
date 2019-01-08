@@ -1,7 +1,7 @@
 <template>
        <v-navigation-drawer
                class="kill-sidebar"
-               :mini-variant.sync="mini"
+               mini-variant="true"
                v-model="drawer"
                height="400px"
                absolute
@@ -20,7 +20,6 @@
                        <v-list-tile-action>
                            <v-btn
                                    icon
-                                   @click.stop="mini = !mini"
                            >
                                <v-icon>chevron_left</v-icon>
                            </v-btn>
@@ -35,10 +34,10 @@
                <v-list-tile
                        v-for="item in items"
                        :key="item.title"
-                       @click=""
+                       :to="item.route"
                >
                    <v-list-tile-action>
-                       <v-icon>{{ item.icon }}</v-icon>
+                       <v-icon >{{ item.icon }}</v-icon>
                    </v-list-tile-action>
 
                    <v-list-tile-content>
@@ -56,8 +55,9 @@
             return {
                 drawer: true,
                 items: [
-                    {title: 'Home', icon: 'dashboard'},
-                    {title: 'About', icon: 'question_answer'}
+                    {title: 'Dashboard', icon: 'dashboard', route: '/'},
+                    {title: 'Calendar', icon: 'calendar_today', route: '/calendar'},
+                    {title: 'Profile', icon: 'account_circle', route: '/profile'}
                 ],
                 mini: true,
                 right: null
@@ -66,19 +66,21 @@
     }
 </script>
 
-<style scoped>
+<style >
     /*
     todo Not like this pls
      */
     .kill-sidebar {
         margin-top: 64px!important;
+        border-radius: 7px;
+        /*border: 1px #dfdfdf solid;*/
+        box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
         /*top: 50%;*/
         /*transform: translateY(-50%) !important;*/
 
         /*transform: translateY(13vw) !important;*/
     }
-
-    .fkin {
-
+    .v-list__tile--active{
+        color: purple!important;
     }
 </style>

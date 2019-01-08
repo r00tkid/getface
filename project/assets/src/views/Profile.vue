@@ -1,54 +1,61 @@
 <template>
     <v-container align-baseline fluid class="profile-wrap">
-        <v-layout row justify-space-between>
-            <v-flex xs2>
+        <v-layout row justify-end>
+            <v-flex>
                 <v-select
                         flat
                         :items="items"
                         solo
                         placeholder="test"
+                        class="width-fixer"
                 ></v-select>
             </v-flex>
             <v-spacer></v-spacer>
-            <v-flex>
+            <v-flex class="d-flex justify-end">
                 <!--Todo fix background color and button "white" bgc-->
-                <v-btn outline color="grey">Success</v-btn>
-                <v-btn outline color="grey">Error</v-btn>
-                <v-btn outline color="purple">Warning</v-btn>
-                <v-btn outline color="grey">Info</v-btn>
+                <v-btn outline color="grey">Сегодня</v-btn>
+                <v-btn outline color="grey">Неделя</v-btn>
+                <v-btn outline color="purple">Месяц</v-btn>
+                <v-btn outline color="grey">Год</v-btn>
             </v-flex>
-            <v-flex>
+            <v-spacer></v-spacer>
+            <v-flex class="d-flex width-limiter">
                 <v-btn large color="purple white--text">
                     <v-icon left dark>add_circle</v-icon>
-                    Info
+                    Добавить сотрудника
                 </v-btn>
             </v-flex>
         </v-layout>
         <v-layout align-baseline justify-end>
-            <v-flex xs2>
+            <v-flex>
                 <v-text-field
-                        class="kill-height normal-border"
+                        class="kill-height normal-border width-fixer"
                         single-line
                         flat
                         solo
                         label="Поиск"
                         append-icon="search"
+                        color="purple"
                 ></v-text-field>
             </v-flex>
-            <v-flex xs7>
+            <v-flex>
                 <v-chip label>
                     <span left class="mr-1">13</span>Сотрудников
                 </v-chip>
 
                 <v-chip label>
-                    <v-icon>settings</v-icon>
+                    <v-icon color="purple">settings</v-icon>
                 </v-chip>
-                <v-btn color="purple lighten-1 white--text">Отправить ссылку на Face ID</v-btn>
-                <v-btn color="purple lighten-1 white--text">Отправить график</v-btn>
+
+                <v-btn outline color="grey">Создать зону видимости</v-btn>
+                <v-btn color="purple lighten-1 white--text">Отправить логин и пароль</v-btn>
             </v-flex>
-            <v-flex xs3 class="d-flex justify-end">
+            <v-flex>
+                <v-btn outline color="grey">Выгрузить в Excel</v-btn>
+            </v-flex>
+            <v-flex class="d-flex justify-end width-limiter">
                 <v-btn color="purple lighten-1 white--text">Активные</v-btn>
-                <v-btn outline color="grey">12 Дней</v-btn>
+                <v-btn color="error lighten-1">Уволенные</v-btn>
             </v-flex>
         </v-layout>
         <v-layout align-center justify-center row class="workers-data-list">
@@ -62,7 +69,7 @@
                         :pagination.sync="data.pagination"
                         select-all
                         item-key="name"
-                        class="elevation-1 data-list-table"
+                        class="elevation-1 data-list-table text-xs-center"
                 >
                     <template slot="headers" slot-scope="props">
                         <tr>
@@ -95,15 +102,15 @@
                                         hide-details
                                 ></v-checkbox>
                             </td>
-                            <td class="text-xs-right">{{ props.item.fio }}</td>
-                            <td class="text-xs-right">{{ props.item.rank }}</td>
-                            <td class="text-xs-right">{{ props.item.warns }}</td>
-                            <td class="text-xs-right">{{ props.item.leftHours }}</td>
-                            <td class="text-xs-right">{{ props.item.achievement }}</td>
-                            <td class="text-xs-right">{{ props.item.mood }}</td>
-                            <td class="text-xs-right">{{ props.item.hourPlan }}</td>
-                            <td class="text-xs-right">{{ props.item.hourFact }}</td>
-                            <td class="text-xs-right">{{ props.item.workCount }}</td>
+                            <td class="text-xs-center">{{ props.item.fio }}</td>
+                            <td class="text-xs-center">{{ props.item.rank }}</td>
+                            <td class="text-xs-center">{{ props.item.warns }}</td>
+                            <td class="text-xs-center">{{ props.item.leftHours }}</td>
+                            <td class="text-xs-center">{{ props.item.achievement }}</td>
+                            <td class="text-xs-center">{{ props.item.mood }}</td>
+                            <td class="text-xs-center">{{ props.item.hourPlan }}</td>
+                            <td class="text-xs-center">{{ props.item.hourFact }}</td>
+                            <td class="text-xs-center">{{ props.item.workCount }}</td>
                         </tr>
                     </template>
                 </v-data-table>
@@ -319,11 +326,24 @@
         width: 0px;
         background: transparent; /* make scrollbar transparent */
     }
+
     .v-table__overflow {
-        max-height: 60vh!important;
+        max-height: 60vh !important;
         overflow: scroll;
     }
+
     .profile-wrap {
         width: 80%;
+    }
+
+    table.v-table thead th:not(:first-child) {
+        white-space: pre-line;
+    }
+
+    .width-fixer {
+        max-width: 190px;
+    }
+    .width-limiter {
+        max-width: 290px;
     }
 </style>

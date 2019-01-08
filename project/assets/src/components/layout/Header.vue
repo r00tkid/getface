@@ -21,6 +21,8 @@
                     solo
                     label="Поиск"
                     append-icon="search"
+                    color="purple"
+
             ></v-text-field>
         </v-flex>
         <v-spacer></v-spacer>
@@ -108,6 +110,9 @@
         border: 1px grey solid;
     }
 
+    .normal-border > .v-input__control > .v-input__slot:focus {
+        border: 1px purple solid!important;
+    }
     .rotate90 {
         transform: rotateZ(90deg);
     }
@@ -115,5 +120,7 @@
     .abn-header {
         align-self: center;
         width: 80%;
+        border-radius: 5px;
+        background-color: #fff!important;
     }
 </style>
