@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+from authentication.serializers import User
+import uuid
 
 
 class Company(models.Model):
@@ -9,10 +10,18 @@ class Company(models.Model):
         null=False,
     )
 
+    description = models.TextField(
+        verbose_name="Описание компании",
+        max_length=4000,
+        null=True,
+        blank=True,
+    )
+
     address = models.CharField(
         verbose_name="Адрес компании",
         max_length=512,
-        null=False,
+        null=True,
+        blank=True,
     )
 
     phone = models.CharField(
@@ -32,7 +41,7 @@ class Company(models.Model):
         User,
         verbose_name="Владелец",
         on_delete=models.DO_NOTHING,
-        null=False
+        null=False,
     )
 
     def __str__(self):
@@ -80,6 +89,14 @@ class Worker(models.Model):
     is_manager = models.BooleanField(
         verbose_name="Менеджер",
         default=False,
+    )
+
+    auth_key = models.UUIDField(
+        verbose_name="Уникальный авторизационный ключ",
+        editable=False,
+        unique=True,
+        null=False,
+        default=uuid.uuid4,
     )
 
     def email(self):

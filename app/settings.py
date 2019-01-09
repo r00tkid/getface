@@ -40,11 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
 
+    'django_extensions',
+
     'rest_framework',
     'rest_framework_jwt',
+
     'authentication.apps.AuthenticationConfig',
     'company.apps.CompanyConfig',
     'agenda.apps.AgendaConfig',
+    'form.apps.FormConfig',
 ]
 
 LOGGING = {
