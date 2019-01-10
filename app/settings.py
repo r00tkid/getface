@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.staticfiles',
 
+    'bootstrap_admin',
     'django.contrib.sessions',
     'django.contrib.admin',
     'django.contrib.auth',

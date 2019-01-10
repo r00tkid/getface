@@ -24,7 +24,7 @@ def sign_up(request):
 
     if not validator.validate():
         return Response({
-            'message': 'Sorry, your form is invalid.',
+            'valid': False,
             'errors': validator.errors,
         }, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
@@ -52,24 +52,71 @@ def sign_up(request):
     token = create_token(user)
 
     return Response({
-        'message': 'All is ok.',
-        'token': token,
+        'valid': True,
+        'token': token,  # todo: send mail instead
     })
 
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def worker_sign_up(request):
-    pass
+    from form.modules.autentication import WorkerRegistration
+    validator = WorkerRegistration(data=request.data)
+
+    if not validator.validate():
+        Response({
+            'valid': False,
+            'errors': validator.errors,
+        }, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+    data = validator.data
+
+    try:
+        worker = Worker.objects.get(auth_key=data.get('uuid'))
+        user = User.objects.get(id=worker.user_id)
+    except:
+        return Response({
+            'valid': False,
+            'message': 'Did you have been invited successfully?',
+        }, status=status.HTTP_404_NOT_FOUND)
+
+    if request.user:
+        if worker.user_id != request.user.id:
+            return Response({
+                'valid': False,
+                'message': "Get log out to perform this action."
+            }, status=status.HTTP_403_FORBIDDEN)
+
+        worker.auth_key = None
+        worker.save()
+
+        return Response({
+            'valid': True,
+            'message': "You already in system."
+        })
+
+    if not user.is_active and not user.is_superuser:
+        user.username = data.get('username')
+        user.set_password(data.get('password'))
+        user.is_active = True
+        user.save()
+
+    worker.auth_key = None
+    worker.save()
+
+    return Response({
+        'valid': True,
+        'token': create_token(user),
+    }, status=status.HTTP_201_CREATED)
 
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def reset_password(request):
-    pass
+    pass  # todo: do
 
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def reset_confirm(request):
-    pass
+    pass  # todo: do

@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import Worker
 from logging import getLogger
+from company.models import Worker
 from authentication.serializers import UserSerializer
 
 log = getLogger('django')
@@ -38,4 +38,4 @@ class CompanySerializer(serializers.ModelSerializer):
         from .models import Company
 
         model = Company
-        fields = ('id', 'name', 'address', 'email', 'phone', 'owner')
+        fields = ('id', 'name', 'description', 'address', 'email', 'phone', 'owner')

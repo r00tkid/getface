@@ -47,8 +47,9 @@ class SoftDeletesModel(TimeStumpModel):
 
     # Deleted at field
     deleted_at = models.DateTimeField(
+        editable=False,
         blank=True,
-        null=True
+        null=True,
     )
 
     def delete(self, **kwargs):

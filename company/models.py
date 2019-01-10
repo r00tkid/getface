@@ -1,9 +1,9 @@
-from django.db import models
 from authentication.serializers import User
+from app.base.abstract import SoftDeletesModel, models
 import uuid
 
 
-class Company(models.Model):
+class Company(SoftDeletesModel):
     name = models.CharField(
         verbose_name="Название компании",
         max_length=200,
@@ -53,7 +53,7 @@ class Company(models.Model):
 
 
 # Create your models here.
-class Worker(models.Model):
+class Worker(SoftDeletesModel):
     first_name = models.CharField(
         max_length=200,
         verbose_name="Имя",
@@ -68,6 +68,7 @@ class Worker(models.Model):
         max_length=200,
         verbose_name="Телефон",
         null=True,
+        blank=True,
     )
 
     user = models.ForeignKey(
@@ -91,11 +92,17 @@ class Worker(models.Model):
         default=False,
     )
 
+    is_fired = models.BooleanField(
+        verbose_name="Уволен",
+        default=False,
+    )
+
     auth_key = models.UUIDField(
         verbose_name="Уникальный авторизационный ключ",
         editable=False,
         unique=True,
-        null=False,
+        null=True,
+        blank=False,
         default=uuid.uuid4,
     )
 
