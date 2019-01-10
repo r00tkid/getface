@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-# bot api paths
+# other api paths
 urlpatterns = [
-
+    path('form/', include('form.urls'))
 ]
