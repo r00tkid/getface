@@ -28,7 +28,7 @@
                </v-list>
            </v-toolbar>
 
-           <v-list class="pt-0" dense>
+           <v-list class="pt-0" >
                <v-divider></v-divider>
 
                <v-list-tile
@@ -55,9 +55,9 @@
             return {
                 drawer: true,
                 items: [
-                    {title: 'Dashboard', icon: 'dashboard', route: '/'},
-                    {title: 'Calendar', icon: 'calendar_today', route: '/calendar'},
-                    {title: 'Profile', icon: 'account_circle', route: '/profile'}
+                    {title: 'Dashboard', icon: 'dashboard', route: 'dashboard'},
+                    {title: 'Calendar', icon: 'calendar_today', route: 'calendar'},
+                    {title: 'Profile', icon: 'account_circle', route: 'profile'}
                 ],
                 mini: true,
                 right: null
@@ -80,7 +80,7 @@
 
         /*transform: translateY(13vw) !important;*/
     }
-    .v-list__tile--active{
+    .primary--text.v-list__tile--active{
         color: purple!important;
     }
 </style>

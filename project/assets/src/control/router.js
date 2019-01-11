@@ -3,6 +3,12 @@ import Router from 'vue-router'
 import Home from '../views/Home'
 import Profile from '../views/Profile'
 import Calendar from '../views/Calendar'
+import Auth from '../views/Auth'
+import Login from '../components/modals/LoginModal'
+import Register from '../components/modals/RegisterModal'
+
+
+import Dashboard from '../views/layout/Dashboard'
 
 Vue.use(Router);
 
@@ -12,26 +18,40 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: 'home',
-            component: Home
+            component: Auth,
+            children: [
+                {
+                    path: '/login',
+                    name: 'login',
+                    component: Login
+                },
+                {
+                    path: '/register',
+                    name: 'register',
+                    component: Register
+                },
+            ]
         },
         {
-            path: '/about',
-            name: 'about',
-            // route level code-splitting
-            // this generates a separate chunk (about.[hash].js) for this route
-            // which is lazy-loaded when the route is visited.
-            component: () => import(/* webpackChunkName: "about" */ '../views/Home')
+            path: '/dashboard',
+            component: Dashboard,
+            children: [
+                {
+                    path: '',
+                    name: 'home',
+                    component: Home
+                },
+                {
+                    path: '/profile',
+                    name: 'profile',
+                    component: Profile
+                },
+                {
+                    path: '/calendar',
+                    name: 'calendar',
+                    component: Calendar
+                }
+            ]
         },
-        {
-            path: '/profile',
-            name: 'profile',
-            component: Profile
-        },
-        {
-            path: '/calendar',
-            name: 'calendar',
-            component: Calendar
-        }
     ],
 });
