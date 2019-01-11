@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+docker exec -i getface-stage bash -c "cd project/assets && npm run build"
+docker exec -i getface-stage python manage.py collectstatic --no-input
