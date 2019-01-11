@@ -70,7 +70,7 @@ class WorkerRegistration(Form):
             base.UUID(message="Invalid or not provided secret key."),
             base.Exists(
                 Worker,
-                column='auth_key',
+                column="auth_key",
                 message="Secret key not found or expired. Make sure that you still have invitation to system."
             ),
         )

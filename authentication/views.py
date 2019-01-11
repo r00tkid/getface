@@ -64,7 +64,7 @@ def worker_sign_up(request):
     validator = WorkerRegistration(data=request.data)
 
     if not validator.validate():
-        Response({
+        return Response({
             'valid': False,
             'errors': validator.errors,
         }, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -73,8 +73,8 @@ def worker_sign_up(request):
 
     try:
         worker = Worker.objects.get(auth_key=data.get('uuid'))
-        user = User.objects.get(id=worker.user_id)
-    except:
+        user = worker.user
+    except Exception as e:
         return Response({
             'valid': False,
             'message': 'Did you have been invited successfully?',

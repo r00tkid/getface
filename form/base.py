@@ -37,7 +37,7 @@ class Unique(object):
     def __call__(self, form, field):
         data = field.raw_data if field.raw_data else field.data
 
-        if self.column.__eq__(None):
+        if not self.column:
             self.column = field.name
 
         try:
@@ -60,12 +60,12 @@ class Exists(object):
     def __call__(self, form, field):
         data = field.raw_data if field.raw_data else field.data
 
-        if self.column.__eq__(None):
+        if not self.column:
             self.column = field.name
 
         try:
             self.model.objects.get(**{self.column: data})
-        except:
+        except Exception as e:
             raise ValidationError(self.message if self.message else "Given data doesn't exist")
 
 

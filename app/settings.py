@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'form.apps.FormConfig',
 ]
 
+AUTH_USER_MODEL = 'authentication.User'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
