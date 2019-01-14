@@ -38,7 +38,7 @@
                         color="purple"
                 ></v-text-field>
             </v-flex>
-            <v-flex>
+            <v-flex d-flex>
                 <v-chip label>
                     <span left class="mr-1">13</span>Сотрудников
                 </v-chip>
@@ -50,6 +50,7 @@
                 <v-btn outline color="grey">Создать зону видимости</v-btn>
                 <v-btn color="purple lighten-1 white--text">Отправить логин и пароль</v-btn>
             </v-flex>
+            <v-spacer></v-spacer>
             <v-flex>
                 <v-btn outline color="grey">Выгрузить в Excel</v-btn>
             </v-flex>
@@ -59,7 +60,7 @@
             </v-flex>
         </v-layout>
         <v-layout align-center justify-center row class="workers-data-list">
-            <v-flex fill-height class="main-field ma-0">
+            <v-flex fill-height class=" ma-0">
                 <v-data-table
                         v-model="data.selected"
                         hide-actions
@@ -287,6 +288,78 @@
                 hourFact: 130,
                 workCount: 11,
             },
+            {
+                value: false,
+                fio: 'Frozen Yogurt',
+                rank: "Ст. Официант",
+                warns: 1,
+                leftHours: 24,
+                achievement: 'Da',
+                mood: '76%',
+                hourPlan: 2,
+                hourFact: 130,
+                workCount: 11,
+            },
+            {
+                value: false,
+                fio: 'Frozen Yogurt',
+                rank: "Ст. Официант",
+                warns: 1,
+                leftHours: 24,
+                achievement: 'Da',
+                mood: '76%',
+                hourPlan: 2,
+                hourFact: 130,
+                workCount: 11,
+            },
+            {
+                value: false,
+                fio: 'Frozen Yogurt',
+                rank: "Ст. Официант",
+                warns: 1,
+                leftHours: 24,
+                achievement: 'Da',
+                mood: '76%',
+                hourPlan: 2,
+                hourFact: 130,
+                workCount: 11,
+            },{
+                value: false,
+                fio: 'Frozen Yogurt',
+                rank: "Ст. Официант",
+                warns: 1,
+                leftHours: 24,
+                achievement: 'Da',
+                mood: '76%',
+                hourPlan: 2,
+                hourFact: 130,
+                workCount: 11,
+            },
+            {
+                value: false,
+                fio: 'Frozen Yogurt',
+                rank: "Ст. Официант",
+                warns: 1,
+                leftHours: 24,
+                achievement: 'Da',
+                mood: '76%',
+                hourPlan: 2,
+                hourFact: 130,
+                workCount: 11,
+            },{
+                value: false,
+                fio: 'Frozen Yogurt',
+                rank: "Ст. Официант",
+                warns: 1,
+                leftHours: 24,
+                achievement: 'Da',
+                mood: '76%',
+                hourPlan: 2,
+                hourFact: 130,
+                workCount: 11,
+            },
+
+
         ]
     };
 
@@ -328,7 +401,7 @@
     }
 
     .v-table__overflow {
-        max-height: 60vh !important;
+        max-height: 70vh !important;
         overflow: scroll;
     }
 
