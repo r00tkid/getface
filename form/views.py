@@ -8,7 +8,9 @@ from . import base
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def sign_in(request):
-    pass
+    return Response({
+        'detail': 'Default login form'
+    })
 
 
 @api_view(['GET'])
@@ -16,3 +18,10 @@ def sign_in(request):
 def sign_up(request):
     from .modules.autentication import Registration
     return Response(base.get_form_fields(Registration()))
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def worker_sign_up(request):
+    from .modules.autentication import WorkerRegistration
+    return Response(base.get_form_fields(WorkerRegistration))

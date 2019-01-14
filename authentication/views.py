@@ -13,7 +13,19 @@ from company.models import Company, Worker
      'DELETE', 'COPY', 'LINK', 'UNLINK', 'PURGE', 'LOCK',
      'UNLOCK', 'PROPFIND', 'VIEW'])
 def self_info(request):
-    return Response(UserSerializer(request.user).data)
+    companies_owner = Company.objects.filter(owner=request.user)
+    as_worker = Worker.objects.filter(user=request.user)
+    companies_worker = None
+    companies_manager = None
+
+    return Response({
+        'user': UserSerializer(request.user).data,
+        'companies': {
+            'owner': companies_owner,
+            'worker': companies_worker,
+            'manager': companies_manager,
+        }
+    })
 
 
 @api_view(['POST'])

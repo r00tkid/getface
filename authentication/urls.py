@@ -5,7 +5,7 @@ from rest_framework_jwt.views import ObtainJSONWebToken, refresh_jwt_token
 from .jwt import CustomJWTSerializer
 
 urlpatterns = [
-    path('/self-info', views.self_info),
+    path('/me', views.self_info),
 
     path('/sign-up', views.sign_up),
     path('/worker', views.worker_sign_up),
