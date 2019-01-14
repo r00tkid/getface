@@ -6,6 +6,7 @@ from rest_framework import status
 from authentication.serializers import User, UserSerializer
 from authentication.jwt import create_token
 from company.models import Company, Worker
+from company.serializers import CompanyWithWorkersSerializer, CompanyWithOwnerSerializer
 
 
 @api_view(
@@ -13,17 +14,20 @@ from company.models import Company, Worker
      'DELETE', 'COPY', 'LINK', 'UNLINK', 'PURGE', 'LOCK',
      'UNLOCK', 'PROPFIND', 'VIEW'])
 def self_info(request):
-    companies_owner = Company.objects.filter(owner=request.user)
-    as_worker = Worker.objects.filter(user=request.user)
-    companies_worker = None
-    companies_manager = None
+    companies_owner = CompanyWithWorkersSerializer(instance=Company.objects.filter(owner=request.user), many=True)
+
+    as_worker = Worker.objects.filter(user=request.user).values('company_id')
+    compare = Company.objects.filter(id__in=[c.get('company_id') for c in as_worker]).filter(worker__is_fired=False)
+
+    companies_worker = CompanyWithOwnerSerializer(instance=compare.filter(worker__is_manager=False), many=True)
+    companies_manager = CompanyWithOwnerSerializer(instance=compare.filter(worker__is_manager=True), many=True)
 
     return Response({
         'user': UserSerializer(request.user).data,
         'companies': {
-            'owner': companies_owner,
-            'worker': companies_worker,
-            'manager': companies_manager,
+            'owner': companies_owner.data,
+            'worker': companies_worker.data,
+            'manager': companies_manager.data,
         }
     })
 
@@ -47,7 +51,8 @@ def sign_up(request):
         'email': info.get('email'),
         'first_name': info.get('first_name'),
         'last_name': info.get('last_name'),
-        'is_active': False,
+        # todo: change when got smtp server
+        'is_active': True,
     })
 
     user.set_password(info.get('password'))
@@ -66,7 +71,7 @@ def sign_up(request):
     return Response({
         'valid': True,
         'token': token,  # todo: send mail instead
-    })
+    }, status=status.HTTP_201_CREATED)
 
 
 @api_view(['POST'])

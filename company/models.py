@@ -79,7 +79,7 @@ class Worker(SoftDeletesModel):
         blank=True,
     )
 
-    company = models.ForeignKey(
+    company = models.OneToOneField(
         Company,
         on_delete=models.CASCADE,
         verbose_name="Компания",
@@ -107,6 +107,7 @@ class Worker(SoftDeletesModel):
     )
 
     email = models.CharField(
+        max_length=256,
         verbose_name="E-mail",
         null=True,
         blank=True,
