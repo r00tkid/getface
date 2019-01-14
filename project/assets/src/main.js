@@ -9,7 +9,7 @@ import axios from 'axios'
 import '@fortawesome/fontawesome-free/css/all.css'
 
 const http = axios.create({
-    baseURL: 'http://192.168.1.254:9090/api/v1/',
+    baseURL: '/api/v1/',
     headers: {
         'Accept': "application\/json"
     }
