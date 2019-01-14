@@ -1,7 +1,7 @@
 <template>
     <v-container grid-list-xl fill-height class="calendar-wrap">
         <v-layout row wrap>
-            <v-flex xs3 v-for="i in 12">
+            <v-flex xs12 md6 lg3 v-for="i in 12">
                 <date-pick
                         :value="getCurrMonth(i-1)"
                         :hasInputElement="false"

@@ -11,7 +11,7 @@
                                     <span class="subheading">ВОЙТИ С ПОМОЩЬЮ</span>
                                 </v-card-title>
                             </v-flex>
-                            <v-flex xs12 class="justify-center">
+                            <v-flex xs12 class="justify-center mb-3">
                                 <div class="text-xs-center">
                                     <v-btn fab dark medium color="red darken-2">
                                         <v-icon>fab fa-google-plus-g</v-icon>
@@ -31,14 +31,23 @@
                                 </div>
                             </v-flex>
                             <v-flex xs12>
-                                <v-text-field prepend-icon="fas fa-user" label="Ваш Email" required></v-text-field>
+                                <v-text-field v-model="username" color="purple" prepend-icon="fas fa-user"
+                                              solo
+                                              label="Ваш Email/Username"
+                                              required
+                                ></v-text-field>
                             </v-flex>
                             <v-flex xs12>
-                                <v-text-field prepend-icon="vpn_key" label="Пароль" type="password"
-                                              required></v-text-field>
+                                <v-text-field v-model="password" color="purple" prepend-icon="vpn_key" label="Пароль"
+                                              solo
+                                              type="password"
+                                              required
+                                ></v-text-field>
                             </v-flex>
                             <v-flex xs12 d-flex>
-                                <v-btn color="purple lighten-2" class="white--text">Войти</v-btn>
+                                <v-btn @click.prevent="submitCredentials" color="purple lighten-2" class="white--text">
+                                    Войти
+                                </v-btn>
                             </v-flex>
                             <v-flex xs6>
                                 <v-checkbox label="Запомнить меня" v-model="checkbox1"></v-checkbox>
@@ -50,8 +59,8 @@
                                 <router-link to="register">Ещё нет аккаунта?</router-link>
                             </v-flex>
                             <v-flex xs12 class="text-xs-center">
-                                <v-text>Создавая аккаут, вы соглашаетесь с нашими <a>Правилами и условиями</a> и <a>Положением
-                                    о конфиденциальности</a></v-text>
+                                <p>Создавая аккаут, вы соглашаетесь с нашими <a>Правилами и условиями</a> и <a>Положением
+                                    о конфиденциальности</a></p>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -65,10 +74,13 @@
 <script>
     export default {
         name: "LoginModal",
-
-        data: () => ({
-            checkbox1: false
-        }),
+        data() {
+            return {
+                checkbox1: false,
+                username: '',
+                password: '',
+            }
+        },
         computed: {
             dialog: {
                 get() {
@@ -76,25 +88,29 @@
                 },
                 set(value) {
                     return this.$store.commit('modal/setLoginModal', value);
-
                 }
             }
         },
         methods: {
             openForgotPassModal() {
                 this.$store.commit('modal/setForgotPasswordModal', true);
+            },
+            submitCredentials() {
+                let [username, password] = [this.username, this.password];
+                // Do shit
+                let user = this.$store.dispatch('auth/login', {username, password}).then(() => {
+                    this.$router.push('dashboard')
+                }).catch(() => {})
+                console.log(username, password)
             }
         },
         mounted() {
-            setTimeout(function () {
-                this.$store.commit('modal/setLoginModal', true);
-            }.bind(this), 600)
+            setTimeout(() => this.$store.commit('modal/setLoginModal', true), 600)
         },
         destroyed() {
-
             this.$store.commit('modal/setLoginModal', false);
+        },
 
-        }
     }
 </script>
 

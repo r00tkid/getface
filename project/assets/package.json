@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
+    "axios": "^0.18.0",
     "vue": "^2.5.17",
     "vue-date-pick": "^1.0.5",
     "vue-recaptcha": "^1.1.1",

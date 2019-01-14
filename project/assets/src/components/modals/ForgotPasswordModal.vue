@@ -7,23 +7,29 @@
                         <v-layout wrap align-center>
                             <v-flex xs12 class="text-xs-center dialog-header">
                                 <span class="subheading bff">ВОССТАНОВИТЬ ПАРОЛЬ</span>
-                                <v-card-title class="justify-center">
-                                    <span class="subheading">ВОЙТИ С ПОМОЩЬЮ</span>
-                                </v-card-title>
                                 <v-flex xs12>
                                     <v-text-field label="Email указанный при регистрации"
+                                                  color="purple"
+                                                  class="mt-3"
+                                                  solo
+                                                  v-model="email"
                                                   required></v-text-field>
                                 </v-flex>
-                                <v-flex xs12>
-                                    <p>I'm not a robot, I swear</p>
-                                </v-flex>
-                                <v-flex xs12 d-flex justify-center>
-                                    <vue-recaptcha sitekey="6LcFAYkUAAAAAEmjE31ouF7BR3fSumdWgeYDURhO" type="flag">
-                                    </vue-recaptcha>
+
+                                <v-flex d-flex justify-center>
+                                    <v-layout justify-center>
+                                        <vue-recaptcha @verify="enableButton"
+                                                       @expired="retry"
+                                                       sitekey="6LcFAYkUAAAAAEmjE31ouF7BR3fSumdWgeYDURhO" type="flag">
+                                        </vue-recaptcha>
+                                    </v-layout>
 
                                 </v-flex>
                                 <v-flex xs12 d-flex>
-                                    <v-btn :disabled="btnDisabled" color="purple lighten-2" class="white--text">ВОССТАНОВИТЬ</v-btn>
+                                    <v-btn  @click.prevent="submitPasswordReset"
+                                            :disabled="btnDisabled" color="purple lighten-2" class="white--text">
+                                        ВОССТАНОВИТЬ
+                                    </v-btn>
                                 </v-flex>
                             </v-flex>
                         </v-layout>
@@ -37,11 +43,13 @@
 
 <script>
     import VueRecaptcha from 'vue-recaptcha';
+
     export default {
         name: "ForgotPasswordModal",
-        components: { VueRecaptcha },
+        components: {VueRecaptcha},
         data: () => ({
-            btnDisabled: false,
+            btnDisabled: true,
+            email: ''
         }),
         computed: {
             dialog: {
@@ -53,24 +61,27 @@
                 }
             }
         },
-        beforeCreate() {
-            $bus.$emit('pidoras', { a: 1 });
 
-            $bus.$on('pidoras', (...shit) => {
-                console.log(shit);
-            });
-
-            $bus.$on('verify', function (...shit) {
-                console.log(shit);
-            });
-        },
         mounted() {
+            // ReCaptcha script mount
             let recaptchaScript = document.createElement('script')
             recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit')
             recaptchaScript.setAttribute('async', 'true')
             recaptchaScript.setAttribute('defer', 'true')
             document.head.appendChild(recaptchaScript)
         },
+        methods: {
+            enableButton() {
+                this.btnDisabled = false;
+            },
+            retry() {
+                this.btnDisabled = true;
+            },
+            submitPasswordReset() {
+                let email = this.email;
+                // Do shit
+            }
+        }
     }
 </script>
 
