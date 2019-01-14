@@ -79,7 +79,7 @@ class Worker(SoftDeletesModel):
         blank=True,
     )
 
-    company = models.ForeignKey(
+    company = models.OneToOneField(
         Company,
         on_delete=models.CASCADE,
         verbose_name="Компания",
@@ -106,8 +106,12 @@ class Worker(SoftDeletesModel):
         default=uuid.uuid4,
     )
 
-    def email(self):
-        return self.user.email if self.user_id else ""
+    email = models.CharField(
+        max_length=256,
+        verbose_name="E-mail",
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return "%s %s" % (self.last_name, self.first_name) + (

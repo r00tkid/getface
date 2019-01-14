@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'form.apps.FormConfig',
 ]
 
+AUTH_USER_MODEL = 'authentication.User'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -150,6 +152,7 @@ JWT_AUTH = {
 }
 
 MIDDLEWARE = [
+    'app.middleware.SimpleMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',

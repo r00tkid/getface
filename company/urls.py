@@ -1,17 +1,14 @@
-from django.urls import path, include
+from django.urls import path
+from .worker.crud import WorkerCrud
 from . import views
 
-company_urls = [
-    path('', views.get_companies),
-    path('<int:company_id>', views.get_company_view),
-    path('<int:company_id>/workers', views.get_company_workers),
-]
-
-worker_urls = [
-    path('', views.get_workers),
-]
-
 urlpatterns = [
-    path('', include(company_urls)),  # Base companies paths
-    path('worker/', include(worker_urls)),  # Base workers paths
+    # Companies
+    path('', views.create_company),  # Company info
+    path('/<int:company_id>', views.get_company_view),  # Company info
+
+    # Workers
+    path('/<int:company_id>/worker', WorkerCrud.as_view()),  # Create worker (POST)
+    path('/<int:company_id>/workers', views.get_company_workers),  # Get company workers
+    path('/<int:company_id>/worker/<int:worker_id>', WorkerCrud.as_view()),  # Other workers crud
 ]

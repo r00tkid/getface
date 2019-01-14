@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from logging import getLogger
-from company.models import Worker
+from company.models import Worker, Company
 from authentication.serializers import UserSerializer
 
 log = getLogger('django')
@@ -24,18 +24,36 @@ class WorkerSerializer(serializers.ModelSerializer):
 
 
 class CompanySerializer(serializers.ModelSerializer):
-    owner = serializers.SerializerMethodField()
+    class Meta:
+        model = Company
+        fields = ('id', 'name', 'description', 'address', 'email', 'phone')
 
-    @staticmethod
-    def get_workers(model):
-        return WorkerSerializer(Worker.objects.filter(company=model), many=True).data
+
+class CompanyWithOwnerSerializer(serializers.ModelSerializer):
+    owner = serializers.SerializerMethodField()
 
     @staticmethod
     def get_owner(model):
         return UserSerializer(model.owner).data
 
     class Meta:
-        from .models import Company
-
         model = Company
         fields = ('id', 'name', 'description', 'address', 'email', 'phone', 'owner')
+
+
+class CompanyWithWorkersSerializer(serializers.ModelSerializer):
+    workers = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_workers(model):
+        return WorkerSerializer(Worker.objects.filter(company=model), many=True).data
+
+    class Meta:
+        model = Company
+        fields = ('id', 'name', 'description', 'address', 'email', 'phone', 'workers')
+
+
+class CompanyFullInfoSerializer(CompanyWithOwnerSerializer, CompanyWithWorkersSerializer):
+    class Meta:
+        model = Company
+        fields = ('id', 'name', 'description', 'address', 'email', 'phone', 'owner', 'workers')

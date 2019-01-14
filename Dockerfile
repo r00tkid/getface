@@ -22,16 +22,10 @@ COPY ./project/get-face.pub /root/.ssh/id_rsa.pub
 RUN chmod 0600 ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa.pub
 RUN echo "    IdentityFile ~/.ssh/id_rsa" >> /etc/ssh/ssh_config
 
-# WORKDIR /var/www/get-face/project/assets
-# RUN npm i && npm run build
-
-# WORKDIR /var/www/get-face
-# RUN ./django collectstatic --noinput
-
 RUN ssh-keyscan -t rsa bitbucket.org > /root/.ssh/known_hosts
 RUN ssh-agent bash -c "ssh-add ~/.ssh/id_rsa"
 RUN git config --global user.name "GetFace"
 RUN git config --global user.email "getface.development@gmail.com"
-RUN git config --global core.filemode false
+# RUN git config --global core.filemode false
 
 EXPOSE 8090

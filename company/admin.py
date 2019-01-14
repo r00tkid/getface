@@ -6,7 +6,8 @@ from django.utils.html import format_html
 
 
 class WorkerAdmin(ModelAdmin):
-    list_display = ('display_full_name', 'display_email', 'display_auth_key', 'display_is_active', 'display_id', 'auth_key')
+    list_display = (
+    'display_full_name', 'display_email', 'display_auth_key', 'display_is_active', 'display_id', 'auth_key')
 
     def display_id(self, obj):
         return obj.id
@@ -42,20 +43,20 @@ class WorkerAdmin(ModelAdmin):
     def display_auth_key(self, obj):
         if obj.auth_key:
             return format_html(
-                "<span style='border-radius: 90px' class='label label-warning'><span class='glyphicon glyphicon-remove'></span></span>")
+                "<span class='glyphicon glyphicon-remove' style='color: #922;'></span>")
         else:
             return format_html(
-                "<span style='border-radius: 50%' class='label label-success'><span class='glyphicon glyphicon-ok'></span></span>")
+                "<span class='glyphicon glyphicon-ok' style='color: #262;'></span>")
 
     display_auth_key.short_description = "Инвайт"
 
     def display_is_active(self, obj):
         if obj.user and obj.user.is_active:
             return format_html(
-                "<span style='border-radius: 90px' class='label label-success'><span class='glyphicon glyphicon-ok'></span></span>")
+                "<span class='glyphicon glyphicon-ok' style='color: #262;'></span>")
         else:
             return format_html(
-                "<span style='border-radius: 50%' class='label label-danger'><span class='glyphicon glyphicon-remove'></span></span>")
+                "<span class='glyphicon glyphicon-remove' style='color: #922;'></span>")
 
     display_is_active.short_description = "Актив"
 
