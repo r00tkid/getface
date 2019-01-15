@@ -9,7 +9,3 @@
         name: "Landing"
     }
 </script>
-
-<style scoped>
-
-</style>

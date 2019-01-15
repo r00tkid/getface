@@ -27,5 +27,6 @@ const Modals = {
             return state.forgotPasswordModal;
         }
     }
-}
-export default Modals
+};
+
+export default Modals;

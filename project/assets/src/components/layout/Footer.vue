@@ -1,6 +1,6 @@
 <template>
     <v-footer :fixed="true" app class="abn-footer">
-        <span>Abnormally &copy; {{ currentYear === 2018 ? currentYear : `2018 - ${currentYear}` }}</span>
+        <span>GetFace &copy; {{ currentYear === 2018 ? currentYear : `2018 - ${currentYear}` }}</span>
     </v-footer>
 </template>
 

@@ -1,18 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../views/Home'
-import Profile from '../views/Profile'
-import Calendar from '../views/Calendar'
-import Auth from '../views/Auth'
-import Login from '../components/modals/LoginModal'
-import Register from '../components/modals/RegisterModal'
 
-
+import Auth from '../views/Auth' // Layout?
 import Dashboard from '../views/layout/Dashboard'
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
     mode: 'history',
     // base: process.env.BASE_URL,
     routes: [
@@ -23,36 +17,62 @@ export default new Router({
                 {
                     path: '/login',
                     name: 'login',
-                    component: Login
+                    component: () => import('../components/modals/LoginModal')
                 },
                 {
                     path: '/register',
                     name: 'register',
-                    component: Register
+                    component: () => import('../components/modals/RegisterModal')
                 },
             ]
         },
         {
             path: '/dashboard',
             component: Dashboard,
-            meta: { requiresAuth: true },
+            meta: {requiresAuth: true},
             children: [
                 {
                     path: '',
                     name: 'home',
-                    component: Home
+                    component: () => import('../views/Home')
                 },
                 {
                     path: '/profile',
                     name: 'profile',
-                    component: Profile
+                    component: () => import('../views/Profile')
                 },
                 {
                     path: '/calendar',
                     name: 'calendar',
-                    component: Calendar
+                    component: () => import('../views/Calendar')
                 }
             ]
         },
+        {
+            path: '/ghost',
+            name: 'ghost',
+            component: () => import('../views/Ghost'),
+        },
     ],
+});
+
+export default router;
+
+/**
+ * Sort of auth gate for routes
+ */
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+
+        if (localStorage.getItem('token') == null) {
+            next({
+                to: 'login',
+                params: {nextUrl: to.fullPath}
+            })
+        } else {
+            next()
+        }
+    } else {
+        next()
+    }
 });

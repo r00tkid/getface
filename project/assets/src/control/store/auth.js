@@ -87,5 +87,6 @@ const Auth = {
             return state.authenticated;
         }
     }
-}
-export default Auth
+};
+
+export default Auth;
