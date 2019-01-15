@@ -9,9 +9,6 @@ class TimeStumpModel(models.Model):
     class Meta:
         abstract = True
 
-    def to_serialize(self, take):
-        return {key: self.__dict__[key] for key in take if key in self.__dict__}
-
 
 class SoftDeletionManager(models.Manager):
     def __init__(self, *args, **kwargs):

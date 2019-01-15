@@ -6,6 +6,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import APIException
 from rest_framework.response import Response
 from company.models import Worker, Company
+from company.serializers import WorkerSerializer
+from authentication.serializers import User
+import uuid
 
 
 class CompanyNotFound(APIException):
@@ -56,21 +59,101 @@ class WorkerCrud(APIView):
     http_method_names = ['get', 'post', 'put', 'delete', 'purge']
 
     def post(self, request, company_id):
+        from form.modules.worker import CreateWorker
+        validator = CreateWorker(data=request.data)
+
+        if not validator.validate():
+            return Response({
+                'detail': 'Form not valid',
+                'errors': validator.errors,
+            })
+
+        data = validator.data
+
+        try:
+            worker = Worker.objects.get(email=data.get('email'), company_id=company_id)
+
+            return Response({
+                'detail': 'Worker with current mail already exists in your company',
+                'worker': WorkerSerializer(instance=worker).data,
+            }, status=status.HTTP_207_MULTI_STATUS)
+        except:
+            pass
+
+        worker = Worker(**{
+            'first_name': data.get('first_name'),
+            'last_name': data.get('last_name'),
+            'email': data.get('email'),
+            'phone': data.get('phone') if data.get('phone') and data.get('phone') != '' else None,
+            'company_id': company_id,
+        })
+
+        try:
+            user = User.objects.get(email=data.get('email'))
+
+            worker.user_id = user.id
+        except:
+            user = User(**{
+                'username': uuid.uuid4(),
+                'email': data.get('email'),
+                'first_name': data.get('first_name'),
+                'last_name': data.get('last_name'),
+                'is_active': False,
+            })
+
+            user.set_password(user.username)
+            user.save()
+
+        worker.save()
+
         return Response(data={
-            'detail': 'Create worker',
-            'method': request.method,
+            'detail': 'Worker has been created',
+            'worker': WorkerSerializer(instance=worker).data,
         }, status=status.HTTP_201_CREATED)
 
     def get(self, request, worker_id, company_id):
-        return Response(data={
-            'detail': 'Get [%s] worker' % worker_id,
-            'method': request.method,
-        })
+        options = request.GET
+
+        if options.get('all') != '':
+            worker = Worker.objects
+        else:
+            worker = Worker.all_objects
+
+        try:
+            return Response({
+                'detail': 'Worker has been found',
+                'worker': WorkerSerializer(instance=worker.get(id=worker_id)).data
+            })
+        except:
+            return Response(data={
+                'detail': 'Worker has not been found',
+            }, status=status.HTTP_404_NOT_FOUND)
 
     def put(self, request, worker_id, company_id):
+        from form.modules.worker import UpdateWorker
+        validator = UpdateWorker(data=request.data)
+
+        if not validator.validate():
+            return Response({
+                'detail': 'Your data is invalid',
+                'errors': validator.errors,
+            })
+
+        data = {k: v for k, v in validator.data.items() if v is not None}
+        worker = Worker.objects.get(id=worker_id)
+
+        if data.__len__() < 1:
+            return Response({
+                'detail': 'Worker has not been updated, cause there is nothing to update.',
+                'worker': WorkerSerializer(instance=worker).data,
+            })
+
+        [worker.__setattr__(k, v) for k, v in data.items()]
+        worker.save()
+
         return Response(data={
-            'detail': 'Update [%s] worker' % worker_id,
-            'method': request.method,
+            'detail': 'Worker has been updated',
+            'worker': WorkerSerializer(instance=worker).data,
         })
 
     def delete(self, request, worker_id, company_id):

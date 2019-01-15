@@ -21,6 +21,30 @@ class CreateWorker(Form):
         validators.Email(message="E-mail must be valid email address"),
     ])
 
+    phone = StringField('Phone', [
+        base.NotRequired(),
+        validators.Length(min=6, max=30, message="E-mail must bee more than 6 and less than 201 characters."),
+    ])
+
 
 class UpdateWorker(Form):
-    pass
+    last_name = StringField('Last name', [
+        base.NotRequired(),
+        validators.Length(min=2, max=200, message="Last name must bee more than 1 and less than 201 characters."),
+    ], description="Enter your last name")
+
+    first_name = StringField('First name', [
+        base.NotRequired(),
+        validators.Length(min=2, max=200, message="First name must bee more than 1 and less than 201 characters."),
+    ], description="Enter your first name")
+
+    email = StringField('E-mail', [
+        base.NotRequired(),
+        validators.Length(min=6, max=200, message="E-mail must bee more than 6 and less than 201 characters."),
+        validators.Email(message="E-mail must be valid email address"),
+    ])
+
+    phone = StringField('Phone', [
+        base.NotRequired(),
+        validators.Length(min=6, max=30, message="E-mail must bee more than 6 and less than 201 characters."),
+    ])
