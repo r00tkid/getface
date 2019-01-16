@@ -37,7 +37,7 @@ const Auth = {
         login: ({commit, state, dispatch}, data) => {
             return Vue.prototype.axios.post('auth/sign-in', data).then(res => {
                 const token = res.data.token;
-                commit('setToken', {token: data.token, remember: data.remember_me});
+                commit('setToken', {token: token, remember: data.remember_me});
                 dispatch('retrieveUser');
                 return res;
             }).catch(e => {
@@ -45,16 +45,13 @@ const Auth = {
             });
         },
         retrieveUser: ({commit}) => {
-            return new Promise((resolve, reject) => {
-                Vue.prototype.axios.get('auth/me').then(res => {
+            return Vue.prototype.axios.get('auth/me').then(res => {
                     commit('setUser', res.data.user);
                     commit('setAuth', true);
-                    resolve(res)
                 }).catch(e => {
                     commit('purgeToken');
-                    reject(e)
+                    throw e;
                 })
-            });
         },
         logout: ({commit}) => {
             return new Promise((resolve) => {
@@ -65,18 +62,13 @@ const Auth = {
             });
         },
         register: ({commit, dispatch}, data) => {
-            return new Promise((resolve, reject) => {
-                Vue.prototype.axios.post('auth/sign-up', data).then(res => {
+                return Vue.prototype.axios.post('auth/sign-up', data).then(res => {
                     const token = res.data.token;
                     commit('setToken', {token: token, remember: true});
                     dispatch('retrieveUser');
-                    resolve(res)
-                }, err => {
-                    reject(err);
                 }).catch(e => {
-                    reject(e);
+                    throw e;
                 })
-            });
         }
     },
     getters: {
