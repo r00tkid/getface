@@ -1,5 +1,5 @@
 import os
-from app import settings
+from . import settings
 
 bind = '0.0.0.0:8090'
 backlog = 2048
@@ -57,4 +57,4 @@ def worker_int(worker):
 def worker_abort(worker):
     worker.log.info("worker received SIGABRT signal")
 
-#capture_output = True
+# capture_output = True

@@ -33,7 +33,7 @@ def self_info(request):
 
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes((AllowAny,))
 def sign_up(request):
     from form.modules.autentication import Registration
     validator = Registration(data=request.data)
@@ -75,7 +75,7 @@ def sign_up(request):
 
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes((AllowAny,))
 def worker_sign_up(request):
     from form.modules.autentication import WorkerRegistration
     validator = WorkerRegistration(data=request.data)
@@ -128,12 +128,12 @@ def worker_sign_up(request):
 
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes((AllowAny,))
 def reset_password(request):
     pass  # todo: do
 
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes((AllowAny,))
 def reset_confirm(request):
     pass  # todo: do

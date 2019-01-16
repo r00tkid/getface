@@ -1,4 +1,4 @@
-__all__ = ['CanManageCompany', 'WorkerCrud']
+__all__ = ['CanManageWorkers', 'WorkerActions']
 
 from rest_framework import status
 from rest_framework.views import APIView
@@ -26,9 +26,9 @@ class NotAllowed(APIException):
     default_detail = 'You have no permissions to do this action'
 
 
-class CanManageCompany(IsAuthenticated):
+class CanManageWorkers(IsAuthenticated):
     def has_permission(self, request, view):
-        if not super(CanManageCompany, self).has_permission(request, view):
+        if not super().has_permission(request, view):
             return False
 
         data = request.parser_context.get('kwargs', {})
@@ -39,24 +39,33 @@ class CanManageCompany(IsAuthenticated):
         except:
             raise CompanyNotFound("Company with id:[%s] not found." % data.get('company_id'))
 
-        if 'POST' != request.method:
+        if request.method not in ('POST', 'RESTORE'):
             try:
                 Worker.objects.get(pk=data.get('worker_id'), company_id=data.get('company_id'))
             except:
                 raise WorkerNotFound("Worker with id:[%s] not found." % data.get('worker_id'))
 
+        if 'RESTORE' == request.method:
+            try:
+                Worker.all_objects.get(pk=data.get('worker_id'), company_id=data.get('company_id'))
+            except:
+                raise WorkerNotFound("Worker with id:[%s] not found." % data.get('worker_id'))
+
         manager = Worker.objects.filter(user=user, company_id=data.get('company_id')).first()
 
-        if user.id != company.owner_id and (not manager or not manager.is_manager or manager.is_fired):
+        is_owner = user.id == company.owner_id
+        is_manager = manager and manager.is_manager and not manager.is_fired
+
+        if not is_owner and not is_manager:
             raise NotAllowed()
 
         return True
 
 
-class WorkerCrud(APIView):
+class WorkerActions(APIView):
     # Change to CanManageWorkers
-    permission_classes = (CanManageCompany,)
-    http_method_names = ['get', 'post', 'put', 'delete', 'purge']
+    permission_classes = (CanManageWorkers,)
+    http_method_names = ['get', 'post', 'put', 'delete', 'restore', 'purge', 'fire', 'hire']
 
     def post(self, request, company_id):
         from form.modules.worker import CreateWorker
@@ -140,7 +149,7 @@ class WorkerCrud(APIView):
             })
 
         data = {k: v for k, v in validator.data.items() if v is not None}
-        worker = Worker.objects.get(id=worker_id)
+        worker = Worker.objects.get(pk=worker_id)
 
         if data.__len__() < 1:
             return Response({
@@ -157,13 +166,54 @@ class WorkerCrud(APIView):
         })
 
     def delete(self, request, worker_id, company_id):
+        worker = Worker.objects.get(pk=worker_id)
+
+        worker.delete()
+
         return Response(data={
-            'detail': 'Soft delete [%s] worker' % worker_id,
-            'method': request.method,
+            'detail': 'Worker %s %s has been deleted' % (worker.first_name, worker.last_name),
+            'worker': WorkerSerializer(instance=worker).data,
+        })
+
+    def restore(self, request, worker_id, company_id):
+        worker = Worker.all_objects.get(pk=worker_id)
+
+        worker.deleted_at = None
+        worker.save()
+
+        return Response({
+            'detail': 'Worker %s %s has been restored' % (worker.first_name, worker.last_name),
+            'worker': WorkerSerializer(instance=worker).data
         })
 
     def purge(self, request, worker_id, company_id):
+        worker = Worker.objects.get(pk=worker_id)
+
+        worker.hard_delete()
+
         return Response(data={
-            'detail': 'Hard delete [%s] worker' % worker_id,
-            'method': request.method,
+            'detail': 'Worker %s %s has been fully removed from system' % (worker.first_name, worker.last_name),
+            'worker': WorkerSerializer(instance=worker).data,
+        })
+
+    def fire(self, request, worker_id, company_id):
+        worker = Worker.objects.get(pk=worker_id)
+
+        worker.is_fired = True
+        worker.save()
+
+        return Response({
+            'detail': 'Worker has been fired',
+            'worker': WorkerSerializer(instance=worker).data,
+        })
+
+    def hire(self, request, worker_id, company_id):
+        worker = Worker.objects.get(pk=worker_id)
+
+        worker.is_fired = False
+        worker.save()
+
+        return Response({
+            'detail': 'Worker has been hired',
+            'worker': WorkerSerializer(instance=worker).data,
         })

@@ -6,8 +6,9 @@ from dateutil import parser
 class NotRequired(object):
     field_flags = ('optional',)
 
-    def __init__(self, strip_whitespace=True, is_string=True):
+    def __init__(self, strip_whitespace=True, is_string=True, allow_empty=True):
         self.is_string = is_string
+        self.allow_empty = allow_empty
 
         if strip_whitespace:
             self.string_check = lambda s: s.strip()
@@ -16,9 +17,13 @@ class NotRequired(object):
 
     def __call__(self, form, field):
         from wtforms import validators, compat
+
         if self.is_string:
             if 'str' != type(field.data).__name__:
                 field.data = field.default
+
+        if not self.allow_empty and field.data == "":
+            field.data = None
 
         if not field.data or isinstance(field.data[0], compat.string_types) \
                 and not self.string_check(field.data[0]):
