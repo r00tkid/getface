@@ -33,7 +33,8 @@
                             <v-flex xs12>
                                 <v-text-field v-model="username" color="purple" prepend-inner-icon="fas fa-user"
                                               label="Ваш Email/Username"
-                                              @keyup.enter="submitCredentials"
+                                              @keydown.space.prevent
+                                              @keyup.enter="$refs.passwordField.focus()"
                                               class="input-shadow"
                                               background-color="white"
                                               box
@@ -42,6 +43,7 @@
                             </v-flex>
                             <v-flex xs12>
                                 <v-text-field v-model="password" color="purple"
+                                              ref="passwordField"
                                               @keyup.enter="submitCredentials"
                                               prepend-inner-icon="vpn_key"
                                               label="Пароль"

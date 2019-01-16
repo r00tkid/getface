@@ -130,6 +130,7 @@
                                             <v-text-field
                                                     box
                                                     background-color="white"
+                                                    @keydown.space.prevent
                                                     v-model="email"
                                                     ref="step1Email"
                                                     color="purple" prepend-inner-icon="email" label="Ваш Email"
@@ -289,6 +290,7 @@
                                                     background-color="white"
                                                     :rules="step3PhoneRule"
                                                     ref="step3Email"
+                                                    @keydown.space.prevent
                                                     v-model="company_email"
                                                     color="purple" label="Email компании"
                                                     required
@@ -344,7 +346,7 @@
                 emailRules: [
                     v => !!v || 'Обязательное поле',
                     v => v.length >= 6 || 'Email слишком короткий',
-                    v => /.+@.+/.test(v) || 'Неправильный email'
+                    v => /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'Неправильный email'
                 ],
                 usernameRules: [
                     v => !!v || 'Обязательное поле',
@@ -383,7 +385,7 @@
                 step3EmailRule: [
                     v => !!v || 'Обязательное поле',
                     v => v.length >= 6 || 'Email слишком короткий',
-                    v => /.+@.+/.test(v) || 'Неправильный email'
+                    v => /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'Неправильный email'
                 ],
             }
         },
@@ -415,7 +417,7 @@
                 ])
                 this.$store.dispatch('auth/register', data).then(() => {
                     this.$router.push('dashboard');
-                }, error => {
+                }).catch(error => {
                     let errors = error.response.data.errors
                     let resp = [];
                     for (let err in errors) {
