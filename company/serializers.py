@@ -1,3 +1,11 @@
+__all__ = (
+    'WorkerSerializer',
+    'CompanySerializer',
+    'CompanyFullInfoSerializer',
+    'CompanyWithWorkersSerializer',
+    'CompanyWithOwnerSerializer'
+)
+
 from rest_framework import serializers
 from logging import getLogger
 from company.models import Worker, Company

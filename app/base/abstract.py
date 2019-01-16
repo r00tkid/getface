@@ -2,7 +2,49 @@ import datetime
 from django.db import models
 
 
-class TimeStumpModel(models.Model):
+class Model(models.Model):
+    class Meta:
+        abstract = True
+
+    def update(self, data, nullable=True, using=None, update_fields=None):
+        """
+        Definitely updates your model
+
+        Update args:
+            @param data: Model data to update
+            @type data: dict
+            @param nullable: Is fields can be nullable
+            @type nullable: bool
+
+        Save args:
+            @param using: DB for write
+            @type using: (None) -> str
+            @param update_fields: Fields that going to be updated
+            @type update_fields: (None, set, frozenset, list, tuple) -> frozenset
+        """
+        return self.fill(
+            data,
+            nullable
+        ).save(
+            force_update=True,
+            update_fields=update_fields,
+            using=using,
+        )
+
+    def fill(self, data, nullable=True):
+        if nullable:
+            [self.__setattr__(k, v) for k, v in data.items()]
+        else:
+            [self.__setattr__(k, v) for k, v in data.items() if v is not None]
+
+        return self
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        super().save(force_insert, force_update, using, update_fields)
+        return self
+
+
+class TimeStumpModel(Model):
     created_at = models.DateTimeField('Date post created', auto_now_add=True, null=True)
     updated_at = models.DateTimeField('Date post updated', auto_now=True, null=True)
 

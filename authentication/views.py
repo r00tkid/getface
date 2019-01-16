@@ -3,11 +3,13 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 
-from authentication.serializers import User, UserSerializer
+from authentication.models import get_user_model
+from authentication.serializers import UserSerializer
 from authentication.jwt import create_token
 from company.models import Company, Worker
 from company.serializers import CompanyWithWorkersSerializer, CompanyWithOwnerSerializer
 
+User = get_user_model()
 
 @api_view(
     ['GET', 'HEAD', 'POST', 'OPTIONS', 'PATCH', 'PUT',

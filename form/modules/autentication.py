@@ -1,7 +1,9 @@
 from wtforms import Form, StringField, PasswordField, HiddenField, validators
 from form import base
-from authentication.serializers import User
+from authentication.models import get_user_model
 from company.models import Worker
+
+User = get_user_model()
 
 
 class Registration(Form):

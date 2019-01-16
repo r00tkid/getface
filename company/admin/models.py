@@ -1,6 +1,4 @@
-from django.contrib import admin
 from django.contrib.admin import ModelAdmin
-from company.models import Company, Worker
 from django.utils.html import format_html
 
 
@@ -58,7 +56,3 @@ class WorkerAdmin(ModelAdmin):
                 "<span class='glyphicon glyphicon-remove' style='color: #922;'></span>")
 
     display_is_active.short_description = "Актив"
-
-
-admin.site.register(Company)
-admin.site.register(Worker, WorkerAdmin)
