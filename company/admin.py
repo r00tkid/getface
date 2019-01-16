@@ -1,13 +1,12 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
-from .models import Company, Worker
-
+from company.models import Company, Worker
 from django.utils.html import format_html
 
 
 class WorkerAdmin(ModelAdmin):
-    list_display = (
-    'display_full_name', 'display_email', 'display_auth_key', 'display_is_active', 'display_id', 'auth_key')
+    list_display = ('display_full_name', 'display_email', 'display_auth_key',
+                    'display_is_active', 'display_id', 'auth_key')
 
     def display_id(self, obj):
         return obj.id

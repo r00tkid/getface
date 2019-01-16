@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 from rest_framework_jwt.views import ObtainJSONWebToken, refresh_jwt_token
-from .jwt import CustomJWTSerializer
+from authentication.jwt import CustomJWTSerializer
 
 urlpatterns = [
     path('/me', views.self_info),

@@ -4,7 +4,7 @@ from django.contrib.admin import ModelAdmin
 from django.utils.html import format_html
 from . import models
 
-# Remove default users and groups
+# Remove default groups
 admin.site.unregister(Group)
 
 

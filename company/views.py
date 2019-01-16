@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from company.serializers import CompanySerializer, WorkerSerializer
 from company.models import Company, Worker
-from .worker.crud import CanManageCompany
+from company.worker.actions import CanManageWorkers
 
 
 @api_view(['POST'])
@@ -14,7 +14,7 @@ def create_company(request):
 
 
 @api_view(['GET'])
-@permission_classes([CanManageCompany])
+@permission_classes((CanManageWorkers,))
 def get_company_workers(request, company_id):
     if False:
         # todo: move False after tests

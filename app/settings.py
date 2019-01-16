@@ -18,6 +18,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
+APPEND_SLASH = False
+# SILENCED_SYSTEM_CHECKS = ['urls.W002']
+# urls.W002 - if APPEND_SLASH in True silence warnings for routes without slashes
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '7751c0)##x&(z94r6*h9076d5izvo#)6-dj3_sor!6i8f5pnl#'
