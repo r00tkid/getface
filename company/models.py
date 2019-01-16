@@ -1,6 +1,10 @@
-from authentication.serializers import User
+__all__ = ('Company', 'Worker')
+
+from authentication.models import get_user_model
 from app.base.abstract import SoftDeletesModel, models
 import uuid
+
+User = get_user_model()
 
 
 class Company(SoftDeletesModel):
@@ -52,7 +56,6 @@ class Company(SoftDeletesModel):
         verbose_name_plural = "Компании"
 
 
-# Create your models here.
 class Worker(SoftDeletesModel):
     first_name = models.CharField(
         max_length=200,

@@ -1,14 +1,17 @@
 from django.urls import path
+from company.company.actions import CompanyActions
+from company.company import workers
 from company.worker.actions import WorkerActions
-from . import views
 
 urlpatterns = [
     # Companies
-    path('', views.create_company),  # Company info
-    path('/<int:company_id>', views.get_company_view),  # Company info
+    path('', CompanyActions.as_view()),  # Create company (POST)
+    path('/<int:company_id>', CompanyActions.as_view()),  # Company actions
+    path('/<int:company_id>/me', workers.get_user_worker),  # Get worker profile for specified company
+    path('/<int:company_id>/status', workers.get_user_status),  # Get status of current user for specified company
 
     # Workers
     path('/<int:company_id>/worker', WorkerActions.as_view()),  # Create worker (POST)
-    path('/<int:company_id>/workers', views.get_company_workers),  # Get company workers
+    path('/<int:company_id>/workers', workers.get_company_workers),  # Get company workers
     path('/<int:company_id>/worker/<int:worker_id>', WorkerActions.as_view()),  # Other workers crud
 ]

@@ -1,6 +1,9 @@
+__all__ = ('get_user_model', 'User')
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model as default_user
 
 
 class User(AbstractUser):
@@ -29,3 +32,7 @@ class User(AbstractUser):
 
     class Meta(AbstractUser.Meta):
         swappable = 'AUTH_USER_MODEL'
+
+
+def get_user_model():
+    return default_user() if default_user() else User

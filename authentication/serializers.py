@@ -1,8 +1,9 @@
-from rest_framework.serializers import ModelSerializer
-from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User as OtherUser
+__all__ = ('UserSerializer',)
 
-User = get_user_model() if get_user_model() else OtherUser
+from rest_framework.serializers import ModelSerializer
+from authentication.models import get_user_model
+
+User = get_user_model()
 
 
 class UserSerializer(ModelSerializer):

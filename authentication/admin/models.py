@@ -1,11 +1,5 @@
-from django.contrib import admin
-from django.contrib.auth.models import Group
 from django.contrib.admin import ModelAdmin
 from django.utils.html import format_html
-from . import models
-
-# Remove default groups
-admin.site.unregister(Group)
 
 
 class UserAdmin(ModelAdmin):
@@ -66,7 +60,3 @@ class UserAdmin(ModelAdmin):
         return format_html(is_ok)
 
     display_is_active.short_description = "Актив"
-
-
-# Add our user to admin panel
-admin.site.register(models.User, UserAdmin)
