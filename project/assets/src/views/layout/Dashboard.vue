@@ -5,7 +5,11 @@
 
             <abn-header></abn-header>
             <v-content>
-                <router-view></router-view>
+                <transition name="zoom"
+                            mode="out-in"
+                >
+                    <router-view></router-view>
+                </transition>
             </v-content>
 
             <abn-footer></abn-footer>
@@ -22,17 +26,12 @@
 
     export default {
         name: "abn-master",
-        data: () => ({
-            login: ''
-        }),
+        data: () => ({}),
 
         components: {
             "abn-header": Header,
             "abn-footer": Footer,
             'kill-sidebar': Sidebar
-        },
-        created() {
-            this.login = !!this.$route.name == 'login'
         }
     }
 </script>
@@ -47,4 +46,27 @@
     .input-no-arrows input::-webkit-inner-spin-button {
         -webkit-appearance: none !important;
     }
+
+    .zoom-enter-active,
+    .zoom-leave-active {
+        animation-duration: 0.1s;
+        animation-fill-mode: both;
+        animation-name: zoom;
+    }
+
+    .zoom-leave-active {
+        animation-direction: reverse;
+    }
+
+    @keyframes zoom {
+        from {
+            opacity: 0;
+            transform: scale3d(0.3, 0.3, 0.3);
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
 </style>

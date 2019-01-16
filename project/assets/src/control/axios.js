@@ -4,7 +4,7 @@ import router from "./router";
 import Vue from "vue";
 
 const http = axios.create({
-    baseURL: '/api/v1/',
+    baseURL: 'http://192.168.1.254:9090/api/v1/',
     headers: {
         'Accept': "application\/json"
     }
@@ -15,7 +15,7 @@ const http = axios.create({
  * @type {AxiosInstance}
  */
 Vue.prototype.axios = http;
-if (localStorage.token) {
+if (localStorage.token || sessionStorage.token) {
     http.defaults.headers.common['Authorization'] = `Bearer ${localStorage.token}`;
     // Only for dev
     store.dispatch('auth/retrieveUser').catch(() => router.push('login'));

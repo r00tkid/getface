@@ -8,12 +8,16 @@ Vue.use(Router);
 
 const router = new Router({
     mode: 'history',
-    // base: process.env.BASE_URL,
+    base: process.env.BASE_URL,
     routes: [
         {
             path: '/',
             component: Auth,
             children: [
+                {
+                    path: '/',
+                    redirect: '/login'
+                },
                 {
                     path: '/login',
                     name: 'login',
@@ -29,7 +33,7 @@ const router = new Router({
         {
             path: '/dashboard',
             component: Dashboard,
-            meta: {requiresAuth: true},
+            // meta: {requiresAuth: true},
             children: [
                 {
                     path: '',
@@ -56,7 +60,7 @@ const router = new Router({
     ],
 });
 
-export default router;
+
 
 /**
  * Sort of auth gate for routes
@@ -66,8 +70,7 @@ router.beforeEach((to, from, next) => {
 
         if (localStorage.getItem('token') == null) {
             next({
-                to: 'login',
-                params: {nextUrl: to.fullPath}
+                path: '/login',
             })
         } else {
             next()
@@ -76,3 +79,4 @@ router.beforeEach((to, from, next) => {
         next()
     }
 });
+export default router;

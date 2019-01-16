@@ -96,7 +96,7 @@
 
                     </v-stepper-header>
 
-                    <v-stepper-items>
+                    <v-stepper-items class="input-shadow">
                         <v-stepper-content step="1">
                             <v-card-text>
                                 <v-container grid-list-md>
@@ -128,20 +128,22 @@
                                         </v-flex>
                                         <v-flex xs12>
                                             <v-text-field
-                                                    solo
+                                                    box
+                                                    background-color="white"
                                                     v-model="email"
                                                     ref="step1Email"
-                                                    color="purple" prepend-icon="email" label="Ваш Email"
+                                                    color="purple" prepend-inner-icon="email" label="Ваш Email"
                                                     required
                                                     :rules="emailRules"
                                             ></v-text-field>
                                         </v-flex>
                                         <v-flex xs12>
                                             <v-text-field
-                                                    solo
+                                                    box
+                                                    background-color="white"
                                                     v-model="username"
                                                     ref="step1Username"
-                                                    color="purple" prepend-icon="account_circle"
+                                                    color="purple" prepend-inner-icon="account_circle"
                                                     label="Имя пользователя"
                                                     required
                                                     :rules="usernameRules"
@@ -149,20 +151,23 @@
                                         </v-flex>
                                         <v-flex xs12>
                                             <v-text-field
-                                                    solo
+                                                    box
+                                                    background-color="white"
                                                     v-model="password"
                                                     ref="step1Password"
-                                                    color="purple" prepend-icon="vpn_key" label="Пароль" type="password"
+                                                    color="purple" prepend-inner-icon="vpn_key" label="Пароль"
+                                                    type="password"
                                                     required
                                                     :rules="passwordRules"
                                             ></v-text-field>
                                         </v-flex>
                                         <v-flex xs12>
                                             <v-text-field
-                                                    solo
+                                                    box
+                                                    background-color="white"
                                                     v-model="password_confirmation"
                                                     ref="step1PasswordConfirm"
-                                                    color="purple" prepend-icon="vpn_key" label="Повторите пароль"
+                                                    color="purple" prepend-inner-icon="vpn_key" label="Повторите пароль"
                                                     type="password"
                                                     required
                                                     :rules="passwordConfirmation"
@@ -198,7 +203,8 @@
                                         </v-flex>
                                         <v-flex xs12>
                                             <v-text-field
-                                                    solo
+                                                    box
+                                                    background-color="white"
                                                     v-model="first_name"
                                                     ref="step2FirstName"
                                                     :rules="step2FirstRule"
@@ -208,7 +214,8 @@
                                         </v-flex>
                                         <v-flex xs12>
                                             <v-text-field
-                                                    solo
+                                                    box
+                                                    background-color="white"
                                                     v-model="last_name"
                                                     ref="step2LastName"
                                                     :rules="step2LastRule"
@@ -245,7 +252,8 @@
                                         </v-flex>
                                         <v-flex xs12>
                                             <v-text-field
-                                                    solo
+                                                    box
+                                                    background-color="white"
                                                     :rules="step3NameRule"
                                                     ref="step3Name"
                                                     v-model="company_name"
@@ -255,7 +263,8 @@
                                         </v-flex>
                                         <v-flex xs12>
                                             <v-text-field
-                                                    solo
+                                                    box
+                                                    background-color="white"
                                                     :rules="step3AdressRule"
                                                     ref="step3Adress"
                                                     v-model="company_address"
@@ -265,7 +274,8 @@
                                         </v-flex>
                                         <v-flex xs12>
                                             <v-text-field
-                                                    solo
+                                                    box
+                                                    background-color="white"
                                                     :rules="step3PhoneRule"
                                                     ref="step3Phone"
                                                     v-model="company_phone"
@@ -275,7 +285,8 @@
                                         </v-flex>
                                         <v-flex xs12>
                                             <v-text-field
-                                                    solo
+                                                    box
+                                                    background-color="white"
                                                     :rules="step3PhoneRule"
                                                     ref="step3Email"
                                                     v-model="company_email"
@@ -314,6 +325,7 @@
         name: "RegisterModal",
         data() {
             return {
+                checkin: false,
                 e1: 0,
                 step1Valid: false,
                 step2Valid: false,
@@ -394,20 +406,28 @@
         },
         methods: {
             registerUser() {
-                let data = {
-                    email: this.email,
-                    password: this.password,
-                    username: this.username,
-                    password_confirmation: this.password_confirmation,
-                    last_name: this.last_name,
-                    first_name: this.first_name,
-                    company_name: this.company_name,
-                    company_address: this.company_address,
-                    company_phone: this.company_phone,
-                    company_email: this.company_email
-                }
-                this.$store.dispatch('auth/register', data).then(res => {
-                    console.log(res);
+                this.checkin = true;
+
+                let vueData = Object.assign({}, this.$data);
+                let data = _.pick(allData, [
+                    'username', 'email', 'password', 'password_confirmation', 'first_name', 'last_name',
+                    'company_name', 'company_address', 'company_phone', 'company_email'
+                ])
+                this.$store.dispatch('auth/register', data).then(() => {
+                    this.$router.push('dashboard');
+                }, error => {
+                    let errors = error.response.data.errors
+                    let resp = [];
+                    for (let err in errors) {
+                        resp.push(err + ': ' + errors[err].join(', '));
+                    }
+                    this.notifi = this.$noty.error("Упс, кажется неправильные данные для входа: <br>" + resp.join("<br>"), {
+                        theme: 'metroui',
+                    });
+                    // setTimeout(() => this.notifi.close(), 2000);
+                    this.e1 = 1;
+                }).finally(() => {
+                    this.checkin = false;
                 })
             },
         },

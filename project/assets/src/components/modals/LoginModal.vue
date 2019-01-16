@@ -31,26 +31,36 @@
                                 </div>
                             </v-flex>
                             <v-flex xs12>
-                                <v-text-field v-model="username" color="purple" prepend-icon="fas fa-user"
-                                              solo
+                                <v-text-field v-model="username" color="purple" prepend-inner-icon="fas fa-user"
                                               label="Ваш Email/Username"
+                                              @keyup.enter="submitCredentials"
+                                              class="input-shadow"
+                                              background-color="white"
+                                              box
                                               required
                                 ></v-text-field>
                             </v-flex>
                             <v-flex xs12>
-                                <v-text-field v-model="password" color="purple" prepend-icon="vpn_key" label="Пароль"
-                                              solo
+                                <v-text-field v-model="password" color="purple"
+                                              @keyup.enter="submitCredentials"
+                                              prepend-inner-icon="vpn_key"
+                                              label="Пароль"
+                                              class="input-shadow"
+                                              background-color="white"
+                                              box
                                               type="password"
                                               required
                                 ></v-text-field>
                             </v-flex>
                             <v-flex xs12 d-flex>
-                                <v-btn @click.prevent="submitCredentials" color="purple lighten-2" class="white--text">
+                                <v-btn :loading="checkin" @click="submitCredentials" color="purple lighten-2"
+                                       class="white--text"
+                                >
                                     Войти
                                 </v-btn>
                             </v-flex>
                             <v-flex xs6>
-                                <v-checkbox label="Запомнить меня" v-model="checkbox1"></v-checkbox>
+                                <v-checkbox label="Запомнить меня" v-model="remember_me"></v-checkbox>
                             </v-flex>
                             <v-flex xs6 class="text-xs-right">
                                 <a @click="openForgotPassModal">Забыли пароль?</a>
@@ -76,7 +86,8 @@
         name: "LoginModal",
         data() {
             return {
-                checkbox1: false,
+                checkin: false,
+                remember_me: false,
                 username: '',
                 password: '',
             }
@@ -96,25 +107,41 @@
                 this.$store.commit('modal/setForgotPasswordModal', true);
             },
             submitCredentials() {
-                let [username, password] = [this.username, this.password];
-                // Do shit
-                let user = this.$store.dispatch('auth/login', {username, password}).then(() => {
+                this.checkin = true;
+
+                const vueData = Object.assign({}, this.$data);
+                let data = _.pick(vueData, ['username', 'password', 'remember_me'])
+
+                let user = this.$store.dispatch('auth/login', data).then((res) => {
                     this.$router.push('dashboard')
-                }).catch(() => {})
-                console.log(username, password)
+                }).catch(error => {
+                    console.log(error);
+                    let errors = error.response.data.errors || error.response.data
+                    let resp = [];
+                    for (let err in errors) {
+                        resp.push(err + ': ' + errors[err].join(', '));
+                    }
+                    this.notifi = this.$noty.error("Упс, кажется неправильные данные для входа: <br>" + resp.join("<br>"), {
+                        theme: 'metroui',
+                    });
+                    setTimeout(() => this.notifi.close(), 4000);
+                }).finally(() => {
+                    this.checkin = false;
+                })
             }
         },
         mounted() {
+            // Load modal after page loading
             setTimeout(() => this.$store.commit('modal/setLoginModal', true), 600)
         },
         destroyed() {
+            // We are changing modals
             this.$store.commit('modal/setLoginModal', false);
         },
-
     }
 </script>
 
-<style scoped>
+<style>
     @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
     .dialog-header, .dialog-header * {
@@ -127,5 +154,17 @@
 
     .bff {
         font-weight: 900;
+    }
+
+    .input-shadow label {
+        font-weight: 500;
+    }
+
+    .input-shadow .v-input__slot {
+        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12) !important;
+    }
+
+    .v-text-field > .v-input__control > .v-input__slot:after, .v-text-field > .v-input__control > .v-input__slot:before {
+        width: 0% !important;
     }
 </style>
