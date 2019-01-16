@@ -16,7 +16,8 @@ const http = axios.create({
  */
 Vue.prototype.axios = http;
 if (localStorage.token || sessionStorage.token) {
-    http.defaults.headers.common['Authorization'] = `Bearer ${localStorage.token}`;
+    const token = localStorage.token || sessionStorage.token;
+    http.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     // Only for dev
     store.dispatch('auth/retrieveUser').catch(() => router.push('login'));
 }

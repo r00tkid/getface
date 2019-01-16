@@ -409,7 +409,7 @@
                 this.checkin = true;
 
                 let vueData = Object.assign({}, this.$data);
-                let data = _.pick(allData, [
+                let data = _.pick(vueData, [
                     'username', 'email', 'password', 'password_confirmation', 'first_name', 'last_name',
                     'company_name', 'company_address', 'company_phone', 'company_email'
                 ])
