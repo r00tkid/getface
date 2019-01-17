@@ -3,12 +3,14 @@ import store from "./store";
 import router from "./router";
 import Vue from "vue";
 
+const digitalocean = 'http://139.59.211.27:9090';
+const local =  'http://192.168.1.254:9090';
 const http = axios.create({
-    baseURL: 'http://192.168.1.254:9090/api/v1/',
+    baseURL: '/api/v1/',
     headers: {
         'Accept': "application\/json"
-    }
-    // timeout: 2000,
+    },
+    timeout: 5000,
 });
 
 /**

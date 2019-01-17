@@ -117,16 +117,23 @@
                 let user = this.$store.dispatch('auth/login', data).then((res) => {
                     this.$router.push('dashboard')
                 }).catch(error => {
-                    console.log(error);
+                    if (error.code === 'ECONNABORTED') {
+                        let errorNotification = this.$noty.error("Мы не получили ответа от сервера.", {
+                            theme: 'metroui',
+                        });
+                        setTimeout(() => errorNotification.close(), 4000);
+                        return 'timeout';
+                    }
+
                     let errors = error.response.data.errors || error.response.data
                     let resp = [];
                     for (let err in errors) {
                         resp.push(err + ': ' + errors[err].join(', '));
                     }
-                    this.notifi = this.$noty.error("Упс, кажется неправильные данные для входа: <br>" + resp.join("<br>"), {
+                    let errorNotification = this.$noty.error("Упс, кажется неправильные данные для входа: <br>" + resp.join("<br>"), {
                         theme: 'metroui',
                     });
-                    setTimeout(() => this.notifi.close(), 4000);
+                    setTimeout(() => errorNotification.close(), 4000);
                 }).finally(() => {
                     this.checkin = false;
                 })
