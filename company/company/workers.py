@@ -11,7 +11,13 @@ from company.base.exceptions import NotFound
 @permission_classes((CanManageCompany,))
 def get_company_workers(request, company_id):
     query = request.GET
-    objects = Worker.objects.filter(company_id=company_id)
+
+    if query.get('all') == '':
+        objects = Worker.all_objects
+    else:
+        objects = Worker.objects
+
+    objects = objects.filter(company_id=company_id)
 
     is_fired = query.get('fired')
     is_manager = query.get('manager')
@@ -20,11 +26,12 @@ def get_company_workers(request, company_id):
     if is_fired != '':
         objects = objects.filter(is_fired=False)
 
-    if is_manager == '':
-        objects = objects.filter(is_manager=True)
+    if is_manager is not is_worker:
+        if is_manager == '':
+            objects = objects.filter(is_manager=True)
 
-    if is_worker == '':
-        objects = objects.filter(is_manager=False)
+        if is_worker == '':
+            objects = objects.filter(is_manager=False)
 
     return Response(
         {

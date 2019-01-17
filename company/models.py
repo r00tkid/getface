@@ -124,3 +124,70 @@ class Worker(SoftDeletesModel):
     class Meta:
         verbose_name = "Работник"
         verbose_name_plural = "Работники"
+        unique_together = (('user', 'company'),)
+
+
+class Rate(SoftDeletesModel):
+    name = models.CharField(
+        "Название",
+        max_length=256,
+        null=False,
+        blank=False,
+    )
+
+    description = models.TextField(
+        "Описание",
+        null=False,
+        blank=False,
+    )
+
+    per_month = models.FloatField(
+        "Цена за месяц (руб)",
+        null=False,
+        blank=False,
+    )
+
+    is_archived = models.BooleanField(
+        "Архивный",
+        null=False,
+        default=False,
+    )
+
+    class Meta:
+        verbose_name = "Тариф"
+        verbose_name_plural = "Тарифы"
+
+
+class Payment(SoftDeletesModel):
+    rate = models.ForeignKey(
+        Rate,
+        on_delete=models.CASCADE,
+        null=False,
+    )
+
+    info = models.TextField(
+        "Информация о платеже",
+        null=False,
+        blank=False,
+        default="{}",
+    )
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.DO_NOTHING,
+        verbose_name="Платильщик",
+        null=True,
+        blank=True,
+    )
+
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.DO_NOTHING,
+        verbose_name="Компания",
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name = "Оплата"
+        verbose_name_plural = "Оплаты"

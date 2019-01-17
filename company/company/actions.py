@@ -24,6 +24,7 @@ class CompanyActions(APIView):
 
         company = Company(**validator.data)
         company.owner_id = request.user.id
+        company.save()
 
         return Response(data={
             'detail': 'Company has been created',

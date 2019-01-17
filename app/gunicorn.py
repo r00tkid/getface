@@ -1,5 +1,5 @@
 import os
-from . import settings
+from app import settings
 
 bind = '0.0.0.0:8090'
 backlog = 2048

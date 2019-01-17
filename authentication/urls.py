@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from authentication import views
 
 from rest_framework_jwt.views import ObtainJSONWebToken, refresh_jwt_token
 from authentication.jwt import CustomJWTSerializer

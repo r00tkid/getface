@@ -9,7 +9,8 @@ class UserAdmin(ModelAdmin):
         'display_is_active',
         'display_is_staff',
         'display_is_super',
-        'display_id'
+        'display_id',
+        'phone',
     )
 
     def display_full_name(self, obj):
