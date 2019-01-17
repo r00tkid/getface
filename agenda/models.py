@@ -20,7 +20,6 @@ class WorkerAgenda(abstract.SoftDeletesModel):
         Worker,
         verbose_name="Работник",
         on_delete=models.CASCADE,
-        null=True
     )
 
     def __str__(self):
@@ -57,7 +56,6 @@ class WorkerFaceTime(abstract.SoftDeletesModel):
         Worker,
         verbose_name="Работник",
         on_delete=models.CASCADE,
-        null=True
     )
 
     def __str__(self):

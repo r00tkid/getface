@@ -11,6 +11,7 @@ from company.serializers import CompanyWithWorkersSerializer, CompanyWithOwnerSe
 
 User = get_user_model()
 
+
 @api_view(
     ['GET', 'HEAD', 'POST', 'OPTIONS', 'PATCH', 'PUT',
      'DELETE', 'COPY', 'LINK', 'UNLINK', 'PURGE', 'LOCK',
@@ -53,20 +54,13 @@ def sign_up(request):
         'email': info.get('email'),
         'first_name': info.get('first_name'),
         'last_name': info.get('last_name'),
+        'phone': info.get('phone'),
         # todo: change when got smtp server
         'is_active': True,
     })
 
     user.set_password(info.get('password'))
     user.save()
-
-    Company(**{
-        'name': info.get('company_name'),
-        'address': info.get('company_address'),
-        'phone': info.get('company_phone'),
-        'email': info.get('company_email'),
-        'owner_id': user.id,
-    }).save()
 
     token = create_token(user)
 

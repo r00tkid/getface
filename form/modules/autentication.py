@@ -21,6 +21,12 @@ class Registration(Form):
         base.Unique(User, message="E-mail not unique")
     ])
 
+    phone = StringField('Phone', [
+        validators.DataRequired(),
+        validators.Length(min=5, max=30, message="E-mail must bee more than 4 and less than 201 characters."),
+        base.Unique(User, message="Phone is already in use"),
+    ])
+
     last_name = StringField('Last name', [
         validators.DataRequired(),
         validators.Length(min=2, max=200, message="Last name must bee more than 1 and less than 201 characters."),
@@ -42,28 +48,6 @@ class Registration(Form):
         [validators.DataRequired()],
         description="Confirm your password"
     )
-
-    # Company block
-    company_name = StringField('Company name', [
-        validators.DataRequired(),
-        validators.Length(min=3, max=200, message="Company name must bee more than 2 and less than 201 characters."),
-    ])
-
-    company_address = StringField('Company address', [
-        base.NotRequired(),
-        validators.Length(min=5, max=200, message="Address must bee more than 6 and less than 201 characters."),
-    ])
-
-    company_phone = StringField('Company phone', [
-        base.NotRequired(),
-        validators.Length(min=7, max=30, message="Phone must bee more than 6 and less than 30 characters."),
-    ])
-
-    company_email = StringField('Company e-mail', [
-        validators.DataRequired(),
-        validators.Length(min=5, max=200, message="Email must bee more than 4 and less than 201 characters."),
-        validators.Email(message="Company e-mail must be valid email address"),
-    ])
 
 
 class WorkerRegistration(Form):
