@@ -124,3 +124,4 @@ class Worker(SoftDeletesModel):
     class Meta:
         verbose_name = "Работник"
         verbose_name_plural = "Работники"
+        unique_together = (('user', 'company'),)

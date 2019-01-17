@@ -45,8 +45,8 @@ class Model(models.Model):
 
 
 class TimeStumpModel(Model):
-    created_at = models.DateTimeField('Date post created', auto_now_add=True, null=True)
-    updated_at = models.DateTimeField('Date post updated', auto_now=True, null=True)
+    created_at = models.DateTimeField('Date record created', auto_now_add=True, null=True)
+    updated_at = models.DateTimeField('Date record updated', auto_now=True, null=True)
 
     class Meta:
         abstract = True
