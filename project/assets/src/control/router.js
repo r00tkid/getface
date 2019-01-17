@@ -33,7 +33,7 @@ const router = new Router({
         {
             path: '/dashboard',
             component: Dashboard,
-            // meta: {requiresAuth: true},
+            meta: {requiresAuth: true},
             children: [
                 {
                     path: '',
@@ -67,8 +67,7 @@ const router = new Router({
  */
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-
-        if (localStorage.getItem('token') == null) {
+        if (!localStorage.token && !sessionStorage.token) {
             next({
                 path: '/login',
             })
