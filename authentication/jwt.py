@@ -1,5 +1,5 @@
 import jwt
-from app import settings
+from index import settings
 from rest_framework_jwt.serializers import JSONWebTokenSerializer
 from django.contrib.auth import authenticate
 from django.utils.translation import ugettext as _

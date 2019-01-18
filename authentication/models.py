@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model as default_user
-from app.base.abstract import Model, SoftDeletesModel
+from index.base.abstract import Model, SoftDeletesModel
 
 
 class User(AbstractUser):

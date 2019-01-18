@@ -1,5 +1,5 @@
 import datetime
-from app.base import abstract
+from index.base import abstract
 from company.models import Worker
 
 models = abstract.models

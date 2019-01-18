@@ -17,14 +17,16 @@ services:
 
   getface_stage:
     build:
-      context: ./
+      context: .
     container_name: getface-stage
     volumes:
       - ./:/var/www/get-face
+      - ./http/http:/usr/local/bin/gunicorn
+      - ./http/pseudo_init.py:/usr/local/lib/python3.7/site-packages/gunicorn/workers/__init__.py
+      - ./http/alternative.py:/usr/local/lib/python3.7/site-packages/gunicorn/workers/alternative.py
     command: >
-      bash -c "gunicorn app.wsgi -c /var/www/get-face/app/gunicorn.py --worker-class gevent --timeout 30 --graceful-timeout 20"
-    environment:
-      - DJANGO_SETTINGS_MODULE=app.settings
+      bash -c "gunicorn index.wsgi:get_face -c /var/www/get-face/index/gunicorn.py --timeout 30 --graceful-timeout 20"
+    working_dir: /var/www/get-face
     restart: always
     ports:
       - 8090:8090
@@ -44,8 +46,6 @@ services:
     ports:
       - 9090:9090
     links:
-      - getface_stage
-    depends_on:
       - getface_stage
     networks:
       - getface_stage_network

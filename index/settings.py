@@ -155,7 +155,7 @@ JWT_AUTH = {
 }
 
 MIDDLEWARE = [
-    'app.middleware.SimpleMiddleware',
+    'index.middleware.SimpleMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -164,7 +164,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
 ]
 
-ROOT_URLCONF = 'app.urls'
+ROOT_URLCONF = 'index.urls'
 
 TEMPLATES = [
     {
@@ -184,7 +184,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'app.wsgi.application'
+WSGI_APPLICATION = 'index.wsgi.get_face'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
