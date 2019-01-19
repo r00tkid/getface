@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'authentication.apps.AuthenticationConfig',
     'company.apps.CompanyConfig',
     'agenda.apps.AgendaConfig',
-    'form.apps.FormConfig',
+    'tech.apps.TechConfig',
 ]
 
 AUTH_USER_MODEL = 'authentication.User'

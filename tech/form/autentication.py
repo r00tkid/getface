@@ -1,5 +1,5 @@
 from wtforms import Form, StringField, PasswordField, HiddenField, validators
-from form import base
+from tech import base
 from authentication.models import get_user_model
 from company.models import Worker
 

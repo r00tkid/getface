@@ -17,7 +17,7 @@ class WorkerActions(APIView):
     http_method_names = ['get', 'post', 'put', 'delete', 'restore', 'purge', 'fire', 'hire']
 
     def post(self, request, company_id):
-        from form.modules.worker import CreateWorker
+        from tech.form.worker import CreateWorker
         validator = CreateWorker(data=request.data)
 
         if not validator.validate():
@@ -88,7 +88,7 @@ class WorkerActions(APIView):
             }, status=status.HTTP_404_NOT_FOUND)
 
     def put(self, request, worker_id, company_id):
-        from form.modules.worker import UpdateWorker
+        from tech.form.worker import UpdateWorker
         validator = UpdateWorker(data=request.data)
 
         if not validator.validate():

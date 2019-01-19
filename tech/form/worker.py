@@ -1,5 +1,5 @@
 from wtforms import Form, StringField, validators
-from form import base
+from tech import base
 
 
 class CreateWorker(Form):

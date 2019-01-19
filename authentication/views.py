@@ -38,7 +38,7 @@ def self_info(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def sign_up(request):
-    from form.modules.autentication import Registration
+    from tech.form.autentication import Registration
     validator = Registration(data=request.data)
 
     if not validator.validate():
@@ -73,7 +73,7 @@ def sign_up(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def worker_sign_up(request):
-    from form.modules.autentication import WorkerRegistration
+    from tech.form.autentication import WorkerRegistration
     validator = WorkerRegistration(data=request.data)
 
     if not validator.validate():

@@ -35,7 +35,7 @@ daemon = False
 
 raw_env = [
     'DJANGO_SECRET_KEY=%s' % settings.SECRET_KEY,
-    'PROJECT_ROOT=%s' % settings.BASE_DIR
+    'PROJECT_ROOT=%s' % settings.BASE_DIR,
 ]
 
 pidfile = None

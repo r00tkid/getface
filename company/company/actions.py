@@ -13,7 +13,7 @@ class CompanyActions(APIView):
     http_method_names = ['get', 'post', 'put', 'delete', 'restore', 'purge']
 
     def post(self, request):
-        from form.modules.company import RegisterCompany
+        from tech.form.company import RegisterCompany
         validator = RegisterCompany(data=request.data)
 
         if not validator.validate():
@@ -44,7 +44,7 @@ class CompanyActions(APIView):
         })
 
     def put(self, request, company_id):
-        from form.modules.company import UpdateCompany
+        from tech.form.company import UpdateCompany
         validator = UpdateCompany(data=request.data)
 
         if not validator.validate():
