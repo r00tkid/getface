@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from company.models import Worker
 from company.serializers import WorkerSerializer
 from company.base.permissions import CanManageWorkers
-from authentication.models import get_user_model
+from authentication.models.user.model import get_user_model
 
 User = get_user_model()
 

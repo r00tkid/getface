@@ -1,5 +1,5 @@
 from wtforms import Form, StringField, TextField, validators
-from tech import base
+from index.base import validation as base
 
 
 class RegisterCompany(Form):

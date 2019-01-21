@@ -1,6 +1,6 @@
 __all__ = ('Company', 'Worker')
 
-from authentication.models import get_user_model
+from authentication.models.user.model import get_user_model
 from index.base.abstract import SoftDeletesModel, models
 import uuid
 

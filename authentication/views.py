@@ -3,7 +3,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 
-from authentication.models import get_user_model
+from authentication.models.user.model import get_user_model
 from authentication.serializers import UserSerializer
 from authentication.jwt import create_token
 from company.models import Company, Worker
