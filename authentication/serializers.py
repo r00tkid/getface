@@ -1,9 +1,7 @@
 __all__ = ('UserSerializer',)
 
 from rest_framework.serializers import ModelSerializer
-from authentication.models.user.model import get_user_model
-
-User = get_user_model()
+from authentication.models.user.model import User
 
 
 class UserSerializer(ModelSerializer):

@@ -1,9 +1,8 @@
-from django.contrib.auth import get_user_model as default_user
 from django.contrib.auth.models import AbstractUser
 from index.base.repository import Base
 
 
-class User(AbstractUser, Base.TimeStumps):
+class User(AbstractUser, Base.CreatedStump):
     field = Base.Model.field
 
     email = field.Email(
@@ -36,7 +35,3 @@ class User(AbstractUser, Base.TimeStumps):
         swappable = 'AUTH_USER_MODEL'
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
-
-
-def get_user_model():
-    return default_user() if default_user() else User

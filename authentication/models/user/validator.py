@@ -1,10 +1,8 @@
 from index.base.repository import Base
-from authentication.models.user.model import get_user_model
-
-User = get_user_model()
+from authentication.models.user.model import User
 
 
-class UserRegister(Base.Validator):
+class Register(Base.Validator):
     field = Base.Validator.field
     valid = Base.Validator.valid
 
@@ -50,5 +48,5 @@ class UserRegister(Base.Validator):
     )
 
 
-class UserUpdate(Base.Validator):
+class Update(Base.Validator):
     pass

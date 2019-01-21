@@ -3,13 +3,11 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 
-from authentication.models.user.model import get_user_model
+from authentication.models import UserRepository
 from authentication.serializers import UserSerializer
 from authentication.jwt import create_token
 from company.models import Company, Worker
 from company.serializers import CompanyWithWorkersSerializer, CompanyWithOwnerSerializer
-
-User = get_user_model()
 
 
 @api_view(
@@ -49,7 +47,7 @@ def sign_up(request):
 
     info = validator.data
 
-    user = User(**{
+    user = UserRepository.model(**{
         'username': info.get('username'),
         'email': info.get('email'),
         'first_name': info.get('first_name'),
