@@ -44,14 +44,24 @@ const Auth = {
                 throw e;
             });
         },
-        retrieveUser: ({commit}) => {
+        retrieveUser: ({commit, dispatch}) => {
             return Vue.prototype.axios.get('auth/me').then(res => {
-                    commit('setUser', res.data.user);
-                    commit('setAuth', true);
-                }).catch(e => {
-                    commit('purgeToken');
+                commit('setUser', res.data.user);
+                commit('setAuth', true);
+            }).catch(e => {
+                // todo Review this
+                try {
+                    dispatch('refreshToken').then(res => {
+                        return true;
+                    }).catch(e => {
+                        commit('purgeToken');
+                        throw e;
+                    });
+                }
+                catch (e) {
                     throw e;
-                })
+                }
+            })
         },
         logout: ({commit}) => {
             return new Promise((resolve) => {
@@ -62,13 +72,22 @@ const Auth = {
             });
         },
         register: ({commit, dispatch}, data) => {
-                return Vue.prototype.axios.post('auth/sign-up', data).then(res => {
-                    const token = res.data.token;
-                    commit('setToken', {token: token, remember: true});
-                    dispatch('retrieveUser');
-                }).catch(e => {
-                    throw e;
-                })
+            return Vue.prototype.axios.post('auth/sign-up', data).then(res => {
+                const token = res.data.token;
+                commit('setToken', {token: token, remember: true});
+                dispatch('retrieveUser');
+            }).catch(e => {
+                throw e;
+            })
+        },
+        refreshToken: ({state, commit, dispatch}) => {
+            return Vue.prototype.axios.post('auth/fresh', {token: state.token}).then(res => {
+                const token = res.data.token;
+                commit('setToken', {token: token, remember: true});
+                dispatch('retrieveUser');
+            }).catch(e => {
+                throw e;
+            })
         }
     },
     getters: {
