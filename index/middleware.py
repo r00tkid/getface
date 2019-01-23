@@ -14,7 +14,7 @@ class SimpleMiddleware:
                 },
                 status=200,
                 headers={
-                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Origin": "http://[::1]:9090, http://localhost:9090, http://127.0.0.1:9090, http://0.0.0.0:9090, http://139.59.211.27:9090",
                     "Access-Control-Allow-Methods": "GET, OPTIONS, POST, DELETE, PUT, PURGE",
                     "Access-Control-Allow-Headers": "Content-type, Authorization, X-Requested-With, X-XSRF-TOKEN",
                     "Access-Control-Allow-Credentials": True,
