@@ -1,8 +1,9 @@
-from django.contrib.admin import ModelAdmin
-from django.utils.html import format_html
+from index.base.repository import Base
 
 
-class WorkerAdmin(ModelAdmin):
+class Worker(Base.Admin):
+    format_html = Base.Admin.format_html
+
     list_display = ('display_full_name', 'display_email', 'display_auth_key',
                     'display_is_active', 'display_id', 'auth_key')
 
@@ -28,7 +29,7 @@ class WorkerAdmin(ModelAdmin):
             if obj.user.is_superuser:
                 full += " <span class='label label-primary'>%s</span>" % "Администратор"
 
-        return format_html(full)
+        return self.format_html(full)
 
     display_full_name.short_description = "ФИО"
 
@@ -39,20 +40,24 @@ class WorkerAdmin(ModelAdmin):
 
     def display_auth_key(self, obj):
         if obj.auth_key:
-            return format_html(
-                "<span class='glyphicon glyphicon-remove' style='color: #922;'></span>")
+            return self.format_html(
+                "<span class='glyphicon glyphicon-remove' style='color: #922;'></span>"
+            )
         else:
-            return format_html(
-                "<span class='glyphicon glyphicon-ok' style='color: #262;'></span>")
+            return self.format_html(
+                "<span class='glyphicon glyphicon-ok' style='color: #262;'></span>"
+            )
 
     display_auth_key.short_description = "Инвайт"
 
     def display_is_active(self, obj):
         if obj.user and obj.user.is_active:
-            return format_html(
-                "<span class='glyphicon glyphicon-ok' style='color: #262;'></span>")
+            return self.format_html(
+                "<span class='glyphicon glyphicon-ok' style='color: #262;'></span>"
+            )
         else:
-            return format_html(
-                "<span class='glyphicon glyphicon-remove' style='color: #922;'></span>")
+            return self.format_html(
+                "<span class='glyphicon glyphicon-remove' style='color: #922;'></span>"
+            )
 
     display_is_active.short_description = "Актив"

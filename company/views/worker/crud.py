@@ -1,13 +1,10 @@
-__all__ = ('WorkerActions',)
-
 import uuid
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from company.models import Worker
-from company.serializers import WorkerSerializer
 from company.base.permissions import CanManageWorkers
-from authentication.models.user.model import User
+from company.models import Worker
+from authentication.models import User
 
 
 class WorkerActions(APIView):
@@ -15,8 +12,7 @@ class WorkerActions(APIView):
     http_method_names = ['get', 'post', 'put', 'delete', 'restore', 'purge', 'fire', 'hire']
 
     def post(self, request, company_id):
-        from tech.form.worker import CreateWorker
-        validator = CreateWorker(data=request.data)
+        validator = Worker.action('create')(data=request.data)
 
         if not validator.validate():
             return Response({
@@ -27,16 +23,16 @@ class WorkerActions(APIView):
         data = validator.data
 
         try:
-            worker = Worker.objects.get(email=data.get('email'), company_id=company_id)
+            worker = Worker.model().objects.get(email=data.get('email'), company_id=company_id)
 
             return Response({
                 'detail': 'Worker with current mail already exists in your company',
-                'worker': WorkerSerializer(instance=worker).data,
+                'worker': Worker.serializer('base')(instance=worker).data,
             }, status=status.HTTP_207_MULTI_STATUS)
         except:
             pass
 
-        worker = Worker(**{
+        worker = Worker.new({
             'first_name': data.get('first_name'),
             'last_name': data.get('last_name'),
             'email': data.get('email'),
@@ -45,11 +41,11 @@ class WorkerActions(APIView):
         })
 
         try:
-            user = User.objects.get(email=data.get('email'))
+            user = User.model().objects.get(email=data.get('email'))
 
             worker.user_id = user.id
         except:
-            user = User(**{
+            user = User.new({
                 'username': uuid.uuid4(),
                 'email': data.get('email'),
                 'first_name': data.get('first_name'),
@@ -64,21 +60,21 @@ class WorkerActions(APIView):
 
         return Response(data={
             'detail': 'Worker has been created',
-            'worker': WorkerSerializer(instance=worker).data,
+            'worker': Worker.serializer('extended')(instance=worker).data,
         }, status=status.HTTP_201_CREATED)
 
     def get(self, request, worker_id, company_id):
         options = request.GET
 
         if options.get('all') != '':
-            worker = Worker.objects
+            worker = Worker.model().objects
         else:
-            worker = Worker.all_objects
+            worker = Worker.model().all
 
         try:
             return Response({
                 'detail': 'Worker has been found',
-                'worker': WorkerSerializer(instance=worker.get(id=worker_id)).data
+                'worker': Worker.serializer('extended')(instance=worker.get(id=worker_id)).data
             })
         except:
             return Response(data={
@@ -86,8 +82,7 @@ class WorkerActions(APIView):
             }, status=status.HTTP_404_NOT_FOUND)
 
     def put(self, request, worker_id, company_id):
-        from tech.form.worker import UpdateWorker
-        validator = UpdateWorker(data=request.data)
+        validator = Worker.action('update')(data=request.data)
 
         if not validator.validate():
             return Response({
@@ -95,62 +90,62 @@ class WorkerActions(APIView):
                 'errors': validator.errors,
             })
 
-        worker = Worker.objects.get(pk=worker_id).update(validator.data, nullable=False)
+        worker = Worker.model().objects.get(pk=worker_id).update(validator.data, nullable=False)
 
         return Response(data={
             'detail': 'Worker has been updated',
-            'worker': WorkerSerializer(instance=worker).data,
+            'worker': Worker.serializer('extended')(instance=worker).data,
         })
 
     def delete(self, request, worker_id, company_id):
-        worker = Worker.objects.get(pk=worker_id)
+        worker = Worker.model().objects.get(pk=worker_id)
 
         worker.delete()
 
         return Response(data={
             'detail': 'Worker %s %s has been deleted' % (worker.first_name, worker.last_name),
-            'worker': WorkerSerializer(instance=worker).data,
+            'worker': Worker.serializer('extended')(instance=worker).data,
         })
 
     def restore(self, request, worker_id, company_id):
-        worker = Worker.all_objects.get(pk=worker_id)
+        worker = Worker.model().deleted.get(pk=worker_id)
 
         worker.deleted_at = None
         worker.save()
 
         return Response({
             'detail': 'Worker %s %s has been restored' % (worker.first_name, worker.last_name),
-            'worker': WorkerSerializer(instance=worker).data
+            'worker': Worker.info('extended')(instance=worker).data
         })
 
     def purge(self, request, worker_id, company_id):
-        worker = Worker.objects.get(pk=worker_id)
+        worker = Worker.model().objects.get(pk=worker_id)
 
         worker.hard_delete()
 
         return Response(data={
             'detail': 'Worker %s %s has been fully removed from system' % (worker.first_name, worker.last_name),
-            'worker': WorkerSerializer(instance=worker).data,
+            'worker': Worker.serializer('extended')(instance=worker).data,
         })
 
     def fire(self, request, worker_id, company_id):
-        worker = Worker.objects.get(pk=worker_id)
+        worker = Worker.model().objects.get(pk=worker_id)
 
         worker.is_fired = True
         worker.save()
 
         return Response({
             'detail': 'Worker has been fired',
-            'worker': WorkerSerializer(instance=worker).data,
+            'worker': Worker.serializer('extended')(instance=worker).data,
         })
 
     def hire(self, request, worker_id, company_id):
-        worker = Worker.objects.get(pk=worker_id)
+        worker = Worker.model().objects.get(pk=worker_id)
 
         worker.is_fired = False
         worker.save()
 
         return Response({
             'detail': 'Worker has been hired',
-            'worker': WorkerSerializer(instance=worker).data,
+            'worker': Worker.serializer('extended')(instance=worker).data,
         })

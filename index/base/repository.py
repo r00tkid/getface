@@ -18,7 +18,7 @@ class Base(object):
         from index.base import validation as valid
 
     class Serializer(serializers.ModelSerializer):
-        pass
+        from rest_framework import serializers
 
     class Admin(admin.ModelAdmin):
         from django.utils.html import format_html

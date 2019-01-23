@@ -1,5 +1,4 @@
-from .user import User
-from .feature import Feature
+from authentication.models import UserRepository
 from index.base.repository import Base
 
 
@@ -8,20 +7,20 @@ class Progress(Base.TimeStumps, Base.SoftDeletion):
     rel = Base.Model.rel
 
     user = field.Foreign(
-        User,
+        UserRepository.model(),
         on_delete=rel.CASCADE,
         verbose_name="Пользователь",
         null=False,
         blank=False,
     )
 
-    feature = field.Foreign(
-        Feature,
-        on_delete=rel.CASCADE,
-        verbose_name="Фича",
-        null=False,
-        blank=False,
-    )
+    # feature = field.Foreign(
+    #     Feature,
+    #     on_delete=rel.CASCADE,
+    #     verbose_name="Фича",
+    #     null=False,
+    #     blank=False,
+    # )
 
     class Meta:
         verbose_name = 'Прогресс'

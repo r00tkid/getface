@@ -2,9 +2,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from company.base.permissions import CanManageCompany
-from company.serializers import WorkerSerializer
 from company.models import Worker, Company
-from company.base.exceptions import NotFound
 
 
 @api_view(('GET',))
@@ -13,9 +11,9 @@ def get_company_workers(request, company_id):
     query = request.GET
 
     if query.get('all') == '':
-        objects = Worker.all_objects
+        objects = Worker.model().all
     else:
-        objects = Worker.objects
+        objects = Worker.model().objects
 
     objects = objects.filter(company_id=company_id)
 
@@ -36,7 +34,7 @@ def get_company_workers(request, company_id):
     return Response(
         {
             'detail': 'Workers view',
-            'workers': WorkerSerializer(
+            'workers': Worker.serializer('extended')(
                 objects,
                 many=True,
             ).data,
@@ -47,15 +45,11 @@ def get_company_workers(request, company_id):
 @api_view(('GET',))
 # Default auth permission
 def get_user_status(request, company_id):
-    try:
-        company = Company.objects.get(pk=company_id)
-    except:
-        raise NotFound
-
+    company = Company.info(company_id, 'extended').Meta.model
     user = request.user
 
-    worker = Worker.objects.filter(user=user, company=company).first()
-    deleted = Worker.all_objects.filter(user=user, company=company).first()
+    worker = Worker.model().objects.filter(user=user, company=company).first()
+    deleted = Worker.model().all.filter(user=user, company=company).first()
 
     return Response({
         'is_owner': company.owner_id == user.id,
@@ -69,15 +63,11 @@ def get_user_status(request, company_id):
 @api_view(('GET',))
 # Default auth permission
 def get_user_worker(request, company_id):
-    try:
-        company = Company.objects.get(pk=company_id)
-    except:
-        raise NotFound
-
+    company = Company.info(company_id, 'extended').Meta.model
     user = request.user
-    worker = Worker.objects.filter(user=user, company=company).first()
+    worker = Worker.model().objects.filter(user=user, company=company).first()
 
     return Response({
         'detail': 'Your company profile' if worker else 'You are not the part of this company or not in workers',
-        'worker': WorkerSerializer(instance=worker).data if worker else None,
+        'worker': Worker.serializer('extended')(instance=worker).data if worker else None,
     }, status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION if worker else status.HTTP_403_FORBIDDEN)

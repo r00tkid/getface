@@ -8,6 +8,7 @@ from authentication.serializers import UserSerializer
 from authentication.jwt import create_token
 from company.models import Company, Worker
 from company.serializers import CompanyWithWorkersSerializer, CompanyWithOwnerSerializer
+from index.base.exceptions import UnprocessableEntity
 
 
 @api_view(
@@ -36,18 +37,18 @@ def self_info(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def sign_up(request):
-    from tech.form.autentication import Registration
-    validator = Registration(data=request.data)
+    validator = UserRepository.action('register')(data=request.data)
 
     if not validator.validate():
-        return Response({
+        raise UnprocessableEntity({
+            'detail': 'Data has invalid fields.',
             'valid': False,
             'errors': validator.errors,
-        }, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        })
 
     info = validator.data
 
-    user = UserRepository.model(**{
+    user = UserRepository.new({
         'username': info.get('username'),
         'email': info.get('email'),
         'first_name': info.get('first_name'),

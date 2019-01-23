@@ -3,26 +3,26 @@ from index.base.exceptions import NotFound
 from index import settings
 
 
-class UserRepository(Base):
+class CompanyRepository(Base):
 
     @classmethod
     def model(cls):
-        from .model import User
+        from .model import Company
 
-        return User
+        return Company
 
     @classmethod
     def admin_view(cls):
-        from .admin import User
+        from .admin import Company
 
-        return User
+        return Company
 
     @classmethod
     def actions(cls):
-        from .validator import Register, Update
+        from .validator import Create, Update
 
         return {
-            'register': Register,
+            'create': Create,
             'update': Update
         }
 
@@ -32,11 +32,11 @@ class UserRepository(Base):
 
     @classmethod
     def serializers(cls):
-        from .serializer import BaseUser, ExtendedUser
+        from .serializer import BaseCompany, ExtendedCompany
 
         return {
-            'base': BaseUser,
-            'extended': ExtendedUser,
+            'base': BaseCompany,
+            'extended': ExtendedCompany,
         }
 
     @classmethod
@@ -48,7 +48,7 @@ class UserRepository(Base):
         """
         Don't use this method directly, until some special reasons.
 
-        @param data: Data for user creation.
+        @param data: Data for company creation.
         @type data: dict
         """
         return cls.model()(**data)
@@ -58,7 +58,7 @@ class UserRepository(Base):
         obj = cls.model().objects
 
         try:
-            user = obj.get(pk=pk)
+            company = obj.get(pk=pk)
         except Exception as e:
             if api_exception:
                 raise NotFound({
@@ -71,4 +71,4 @@ class UserRepository(Base):
             else:
                 return None
 
-        return cls.serializer(name=name if name else 'base')(instance=user)
+        return cls.serializer(name=name if name else 'base')(instance=company)

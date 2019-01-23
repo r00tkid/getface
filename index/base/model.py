@@ -44,5 +44,13 @@ class SoftDeletion(Model):
     def hard_delete(self):
         super(SoftDeletion, self).delete()
 
+    def update(self, data, nullable=True):
+        if nullable:
+            [self.__setattr__(k, v) for k, v in data.items()]
+        else:
+            [self.__setattr__(k, v) for k, v in data.items() if v is not None]
+
+        self.save()
+
     class Meta:
         abstract = True

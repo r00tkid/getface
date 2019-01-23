@@ -1,5 +1,5 @@
 from django.contrib import admin
-from agenda import models
-
-admin.site.register(models.WorkerAgenda)
-admin.site.register(models.WorkerFaceTime)
+# from agenda.models import Agenda, Calendar
+#
+# admin.site.register(Agenda.model())
+# admin.site.register(Calendar.model())
