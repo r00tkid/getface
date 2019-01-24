@@ -1,7 +1,6 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-
 from tech import base
 
 
@@ -16,12 +15,12 @@ def sign_in(request):
 @api_view(['GET'])
 @permission_classes((AllowAny,))
 def sign_up(request):
-    from tech.form.autentication import Registration
-    return Response(base.get_form_fields(Registration()))
+    from authentication.models import User
+    return Response(base.get_form_fields(User.action('register')))
 
 
 @api_view(['GET'])
 @permission_classes((AllowAny,))
 def worker_sign_up(request):
-    from tech.form.autentication import WorkerRegistration
-    return Response(base.get_form_fields(WorkerRegistration))
+    from company.models import Worker
+    return Response(base.get_form_fields(Worker.action('register')))

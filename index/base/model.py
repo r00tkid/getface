@@ -4,7 +4,7 @@ from index.base import field
 
 
 class CreatedStump(Model):
-    updated_at = field.DateTime('Date record updated', auto_now=True, null=True)
+    created_at = field.DateTime('Date record created', auto_now_add=True, null=True)
 
     class Meta:
         abstract = True
@@ -43,6 +43,14 @@ class SoftDeletion(Model):
 
     def hard_delete(self):
         super(SoftDeletion, self).delete()
+
+    def update(self, data, nullable=True):
+        if nullable:
+            [self.__setattr__(k, v) for k, v in data.items()]
+        else:
+            [self.__setattr__(k, v) for k, v in data.items() if v is not None]
+
+        self.save()
 
     class Meta:
         abstract = True

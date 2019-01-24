@@ -2,19 +2,33 @@ from index.base.repository import Base
 
 
 class UserRepository(Base):
-    from .model import User as Model
-    from .admin import User as Admin
-    from .serializer import User as Basic
-    from .validator import Register, Update
 
-    model = Model
-    admin = Admin
+    @classmethod
+    def model(cls):
+        from .model import User
 
-    serializers = {
-        'base': Basic,
-    }
+        return User
 
-    forms = {
-        'register': Register,
-        'update': Update,
-    }
+    @classmethod
+    def admin_view(cls):
+        from .admin import User
+
+        return User
+
+    @classmethod
+    def actions(cls):
+        from .validator import Register, Update
+
+        return {
+            'register': Register,
+            'update': Update
+        }
+
+    @classmethod
+    def serializers(cls):
+        from .serializer import BaseUser, ExtendedUser
+
+        return {
+            'base': BaseUser,
+            'extended': ExtendedUser,
+        }

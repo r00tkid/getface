@@ -13,7 +13,7 @@ class ExtendedUser(Base.Serializer):
     last_login = serializers.SerializerMethodField()
 
     def get_last_login(self, model):
-        """@type model BaseUser"""
+        """@type model: BaseUser"""
         return model.last_login if not model.is_superuser else None
 
     class Meta:
