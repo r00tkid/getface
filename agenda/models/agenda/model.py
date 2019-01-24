@@ -9,17 +9,17 @@ class Agenda(Base.TimeStumps, Base.SoftDeletion):
     start = field.DateTime("Дата начала")
     end = field.DateTime("Дата окончания")
 
-    active = field.Integer(
+    active = field.SmallInteger(
         "Активность",
         default=0,
     )
 
-    mood = field.Integer(
+    mood = field.SmallInteger(
         "Настроение",
         default=0,
     )
 
-    fatigue = field.Integer(
+    fatigue = field.SmallInteger(
         "Усталость",
         default=0,
     )

@@ -11,7 +11,9 @@ class AgendaRepository(Base):
 
     @classmethod
     def admin_view(cls):
-        raise ToDo
+        from .admin import Agenda
+
+        return Agenda
 
     @classmethod
     def actions(cls):
@@ -19,4 +21,8 @@ class AgendaRepository(Base):
 
     @classmethod
     def serializers(cls):
-        raise ToDo
+        from .serializer import BaseAgenda
+
+        return {
+            'base': BaseAgenda,
+        }

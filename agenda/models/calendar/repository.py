@@ -11,7 +11,9 @@ class CalendarRepository(Base):
 
     @classmethod
     def admin_view(cls):
-        raise ToDo
+        from .admin import Calendar
+
+        return Calendar
 
     @classmethod
     def actions(cls):
@@ -19,4 +21,8 @@ class CalendarRepository(Base):
 
     @classmethod
     def serializers(cls):
-        raise ToDo
+        from .serializer import BaseCalendar
+
+        return {
+            'base': BaseCalendar
+        }
