@@ -9,7 +9,7 @@ from wtforms import (
     FloatField as Float,
     IntegerField as Integer,
     DateTimeField as DateTime,
-    HiddenField as Field,
+    HiddenField as Hidden,
     DateField as Date,
     DecimalField as Decimal,
     MultipleFileField as MultipleFile,

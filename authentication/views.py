@@ -3,11 +3,9 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 
-from authentication.models import UserRepository
-from authentication.serializers import UserSerializer
-from authentication.jwt import create_token
+from authentication.models import User
 from company.models import Company, Worker
-from company.serializers import CompanyWithWorkersSerializer, CompanyWithOwnerSerializer
+from authentication.jwt import create_token
 from index.base.exceptions import UnprocessableEntity
 
 
@@ -16,16 +14,24 @@ from index.base.exceptions import UnprocessableEntity
      'DELETE', 'COPY', 'LINK', 'UNLINK', 'PURGE', 'LOCK',
      'UNLOCK', 'PROPFIND', 'VIEW'])
 def self_info(request):
-    companies_owner = CompanyWithWorkersSerializer(instance=Company.objects.filter(owner=request.user), many=True)
+    companies_owner = Company.serializer('extended')(
+        instance=Company.model().objects.filter(owner=request.user),
+        many=True
+    )
 
-    as_worker = Worker.objects.filter(user=request.user).values('company_id')
-    compare = Company.objects.filter(id__in=[c.get('company_id') for c in as_worker]).filter(worker__is_fired=False)
+    as_worker = Worker.model().objects.filter(user=request.user).values('company_id')
+    compare = Company.model().objects.filter(
+        id__in=[c.get('company_id') for c in as_worker]
+    ).filter(worker__is_fired=False)
 
-    companies_worker = CompanyWithOwnerSerializer(instance=compare.filter(worker__is_manager=False), many=True)
-    companies_manager = CompanyWithOwnerSerializer(instance=compare.filter(worker__is_manager=True), many=True)
+    companies_worker = Company.serializer('extended')(instance=compare.filter(worker__is_manager=False), many=True)
+    companies_manager = Company.serializer('extended')(instance=compare.filter(worker__is_manager=True), many=True)
+
+    companies_worker.add_owner()
+    companies_manager.add_owner()
 
     return Response({
-        'user': UserSerializer(request.user).data,
+        'user': User.serializer('extended')(request.user).data,
         'companies': {
             'owner': companies_owner.data,
             'worker': companies_worker.data,
@@ -37,7 +43,7 @@ def self_info(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def sign_up(request):
-    validator = UserRepository.action('register')(data=request.data)
+    validator = User.action('register')(data=request.data)
 
     if not validator.validate():
         raise UnprocessableEntity({
@@ -48,7 +54,7 @@ def sign_up(request):
 
     info = validator.data
 
-    user = UserRepository.new({
+    user = User.new({
         'username': info.get('username'),
         'email': info.get('email'),
         'first_name': info.get('first_name'),
@@ -72,8 +78,7 @@ def sign_up(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def worker_sign_up(request):
-    from tech.form.autentication import WorkerRegistration
-    validator = WorkerRegistration(data=request.data)
+    validator = Worker.action('register')(data=request.data)
 
     if not validator.validate():
         return Response({
@@ -84,7 +89,7 @@ def worker_sign_up(request):
     data = validator.data
 
     try:
-        worker = Worker.objects.get(auth_key=data.get('uuid'))
+        worker = Worker.model().objects.get(auth_key=data.get('uuid'))
         user = worker.user
     except Exception as e:
         return Response({

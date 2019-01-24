@@ -6,7 +6,7 @@ class Feature(Base.TimeStumps, Base.SoftDeletion):
 
     name = field.Char(
         "Название",
-        max_length=512,
+        max_length=256,
         null=False,
         blank=False,
     )
@@ -14,12 +14,13 @@ class Feature(Base.TimeStumps, Base.SoftDeletion):
     link = field.Char(
         "Ссылка",
         max_length=1024,
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
     )
 
     description = field.Text(
         "Описание",
+        max_length=5000,
         null=False,
         blank=False,
     )

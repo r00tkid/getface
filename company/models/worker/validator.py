@@ -1,4 +1,40 @@
 from index.base.repository import Base
+from authentication.models import User
+from .model import Worker
+
+
+class Register(Base.Validator):
+    field = Base.Validator.field
+    valid = Base.Validator.valid
+
+    uuid = field.Hidden('Auth key [hidden]', [
+        valid.ValidationChain(
+            valid.UUID(message="Invalid or not provided secret key."),
+            valid.Exists(
+                Worker,
+                column="auth_key",
+                message="Secret key not found or expired. Make sure that you still have invitation to system."
+            ),
+        )
+    ])
+
+    username = field.String('Username', [
+        valid.Unique(User.model()),
+        valid.DataRequired(),
+        valid.Length(min=6, max=200, message="Username must bee more than 5 and less than 201 characters."),
+    ], description="Enter your username")
+
+    password = field.Password('Your password', [
+        valid.DataRequired(),
+        valid.EqualTo('password_confirmation', message="Passwords not match"),
+        valid.Length(min=6, max=100, message="Password must bee more than 5 and less than 101 characters."),
+    ])
+
+    password_confirmation = field.Password(
+        'Confirm password',
+        [valid.DataRequired()],
+        description="Confirm your password"
+    )
 
 
 class Create(Base.Validator):

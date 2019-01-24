@@ -1,4 +1,5 @@
 from index.base.repository import Base
+from authentication.models import Progress
 
 
 class User(Base.Admin):
@@ -7,11 +8,12 @@ class User(Base.Admin):
     list_display = (
         'display_full_name',
         'email',
+        'phone',
         'display_is_active',
         'display_is_staff',
         'display_is_super',
+        'display_achieves',
         'display_id',
-        'phone',
     )
 
     def display_full_name(self, obj):
@@ -62,3 +64,8 @@ class User(Base.Admin):
         return self.format_html(is_ok)
 
     display_is_active.short_description = "Актив"
+
+    def display_achieves(self, obj):
+        return Progress.model().objects.filter(user=obj)
+
+    display_achieves.short_description = "Достижений"
