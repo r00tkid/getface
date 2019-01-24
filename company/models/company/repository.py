@@ -1,6 +1,4 @@
 from index.base.repository import Base
-from index.base.exceptions import NotFound
-from index import settings
 
 
 class CompanyRepository(Base):

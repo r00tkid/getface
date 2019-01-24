@@ -3,6 +3,10 @@ from rest_framework import status
 from rest_framework.exceptions import APIException as RestException
 
 
+class ToDo(NotImplementedError):
+    pass
+
+
 class APIException(RestException):
     def __str__(self):
         if 'dict' == type(self.detail).__name__:

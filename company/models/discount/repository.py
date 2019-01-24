@@ -1,33 +1,32 @@
 from index.base.repository import Base
 
 
-class RateRepository(Base):
+class DiscountRepository(Base):
 
     @classmethod
     def model(cls):
-        from .model import Rate
+        from .model import Discount
 
-        return Rate
+        return Discount
 
     @classmethod
     def admin_view(cls):
-        from .admin import Rate
+        from .admin import Discount
 
-        return Rate
+        return Discount
 
     @classmethod
     def actions(cls):
-        from .validator import Create, Update
+        from .validator import Create
 
         return {
             'create': Create,
-            'update': Update
         }
 
     @classmethod
     def serializers(cls):
-        from .serializer import BaseRate
+        from .serializer import BaseDiscount
 
         return {
-            'base': BaseRate,
+            'base': BaseDiscount,
         }

@@ -1,9 +1,9 @@
 from index.base.repository import Base
 
+format_html = Base.Admin.format_html
+
 
 class Worker(Base.Admin):
-    format_html = Base.Admin.format_html
-
     list_display = ('display_full_name', 'display_email', 'display_auth_key',
                     'display_is_active', 'display_id', 'auth_key')
 
@@ -29,7 +29,7 @@ class Worker(Base.Admin):
             if obj.user.is_superuser:
                 full += " <span class='label label-primary'>%s</span>" % "Администратор"
 
-        return self.format_html(full)
+        return format_html(full)
 
     display_full_name.short_description = "ФИО"
 
@@ -40,11 +40,11 @@ class Worker(Base.Admin):
 
     def display_auth_key(self, obj):
         if obj.auth_key:
-            return self.format_html(
+            return format_html(
                 "<span class='glyphicon glyphicon-remove' style='color: #922;'></span>"
             )
         else:
-            return self.format_html(
+            return format_html(
                 "<span class='glyphicon glyphicon-ok' style='color: #262;'></span>"
             )
 
@@ -52,11 +52,11 @@ class Worker(Base.Admin):
 
     def display_is_active(self, obj):
         if obj.user and obj.user.is_active:
-            return self.format_html(
+            return format_html(
                 "<span class='glyphicon glyphicon-ok' style='color: #262;'></span>"
             )
         else:
-            return self.format_html(
+            return format_html(
                 "<span class='glyphicon glyphicon-remove' style='color: #922;'></span>"
             )
 

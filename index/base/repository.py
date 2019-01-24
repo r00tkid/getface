@@ -47,7 +47,7 @@ class Base(object):
         return cls.actions()[name]
 
     @classmethod
-    def serializer(cls, name):
+    def serializer(cls, name='base'):
         return cls.serializers()[name]
 
     @classmethod
@@ -61,7 +61,7 @@ class Base(object):
         return cls.model()(**data)
 
     @classmethod
-    def info(cls, pk, name=None, api_exception=True):
+    def info(cls, pk, name='base', api_exception=True):
         obj = cls.model().objects
 
         try:
@@ -78,4 +78,4 @@ class Base(object):
             else:
                 return None
 
-        return cls.serializer(name=name if name else 'base')(instance=model)
+        return cls.serializer(name)(instance=model)

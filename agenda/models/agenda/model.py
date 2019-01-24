@@ -19,6 +19,11 @@ class Agenda(Base.TimeStumps, Base.SoftDeletion):
         default=0,
     )
 
+    fatigue = field.Integer(
+        "Усталость",
+        default=0,
+    )
+
     worker = field.Foreign(
         Worker.model(),
         verbose_name="Работник",

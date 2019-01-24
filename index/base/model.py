@@ -4,7 +4,7 @@ from index.base import field
 
 
 class CreatedStump(Model):
-    updated_at = field.DateTime('Date record updated', auto_now=True, null=True)
+    created_at = field.DateTime('Date record created', auto_now_add=True, null=True)
 
     class Meta:
         abstract = True
