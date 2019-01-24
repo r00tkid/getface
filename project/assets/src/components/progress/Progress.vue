@@ -41,7 +41,7 @@ export default {
 .timeProgressBar{
     width: 100%;
     height: 10px;
-    background-color: #5ae08f;
+    background-color: #d4d4d4;
     border-radius: 5px;
     display: flex;
     overflow: hidden;
@@ -81,7 +81,6 @@ export default {
 }
 .missed{
     background-color: #fa6d6e;
-    border-radius: 10px;
 }
 </style>
 
