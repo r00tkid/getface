@@ -17,7 +17,7 @@ class SimpleMiddleware:
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "GET, OPTIONS, POST, DELETE, PUT, PURGE",
                     "Access-Control-Allow-Headers": "Content-type, Authorization, X-Requested-With, X-XSRF-TOKEN",
-                    # "Access-Control-Allow-Credentials": True,
+                    "Access-Control-Allow-Credentials": True,
                     "Access-Control-Max-Age": 10000,
                 })
 
