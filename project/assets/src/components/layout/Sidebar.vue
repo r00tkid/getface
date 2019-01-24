@@ -1,7 +1,7 @@
 <template>
     <v-navigation-drawer
             class="kill-sidebar"
-            mini-variant="true"
+            mini-variant
             v-model="drawer"
             height="400px"
             absolute
