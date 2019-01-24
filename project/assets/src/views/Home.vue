@@ -15,7 +15,7 @@
         <v-layout row wrap justify-start>
           <v-flex xs12>
               <v-layout align-content-start column>
-                  <v-flex>
+                  <v-flex xs12>
                     <time-table></time-table>
                   </v-flex>
                   <v-flex style="text-align: left;">
@@ -278,7 +278,7 @@ export default {
   })
 };
 </script>
-<style scope>
+<style scoped>
 .purpleText {
   color: #a841ba;
 }
@@ -310,7 +310,7 @@ export default {
 }
 .chartBox {
   max-width: 50%;
-  margin-left: 15px;
+  padding-left: 15px;
 }
 #line-chart {
   width: 250px !important;

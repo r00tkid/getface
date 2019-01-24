@@ -88,135 +88,65 @@
           <td class="mainCell">2</td>
           <td class="mainCell">2/16</td>
           <td class="mainCell">+20ч : 30 м</td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime notCome">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime "></div>
+            <div class="goneTime "></div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="checkbox">
-          </td>
-          <td class="nameCell">Баренцев Владимир</td>
-          <td class="mainCell">Ст. Официант</td>
-          <td class="mainCell">2</td>
-          <td class="mainCell">2/16</td>
-          <td class="mainCell">+20ч : 30 м</td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
         </tr>
         <tr>
@@ -228,65 +158,135 @@
           <td class="mainCell">2</td>
           <td class="mainCell">2/16</td>
           <td class="mainCell">+20ч : 30 м</td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime notCome">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+        </tr>
+        <tr>
           <td>
-            <div>9:00</div>
-            <div>18:00</div>
+            <input type="checkbox">
+          </td>
+          <td class="nameCell">Баренцев Владимир</td>
+          <td class="mainCell">Ст. Официант</td>
+          <td class="mainCell">2</td>
+          <td class="mainCell">2/16</td>
+          <td class="mainCell">+20ч : 30 м</td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime notCome">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime "></div>
+            <div class="goneTime "></div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
         </tr>
       </tbody>
@@ -305,135 +305,65 @@
           <td class="mainCell">2</td>
           <td class="mainCell">2/16</td>
           <td class="mainCell">+20ч : 30 м</td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime notCome">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime "></div>
+            <div class="goneTime "></div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="checkbox">
-          </td>
-          <td class="nameCell">Баренцев Владимир</td>
-          <td class="mainCell">Ст. Официант</td>
-          <td class="mainCell">2</td>
-          <td class="mainCell">2/16</td>
-          <td class="mainCell">+20ч : 30 м</td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
         </tr>
         <tr>
@@ -445,65 +375,135 @@
           <td class="mainCell">2</td>
           <td class="mainCell">2/16</td>
           <td class="mainCell">+20ч : 30 м</td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime notCome">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+        </tr>
+        <tr>
           <td>
-            <div>9:00</div>
-            <div>18:00</div>
+            <input type="checkbox">
+          </td>
+          <td class="nameCell">Баренцев Владимир</td>
+          <td class="mainCell">Ст. Официант</td>
+          <td class="mainCell">2</td>
+          <td class="mainCell">2/16</td>
+          <td class="mainCell">+20ч : 30 м</td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime notCome">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime "></div>
+            <div class="goneTime "></div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
         </tr>
       </tbody>
@@ -522,135 +522,65 @@
           <td class="mainCell">2</td>
           <td class="mainCell">2/16</td>
           <td class="mainCell">+20ч : 30 м</td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime notCome">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime "></div>
+            <div class="goneTime "></div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="checkbox">
-          </td>
-          <td class="nameCell">Баренцев Владимир</td>
-          <td class="mainCell">Ст. Официант</td>
-          <td class="mainCell">2</td>
-          <td class="mainCell">2/16</td>
-          <td class="mainCell">+20ч : 30 м</td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
-          </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
         </tr>
         <tr>
@@ -662,65 +592,135 @@
           <td class="mainCell">2</td>
           <td class="mainCell">2/16</td>
           <td class="mainCell">+20ч : 30 м</td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime notCome">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
-          <td>
-            <div>9:00</div>
-            <div>18:00</div>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+        </tr>
+        <tr>
           <td>
-            <div>9:00</div>
-            <div>18:00</div>
+            <input type="checkbox">
+          </td>
+          <td class="nameCell">Баренцев Владимир</td>
+          <td class="mainCell">Ст. Официант</td>
+          <td class="mainCell">2</td>
+          <td class="mainCell">2/16</td>
+          <td class="mainCell">+20ч : 30 м</td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime notCome">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime "></div>
+            <div class="goneTime "></div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
+          </td>
+          <td class="calendarTD">
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
         </tr>
       </tbody>
@@ -794,7 +794,22 @@ table {
   border-width: 5px 2.5px 0 2.5px;
   border-color: #ffffff transparent transparent transparent;
 }
-.tableContainer::-webkit-scrollbar { width: 5px; height: 5px;}
+.come{
+  background-color: #5adf8e;
+}
+.notCome{
+  background-color: #fa6d74;
+}
+.calendarTD{
+  padding: 0;
+  color: #fff;
+  min-width: 45px;
+  min-height: 45px;
+}
+.calendarTD div{
+  padding: 1px 3px;
+}
+.tableContainer::-webkit-scrollbar { width: 7px; height: 7px;}
 .tableContainer::-webkit-scrollbar-button {  display: none; }
 .tableContainer::-webkit-scrollbar-track {  background-color: #969696;}
 .tableContainer::-webkit-scrollbar-track-piece { background-color: #d4d4d4;}
