@@ -49,6 +49,11 @@ const router = new Router({
                     path: '/calendar',
                     name: 'calendar',
                     component: () => import('../views/Calendar')
+                },
+                {
+                    path: '/employee',
+                    name: 'employee',
+                    component: () => import('../views/Employee')
                 }
             ]
         },

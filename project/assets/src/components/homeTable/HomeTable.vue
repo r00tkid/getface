@@ -83,7 +83,21 @@
           <td>
             <input type="checkbox">
           </td>
-          <td class="nameCell">Баренцев Владимир</td>
+          <td class="nameCell">
+            <div>
+              <span class="staffName">Баренцев Владимир</span>
+              <div>
+                <span class="rewards">
+                  <v-icon>star</v-icon>
+                </span>
+                <router-link :to="'employee'">
+                  <span class="linkProfile">
+                    <v-icon>account_circle</v-icon>
+                  </span>
+                </router-link>
+              </div>
+            </div>
+          </td>
           <td class="mainCell">Ст. Официант</td>
           <td class="mainCell">2</td>
           <td class="mainCell">2/16</td>
@@ -101,8 +115,8 @@
             <div class="goneTime come">18:00</div>
           </td>
           <td class="calendarTD">
-            <div class="comingTime "></div>
-            <div class="goneTime "></div>
+            <div class="comingTime"></div>
+            <div class="goneTime"></div>
           </td>
           <td class="calendarTD">
             <div class="comingTime come">9:00</div>
@@ -153,7 +167,21 @@
           <td>
             <input type="checkbox">
           </td>
-          <td class="nameCell">Баренцев Владимир</td>
+          <td class="nameCell">
+            <div>
+              <span class="staffName">Баренцев Владимир</span>
+              <div>
+                <span class="rewards">
+                  <v-icon>star</v-icon>
+                </span>
+                <router-link :to="'employee'">
+                  <span class="linkProfile">
+                    <v-icon>account_circle</v-icon>
+                  </span>
+                </router-link>
+              </div>
+            </div>
+          </td>
           <td class="mainCell">Ст. Официант</td>
           <td class="mainCell">2</td>
           <td class="mainCell">2/16</td>
@@ -171,8 +199,8 @@
             <div class="goneTime come">18:00</div>
           </td>
           <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
+            <div class="comingTime"></div>
+            <div class="goneTime"></div>
           </td>
           <td class="calendarTD">
             <div class="comingTime come">9:00</div>
@@ -223,7 +251,21 @@
           <td>
             <input type="checkbox">
           </td>
-          <td class="nameCell">Баренцев Владимир</td>
+          <td class="nameCell">
+            <div>
+              <span class="staffName">Баренцев Владимир</span>
+              <div>
+                <span class="rewards">
+                  <v-icon>star</v-icon>
+                </span>
+                <router-link :to="'employee'">
+                  <span class="linkProfile">
+                    <v-icon>account_circle</v-icon>
+                  </span>
+                </router-link>
+              </div>
+            </div>
+          </td>
           <td class="mainCell">Ст. Официант</td>
           <td class="mainCell">2</td>
           <td class="mainCell">2/16</td>
@@ -241,8 +283,8 @@
             <div class="goneTime come">18:00</div>
           </td>
           <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
+            <div class="comingTime"></div>
+            <div class="goneTime"></div>
           </td>
           <td class="calendarTD">
             <div class="comingTime come">9:00</div>
@@ -257,8 +299,8 @@
             <div class="goneTime come">18:00</div>
           </td>
           <td class="calendarTD">
-            <div class="comingTime "></div>
-            <div class="goneTime "></div>
+            <div class="comingTime come">9:00</div>
+            <div class="goneTime come">18:00</div>
           </td>
           <td class="calendarTD">
             <div class="comingTime come">9:00</div>
@@ -300,7 +342,21 @@
           <td>
             <input type="checkbox">
           </td>
-          <td class="nameCell">Баренцев Владимир</td>
+          <td class="nameCell">
+            <div>
+              <span class="staffName">Баренцев Владимир</span>
+              <div>
+                <span class="rewards">
+                  <v-icon>star</v-icon>
+                </span>
+                <router-link :to="'employee'">
+                  <span class="linkProfile">
+                    <v-icon>account_circle</v-icon>
+                  </span>
+                </router-link>
+              </div>
+            </div>
+          </td>
           <td class="mainCell">Ст. Официант</td>
           <td class="mainCell">2</td>
           <td class="mainCell">2/16</td>
@@ -318,8 +374,8 @@
             <div class="goneTime come">18:00</div>
           </td>
           <td class="calendarTD">
-            <div class="comingTime "></div>
-            <div class="goneTime "></div>
+            <div class="comingTime"></div>
+            <div class="goneTime"></div>
           </td>
           <td class="calendarTD">
             <div class="comingTime come">9:00</div>
@@ -370,7 +426,21 @@
           <td>
             <input type="checkbox">
           </td>
-          <td class="nameCell">Баренцев Владимир</td>
+          <td class="nameCell">
+            <div>
+              <span class="staffName">Баренцев Владимир</span>
+              <div>
+                <span class="rewards">
+                  <v-icon>star</v-icon>
+                </span>
+                <router-link :to="'employee'">
+                  <span class="linkProfile">
+                    <v-icon>account_circle</v-icon>
+                  </span>
+                </router-link>
+              </div>
+            </div>
+          </td>
           <td class="mainCell">Ст. Официант</td>
           <td class="mainCell">2</td>
           <td class="mainCell">2/16</td>
@@ -388,8 +458,8 @@
             <div class="goneTime come">18:00</div>
           </td>
           <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
+            <div class="comingTime"></div>
+            <div class="goneTime"></div>
           </td>
           <td class="calendarTD">
             <div class="comingTime come">9:00</div>
@@ -440,7 +510,21 @@
           <td>
             <input type="checkbox">
           </td>
-          <td class="nameCell">Баренцев Владимир</td>
+          <td class="nameCell">
+            <div>
+              <span class="staffName">Баренцев Владимир</span>
+              <div>
+                <span class="rewards">
+                  <v-icon>star</v-icon>
+                </span>
+                <router-link :to="'employee'">
+                  <span class="linkProfile">
+                    <v-icon>account_circle</v-icon>
+                  </span>
+                </router-link>
+              </div>
+            </div>
+          </td>
           <td class="mainCell">Ст. Официант</td>
           <td class="mainCell">2</td>
           <td class="mainCell">2/16</td>
@@ -458,24 +542,8 @@
             <div class="goneTime come">18:00</div>
           </td>
           <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime "></div>
-            <div class="goneTime "></div>
+            <div class="comingTime"></div>
+            <div class="goneTime"></div>
           </td>
           <td class="calendarTD">
             <div class="comingTime come">9:00</div>
@@ -492,207 +560,6 @@
           <td class="calendarTD">
             <div class="comingTime come">9:00</div>
             <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-        </tr>
-      </tbody>
-      <tbody>
-        <tr>
-          <td @click="hideGroup" class="tableSeparator" colspan="999" style="text-align: left;">
-            <span class="separatorText">Горячий цех</span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="checkbox">
-          </td>
-          <td class="nameCell">Баренцев Владимир</td>
-          <td class="mainCell">Ст. Официант</td>
-          <td class="mainCell">2</td>
-          <td class="mainCell">2/16</td>
-          <td class="mainCell">+20ч : 30 м</td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime notCome">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime "></div>
-            <div class="goneTime "></div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="checkbox">
-          </td>
-          <td class="nameCell">Баренцев Владимир</td>
-          <td class="mainCell">Ст. Официант</td>
-          <td class="mainCell">2</td>
-          <td class="mainCell">2/16</td>
-          <td class="mainCell">+20ч : 30 м</td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime notCome">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="checkbox">
-          </td>
-          <td class="nameCell">Баренцев Владимир</td>
-          <td class="mainCell">Ст. Официант</td>
-          <td class="mainCell">2</td>
-          <td class="mainCell">2/16</td>
-          <td class="mainCell">+20ч : 30 м</td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime notCome">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime come">9:00</div>
-            <div class="goneTime come">18:00</div>
-          </td>
-          <td class="calendarTD">
-            <div class="comingTime "></div>
-            <div class="goneTime "></div>
           </td>
           <td class="calendarTD">
             <div class="comingTime come">9:00</div>
@@ -751,15 +618,33 @@ export default {
 };
 </script>
 <style scoped>
-.tableContainer{
-    overflow: auto;
-    max-height: 500px;
+table a{
+  color: #fff;
 }
-.nameCell{
-    min-width: 250px;
+.tableContainer {
+  overflow: auto;
+  max-height: 500px;
 }
-.mainCell{
-    min-width: 150px;
+.nameCell {
+  min-width: 250px;
+}
+.nameCell div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.linkProfile {
+  padding: 3px;
+  border-left: 1px solid #d4d4d4;
+  cursor: pointer;
+}
+.rewards i{
+  font-size: 16px;
+  color: #fbbd21;
+  margin-right: 2px;
+}
+.mainCell {
+  min-width: 150px;
 }
 th,
 td {
@@ -794,28 +679,45 @@ table {
   border-width: 5px 2.5px 0 2.5px;
   border-color: #ffffff transparent transparent transparent;
 }
-.come{
+.come {
   background-color: #5adf8e;
 }
-.notCome{
+.notCome {
   background-color: #fa6d74;
 }
-.calendarTD{
+.calendarTD {
   padding: 0;
   color: #fff;
   min-width: 45px;
   min-height: 45px;
 }
-.calendarTD div{
+.calendarTD div {
   padding: 1px 3px;
 }
-.tableContainer::-webkit-scrollbar { width: 7px; height: 7px;}
-.tableContainer::-webkit-scrollbar-button {  display: none; }
-.tableContainer::-webkit-scrollbar-track {  background-color: #969696;}
-.tableContainer::-webkit-scrollbar-track-piece { background-color: #d4d4d4;}
-.tableContainer::-webkit-scrollbar-thumb { height: 50px; background-color: #969696; border-radius: 3px;}
-.tableContainer::-webkit-scrollbar-corner { display: none;}
-.tableContainer::-webkit-resizer { background-color: #969696;}
+.tableContainer::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+.tableContainer::-webkit-scrollbar-button {
+  display: none;
+}
+.tableContainer::-webkit-scrollbar-track {
+  background-color: #969696;
+}
+.tableContainer::-webkit-scrollbar-track-piece {
+  background-color: #d4d4d4;
+}
+.tableContainer::-webkit-scrollbar-thumb {
+  height: 50px;
+  background-color: #969696;
+  border-radius: 3px;
+}
+.tableContainer::-webkit-scrollbar-corner {
+  display: none;
+}
+.tableContainer::-webkit-resizer {
+  background-color: #969696;
+}
 </style>
 
 
