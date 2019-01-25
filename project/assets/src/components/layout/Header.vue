@@ -35,7 +35,7 @@
         </v-icon>
         <v-spacer></v-spacer>
         <v-btn large outline color="grey">12 Дней</v-btn>
-        <v-btn large color="purple lighten-1 white--text">Оплатить</v-btn>
+        <v-btn large class="primary white--text">Оплатить</v-btn>
         <v-spacer></v-spacer>
 
         <v-badge left class="mr-5">

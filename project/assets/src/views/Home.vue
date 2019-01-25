@@ -1,7 +1,7 @@
 <template>
     <v-container grid-list-md text-xs-center fluid class="home-wrap">
         <v-layout row wrap justify-end>
-            <v-flex xs6 d-flex>
+            <v-flex lg6 xs12 d-flex>
                 <v-btn outline color="grey">23 янв 2019</v-btn>
                 <v-btn outline color="grey">23 фев 2019</v-btn>
 
@@ -12,7 +12,7 @@
             </v-flex>
         </v-layout>
         <v-layout row wrap justify-start>
-            <v-flex xs6>
+            <v-flex lg6 xs12>
                 <v-layout row wrap justify-start>
                         <v-flex xs12 d-flex>
                             <table class="timeTable">
@@ -65,11 +65,11 @@
                         </table>
                         <div class="timeTableControl">
                             <div class="timeTableControl-arrows">
-                                <v-btn icon outline color="purple">&#60;</v-btn>
-                                <v-btn icon outline color="purple">&#62;</v-btn>
+                                <v-btn icon outline color="purple purple--text">&#60;</v-btn>
+                                <v-btn icon outline color="purple purple--text">&#62;</v-btn>
                             </div>
                             <div class="timeTableControl-buttons">
-                                <v-btn color="purple lighten-1 white--text">Показать все</v-btn>
+                                <v-btn color="primary lighten-1 white--text">Показать все</v-btn>
                                 <v-btn outline color="grey">Добавить время</v-btn>
                             </div>
                         </div>
@@ -79,9 +79,9 @@
                         </v-flex>
                 </v-layout>
             </v-flex>
-            <v-flex xs6>
+            <v-flex lg6 xs12>
                 <v-layout>
-                    <v-flex xs2>
+                    <v-flex lg2 xs12>
                         <v-card class="kill-card mt-3" dense>
                             <v-layout row justify-center>
                                 <v-flex xs12>
@@ -122,7 +122,7 @@
                             </v-card-actions>
                         </v-card>
                     </v-flex>
-                    <v-flex xs10>
+                    <v-flex lg10 xs12>
                         <!--Graphs-->
                         <div class="charts">
                             <div class="chartBox">
@@ -194,8 +194,8 @@
                     <v-icon color="purple">settings</v-icon>
                 </v-chip>
 
-                <v-btn color="purple lighten-1 white--text">Отправить ссылку на Face ID</v-btn>
-                <v-btn color="purple lighten-1 white--text">Отправить График</v-btn>
+                <v-btn class="primary lighten-1 white--text">Отправить ссылку на Face ID</v-btn>
+                <v-btn class="primary lighten-1 white--text">Отправить График</v-btn>
 
             </v-flex>
         </v-layout>
@@ -321,7 +321,7 @@
 </script>
 <style scope>
     .purpleText{
-        color: #a841ba;
+        color: #7d6df2;
     }
     .main-field {
         background-color: #fff;

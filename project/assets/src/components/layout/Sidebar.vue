@@ -104,6 +104,6 @@
     }
 
     .primary--text.v-list__tile--active {
-        color: purple !important;
+        color: #7d6df2!important;
     }
 </style>

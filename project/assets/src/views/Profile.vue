@@ -20,7 +20,7 @@
             </v-flex>
             <v-spacer></v-spacer>
             <v-flex class="d-flex width-limiter">
-                <v-btn large color="purple white--text">
+                <v-btn large color="primary white--text">
                     <v-icon left dark>add_circle</v-icon>
                     Добавить сотрудника
                 </v-btn>
@@ -48,14 +48,13 @@
                 </v-chip>
 
                 <v-btn outline color="grey">Создать зону видимости</v-btn>
-                <v-btn color="purple lighten-1 white--text">Отправить логин и пароль</v-btn>
+                <v-btn class="primary white--text">Отправить логин и пароль</v-btn>
             </v-flex>
-            <v-spacer></v-spacer>
             <v-flex>
                 <v-btn outline color="grey">Выгрузить в Excel</v-btn>
             </v-flex>
             <v-flex class="d-flex justify-end width-limiter">
-                <v-btn color="purple lighten-1 white--text">Активные</v-btn>
+                <v-btn color="primary lighten-1 white--text">Активные</v-btn>
                 <v-btn color="error lighten-1">Уволенные</v-btn>
             </v-flex>
         </v-layout>
