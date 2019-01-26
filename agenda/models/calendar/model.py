@@ -1,3 +1,4 @@
+import datetime
 from index.base.repository import Base
 from company.models import Worker
 
@@ -6,8 +7,8 @@ class Calendar(Base.TimeStumps, Base.SoftDeletion):
     field = Base.Model.field
     rel = Base.Model.rel
 
-    start = field.DateTime("Дата начала")
-    end = field.DateTime("Дата окончания")
+    start = field.DateTime("Дата начала")  # type: datetime.datetime
+    end = field.DateTime("Дата окончания")  # type: datetime.datetime
 
     is_wanted = field.NullBoolean(
         "Хочет работать",
@@ -18,7 +19,7 @@ class Calendar(Base.TimeStumps, Base.SoftDeletion):
         Worker.model(),
         verbose_name="Работник",
         on_delete=rel.CASCADE,
-    )
+    )  # type: Worker.model()
 
     def __str__(self):
         u = self.worker

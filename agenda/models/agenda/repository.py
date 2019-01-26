@@ -17,7 +17,11 @@ class AgendaRepository(Base):
 
     @classmethod
     def actions(cls):
-        raise ToDo
+        from .validator import Create
+
+        return {
+            'create': Create,
+        }
 
     @classmethod
     def serializers(cls):
