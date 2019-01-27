@@ -81,7 +81,7 @@ export default {
 }
 .missed{
     background-color: #fa6d6e;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 </style>
 
