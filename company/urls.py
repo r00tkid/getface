@@ -1,7 +1,7 @@
 from django.urls import path
-from company.company.actions import CompanyActions
-from company.company import workers
-from company.worker.actions import WorkerActions
+from company.views.company.crud import CompanyActions
+from company.views.company import workers
+from company.views.worker.crud import WorkerActions
 
 urlpatterns = [
     # Companies

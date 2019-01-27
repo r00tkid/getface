@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 APPEND_SLASH = False
-# SILENCED_SYSTEM_CHECKS = ['urls.W002']
+# SILENCED_SYSTEM_CHECKS = ['models.E006']
 # urls.W002 - if APPEND_SLASH in True silence warnings for routes without slashes
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -156,6 +156,7 @@ JWT_AUTH = {
 
 MIDDLEWARE = [
     'index.middleware.SimpleMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -222,7 +223,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 

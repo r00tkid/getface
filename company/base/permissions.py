@@ -13,11 +13,11 @@ class CanManageCompany(IsAuthenticated):
 
         if 'POST' != request.method or data.get('company_id', False):
             try:
-                company = Company.objects.get(pk=data.get('company_id'))
+                company = Company.model().objects.get(pk=data.get('company_id'))
             except:
                 raise exceptions.CompanyNotFound("Company with id:[%s] not found." % data.get('company_id'))
 
-            manager = Worker.objects.filter(user=user, company_id=data.get('company_id')).first()
+            manager = Worker.model().objects.filter(user=user, company_id=data.get('company_id')).first()
 
             is_owner = user.id == company.owner_id
             is_manager = manager and manager.is_manager and not manager.is_fired
@@ -40,7 +40,7 @@ class CanManageWorkers(CanManageCompany):
                 raise exceptions.NotFound
 
             try:
-                Worker.objects.get(pk=data.get('worker_id'), company_id=data.get('company_id'))
+                Worker.model().objects.get(pk=data.get('worker_id'), company_id=data.get('company_id'))
             except:
                 raise exceptions.WorkerNotFound("Worker with id:[%s] not found." % data.get('worker_id'))
 
@@ -49,7 +49,7 @@ class CanManageWorkers(CanManageCompany):
                 raise exceptions.NotFound
 
             try:
-                Worker.all_objects.get(pk=data.get('worker_id'), company_id=data.get('company_id'))
+                Worker.model().all_objects.get(pk=data.get('worker_id'), company_id=data.get('company_id'))
             except:
                 raise exceptions.WorkerNotFound("Worker with id:[%s] not found." % data.get('worker_id'))
 

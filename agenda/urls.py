@@ -1,7 +1,8 @@
 from django.urls import path
-from agenda.views import agenda, face
+from agenda.views.agenda.crud import AgendaActions
+from agenda.views.calendar.crud import CalendarActions
 
 urlpatterns = [
-    path('/agenda', agenda.AgendaActions.as_view()),
-    path('/time', face.FaceTimeActions.as_view()),
+    path('/agenda', AgendaActions.as_view()),
+    path('/time', CalendarActions.as_view()),
 ]
