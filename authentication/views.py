@@ -22,16 +22,25 @@ def self_info(request):
     as_worker = Worker.model().objects.filter(user=request.user).values('company_id')
     compare = Company.model().objects.filter(
         id__in=[c.get('company_id') for c in as_worker]
-    ).filter(worker__is_fired=False)
+    ).filter(worker__is_fired=False).distinct()
 
-    companies_worker = Company.serializer('extended')(instance=compare.filter(worker__is_manager=False), many=True)
-    companies_manager = Company.serializer('extended')(instance=compare.filter(worker__is_manager=True), many=True)
+    companies_worker = Company.serializer('extended')(
+        instance=compare.filter(worker__is_manager=False),
+        many=True,
+    )
+
+    companies_manager = Company.serializer('extended')(
+        instance=compare.filter(worker__is_manager=True),
+        many=True,
+    )
 
     companies_worker.add_owner()
+    companies_worker.add_worker_info(user=request.user, field_name='me')
     companies_manager.add_owner()
+    companies_manager.add_worker_info(user=request.user, field_name='me')
 
     return Response({
-        'user': User.serializer('extended')(request.user).data,
+        'user': User.serializer('extended')(instance=request.user).data,
         'companies': {
             'owner': companies_owner.data,
             'worker': companies_worker.data,

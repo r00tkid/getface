@@ -27,7 +27,7 @@ class WorkerActions(APIView):
 
             return Response({
                 'detail': 'Worker with current mail already exists in your company',
-                'worker': Worker.serializer('base')(instance=worker).data,
+                'worker': Worker.serializer()(instance=worker).data,
             }, status=status.HTTP_207_MULTI_STATUS)
         except:
             pass

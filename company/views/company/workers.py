@@ -45,7 +45,7 @@ def get_company_workers(request, company_id):
 @api_view(('GET',))
 # Default auth permission
 def get_user_status(request, company_id):
-    company = Company.info(company_id, 'extended').Meta.model
+    company = Company.info(company_id, 'extended').instance
     user = request.user
 
     worker = Worker.model().objects.filter(user=user, company=company).first()

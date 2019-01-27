@@ -8,7 +8,6 @@ from wtforms.validators import (
     EqualTo,
     IPAddress,
     Length,
-    NumberRange,
     Regexp,
     URL,
     AnyOf,
@@ -163,3 +162,29 @@ class UUID(object):
             uuid.UUID(field.data)
         except:
             raise ValidationError(message)
+
+
+class NumberRange(object):
+    def __init__(self, min=None, max=None, message=None):
+        self.min = min
+        self.max = max
+        self.message = message
+
+    def __call__(self, form, field):
+        try:
+            data = int(field.data)
+        except:
+            raise ValidationError("Field must be a number.")
+
+        if data is None or (self.min is not None and data < self.min) or \
+                (self.max is not None and data > self.max):
+            message = self.message
+            if message is None:
+                if self.max is None:
+                    message = field.gettext('Number must be at least %(min)s.')
+                elif self.min is None:
+                    message = field.gettext('Number must be at most %(max)s.')
+                else:
+                    message = field.gettext('Number must be between %(min)s and %(max)s.')
+
+            raise ValidationError(message % dict(min=self.min, max=self.max))

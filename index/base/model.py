@@ -6,12 +6,28 @@ from index.base import field
 class CreatedStump(Model):
     created_at = field.DateTime('Date record created', auto_now_add=True, null=True)
 
+    def update(self, data, nullable=True):
+        if nullable:
+            [self.__setattr__(k, v) for k, v in data.items()]
+        else:
+            [self.__setattr__(k, v) for k, v in data.items() if v is not None]
+
+        self.save(force_update=True)
+
     class Meta:
         abstract = True
 
 
 class UpdatedStump(Model):
     updated_at = field.DateTime('Date record updated', auto_now=True, null=True)
+
+    def update(self, data, nullable=True):
+        if nullable:
+            [self.__setattr__(k, v) for k, v in data.items()]
+        else:
+            [self.__setattr__(k, v) for k, v in data.items() if v is not None]
+
+        self.save(force_update=True)
 
     class Meta:
         abstract = True
@@ -50,7 +66,7 @@ class SoftDeletion(Model):
         else:
             [self.__setattr__(k, v) for k, v in data.items() if v is not None]
 
-        self.save()
+        self.save(force_update=True)
 
     class Meta:
         abstract = True

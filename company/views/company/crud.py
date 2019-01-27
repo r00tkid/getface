@@ -24,7 +24,7 @@ class CompanyActions(APIView):
 
         return Response(data={
             'detail': 'Company has been created',
-            'company': Company.serializer('base')(instance=company).data,
+            'company': Company.serializer()(instance=company).data,
         }, status=status.HTTP_201_CREATED)
 
     def get(self, request, company_id):
@@ -40,8 +40,7 @@ class CompanyActions(APIView):
         })
 
     def put(self, request, company_id):
-        from tech.form.company import UpdateCompany
-        validator = UpdateCompany(data=request.data)
+        validator = Company.serializer()(data=request.data)
 
         if not validator.validate():
             return Response({
@@ -49,7 +48,8 @@ class CompanyActions(APIView):
                 'errors': validator.errors,
             }, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-        company = Company.model().objects.get(pk=company_id).update(validator.data, nullable=False)
+        company = Company.model().objects.get(pk=company_id)
+        company.update(validator.data, nullable=False)
         info = Company.serializer('extended')(instance=company)
 
         info.add_owner()

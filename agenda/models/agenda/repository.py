@@ -1,5 +1,4 @@
 from index.base.repository import Base
-from index.base.exceptions import ToDo
 
 
 class AgendaRepository(Base):
@@ -17,10 +16,11 @@ class AgendaRepository(Base):
 
     @classmethod
     def actions(cls):
-        from .validator import Create
+        from .validator import Create, Update
 
         return {
             'create': Create,
+            'update': Update,
         }
 
     @classmethod
