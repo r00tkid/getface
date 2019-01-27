@@ -66,7 +66,6 @@ const router = new Router({
 });
 
 
-
 /**
  * Sort of auth gate for routes
  */

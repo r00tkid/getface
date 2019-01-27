@@ -96,7 +96,7 @@
                                         </v-flex>
                                         <v-flex xs12 d-flex>
                                             <v-btn @click.prevent="e1=2" :disabled="!step1Valid"
-                                                   color="purple lighten-2" class="white--text"
+                                                   color="primary lighten-2" class="white--text"
                                             >
                                                 ДАЛЕЕ
                                             </v-btn>
@@ -167,7 +167,7 @@
                                                 НАЗАД
                                             </v-btn>
                                             <v-btn @click.prevent="registerUser" :disabled="!step2Valid"
-                                                   color="purple lighten-2" class="white--text"
+                                                   color="primary lighten-2" class="white--text"
                                             >
                                                 ЗАРЕГИСТРИРОВАТЬСЯ
                                             </v-btn>
@@ -239,7 +239,7 @@
                                                 Пропустить
                                             </v-btn>
                                             <v-btn @click.prevent="registerCompany" :disabled="!step3Valid"
-                                                   color="purple lighten-2" class="white--text"
+                                                   color="primary lighten-2" class="white--text"
                                             >
                                                 ДОБАВИТЬ
                                             </v-btn>
@@ -312,13 +312,13 @@
                 ],
                 step3NameRule: [
                     v => !!v || 'Обязательное поле',
-                    v =>  v.length >= 3 || 'Название слишком короткое'
+                    v => v.length >= 3 || 'Название слишком короткое'
                 ],
                 step3PhoneRule: [
-                    v => (v.length == 0 || v.length >= 6 ) || 'Телефон слишком короткий'
+                    v => (v.length == 0 || v.length >= 6) || 'Телефон слишком короткий'
                 ],
                 step3AdressRule: [
-                    v => (v.length == 0 || v.length >= 5 ) || 'Адресс слишком короткий'
+                    v => (v.length == 0 || v.length >= 5) || 'Адресс слишком короткий'
                 ],
                 step3EmailRule: [
                     v => !!v || 'Обязательное поле',

@@ -48,17 +48,17 @@
         <v-spacer></v-spacer>
 
 
-            <v-list>
-                <v-list-tile @click="logout">
-                    <v-list-tile-action>
-                        <v-icon>logout</v-icon>
-                    </v-list-tile-action>
+        <v-list>
+            <v-list-tile @click="logout">
+                <v-list-tile-action>
+                    <v-icon>logout</v-icon>
+                </v-list-tile-action>
 
-                    <v-list-tile-content>
-                        <v-list-tile-title>Logout</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-            </v-list>
+                <v-list-tile-content>
+                    <v-list-tile-title>Logout</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+        </v-list>
 
     </v-navigation-drawer>
 </template>
@@ -104,6 +104,6 @@
     }
 
     .primary--text.v-list__tile--active {
-        color: purple !important;
+        color: #7d6df2 !important;
     }
 </style>

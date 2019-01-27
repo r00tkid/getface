@@ -26,8 +26,8 @@
 
                                 </v-flex>
                                 <v-flex xs12 d-flex>
-                                    <v-btn  @click.prevent="submitPasswordReset"
-                                            :disabled="btnDisabled" color="purple lighten-2" class="white--text">
+                                    <v-btn @click.prevent="submitPasswordReset"
+                                           :disabled="btnDisabled" color="primary lighten-2" class="white--text">
                                         ВОССТАНОВИТЬ
                                     </v-btn>
                                 </v-flex>

@@ -3,9 +3,9 @@
         <v-layout row wrap justify-end>
             <v-flex xs12 lg2 align-center class="text-xs-center">
                 <div class="year-selection">
-                    <v-btn icon @click="year--" small color="purple white--text">&#60;</v-btn>
+                    <v-btn icon @click="year--" small color="primary white--text">&#60;</v-btn>
                     <span class="font-weight-black title">{{year}}</span>
-                    <v-btn icon @click="year++" small color="purple white--text">&#62;</v-btn>
+                    <v-btn icon @click="year++" small color="primary white--text">&#62;</v-btn>
                 </div>
             </v-flex>
         </v-layout>
@@ -89,7 +89,7 @@
     }
 
     .vdpHeader {
-        background-color: #ab47bc;
+        background-image: linear-gradient(to right top, #7d6df2, #9077f4, #a181f6, #b08bf9, #be96fb);;
         color: white;
         font-weight: 700;
         margin-bottom: 0px;

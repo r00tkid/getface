@@ -55,14 +55,14 @@
                                 ></v-text-field>
                             </v-flex>
                             <v-flex xs12 d-flex>
-                                <v-btn :loading="checkin" @click="submitCredentials" color="purple lighten-2"
+                                <v-btn :loading="checkin" @click="submitCredentials" color="primary lighten-2"
                                        class="white--text"
                                 >
                                     Войти
                                 </v-btn>
                             </v-flex>
                             <v-flex xs6>
-                                <v-checkbox label="Запомнить меня" v-model="remember_me"></v-checkbox>
+                                <v-checkbox label="Запомнить меня" color="purple" v-model="remember_me"></v-checkbox>
                             </v-flex>
                             <v-flex xs6 class="text-xs-right">
                                 <a @click="openForgotPassModal">Забыли пароль?</a>

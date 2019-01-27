@@ -57,8 +57,7 @@ const Auth = {
                         commit('purgeToken');
                         throw e;
                     });
-                }
-                catch (e) {
+                } catch (e) {
                     throw e;
                 }
             })
