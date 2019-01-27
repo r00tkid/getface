@@ -1,6 +1,6 @@
 module.exports = {
     productionSourceMap: true,
-    publicPath: '/static/',
+    baseUrl: '/static/',
     outputDir: 'dist',
     assetsDir: undefined,
     runtimeCompiler: true,
