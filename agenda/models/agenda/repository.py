@@ -1,5 +1,4 @@
 from index.base.repository import Base
-from index.base.exceptions import ToDo
 
 
 class AgendaRepository(Base):
@@ -11,12 +10,23 @@ class AgendaRepository(Base):
 
     @classmethod
     def admin_view(cls):
-        raise ToDo
+        from .admin import Agenda
+
+        return Agenda
 
     @classmethod
     def actions(cls):
-        raise ToDo
+        from .validator import Create, Update
+
+        return {
+            'create': Create,
+            'update': Update,
+        }
 
     @classmethod
     def serializers(cls):
-        raise ToDo
+        from .serializer import BaseAgenda
+
+        return {
+            'base': BaseAgenda,
+        }

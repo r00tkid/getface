@@ -26,7 +26,7 @@ class CustomJWTSerializer(JSONWebTokenSerializer):
     def validate(self, attrs):
         password = attrs.get("password")
         user_obj = User.objects.filter(
-            Q(email=attrs.get("username")) | ~Q(username=attrs.get("username")) | ~Q(phone=attrs.get('phone'))
+            Q(email=attrs.get("username")) | Q(username=attrs.get("username")) | Q(phone=attrs.get('phone'))
         ).first()
 
         if user_obj is not None:

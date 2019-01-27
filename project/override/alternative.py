@@ -40,7 +40,6 @@ class TornadoWorker(BaseWorker):
         if self.cfg.reload:
             def changed(fname):
                 self.log.info("Worker reloading: %s modified", fname)
-                # todo: call special hook
                 self.alive = False
                 self.cfg.worker_int(self)
                 time.sleep(0.1)

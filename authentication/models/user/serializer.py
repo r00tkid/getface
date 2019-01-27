@@ -1,11 +1,11 @@
 from index.base.repository import Base
-from authentication.models.user.model import User as BaseUser
+from .model import User
 from rest_framework import serializers
 
 
-class User(Base.Serializer):
+class BaseUser(Base.Serializer):
     class Meta:
-        model = BaseUser
+        model = User
         fields = ('id', 'first_name', 'last_name', 'username')
 
 
@@ -17,7 +17,7 @@ class ExtendedUser(Base.Serializer):
         return model.last_login if not model.is_superuser else None
 
     class Meta:
-        model = BaseUser
+        model = User
         fields = (
             'id',
             'first_name',
@@ -25,7 +25,7 @@ class ExtendedUser(Base.Serializer):
             'email',
             'phone',
             'is_active',
-            'is_stuff',
+            'is_staff',
             'is_superuser',
             'date_joined',
             'last_login',

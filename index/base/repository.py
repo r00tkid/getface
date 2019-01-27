@@ -1,3 +1,4 @@
+from typing import Type, Optional, Dict
 from wtforms import Form
 from rest_framework import serializers
 from django.db import models
@@ -13,6 +14,15 @@ class Base(object):
     class Model(models.Model):
         from index.base import field
         from index.base import relations as rel
+
+        def update(self, data, nullable=True):
+            if nullable:
+                [self.__setattr__(k, v) for k, v in data.items()]
+            else:
+                [self.__setattr__(k, v) for k, v in data.items() if v is not None]
+
+            self.save(force_update=True)
+
         class Meta:
             abstract = True
 
@@ -23,35 +33,38 @@ class Base(object):
     class Serializer(serializers.ModelSerializer):
         from rest_framework import serializers
 
+    class ListSerializer(serializers.ListSerializer):
+        pass
+
     class Admin(admin.ModelAdmin):
         from django.utils.html import format_html
 
     @classmethod
-    def model(cls):
+    def model(cls) -> Type[Model]:
         raise NotImplementedError
 
     @classmethod
-    def admin_view(cls):
+    def admin_view(cls) -> Type[Admin]:
         raise NotImplementedError
 
     @classmethod
-    def actions(cls):
+    def actions(cls) -> Dict[str, Type[Form]]:
         raise NotImplementedError
 
     @classmethod
-    def serializers(cls):
+    def serializers(cls) -> Dict[str, Type[Serializer]]:
         raise NotImplementedError
 
     @classmethod
-    def action(cls, name):
+    def action(cls, name: str = 'create') -> Type[Form]:
         return cls.actions()[name]
 
     @classmethod
-    def serializer(cls, name='base'):
+    def serializer(cls, name: str = 'base') -> Type[Serializer]:
         return cls.serializers()[name]
 
     @classmethod
-    def new(cls, data):
+    def new(cls, data: dict) -> Model:
         """
         Don't use this method directly, until some special reasons.
 
@@ -61,7 +74,7 @@ class Base(object):
         return cls.model()(**data)
 
     @classmethod
-    def info(cls, pk, name='base', api_exception=True):
+    def info(cls, pk, name: str = 'base', api_exception: bool = True) -> Optional[Serializer]:
         obj = cls.model().objects
 
         try:
@@ -70,7 +83,7 @@ class Base(object):
             if api_exception:
                 raise NotFound({
                     'detail': '%(model)s id:[%(id)d] has not been found.' % {
-                        'model': type(cls.model()).__name__,
+                        'model': cls.model()._meta.verbose_name.title(),
                         'id': pk
                     },
                     'debug': str(e) if settings.DEBUG else None,
