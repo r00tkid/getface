@@ -1,4 +1,5 @@
-from authentication.models import User, Feature
+from authentication.models.user.model import User
+from authentication.models.feature.model import Feature
 from index.base.repository import Base
 
 
@@ -7,7 +8,7 @@ class Progress(Base.CreatedStump):
     rel = Base.Model.rel
 
     user = field.Foreign(
-        User.model(),
+        User,
         on_delete=rel.CASCADE,
         verbose_name="Пользователь",
         null=False,
@@ -15,7 +16,7 @@ class Progress(Base.CreatedStump):
     )
 
     feature = field.Foreign(
-        Feature.model(),
+        Feature,
         on_delete=rel.CASCADE,
         verbose_name="Фича",
         null=False,

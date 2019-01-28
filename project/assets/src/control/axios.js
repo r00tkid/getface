@@ -4,10 +4,9 @@ import router from "./router";
 import Vue from "vue";
 
 const digitalocean = 'http://139.59.211.27:9090';
-const local = '';
 
 const http = axios.create({
-    baseURL: local + '/api/v1/',
+    baseURL: (window.location.href.includes('localhost') ? digitalocean : '') + '/api/v1/',
     headers: {
         'Accept': "application\/json"
     },

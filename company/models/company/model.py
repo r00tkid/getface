@@ -1,5 +1,5 @@
 from index.base.repository import Base
-from authentication.models import User
+from authentication.models.user.model import User
 
 
 class Company(Base.TimeStumps, Base.SoftDeletion):
@@ -40,7 +40,7 @@ class Company(Base.TimeStumps, Base.SoftDeletion):
     )
 
     owner = field.Foreign(
-        User.model(),
+        User,
         verbose_name="Владелец",
         on_delete=rel.DO_NOTHING,
         null=False,

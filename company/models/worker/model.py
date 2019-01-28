@@ -1,7 +1,7 @@
 import uuid
 from index.base.repository import Base
-from authentication.models import User
-from company.models import Company
+from authentication.models.user.model import User
+from company.models.company.model import Company
 
 
 class Worker(Base.TimeStumps, Base.SoftDeletion):
@@ -26,7 +26,7 @@ class Worker(Base.TimeStumps, Base.SoftDeletion):
     )
 
     user = field.Foreign(
-        User.model(),
+        User,
         on_delete=rel.CASCADE,
         verbose_name="Физический пользователь",
         null=True,
@@ -34,7 +34,7 @@ class Worker(Base.TimeStumps, Base.SoftDeletion):
     )
 
     company = field.Foreign(
-        Company.model(),
+        Company,
         on_delete=rel.CASCADE,
         verbose_name="Компания",
         null=False,

@@ -1,6 +1,7 @@
 from index.base.repository import Base
-from authentication.models import User
-from company.models import Company, Rate
+from authentication.models.user.model import User
+from company.models.company.model import Company
+from company.models.rate.model import Rate
 
 
 class Payment(Base.TimeStumps, Base.SoftDeletion):
@@ -8,7 +9,7 @@ class Payment(Base.TimeStumps, Base.SoftDeletion):
     rel = Base.Model.rel
 
     rate = field.Foreign(
-        Rate.model(),
+        Rate,
         on_delete=rel.CASCADE,
         null=False,
     )
@@ -21,7 +22,7 @@ class Payment(Base.TimeStumps, Base.SoftDeletion):
     )
 
     user = field.Foreign(
-        User.model(),
+        User,
         on_delete=rel.DO_NOTHING,
         verbose_name="Платильщик",
         null=True,
@@ -29,7 +30,7 @@ class Payment(Base.TimeStumps, Base.SoftDeletion):
     )
 
     company = field.Foreign(
-        Company.model(),
+        Company,
         on_delete=rel.DO_NOTHING,
         verbose_name="Компания",
         null=True,

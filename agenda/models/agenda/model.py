@@ -1,6 +1,6 @@
 import datetime
 from index.base.repository import Base
-from company.models import Worker
+from company.models.worker.model import Worker
 
 
 class Agenda(Base.TimeStumps, Base.SoftDeletion):
@@ -26,10 +26,10 @@ class Agenda(Base.TimeStumps, Base.SoftDeletion):
     )
 
     worker = field.Foreign(
-        Worker.model(),
+        Worker,
         verbose_name="Работник",
         on_delete=rel.CASCADE,
-    )  # type: Worker.model()
+    )  # type: Worker
 
     def __str__(self):
         u = self.worker
