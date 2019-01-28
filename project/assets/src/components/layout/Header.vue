@@ -35,7 +35,7 @@
         </v-icon>
         <v-spacer></v-spacer>
         <v-btn large outline color="grey">12 Дней</v-btn>
-        <v-btn large color="purple lighten-1 white--text">Оплатить</v-btn>
+        <v-btn large class="primary white--text">Оплатить</v-btn>
         <v-spacer></v-spacer>
 
         <v-badge left class="mr-5">
@@ -103,7 +103,7 @@
     }
 
     .kill-height > .v-input__control > .v-input__slot {
-        min-height: 36px!important; /* 36px because normal button has the same height. Logic. Believe me */
+        min-height: 36px !important; /* 36px because normal button has the same height. Logic. Believe me */
     }
 
     .normal-border > .v-input__control > .v-input__slot {
@@ -111,8 +111,9 @@
     }
 
     .normal-border > .v-input__control > .v-input__slot:focus {
-        border: 1px purple solid!important;
+        border: 1px purple solid !important;
     }
+
     .rotate90 {
         transform: rotateZ(90deg);
     }
@@ -121,6 +122,6 @@
         align-self: center;
         width: 80%;
         border-radius: 5px;
-        background-color: #fff!important;
+        background-color: #fff !important;
     }
 </style>

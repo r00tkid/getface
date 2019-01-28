@@ -2,13 +2,7 @@
     <v-container align-baseline fluid class="profile-wrap">
         <v-layout row justify-end>
             <v-flex>
-                <v-select
-                        flat
-                        :items="items"
-                        solo
-                        placeholder="test"
-                        class="width-fixer"
-                ></v-select>
+                <v-select flat :items="items" solo placeholder="test" class="width-fixer"></v-select>
             </v-flex>
             <v-spacer></v-spacer>
             <v-flex class="d-flex justify-end">
@@ -20,7 +14,7 @@
             </v-flex>
             <v-spacer></v-spacer>
             <v-flex class="d-flex width-limiter">
-                <v-btn large color="purple white--text">
+                <v-btn large color="primary white--text">
                     <v-icon left dark>add_circle</v-icon>
                     Добавить сотрудника
                 </v-btn>
@@ -48,356 +42,78 @@
                 </v-chip>
 
                 <v-btn outline color="grey">Создать зону видимости</v-btn>
-                <v-btn color="purple lighten-1 white--text">Отправить логин и пароль</v-btn>
+                <v-btn class="primary white--text">Отправить логин и пароль</v-btn>
             </v-flex>
             <v-spacer></v-spacer>
             <v-flex>
                 <v-btn outline color="grey">Выгрузить в Excel</v-btn>
             </v-flex>
             <v-flex class="d-flex justify-end width-limiter">
-                <v-btn color="purple lighten-1 white--text">Активные</v-btn>
+                <v-btn class="primary white--text">Активные</v-btn>
                 <v-btn color="error lighten-1">Уволенные</v-btn>
             </v-flex>
         </v-layout>
         <v-layout align-center justify-center row class="workers-data-list">
-            <v-flex fill-height class=" ma-0">
-                <v-data-table
-                        v-model="data.selected"
-                        hide-actions
-                        :headers="data.headers"
-                        :items="data.desserts"
-                        total-items="100"
-                        :pagination.sync="data.pagination"
-                        select-all
-                        item-key="name"
-                        class="elevation-1 data-list-table text-xs-center"
-                >
-                    <template slot="headers" slot-scope="props">
-                        <tr>
-                            <th>
-                                <v-checkbox
-                                        :input-value="props.all"
-                                        :indeterminate="props.indeterminate"
-                                        primary
-                                        hide-details
-                                        @click="toggleAll"
-                                ></v-checkbox>
-                            </th>
-                            <th
-                                    v-for="header in props.headers"
-                                    :key="header.text"
-                                    :class="['column sortable', data.pagination.descending ? 'desc' : 'asc', header.value === data.pagination.sortBy ? 'active' : '']"
-                                    @click="changeSort(header.value)"
-                            >
-                                <v-icon small>arrow_upward</v-icon>
-                                {{ header.text }}
-                            </th>
-                        </tr>
-                    </template>
-                    <template slot="items" slot-scope="props">
-                        <tr :active="props.selected" @click="props.selected = !props.selected">
-                            <td>
-                                <v-checkbox
-                                        :input-value="props.selected"
-                                        primary
-                                        hide-details
-                                ></v-checkbox>
-                            </td>
-                            <td class="text-xs-center">{{ props.item.fio }}</td>
-                            <td class="text-xs-center">{{ props.item.rank }}</td>
-                            <td class="text-xs-center">{{ props.item.warns }}</td>
-                            <td class="text-xs-center">{{ props.item.leftHours }}</td>
-                            <td class="text-xs-center">{{ props.item.achievement }}</td>
-                            <td class="text-xs-center">{{ props.item.mood }}</td>
-                            <td class="text-xs-center">{{ props.item.hourPlan }}</td>
-                            <td class="text-xs-center">{{ props.item.hourFact }}</td>
-                            <td class="text-xs-center">{{ props.item.workCount }}</td>
-                        </tr>
-                    </template>
-                </v-data-table>
+            <v-flex fill-height class="ma-0">
+                <profile-table></profile-table>
             </v-flex>
         </v-layout>
     </v-container>
 </template>
 
 <script>
-    // todo Disable pagination
-    let data_json = {
-        pagination: {
-            sortBy: 'fio'
-        },
-        selected: [],
-        headers: [
-            {
-                text: 'Ф.И.О.',
-                align: 'left',
-                value: 'fio'
-            },
-            {text: 'Должность', value: 'rank'},
-            {text: 'Кол-во нарушений', value: 'warns'},
-            {text: 'Недоработанные часы', value: 'leftHours'},
-            {text: 'Награды', value: 'achievement'},
-            {text: 'Настроение', value: 'mood'},
-            {text: 'План рабочих часов', value: 'hourPlan'},
-            {text: 'Факт отработанных часов', value: 'hourFact'},
-            {text: 'Кол-во смен', value: 'workCount'},
-        ],
-        desserts: [
-            {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            },
-            {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            }, {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            }, {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            }, {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            }, {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            }, {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            }, {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            }, {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            }, {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            }, {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            }, {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            }, {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            },
-            {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            },
-            {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            },
-            {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            },{
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            },
-            {
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            },{
-                value: false,
-                fio: 'Frozen Yogurt',
-                rank: "Ст. Официант",
-                warns: 1,
-                leftHours: 24,
-                achievement: 'Da',
-                mood: '76%',
-                hourPlan: 2,
-                hourFact: 130,
-                workCount: 11,
-            },
-
-
-        ]
-    };
+    import ProfileTable from "../components/profileTable/ProfileTable";
 
     export default {
         name: "Profile",
+        components: {
+            ProfileTable
+        },
         data() {
             return {
-                items: [
-                    "RUS",
-                    "ENG"
-                ],
-                data: data_json,
-            }
-        }, methods: {
+                items: ["RUS", "ENG"],
+                data: data_json
+            };
+        },
+        methods: {
             toggleAll() {
-                if (this.selected.length) this.selected = []
-                else this.selected = this.desserts.slice()
+                if (this.selected.length) this.selected = [];
+                else this.selected = this.desserts.slice();
             },
             changeSort(column) {
                 if (this.pagination.sortBy === column) {
-                    this.pagination.descending = !this.pagination.descending
+                    this.pagination.descending = !this.pagination.descending;
                 } else {
-                    this.pagination.sortBy = column
-                    this.pagination.descending = false
+                    this.pagination.sortBy = column;
+                    this.pagination.descending = false;
                 }
             },
-            consoleLog(item) {
-                console.log(item)
+            hideGroup(e) {
+                if (e.target.className.includes("tableSeparator")) {
+                    let tableBody = e.target.parentElement.parentElement;
+                    let bodyElements = tableBody.childNodes;
+
+                    bodyElements.forEach((element, i) => {
+                        if (i > 0 && element.style.display == "none") {
+                            element.style.display = "table-row";
+                        } else if (i > 0) {
+                            element.style.display = "none";
+                        }
+                    });
+                }
             }
         }
-    }
+    };
 </script>
 
-<style>
+<style scoped>
+    .container {
+        padding: 24px 0;
+    }
 
-    ::-webkit-scrollbar {
-        width: 0px;
-        background: transparent; /* make scrollbar transparent */
+    .tableContainer {
+        overflow: auto;
+        max-height: 500px;
     }
 
     .v-table__overflow {
@@ -416,7 +132,88 @@
     .width-fixer {
         max-width: 190px;
     }
+
     .width-limiter {
         max-width: 290px;
+    }
+
+    th,
+    td {
+        border: 1px solid #d4d4d4;
+        border-collapse: collapse;
+        background-color: #fff;
+        padding: 10px;
+    }
+
+    table {
+        border-collapse: collapse;
+        min-width: 1270px;
+        box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .tableSeparator {
+        background-color: #a841ba;
+        color: #fff;
+        padding: 5px 40px;
+        cursor: pointer;
+
+    }
+
+    .separatorText {
+        position: relative;
+    }
+
+    .separatorText::after {
+        content: "";
+        position: absolute;
+        top: 7px;
+        right: -10px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 5px 2.5px 0 2.5px;
+        border-color: #ffffff transparent transparent transparent;
+    }
+
+    .reward {
+        font-size: 25px;
+        color: #f6a944;
+    }
+
+    .mood {
+        font-size: 25px;
+        color: #5ae08f;
+    }
+
+    .tableContainer::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+
+    .tableContainer::-webkit-scrollbar-button {
+        display: none;
+    }
+
+    .tableContainer::-webkit-scrollbar-track {
+        background-color: #969696;
+    }
+
+    .tableContainer::-webkit-scrollbar-track-piece {
+        background-color: #d4d4d4;
+    }
+
+    .tableContainer::-webkit-scrollbar-thumb {
+        height: 50px;
+        background-color: #969696;
+        border-radius: 3px;
+    }
+
+    .tableContainer::-webkit-scrollbar-corner {
+        display: none;
+    }
+
+    .tableContainer::-webkit-resizer {
+        background-color: #969696;
     }
 </style>

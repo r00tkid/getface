@@ -1,0 +1,20 @@
+#!/usr/local/bin/python
+
+# -*- coding: utf-8 -*-
+import re, sys
+from gunicorn.app.wsgiapp import WSGIApplication
+
+
+def say(msg):
+    print(">>>>>>>>> %s" % msg)
+
+
+class Application(WSGIApplication):
+    def __init__(self, *args, **kwargs):
+        say("Alternative gunicorn running")
+        super(Application, self).__init__(*args, **kwargs)
+
+
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+    sys.exit(Application("%(prog)s [OPTIONS] [APP_MODULE]").run())

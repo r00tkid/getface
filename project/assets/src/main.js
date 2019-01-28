@@ -6,6 +6,8 @@ import App from './views/layout/App.vue'
 import router from './control/router'
 import store from './control/store'
 import '@fortawesome/fontawesome-free/css/all.css'
+window._ = require('lodash');
+
 
 import './control/axios'
 import './control/bus'

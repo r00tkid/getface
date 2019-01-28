@@ -15,6 +15,10 @@ const router = new Router({
             component: Auth,
             children: [
                 {
+                    path: '/',
+                    redirect: '/login'
+                },
+                {
                     path: '/login',
                     name: 'login',
                     component: () => import('../components/modals/LoginModal')
@@ -45,6 +49,11 @@ const router = new Router({
                     path: '/calendar',
                     name: 'calendar',
                     component: () => import('../views/Calendar')
+                },
+                {
+                    path: '/employee',
+                    name: 'employee',
+                    component: () => import('../views/Employee')
                 }
             ]
         },
@@ -56,18 +65,15 @@ const router = new Router({
     ],
 });
 
-export default router;
 
 /**
  * Sort of auth gate for routes
  */
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-
-        if (localStorage.getItem('token') == null) {
+        if (!localStorage.token && !sessionStorage.token) {
             next({
-                to: 'login',
-                params: {nextUrl: to.fullPath}
+                path: '/login',
             })
         } else {
             next()
@@ -76,3 +82,4 @@ router.beforeEach((to, from, next) => {
         next()
     }
 });
+export default router;

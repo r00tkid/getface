@@ -1,13 +1,13 @@
 import jwt
-from app import settings
+from index import settings
 from rest_framework_jwt.serializers import JSONWebTokenSerializer
+from django.db.models import Q
 from django.contrib.auth import authenticate
 from django.utils.translation import ugettext as _
 from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
-from authentication.models import get_user_model
+from authentication.models.user.model import User
 
-User = get_user_model()
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
@@ -25,8 +25,9 @@ class CustomJWTSerializer(JSONWebTokenSerializer):
 
     def validate(self, attrs):
         password = attrs.get("password")
-        user_obj = User.objects.filter(email=attrs.get("username")).first() or \
-                   User.objects.filter(username=attrs.get("username")).first()
+        user_obj = User.objects.filter(
+            Q(email=attrs.get("username")) | Q(username=attrs.get("username")) | Q(phone=attrs.get('phone'))
+        ).first()
 
         if user_obj is not None:
             credentials = {

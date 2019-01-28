@@ -1,6 +1,7 @@
 .idea
 node_modules
 *.pyc
+*.pyc.swp
 
 npm-debug.log
 yarn-error.log

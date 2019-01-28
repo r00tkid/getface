@@ -3,8 +3,8 @@ import VueNoty from "vuejs-noty";
 import 'vuejs-noty/dist/vuejs-noty.css';
 
 Vue.use(VueNoty, {
-    timeout: 4000,
-    progressBar: true,
+    timeout: false,
+    // progressBar: false,
     layout: 'topCenter',
     theme: 'nest'
 });
