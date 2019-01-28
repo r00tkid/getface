@@ -1,5 +1,5 @@
 from index.base.repository import Base
-from authentication.models import Progress
+from authentication.models.progress.model import Progress
 
 format_html = Base.Admin.format_html
 
@@ -66,6 +66,6 @@ class User(Base.Admin):
     display_is_active.short_description = "Актив"
 
     def display_achieves(self, obj):
-        return Progress.model().objects.filter(user=obj).count()
+        return Progress.objects.filter(user=obj, feature__is_alive=True).count()
 
     display_achieves.short_description = "Достижений"

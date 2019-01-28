@@ -1,5 +1,5 @@
 from index.base.repository import Base
-from authentication.models import Progress
+from authentication.models.progress.model import Progress
 
 
 class Feature(Base.Admin):
@@ -17,6 +17,6 @@ class Feature(Base.Admin):
         """
         :type obj: authentication.models.feature.model.Feature
         """
-        return Progress.model().objects.filter(feature=obj).count()
+        return Progress.objects.filter(feature=obj).count()
 
     display_achieved.short_description = "Достигнуто раз"

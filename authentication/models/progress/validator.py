@@ -1,5 +1,6 @@
 from index.base.repository import Base
-from authentication.models import User, Feature
+from authentication.models.user.model import User
+from authentication.models.feature.model import Feature
 
 
 class Create(Base.Validator):
@@ -8,7 +9,7 @@ class Create(Base.Validator):
 
     user_id = field.Integer("User", [
         valid.Exists(
-            User.model(),
+            User,
             'pk',
             'User not found'
         )
@@ -16,7 +17,7 @@ class Create(Base.Validator):
 
     feature_id = field.Integer("Feature", [
         valid.Exists(
-            Feature.model(),
+            Feature,
             'pk',
             'Feature not found'
         )
