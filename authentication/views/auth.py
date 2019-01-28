@@ -19,10 +19,8 @@ def self_info(request):
         many=True
     )
 
-    as_worker = Worker.model().objects.filter(user=request.user).values('company_id')
-    compare = Company.model().objects.filter(
-        id__in=[c.get('company_id') for c in as_worker]
-    ).filter(worker__is_fired=False).distinct()
+    as_worker = Worker.model().objects.filter(user=request.user).values_list('company_id', flat=True)
+    compare = Company.model().objects.filter(id__in=as_worker).filter(worker__is_fired=False).distinct()
 
     companies_worker = Company.serializer('extended')(
         instance=compare.filter(worker__is_manager=False),
