@@ -23,6 +23,7 @@
 </template>
 <script>
     export default {
+      name: 'Progress',
         data() {
             return {}
         }
@@ -31,7 +32,7 @@
 <style scoped>
     .progressContainer {
         background-color: #fff;
-        border: #d4d4d4 solid 1px;
+        /*border: #d4d4d4 solid 1px;*/
         box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
         border-radius: 5px;
         padding: 10px;
