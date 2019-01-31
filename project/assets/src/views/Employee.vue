@@ -117,7 +117,8 @@
                                         <div class="achievent-badge">
                                            <span class="achievent-content">
                                                <img class="achievent-img"
-                                                       src="https://stickeroid.com/uploads/pic/full-tlgrm/2bacfa210665b0415873f7cd5c2bbaa1e1b48c64.png" alt="">
+                                                    src="https://stickeroid.com/uploads/pic/full-tlgrm/2bacfa210665b0415873f7cd5c2bbaa1e1b48c64.png"
+                                                    alt="">
                                            </span>
                                         </div>
                                     </v-flex>
@@ -125,7 +126,8 @@
                                         <div class="achievent-badge">
                                            <span class="achievent-content">
                                                <img class="achievent-img"
-                                                    src="https://stickeroid.com/uploads/pic/full-tlgrm/2bacfa210665b0415873f7cd5c2bbaa1e1b48c64.png" alt="">
+                                                    src="https://stickeroid.com/uploads/pic/full-tlgrm/2bacfa210665b0415873f7cd5c2bbaa1e1b48c64.png"
+                                                    alt="">
                                            </span>
                                         </div>
                                     </v-flex>
@@ -133,7 +135,8 @@
                                         <div class="achievent-badge">
                                            <span class="achievent-content">
                                                <img class="achievent-img"
-                                                    src="https://stickeroid.com/uploads/pic/full-tlgrm/2bacfa210665b0415873f7cd5c2bbaa1e1b48c64.png" alt="">
+                                                    src="https://stickeroid.com/uploads/pic/full-tlgrm/2bacfa210665b0415873f7cd5c2bbaa1e1b48c64.png"
+                                                    alt="">
                                            </span>
                                         </div>
                                     </v-flex>
@@ -141,7 +144,8 @@
                                         <div class="achievent-badge">
                                            <span class="achievent-content">
                                                <img class="achievent-img"
-                                                    src="https://stickeroid.com/uploads/pic/full-tlgrm/2bacfa210665b0415873f7cd5c2bbaa1e1b48c64.png" alt="">
+                                                    src="https://stickeroid.com/uploads/pic/full-tlgrm/2bacfa210665b0415873f7cd5c2bbaa1e1b48c64.png"
+                                                    alt="">
                                            </span>
                                         </div>
                                     </v-flex>
@@ -149,7 +153,8 @@
                                         <div class="achievent-badge">
                                            <span class="achievent-content">
                                                <img class="achievent-img"
-                                                    src="https://stickeroid.com/uploads/pic/full-tlgrm/2bacfa210665b0415873f7cd5c2bbaa1e1b48c64.png" alt="">
+                                                    src="https://stickeroid.com/uploads/pic/full-tlgrm/2bacfa210665b0415873f7cd5c2bbaa1e1b48c64.png"
+                                                    alt="">
                                            </span>
                                         </div>
                                     </v-flex>
@@ -158,7 +163,6 @@
                         </div>
                     </v-flex>
                 </v-layout>
-
                 <div class="fireEmployee"></div>
                 <div class="rewards"></div>
             </v-flex>
@@ -304,7 +308,8 @@
                                                             </v-flex>
                                                         </v-layout>
                                                         <v-divider light></v-divider>
-                                                        <v-card-actions class="pa-3 green--text justify-center">+20 ч :
+                                                        <v-card-actions class="pa-3 green--text justify-center">
+                                                            +20 ч :
                                                             30 м
                                                         </v-card-actions>
                                                     </v-card>
@@ -321,7 +326,8 @@
                                                             </v-flex>
                                                         </v-layout>
                                                         <v-divider light></v-divider>
-                                                        <v-card-actions class="pa-3 green--text justify-center">+20 ч :
+                                                        <v-card-actions class="pa-3 green--text justify-center">
+                                                            +20 ч :
                                                             30 м
                                                         </v-card-actions>
                                                     </v-card>
@@ -338,7 +344,8 @@
                                                             </v-flex>
                                                         </v-layout>
                                                         <v-divider light></v-divider>
-                                                        <v-card-actions class="pa-3 green--text justify-center">+20 ч :
+                                                        <v-card-actions class="pa-3 green--text justify-center">
+                                                            +20 ч :
                                                             30 м
                                                         </v-card-actions>
                                                     </v-card>
@@ -368,91 +375,93 @@
         </v-layout>
     </v-container>
 </template>
+
 <script>
-  import Progress from '../components/progress/Progress'
-  import Chart from '../components/chart/Chart'
+    import Progress from '../components/progress/Progress'
+    import Chart from '../components/chart/Chart'
 
 
-  export default {
-    name: 'Employee',
-    components: {
-      Progress,
-      Chart,
-    },
-    data() {
-      return {
-        gender: 'man',
-        datePicker: false,
-        date: new Date().toISOString().substr(0, 10),
-        duties: [
-          'Первая должность',
-          'Вторая',
-          'Третья'
-        ],
-        duty: 'Первая должность',
-        chartData: {
-          labels: ["January", "February", "March", "April", "May", "June"],
-          datasets: [
-            {
-              label: "Data One",
-              backgroundColor: "#5ae08f",
-              borderColor: "#5ae08f",
-              lineTension: 0,
-              data: [0, 13, 10, 30, 12, 6],
-              fill: false
-            },
-            {
-              label: "Data Two",
-              backgroundColor: "#fa6d6e",
-              borderColor: "#fa6d6e",
-              lineTension: 0,
-              data: [0, 12, 7, 31, 24, 15],
-              fill: false
-            },
-            {
-              label: "Data Tree",
-              backgroundColor: "#f6a944",
-              borderColor: "#f6a944",
-              lineTension: 0,
-              data: [0, 12, 15, 20, 24, 27],
-              fill: false
-            }
-          ]
+    export default {
+        name: 'Employee',
+        components: {
+            Progress,
+            Chart,
         },
-        chartOptions: {
-          responsive: true,
-          steppedLine: false,
-          scales: {
-            xAxes: [
-              {
-                gridLines: {
-                  display: false
-                }
-              }
-            ],
-            yAxes: [
-              {
-                gridLines: {
-                  display: false
-                }
-              }
-            ]
-          },
-          legend: {
-            display: false
-          },
-          tooltips: {
-            cornerRadius: 2,
-            callbacks: {
-              label: tooltipItem => `${tooltipItem.yLabel}: ${tooltipItem.xLabel}`,
-              title: () => null
+        data() {
+            return {
+                gender: 'man',
+                datePicker: false,
+                date: new Date().toISOString().substr(0, 10),
+                duties: [
+                    'Первая должность',
+                    'Вторая',
+                    'Третья'
+                ],
+                duty: 'Первая должность',
+                chartData: {
+                    labels: ["January", "February", "March", "April", "May", "June"],
+                    datasets: [
+                        {
+                            label: "Data One",
+                            backgroundColor: "#5ae08f",
+                            borderColor: "#5ae08f",
+                            lineTension: 0,
+                            data: [0, 13, 10, 30, 12, 6],
+                            fill: false,
+                        },
+                        {
+                            label: "Data Two",
+                            backgroundColor: "#fa6d6e",
+                            borderColor: "#fa6d6e",
+                            lineTension: 0,
+                            data: [0, 12, 7, 31, 24, 15],
+                            fill: false,
+                        },
+                        {
+                            label: "Data Tree",
+                            backgroundColor: "#f6a944",
+                            borderColor: "#f6a944",
+                            lineTension: 0,
+                            data: [0, 12, 15, 20, 24, 27],
+                            fill: false,
+                        }
+                    ]
+                },
+                chartOptions: {
+                    responsive: true,
+                    steppedLine: false,
+                    scales: {
+                        xAxes: [
+                            {
+                                gridLines: {
+                                    display: false,
+                                }
+                            }
+                        ],
+                        yAxes: [
+                            {
+                                gridLines: {
+                                    display: false,
+                                }
+                            }
+                        ]
+                    },
+                    legend: {
+                        display: false,
+                    },
+                    tooltips: {
+                        cornerRadius: 2,
+                        callbacks: {
+                            label: tooltipItem => `${tooltipItem.yLabel}: ${tooltipItem.xLabel}`,
+                            title: () => null,
+                        }
+                    }
+                },
             }
-          }
-        },
-      }
-    },
-  };
+        }
+    }
 </script>
+
 <style scoped>
     .home-wrap {
         padding: 24px 0;
@@ -521,15 +530,22 @@
     .achievent-img {
         max-height: 50px;
     }
+
     @media screen and (max-width: 960px) {
         .achievent-content {
             height: 70px;
         }
+
         .achievent-badge {
             max-width: 70px;
         }
+
         .achievent-img {
             max-height: 30px;
         }
+    }
+
+    .employeeBar button {
+        width: 90%;
     }
 </style>
