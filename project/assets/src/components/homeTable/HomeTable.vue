@@ -75,7 +75,12 @@
             </thead>
             <tbody>
             <tr>
-                <td @click="hideGroup" class="tableSeparator primary white--text" colspan="999" style="text-align: left;">
+                <td
+                        @click="hideGroup"
+                        class="tableSeparator primary white--text"
+                        colspan="999"
+                        style="text-align: left;"
+                >
                     <span class="separatorText">Горячий цех</span>
                 </td>
             </tr>
@@ -334,7 +339,12 @@
             </tbody>
             <tbody>
             <tr>
-                <td @click="hideGroup" class="tableSeparator primary white--text" colspan="999" style="text-align: left;">
+                <td
+                        @click="hideGroup"
+                        class="tableSeparator primary white--text"
+                        colspan="999"
+                        style="text-align: left;"
+                >
                     <span class="separatorText">Горячий цех</span>
                 </td>
             </tr>
@@ -594,6 +604,7 @@
         </table>
     </div>
 </template>
+
 <script>
     export default {
         data() {
@@ -617,9 +628,10 @@
         }
     };
 </script>
+
 <style scoped>
-    table a {
-        color: #fff;
+    .nameCell a {
+        color: #fff !important;
     }
 
     .tableContainer {
@@ -638,7 +650,7 @@
     }
 
     .linkProfile {
-        padding: 3px;
+        padding: 5px;
         border-left: 1px solid #d4d4d4;
         cursor: pointer;
     }
@@ -669,7 +681,7 @@
     }
 
     .tableSeparator {
-        background-color: #a841ba;
+        border-color: #969696 !important;
         color: #fff;
         padding-left: 40px;
         cursor: pointer;
@@ -741,5 +753,3 @@
         background-color: #969696;
     }
 </style>
-
-
