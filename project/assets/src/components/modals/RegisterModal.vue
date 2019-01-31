@@ -155,7 +155,8 @@
                                                     ref="step2Phone"
                                                     @keyup.enter.prevent="registerUser"
                                                     :rules="step2PhoneRule"
-                                                    mask="#####################"
+                                                    type="tel"
+                                                    mask="############"
                                                     color="purple" label="Телефон"
                                                     required
                                             ></v-text-field>

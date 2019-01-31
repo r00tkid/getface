@@ -1,7 +1,15 @@
 from index.base.repository import Base
-from company.models.company.model import Company
 from authentication.models import User
-from company.models import Worker
+from company.models.company.model import Company
+from company.models.worker.model import Worker
+from company.models.worker.serializer import BaseWorker, ExtendedWorker
+
+
+def get_worker_serializer(name):
+    return {
+        'base': BaseWorker,
+        'extended': ExtendedWorker,
+    }[name]
 
 
 class BaseCompany(Base.Serializer):
@@ -17,17 +25,19 @@ class ExtendedCompanyList(Base.ListSerializer):
 
     def add_worker_info(self, user=None, field_name='worker'):
         for data, instance in zip(self.data, self.instance):
-            if not User:
+            if not user:
                 data[field_name] = None
             else:
-                data[field_name] = Worker.serializer()(
-                    instance=Worker.model().objects.filter(user=user, company=instance).first()
+                data[field_name] = BaseWorker(
+                    instance=Worker.objects.filter(user=user, company=instance).first()
                 ).data
 
     def add_workers(self, name='base'):
         for data, instance in zip(self.data, self.instance):
-            data['workers'] = Worker.serializer(name)(
-                instance=Worker.model().objects.filter(company_id=instance.pk),
+            serial = get_worker_serializer(name)
+
+            data['workers'] = serial(
+                instance=Worker.objects.filter(company_id=instance.pk),
                 many=True,
             ).data
 
@@ -40,9 +50,9 @@ class ExtendedCompany(Base.Serializer):
         self.data['owner'] = User.serializer()(instance=self.instance.owner).data
 
     def add_workers(self):
-        workers = Worker.model().objects.filter(company_id=self.instance.pk)
+        workers = Worker.objects.filter(company_id=self.instance.pk)
 
-        self.data['workers'] = Worker.serializer()(instance=workers, many=True).data
+        self.data['workers'] = BaseWorker(instance=workers, many=True).data
 
     class Meta:
         model = Company
