@@ -44,7 +44,6 @@
                 <v-btn outline color="grey">Создать зону видимости</v-btn>
                 <v-btn class="primary white--text">Отправить логин и пароль</v-btn>
             </v-flex>
-            <v-spacer></v-spacer>
             <v-flex>
                 <v-btn outline color="grey">Выгрузить в Excel</v-btn>
             </v-flex>
