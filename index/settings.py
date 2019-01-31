@@ -30,8 +30,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '::1']
 
-# Application definition
+# Mail settings
+EMAIL_HOST_PASSWORD = 'getface-85Ftww34'
+EMAIL_HOST_USER = 'admin@get-face.com'
+EMAIL_HOST = 'getface-mail'
+EMAIL_PORT = '25'
+# EMAIL_PORT = '465' # SSL
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
 
+# Application definition
 FAKER_LOCALE = None  # settings.LANGUAGE_CODE is loaded
 FAKER_PROVIDERS = None  # faker.DEFAULT_PROVIDERS is loaded (all)
 
