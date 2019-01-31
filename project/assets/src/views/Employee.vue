@@ -119,7 +119,6 @@
                         </div>
                     </v-flex>
                 </v-layout>
-
                 <div class="fireEmployee"></div>
                 <div class="rewards"></div>
             </v-flex>
@@ -177,7 +176,8 @@
                                                             </v-flex>
                                                         </v-layout>
                                                         <v-divider light></v-divider>
-                                                        <v-card-actions class="pa-3 green--text justify-center">+20 ч :
+                                                        <v-card-actions class="pa-3 green--text justify-center">
+                                                            +20 ч :
                                                             30 м
                                                         </v-card-actions>
                                                     </v-card>
@@ -194,7 +194,8 @@
                                                             </v-flex>
                                                         </v-layout>
                                                         <v-divider light></v-divider>
-                                                        <v-card-actions class="pa-3 green--text justify-center">+20 ч :
+                                                        <v-card-actions class="pa-3 green--text justify-center">
+                                                            +20 ч :
                                                             30 м
                                                         </v-card-actions>
                                                     </v-card>
@@ -211,7 +212,8 @@
                                                             </v-flex>
                                                         </v-layout>
                                                         <v-divider light></v-divider>
-                                                        <v-card-actions class="pa-3 green--text justify-center">+20 ч :
+                                                        <v-card-actions class="pa-3 green--text justify-center">
+                                                            +20 ч :
                                                             30 м
                                                         </v-card-actions>
                                                     </v-card>
@@ -241,82 +243,84 @@
         </v-layout>
     </v-container>
 </template>
+
 <script>
-  import Progress from '../components/progress/Progress'
-  import Chart from '../components/chart/Chart'
+    import Progress from '../components/progress/Progress'
+    import Chart from '../components/chart/Chart'
 
 
-  export default {
-    name: 'Employee',
-    components: {
-      Progress,
-      Chart,
-    },
-    data() {
-      return {
-        chartData: {
-          labels: ["January", "February", "March", "April", "May", "June"],
-          datasets: [
-            {
-              label: "Data One",
-              backgroundColor: "#5ae08f",
-              borderColor: "#5ae08f",
-              lineTension: 0,
-              data: [0, 13, 10, 30, 12, 6],
-              fill: false
-            },
-            {
-              label: "Data Two",
-              backgroundColor: "#fa6d6e",
-              borderColor: "#fa6d6e",
-              lineTension: 0,
-              data: [0, 12, 7, 31, 24, 15],
-              fill: false
-            },
-            {
-              label: "Data Tree",
-              backgroundColor: "#f6a944",
-              borderColor: "#f6a944",
-              lineTension: 0,
-              data: [0, 12, 15, 20, 24, 27],
-              fill: false
-            }
-          ]
+    export default {
+        name: 'Employee',
+        components: {
+            Progress,
+            Chart,
         },
-        chartOptions: {
-          responsive: true,
-          steppedLine: false,
-          scales: {
-            xAxes: [
-              {
-                gridLines: {
-                  display: false
-                }
-              }
-            ],
-            yAxes: [
-              {
-                gridLines: {
-                  display: false
-                }
-              }
-            ]
-          },
-          legend: {
-            display: false
-          },
-          tooltips: {
-            cornerRadius: 2,
-            callbacks: {
-              label: tooltipItem => `${tooltipItem.yLabel}: ${tooltipItem.xLabel}`,
-              title: () => null
+        data() {
+            return {
+                chartData: {
+                    labels: ["January", "February", "March", "April", "May", "June"],
+                    datasets: [
+                        {
+                            label: "Data One",
+                            backgroundColor: "#5ae08f",
+                            borderColor: "#5ae08f",
+                            lineTension: 0,
+                            data: [0, 13, 10, 30, 12, 6],
+                            fill: false
+                        },
+                        {
+                            label: "Data Two",
+                            backgroundColor: "#fa6d6e",
+                            borderColor: "#fa6d6e",
+                            lineTension: 0,
+                            data: [0, 12, 7, 31, 24, 15],
+                            fill: false
+                        },
+                        {
+                            label: "Data Tree",
+                            backgroundColor: "#f6a944",
+                            borderColor: "#f6a944",
+                            lineTension: 0,
+                            data: [0, 12, 15, 20, 24, 27],
+                            fill: false
+                        }
+                    ]
+                },
+                chartOptions: {
+                    responsive: true,
+                    steppedLine: false,
+                    scales: {
+                        xAxes: [
+                            {
+                                gridLines: {
+                                    display: false
+                                }
+                            }
+                        ],
+                        yAxes: [
+                            {
+                                gridLines: {
+                                    display: false
+                                }
+                            }
+                        ]
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        cornerRadius: 2,
+                        callbacks: {
+                            label: tooltipItem => `${tooltipItem.yLabel}: ${tooltipItem.xLabel}`,
+                            title: () => null
+                        }
+                    }
+                },
             }
-          }
         },
-      }
-    },
-  };
+    };
 </script>
+
 <style scoped>
     .home-wrap {
         padding: 24px 0;
@@ -353,5 +357,9 @@
 
     .card-parent {
         padding: 4px;
+    }
+
+    .employeeBar button {
+        width: 90%;
     }
 </style>

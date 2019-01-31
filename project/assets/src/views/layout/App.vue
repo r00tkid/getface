@@ -7,6 +7,7 @@
         name: "abn-master",
     }
 </script>
+
 <style>
     .primary {
         background: linear-gradient(to right top, #7d6df2, #9077f4, #a181f6, #b08bf9, #be96fb) !important;
@@ -34,6 +35,7 @@
 
     .get-danger--text {
         color: #ff687c !important;
+    }
 
     .v-btn {
         text-transform: none;
