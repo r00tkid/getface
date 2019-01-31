@@ -19,4 +19,8 @@
     .purple--text, a {
         color: #7d6df2 !important;
     }
+    .v-btn{
+        text-transform: none;
+        line-height: 15px;
+    }
 </style>

@@ -13,8 +13,13 @@
                             </v-avatar>
                             <v-btn color="#fa6d6e" dark class="removeID">Удалить Face ID</v-btn>
                         </v-flex>
-                        <v-flex xs6>
-                            dfhfghfgj
+                        <v-flex xs6 class="employeeBar">
+                            <v-select
+                                label="Solo field"
+                                solo
+                            ></v-select>
+                            <v-btn class="primary lighten-1 white--text">Сгенерировать<br> ссылку Face ID</v-btn>
+                            <v-btn class="primary lighten-1 white--text">Отправить График</v-btn>
                         </v-flex>
                     </v-layout>
                 </div>
@@ -45,5 +50,8 @@
 
     .removeID {
         margin-top: -15px;
+    }
+    .employeeBar button{
+        width: 90%;
     }
 </style>
