@@ -1,5 +1,7 @@
 from index.base.repository import Base
 from authentication.models.user.model import User
+from company.models.rate.model import Rate
+from company.models.discount.model import Discount
 
 
 class Company(Base.TimeStumps, Base.SoftDeletion):
@@ -44,6 +46,20 @@ class Company(Base.TimeStumps, Base.SoftDeletion):
         verbose_name="Владелец",
         on_delete=rel.DO_NOTHING,
         null=False,
+    )
+
+    rate = field.Foreign(
+        Rate,
+        on_delete=rel.DO_NOTHING,
+        null=True,
+        blank=True,
+    )
+
+    discount = field.Foreign(
+        Discount,
+        on_delete=rel.SET(None),
+        null=True,
+        blank=True,
     )
 
     def __str__(self):
