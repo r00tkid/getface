@@ -15,6 +15,7 @@ import os, datetime
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 [LOGS_DIR] = os.path.abspath(os.path.join(BASE_DIR, 'project', 'log')),
+DEFAULT_NAME = "Get Face"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -30,8 +31,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '::1']
 
-# Application definition
+# Mail settings
+EMAIL_HOST_PASSWORD = 'getface-85Ftww34'
+EMAIL_HOST_USER = 'admin@get-face.com'
+EMAIL_HOST = 'getface-mail'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
+# Application definition
 FAKER_LOCALE = None  # settings.LANGUAGE_CODE is loaded
 FAKER_PROVIDERS = None  # faker.DEFAULT_PROVIDERS is loaded (all)
 

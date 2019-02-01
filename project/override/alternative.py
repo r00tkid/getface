@@ -39,6 +39,7 @@ class TornadoWorker(BaseWorker):
         # start the reloader
         if self.cfg.reload:
             def changed(fname):
+                print(">>>> Worker restarted <<<<")
                 self.log.info("Worker reloading: %s modified", fname)
                 self.alive = False
                 self.cfg.worker_int(self)

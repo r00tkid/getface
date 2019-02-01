@@ -1,7 +1,23 @@
+from tech import base
+from index.mail import sender
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from tech import base
+
+
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def turtle(request):
+    sender.Sandman(
+        mail_to="abnormally.dev@gmail.com",
+        body="Test mail",
+        subject="Non default",
+        flat=True,
+    ).start()
+
+    return Response({
+        'detail': 'All is ok'
+    })
 
 
 @api_view(['GET'])
