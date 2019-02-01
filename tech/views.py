@@ -8,7 +8,12 @@ from rest_framework.response import Response
 @api_view(['GET'])
 @permission_classes((AllowAny,))
 def turtle(request):
-    sender.send_mail("Oppai", ("abnormally.dev@gmail.com",)).send()
+    sender.Sandman(
+        mail_to="abnormally.dev@gmail.com",
+        body="Test mail",
+        subject="Non default",
+        flat=True,
+    ).start()
 
     return Response({
         'detail': 'All is ok'
