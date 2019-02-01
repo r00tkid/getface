@@ -7,6 +7,7 @@ ADD ./project/get-face.key /var/www/get-face/project/get-face.key
 ADD ./project/get-face.pub /var/www/get-face/project/get-face.pub
 
 WORKDIR /var/www/get-face/project
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 WORKDIR /
