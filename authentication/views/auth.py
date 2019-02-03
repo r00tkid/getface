@@ -87,7 +87,7 @@ def sign_up(request):
         context={
             'user': user,
         }
-    )
+    ).start()
 
     return Response({
         'valid': True,
