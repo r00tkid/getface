@@ -12,6 +12,7 @@ class Sandman(__th):
         self.extension = str(kwargs.get('extension', 'html')).strip('.')
         self.using = kwargs.get('using')
         self.context = kwargs.get('context', {})
+        self.context['base_url'] = settings.BASE_URL
 
         self.body = kwargs.get('body', 'Mail from %s' % settings.DEFAULT_NAME)
         self.headers = kwargs.get('headers', {})
