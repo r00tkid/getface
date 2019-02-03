@@ -79,7 +79,7 @@ def sign_up(request):
     Sandman(
         mail_from=EMAIL_ADDRESSES.get('main'),
         mail_to=user.email,
-        subject="You have been registered",
+        subject="Registration",
         template='user_register',
         context={
             'user': user,
