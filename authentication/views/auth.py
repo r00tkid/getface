@@ -75,9 +75,6 @@ def sign_up(request):
     })
 
     user.set_password(info.get('password'))
-    user.save()
-
-    token = create_token(user)
 
     Sandman(
         mail_from=EMAIL_ADDRESSES.get('main'),
@@ -88,6 +85,9 @@ def sign_up(request):
             'user': user,
         }
     ).start()
+
+    user.save()
+    token = create_token(user)
 
     return Response({
         'valid': True,

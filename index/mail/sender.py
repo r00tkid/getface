@@ -2,18 +2,20 @@ from threading import Thread as __th
 
 
 class Sandman(__th):
-    from django.template.loader import get_template as __gt
-    from django.template import Context as __ctx
-
     def __init__(self, **kwargs):
         from index import settings
         from django.core.mail import EmailMessage
 
         self.flat = kwargs.get('flat', False)
+
         self.template = kwargs.get('template')
+        self.extension = str(kwargs.get('extension', 'html')).strip('.')
+        self.using = kwargs.get('using')
         self.context = kwargs.get('context', {})
+
         self.body = kwargs.get('body', 'Mail from %s' % settings.DEFAULT_NAME)
         self.headers = kwargs.get('headers', {})
+        self.request = kwargs.get('request')
 
         mail_to = kwargs.get('mail_to', settings.EMAIL_HOST_USER)
         self.message = EmailMessage(
@@ -38,14 +40,26 @@ class Sandman(__th):
 
     def __call__(self, fail_silently=False):
         if not self.flat and bool(self.template):
+            from os import sep
+            from django.template import Template, loader
+
             self.headers['Content'] = 'text/html'
             self.context['body'] = self.body
+            self.context['request'] = self.request
             self.message.content_subtype = 'html'
 
-            context = self.__ctx(self.context)
-            template = self.__gt('mail/%s.html' % self.template)
+            compiled_name = "mail%(separator)s%(template)s.%(extension)s" % {
+                'separator': sep,
+                'template': self.template,
+                'extension': self.extension,
+            }
 
-            self.message.body = template.render(context)
+            template: Template = loader.get_template(
+                compiled_name,
+                self.using,
+            )
+
+            self.message.body = template.render(self.context)
 
         self.message.extra_headers = self.headers
         self.message.send(fail_silently)
