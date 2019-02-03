@@ -39,6 +39,13 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
+EMAIL_ADDRESSES = {
+    'main': 'Get Face official <no-response@get-face.com>',
+    'admin': 'Get Face administrator <admin@get-face.com>',
+    'finance': 'Get Face financial <finance@get-face.com>',
+    'info': 'Get Face info <info@get-face.com>',
+}
+
 # Application definition
 FAKER_LOCALE = None  # settings.LANGUAGE_CODE is loaded
 FAKER_PROVIDERS = None  # faker.DEFAULT_PROVIDERS is loaded (all)
@@ -180,6 +187,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'static'),
+            os.path.join(BASE_DIR, 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -192,6 +200,11 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATE_PREFIXES = {
+    'mail': 'mail',  # For e-mail templates
+    'page': 'page',  # Fro pages that are not in SPA
+}
 
 WSGI_APPLICATION = 'index.wsgi.get_face'
 

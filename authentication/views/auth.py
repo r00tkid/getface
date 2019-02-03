@@ -8,6 +8,9 @@ from company.models import Company, Worker
 from authentication.jwt import create_token
 from index.base.exceptions import UnprocessableEntity
 
+from index.mail.sender import Sandman
+from index.settings import EMAIL_ADDRESSES
+
 
 @api_view(
     ['GET', 'HEAD', 'POST', 'OPTIONS', 'PATCH', 'PUT',
@@ -75,6 +78,16 @@ def sign_up(request):
     user.save()
 
     token = create_token(user)
+
+    Sandman(
+        mail_from=EMAIL_ADDRESSES.get('main'),
+        mail_to=user.email,
+        subject="You have been registered",
+        template='user_register',
+        context={
+            'user': user,
+        }
+    )
 
     return Response({
         'valid': True,
