@@ -1,21 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-          crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>Get Face registration</title>
-
-    <style>
-
-    </style>
 </head>
 <body>
 
 <main class="container-fluid">
     <p>You have been registered {{ user }}</p>
-    <a role="button" class="btn btn-outline-success" href="{{ base_url }}/auth/confirmation/{{ user.activation }}">
+    <a role="button" href="{{ base_url }}/auth/confirmation/{{ user.id }}.{{ user.activation }}">
         Confirm your registration
     </a>
 </main>

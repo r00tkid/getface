@@ -26,18 +26,28 @@ class User(AbstractUser, Base.CreatedStump):
     )
 
     activation = field.Char(
-        "Код активации",
+        "Код активации/восстановления пароля",
         max_length=255,
-        null=False,
+        null=True,
         editable=False,
         default=_md5.md5(uuid.uuid4().bytes).hexdigest()
     )
 
+    def new_activation(self):
+        self.activation = _md5.md5(uuid.uuid4().bytes).hexdigest()
+
     def check_activation(self, code):
+        if self.activation is None or code is None or code == '':
+            return False
+
         for a, b in zip((self.activation, code)):
             if a != b:
                 return False
         return True
+
+    def get_token(self):
+        from authentication.jwt import create_token
+        return create_token(self)
 
     def __str__(self):
         return "%s %s (%s)" % (self.first_name, self.last_name, self.username) if (
