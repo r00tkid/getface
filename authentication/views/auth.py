@@ -8,6 +8,9 @@ from company.models import Company, Worker
 from authentication.jwt import create_token
 from index.base.exceptions import UnprocessableEntity
 
+from index.mail.sender import Sandman
+from index.settings import EMAIL_ADDRESSES
+
 
 @api_view(
     ['GET', 'HEAD', 'POST', 'OPTIONS', 'PATCH', 'PUT',
@@ -67,18 +70,26 @@ def sign_up(request):
         'first_name': info.get('first_name'),
         'last_name': info.get('last_name'),
         'phone': info.get('phone'),
-        # todo: change when got smtp server
-        'is_active': True,
+        'is_active': False,
     })
 
     user.set_password(info.get('password'))
-    user.save()
 
-    token = create_token(user)
+    Sandman(
+        mail_from=EMAIL_ADDRESSES.get('main'),
+        mail_to=user.email,
+        subject="Registration",
+        template='user_register',
+        context={
+            'user': user,
+        }
+    ).start()
+
+    user.save()
 
     return Response({
         'valid': True,
-        'token': token,  # todo: send mail instead
+        'detail': 'You have been registered.',
     }, status=status.HTTP_201_CREATED)
 
 
@@ -97,7 +108,7 @@ def worker_sign_up(request):
 
     try:
         worker = Worker.model().objects.get(auth_key=data.get('uuid'))
-        user = worker.user
+        user: User.model() = worker.user
     except Exception as e:
         return Response({
             'valid': False,
@@ -130,8 +141,34 @@ def worker_sign_up(request):
 
     return Response({
         'valid': True,
-        'token': create_token(user),
+        'token': user.get_token(),
     }, status=status.HTTP_201_CREATED)
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))
+def activate_account(request):
+    data: dict = request.data
+    user: User.model() = User.info(data.get('id')).instance
+
+    if not user.check_activation(data.get('activation')) or user.is_active:
+        return Response({
+            'detail': 'User already has been activated or secret codes not match.',
+            'active': user.is_active,
+        }, status=status.HTTP_409_CONFLICT)
+
+    if not user.check_password(data.get('password')):
+        return Response({
+            'detail': 'Passwords not match.',
+        }, status=status.HTTP_403_FORBIDDEN)
+
+    user.activation = None
+    user.save()
+
+    return Response({
+        'detail': 'Account has been activated',
+        'token': user.get_token(),
+    })
 
 
 @api_view(['POST'])

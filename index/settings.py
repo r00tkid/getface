@@ -16,6 +16,7 @@ import os, datetime
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 [LOGS_DIR] = os.path.abspath(os.path.join(BASE_DIR, 'project', 'log')),
 DEFAULT_NAME = "Get Face"
+BASE_URL = "http://139.59.211.27:9090"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -38,6 +39,13 @@ EMAIL_HOST = 'getface-mail'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+EMAIL_ADDRESSES = {
+    'main': 'Get Face official <no-response@get-face.com>',
+    'admin': 'Get Face administrator <admin@get-face.com>',
+    'finance': 'Get Face financial <finance@get-face.com>',
+    'info': 'Get Face info <info@get-face.com>',
+}
 
 # Application definition
 FAKER_LOCALE = None  # settings.LANGUAGE_CODE is loaded
@@ -180,6 +188,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'static'),
+            os.path.join(BASE_DIR, 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -192,6 +201,11 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATE_PREFIXES = {
+    'mail': 'mail',  # For e-mail templates
+    'page': 'page',  # Fro pages that are not in SPA
+}
 
 WSGI_APPLICATION = 'index.wsgi.get_face'
 

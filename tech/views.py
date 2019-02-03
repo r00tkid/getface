@@ -12,7 +12,6 @@ def turtle(request):
         mail_to="abnormally.dev@gmail.com",
         body="Test mail",
         subject="Non default",
-        flat=True,
     ).start()
 
     return Response({
