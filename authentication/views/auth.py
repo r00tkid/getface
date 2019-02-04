@@ -5,11 +5,10 @@ from rest_framework import status
 
 from authentication.models import User
 from company.models import Company, Worker
-from authentication.jwt import create_token
 from index.base.exceptions import UnprocessableEntity
 
 from index.mail.sender import Sandman
-from index.settings import EMAIL_ADDRESSES
+from index import settings
 
 
 @api_view(
@@ -62,6 +61,7 @@ def sign_up(request):
             'errors': validator.errors,
         })
 
+    debug = {}
     info = validator.data
 
     user = User.new({
@@ -76,7 +76,7 @@ def sign_up(request):
     user.set_password(info.get('password'))
 
     Sandman(
-        mail_from=EMAIL_ADDRESSES.get('main'),
+        mail_from=settings.EMAIL_ADDRESSES.get('main'),
         mail_to=user.email,
         subject="Registration",
         template='user_register',
@@ -87,9 +87,15 @@ def sign_up(request):
 
     user.save()
 
+    if settings.DEBUG:
+        debug['user'] = {}
+        debug['user']['id'] = user.id
+        debug['user']['activation'] = user.activation
+
     return Response({
         'valid': True,
         'detail': 'You have been registered.',
+        'debug': debug if settings.DEBUG else None,
     }, status=status.HTTP_201_CREATED)
 
 
@@ -149,7 +155,8 @@ def worker_sign_up(request):
 @permission_classes((AllowAny,))
 def activate_account(request):
     data: dict = request.data
-    user: User.model() = User.info(data.get('id')).instance
+    print(data.get('id'))
+    user: User.model() = User.info(int(data.get('id'))).instance
 
     if not user.check_activation(data.get('activation')) or user.is_active:
         return Response({

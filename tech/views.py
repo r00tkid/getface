@@ -1,8 +1,22 @@
+import subprocess
 from tech import base
 from index.mail import sender
+from django.http.response import HttpResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+
+
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def fortune(request):
+    return HttpResponse(
+        b"<pre id='fortune'>%s</pre>" % subprocess.Popen(
+            '/usr/games/fortune | /usr/games/cowthink',
+            shell=True,
+            stdout=subprocess.PIPE,
+        ).stdout.read(),
+    )
 
 
 @api_view(['GET'])

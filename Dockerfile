@@ -1,4 +1,4 @@
-FROM python:3.7.1
+FROM python:3.7.2
 MAINTAINER Polshchyn Kyrylo <abnormally.dev@gmail.com>
 
 ENV PYTHONUNBUFFERED 1
@@ -12,7 +12,7 @@ RUN pip install -r requirements.txt
 
 WORKDIR /
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN apt-get update && apt-get -y install gcc nodejs npm libxml2-dev libxslt1-dev libxslt-dev \
+RUN apt-get update && apt-get -y install gcc nodejs npm libxml2-dev libxslt1-dev libxslt-dev fortune-mod cowsay \
                                           python-lxml pgloader build-essential git openssh-server nano
 RUN npm i -g npm
 RUN pip install lxml tornado psycopg2-binary inotify
