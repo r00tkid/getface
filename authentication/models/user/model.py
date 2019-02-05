@@ -35,6 +35,7 @@ class User(AbstractUser, Base.CreatedStump):
 
     def new_activation(self):
         self.activation = _md5.md5(uuid.uuid4().bytes).hexdigest()
+        return self.activation
 
     def check_activation(self, code):
         if self.activation is None or code is None or code == '':

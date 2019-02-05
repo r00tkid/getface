@@ -60,10 +60,16 @@ class Worker(Base.TimeStumps, Base.SoftDeletion):
         default=uuid.uuid4,
     )
 
-    email = field.Char(
-        max_length=256,
+    email = field.Email(
         verbose_name="E-mail",
         null=True,
+        blank=True,
+    )
+
+    timezone = field.TimeZone(
+        "Локальное время работника",
+        default="UTC",
+        null=False,
         blank=True,
     )
 

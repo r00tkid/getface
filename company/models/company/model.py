@@ -62,6 +62,13 @@ class Company(Base.TimeStumps, Base.SoftDeletion):
         blank=True,
     )
 
+    timezone = field.TimeZone(
+        "Локальное время компании",
+        default="UTC",
+        null=False,
+        blank=True,
+    )
+
     def __str__(self):
         return self.name
 

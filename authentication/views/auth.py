@@ -1,3 +1,4 @@
+import os
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -74,18 +75,17 @@ def sign_up(request):
     })
 
     user.set_password(info.get('password'))
+    user.save()
 
     Sandman(
         mail_from=settings.EMAIL_ADDRESSES.get('main'),
         mail_to=user.email,
         subject="Registration",
-        template='user_register',
+        template='user%sregister' % os.sep,
         context={
             'user': user,
         }
     ).start()
-
-    user.save()
 
     if settings.DEBUG:
         debug['user'] = {}
@@ -181,10 +181,72 @@ def activate_account(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def reset_password(request):
-    pass  # todo: do
+    data: dict = request.data
+    model = User.model()
+    email = data.get('email')
+    debug = {}
+
+    if not email:
+        return Response({
+            'detail': 'Ups, something goes wrong',
+            'email': email,
+        }, status=status.HTTP_404_NOT_FOUND)
+
+    user: User.model() = model.objects.filter(email=email).first()
+
+    if not user or not user.is_active:
+        return Response({
+            'detail': 'Are you sure that you activate your account?'
+        }, status=status.HTTP_409_CONFLICT)
+
+    user.new_activation()
+    user.save()
+
+    if settings.DEBUG:
+        debug['user'] = {}
+        debug['user']['id'] = user.id
+        debug['user']['activation'] = user.activation
+
+    Sandman(
+        mail_from=settings.EMAIL_ADDRESSES.get('main'),
+        mail_to=user.email,
+        subject="Password restoration",
+        template='user%snew_password' % os.sep,
+        context={
+            'user': user,
+        }
+    ).start()
+
+    return Response({
+        'detail': 'Change password action has been activated.'
+    })
 
 
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def reset_confirm(request):
-    pass  # todo: do
+    data: dict = request.data
+    print(data.get('id'))
+    user: User.model() = User.info(int(data.get('id'))).instance
+
+    if not user.check_activation(data.get('activation')) or not user.is_active:
+        return Response({
+            'detail': 'Already used or user is inactive.',
+            'active': user.is_active,
+        }, status=status.HTTP_409_CONFLICT)
+
+    password = data.get('password')
+    c_password = data.get('password_confirmation')
+
+    if not password or not c_password or password != c_password:
+        return Response({
+            'detail': 'Password not set or confirmation mismatch'
+        }, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+    user.set_password(data.get('password'))
+    user.save()
+
+    return Response({
+        'detail': 'Password has been reset',
+        'token': user.get_token(),
+    })
