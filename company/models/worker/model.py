@@ -1,7 +1,11 @@
 import uuid
+from datetime import datetime
 from index.base.repository import Base
 from authentication.models.user.model import User
 from company.models.company.model import Company
+
+from company.models.worker.position.model import WorkerPosition
+from company.models.worker.department.model import WorkerDepartment
 
 
 class Worker(Base.TimeStumps, Base.SoftDeletion):
@@ -72,6 +76,57 @@ class Worker(Base.TimeStumps, Base.SoftDeletion):
         null=False,
         blank=True,
     )
+
+    invitation = field.DateTime(
+        verbose_name="Последнее приглашение",
+        null=True,
+        blank=True,
+    )
+
+    is_invited = field.Boolean(
+        "Приглашён",
+        null=False,
+        default=False,
+    )
+
+    is_active = field.Boolean(
+        "Активен",
+        null=False,
+        default=False,
+    )
+
+    face_id = field.UUID(
+        "Face ID",
+        null=True,
+        blank=True,
+    )
+
+    department = field.Foreign(
+        WorkerDepartment,
+        on_delete=rel.SET(None),
+        default=None,
+        null=True,
+        blank=True,
+    )
+
+    position = field.Foreign(
+        WorkerPosition,
+        on_delete=rel.SET(None),
+        default=None,
+        null=True,
+        blank=True,
+    )
+
+    def clear_face_id(self):
+        self.face_id = None
+
+    def new_face_id(self):
+        self.face_id = uuid.uuid4()
+
+    def new_invitation(self):
+        old = self.invitation
+        self.invitation = datetime.now()
+        return old
 
     def __str__(self):
         return "%s %s" % (self.last_name, self.first_name) + (

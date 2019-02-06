@@ -4,8 +4,19 @@ format_html = Base.Admin.format_html
 
 
 class Worker(Base.Admin):
-    list_display = ('display_full_name', 'display_email', 'display_auth_key',
-                    'display_is_active', 'display_id', 'auth_key', 'timezone')
+    list_display = (
+        'display_full_name',
+        'display_email',
+        'display_auth_key',
+        'is_active',
+        'is_invited',
+        'invitation',
+        'display_id',
+        'auth_key',
+        'timezone',
+        'position',
+        'department',
+    )
 
     def display_id(self, obj):
         return obj.id
@@ -49,15 +60,3 @@ class Worker(Base.Admin):
             )
 
     display_auth_key.short_description = "Инвайт"
-
-    def display_is_active(self, obj):
-        if obj.user and obj.user.is_active:
-            return format_html(
-                "<span class='glyphicon glyphicon-ok' style='color: #262;'></span>"
-            )
-        else:
-            return format_html(
-                "<span class='glyphicon glyphicon-remove' style='color: #922;'></span>"
-            )
-
-    display_is_active.short_description = "Актив"

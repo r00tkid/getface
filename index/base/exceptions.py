@@ -8,8 +8,13 @@ class ToDo(NotImplementedError):
 
 
 class APIException(RestException):
+
+    def __init__(self, detail=None, code=None):
+        super().__init__(detail)
+        self.status_code = code
+
     def __str__(self):
-        if 'dict' == type(self.detail).__name__:
+        if isinstance(self.detail, dict):
             return json.dumps(self.detail)
         return super(APIException, self).__str__()
 
