@@ -11,11 +11,10 @@ class Worker(Base.Admin):
         'is_active',
         'is_invited',
         'invitation',
-        'display_id',
-        'auth_key',
         'timezone',
         'position',
         'department',
+        'display_id',
     )
 
     def display_id(self, obj):
