@@ -8,7 +8,7 @@ urlpatterns = [
     path('/me', auth.self_info),
 
     path('/sign-up', auth.sign_up),
-    path('/worker', auth.worker_sign_up),
+    path('/worker', auth.employee_sign_up),
     path('/confirm', auth.activate_account),
     path('/sign-in', ObtainJSONWebToken.as_view(serializer_class=CustomJWTSerializer)),
     path('/fresh', refresh_jwt_token),

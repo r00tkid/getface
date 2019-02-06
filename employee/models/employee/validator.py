@@ -1,6 +1,6 @@
 from index.base.repository import Base
 from authentication.models import User
-from .model import Worker
+from .model import Employee
 
 
 class Register(Base.Validator):
@@ -11,7 +11,7 @@ class Register(Base.Validator):
         valid.ValidationChain(
             valid.UUID(message="Invalid or not provided secret key."),
             valid.Exists(
-                Worker,
+                Employee,
                 column="auth_key",
                 message="Secret key not found or expired. Make sure that you still have invitation to system."
             ),

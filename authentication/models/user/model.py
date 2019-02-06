@@ -3,6 +3,10 @@ from django.contrib.auth.models import AbstractUser
 from index.base.repository import Base
 
 
+def _activation_key() -> str:
+    return _md5.md5(uuid.uuid4().bytes).hexdigest()
+
+
 class User(AbstractUser, Base.CreatedStump):
     field = Base.Model.field
 
@@ -26,15 +30,15 @@ class User(AbstractUser, Base.CreatedStump):
     )
 
     activation = field.Char(
-        "Код активации/восстановления пароля",
+        verbose_name="Код активации/восстановления пароля",
         max_length=255,
         null=True,
         editable=False,
-        default=_md5.md5(uuid.uuid4().bytes).hexdigest()
+        default=_activation_key
     )
 
     def new_activation(self):
-        self.activation = _md5.md5(uuid.uuid4().bytes).hexdigest()
+        self.activation = _activation_key()
         return self.activation
 
     def check_activation(self, code):

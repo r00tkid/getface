@@ -2,11 +2,11 @@ import typing as tp
 from index.base.repository import Base
 
 
-class WorkerRepository(Base):
-    from .model import Worker as __Model
-    from .admin import Worker as __Admin
+class EmployeeRepository(Base):
+    from .model import Employee as __Model
+    from .admin import Employee as __Admin
     from .validator import Register as __Register, Create as __Create, Update as __Update
-    from .serializer import BaseWorker as __BaseWorker, ExtendedWorker as __ExtendedWorker
+    from .serializer import BaseEmployee as __BaseEmployee, ExtendedEmployee as __ExtendedEmployee
 
     @classmethod
     def model(cls) -> tp.Type[__Model]:
@@ -25,8 +25,8 @@ class WorkerRepository(Base):
         }
 
     @classmethod
-    def serializers(cls) -> tp.Dict[str, tp.Union[tp.Type[__BaseWorker], tp.Type[__ExtendedWorker]]]:
+    def serializers(cls) -> tp.Dict[str, tp.Union[tp.Type[__BaseEmployee], tp.Type[__ExtendedEmployee]]]:
         return {
-            'base': cls.__BaseWorker,
-            'extended': cls.__ExtendedWorker,
+            'base': cls.__BaseEmployee,
+            'extended': cls.__ExtendedEmployee,
         }

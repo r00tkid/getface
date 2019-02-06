@@ -3,7 +3,7 @@ from index.base.repository import Base
 format_html = Base.Admin.format_html
 
 
-class Worker(Base.Admin):
+class Employee(Base.Admin):
     list_display = (
         'display_full_name',
         'display_email',

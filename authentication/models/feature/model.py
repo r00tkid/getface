@@ -35,6 +35,9 @@ class Feature(Base.TimeStumps, Base.SoftDeletion):
         default=False,
     )
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = 'Фича'
         verbose_name_plural = 'Фичи'

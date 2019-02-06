@@ -1,8 +1,8 @@
 from index.base.repository import Base
-from .model import WorkerPosition
+from .model import Position
 
 
 class BasePosition(Base.Serializer):
     class Meta:
-        model = WorkerPosition
+        model = Position
         fields = ('name', 'company', 'id')

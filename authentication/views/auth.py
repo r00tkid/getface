@@ -5,7 +5,8 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from authentication.models import User
-from company.models import Company, Worker
+from company.models import Company
+from employee.models import Employee
 from index.base.exceptions import UnprocessableEntity
 
 from index.mail.sender import Sandman
@@ -22,29 +23,29 @@ def self_info(request):
         many=True
     )
 
-    as_worker = Worker.model().objects.filter(user=request.user).values_list('company_id', flat=True)
-    compare = Company.model().objects.filter(id__in=as_worker).filter(worker__is_fired=False).distinct()
+    as_employee = Employee.model().objects.filter(user=request.user).values_list('company_id', flat=True)
+    compare = Company.model().objects.filter(id__in=as_employee).filter(employee__is_fired=False).distinct()
 
-    companies_worker = Company.serializer('extended')(
-        instance=compare.filter(worker__is_manager=False),
+    companies_employee = Company.serializer('extended')(
+        instance=compare.filter(employee__is_manager=False),
         many=True,
     )
 
     companies_manager = Company.serializer('extended')(
-        instance=compare.filter(worker__is_manager=True),
+        instance=compare.filter(employee__is_manager=True),
         many=True,
     )
 
-    companies_worker.add_owner()
-    companies_worker.add_worker_info(user=request.user, field_name='me')
+    companies_employee.add_owner()
+    companies_employee.add_employee_info(user=request.user, field_name='me')
     companies_manager.add_owner()
-    companies_manager.add_worker_info(user=request.user, field_name='me')
+    companies_manager.add_employee_info(user=request.user, field_name='me')
 
     return Response({
         'user': User.serializer('extended')(instance=request.user).data,
         'companies': {
             'owner': companies_owner.data,
-            'worker': companies_worker.data,
+            'employee': companies_employee.data,
             'manager': companies_manager.data,
         }
     })
@@ -101,8 +102,8 @@ def sign_up(request):
 
 @api_view(['POST'])
 @permission_classes((AllowAny,))
-def worker_sign_up(request):
-    validator = Worker.action('register')(data=request.data)
+def employee_sign_up(request):
+    validator = Employee.action('register')(data=request.data)
 
     if not validator.validate():
         return Response({
@@ -113,8 +114,8 @@ def worker_sign_up(request):
     data = validator.data
 
     try:
-        worker = Worker.model().objects.get(auth_key=data.get('uuid'))
-        user: User.model() = worker.user
+        employee = Employee.model().objects.get(auth_key=data.get('uuid'))
+        user: User.model() = employee.user
     except Exception as e:
         return Response({
             'valid': False,
@@ -122,14 +123,14 @@ def worker_sign_up(request):
         }, status=status.HTTP_404_NOT_FOUND)
 
     if request.user:
-        if worker.user_id != request.user.id:
+        if employee.user_id != request.user.id:
             return Response({
                 'valid': False,
                 'message': "Get log out to perform this action."
             }, status=status.HTTP_403_FORBIDDEN)
 
-        worker.auth_key = None
-        worker.save()
+        employee.auth_key = None
+        employee.save()
 
         return Response({
             'valid': True,
@@ -142,8 +143,8 @@ def worker_sign_up(request):
         user.is_active = True
         user.save()
 
-    worker.auth_key = None
-    worker.save()
+    employee.auth_key = None
+    employee.save()
 
     return Response({
         'valid': True,

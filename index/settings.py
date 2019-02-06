@@ -67,6 +67,7 @@ INSTALLED_APPS = [
 
     'authentication.apps.AuthenticationConfig',
     'company.apps.CompanyConfig',
+    'employee.apps.EmployeeConfig',
     'agenda.apps.AgendaConfig',
     'tech.apps.TechConfig',
 ]

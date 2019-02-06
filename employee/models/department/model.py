@@ -2,7 +2,7 @@ from index.base.repository import Base
 from company.models.company.model import Company
 
 
-class WorkerDepartment(Base.TimeStumps, Base.SoftDeletion):
+class Department(Base.TimeStumps, Base.SoftDeletion):
     field = Base.Model.field
     rel = Base.Model.rel
 

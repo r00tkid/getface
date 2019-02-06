@@ -2,7 +2,7 @@ from index.base.repository import Base
 from company.models.company.model import Company
 
 
-class WorkerPosition(Base.TimeStumps, Base.SoftDeletion):
+class Position(Base.TimeStumps, Base.SoftDeletion):
     field = Base.Model.field
     rel = Base.Model.rel
 

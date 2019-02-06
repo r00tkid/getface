@@ -2,10 +2,10 @@ import typing as tp
 from index.base.repository import Base
 
 
-class PositionRepository(Base):
-    from .model import WorkerPosition as __Model
+class DepartmentRepository(Base):
+    from .model import Department as __Model
     from .validator import Create as __Create, Update as __Update
-    from .serializer import BasePosition as __BasePosition
+    from .serializer import BaseDepartment as __BaseDepartment
 
     @classmethod
     def model(cls) -> tp.Type[__Model]:
@@ -23,7 +23,7 @@ class PositionRepository(Base):
         }
 
     @classmethod
-    def serializers(cls) -> tp.Dict[str, tp.Union[tp.Type[__BasePosition]]]:
+    def serializers(cls) -> tp.Dict[str, tp.Union[tp.Type[__BaseDepartment]]]:
         return {
-            'base': cls.__BasePosition,
+            'base': cls.__BaseDepartment,
         }

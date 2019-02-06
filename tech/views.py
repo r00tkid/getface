@@ -51,5 +51,5 @@ def sign_up(request):
 @api_view(['GET'])
 @permission_classes((AllowAny,))
 def worker_sign_up(request):
-    from company.models import Worker
-    return Response(base.get_form_fields(Worker.action('register')))
+    from employee.models import Employee
+    return Response(base.get_form_fields(Employee.action('register')))

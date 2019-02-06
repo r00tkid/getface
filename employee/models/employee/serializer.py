@@ -1,14 +1,14 @@
 from index.base.repository import Base
-from .model import Worker
+from .model import Employee
 
 
-class BaseWorker(Base.Serializer):
+class BaseEmployee(Base.Serializer):
     class Meta:
-        model = Worker
+        model = Employee
         fields = ('id', 'first_name', 'last_name', 'email',)
 
 
-class ExtendedWorker(Base.Serializer):
+class ExtendedEmployee(Base.Serializer):
     serial = Base.Serializer.serializers
 
     email = serial.SerializerMethodField('get_worker_email')
@@ -27,5 +27,5 @@ class ExtendedWorker(Base.Serializer):
         return bool(model.user_id)
 
     class Meta:
-        model = Worker
+        model = Employee
         fields = ('id', 'first_name', 'last_name', 'is_fired', 'is_manager', 'email', 'physical',)
