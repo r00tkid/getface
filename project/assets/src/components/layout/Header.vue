@@ -38,15 +38,15 @@
         <v-btn large class="primary white--text">Оплатить</v-btn>
         <v-spacer></v-spacer>
 
-        <v-badge left class="mr-5">
-            <!--<span slot="badge">6</span>-->
+        <v-btn left class="mr-5" icon>
+            <span slot="badge">6</span>
             <v-icon
                     large
                     color="grey lighten-1"
             >
                 notification_important
             </v-icon>
-        </v-badge>
+        </v-btn>
 
         <v-flex xs1>
             <v-select
@@ -92,12 +92,8 @@
     }
 </script>
 
-<style>
-
-    /**
-    todo HELLO THIS IS GLOBAL CSS IN HEADER
-     */
-
+<style scoped>
+    /* todo: do */
     .kill-select > .v-input__control > .v-input__slot {
         background-color: rgba(0, 0, 0, 0) !important;
     }

@@ -8,7 +8,17 @@
     }
 </script>
 
+<!-- Global project styles -->
 <style>
+    .v-icon {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+    }
+
     .primary {
         background: linear-gradient(to right top, #7d6df2, #9077f4, #a181f6, #b08bf9, #be96fb) !important;
     }

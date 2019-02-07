@@ -71,7 +71,7 @@
         data() {
             return {
                 items: ["RUS", "ENG"],
-                data: data_json
+                data: {}
             };
         },
         methods: {

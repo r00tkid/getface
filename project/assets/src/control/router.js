@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Auth from '../views/Auth' // Layout?
 import Dashboard from '../views/layout/Dashboard'
+import Landing from '../views/layout/Landing'
 
 Vue.use(Router);
 
@@ -12,12 +13,19 @@ const router = new Router({
     routes: [
         {
             path: '/',
-            component: Auth,
+            component: Landing,
             children: [
                 {
-                    path: '/',
-                    redirect: '/login'
-                },
+                    path: '',
+                    name: 'landing',
+                    component: () => import('../views/tech/Empty')
+                }
+            ]
+        },
+        {
+            path: '/auth',
+            component: Auth,
+            children: [
                 {
                     path: '/login',
                     name: 'login',
