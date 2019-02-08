@@ -15,16 +15,10 @@
                 <v-layout row wrap justify-start>
                     <v-flex xs12>
                         <v-layout align-content-start column>
-                            <v-flex xs12>
-                                <time-table></time-table>
-                            </v-flex>
                             <v-flex style="text-align: left;">
                                 <v-btn color="#fa6d6e" dark class="hideAnalitics">Скрыть аналитику</v-btn>
                             </v-flex>
                         </v-layout>
-                    </v-flex>
-                    <v-flex xs12>
-                        <MyProgress></MyProgress>
                     </v-flex>
                 </v-layout>
             </v-flex>
@@ -75,7 +69,6 @@
                         <!--Graphs-->
                         <div class="charts">
                             <div class="chartBox">
-                                <line-chart :chartdata="chartData" :options="chartOptions"/>
                                 <div class="chartResults">
                                     <div class="chartResult-item late">
                                         <p>Коэф
@@ -96,29 +89,7 @@
                                         <span>72%</span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="chartBox">
                                 <line-chart :chartdata="chartData" :options="chartOptions"/>
-                                <div class="chartResults">
-                                    <div class="chartResult-item late">
-                                        <p>Коэф
-                                            <br>опозданий
-                                        </p>
-                                        <span>0,01%</span>
-                                    </div>
-                                    <div class="chartResult-item gone">
-                                        <p>Коэф
-                                            <br>ушел
-                                        </p>
-                                        <span>0,1%</span>
-                                    </div>
-                                    <div class="chartResult-item mood">
-                                        <p>Коэф
-                                            <br>настроение
-                                        </p>
-                                        <span>72%</span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </v-flex>
@@ -195,31 +166,28 @@
                         label: "Data One",
                         backgroundColor: "#5ae08f",
                         borderColor: "#5ae08f",
-                        lineTension: 0,
-                        data: [0, 13, 10, 30, 12, 6],
+                        data: [20, 13, 25, 10, 30, 35],
                         fill: false
                     },
                     {
                         label: "Data Two",
                         backgroundColor: "#fa6d6e",
                         borderColor: "#fa6d6e",
-                        lineTension: 0,
-                        data: [0, 12, 7, 31, 24, 15],
+                        data: [35, 28, 40, 25, 45, 45],
                         fill: false
                     },
                     {
-                        label: "Data Tree",
-                        backgroundColor: "#f6a944",
-                        borderColor: "#f6a944",
-                        lineTension: 0,
-                        data: [0, 12, 15, 20, 24, 27],
+                        label: "Data Two",
+                        backgroundColor: "#fbbd21",
+                        borderColor: "#fbbd21",
+                        data: [15, 20, 10, 22, 15, 30],
                         fill: false
-                    }
+                    },
                 ]
             },
             chartOptions: {
-                responsive: true,
                 steppedLine: false,
+                responsive: true,
                 scales: {
                     xAxes: [
                         {
@@ -232,6 +200,12 @@
                         {
                             gridLines: {
                                 display: false
+                            },
+                            ticks: {
+                                beginAtZero: true,
+                                steps: 10,
+                                stepValue: 5,
+                                max: 100
                             }
                         }
                     ]
@@ -250,35 +224,11 @@
             rowsPerPageItems: [4, 8, 12],
             pagination: {
                 rowsPerPage: 4
-            },
-            items: [
-                {
-                    value: false,
-                    name: "Frozen Yogurt",
-                    calories: 159,
-                    fat: 6.0,
-                    carbs: 24,
-                    protein: 4.0,
-                    sodium: 87,
-                    calcium: "14%",
-                    iron: "1%"
-                },
-                {
-                    value: false,
-                    name: "Ice cream sandwich",
-                    calories: 237,
-                    fat: 9.0,
-                    carbs: 37,
-                    protein: 4.3,
-                    sodium: 129,
-                    calcium: "8%",
-                    iron: "1%"
-                }
-            ]
+            }
         })
     };
 </script>
-<style scoped>
+<style >
     .purpleText {
         color: #7d6df2;
     }
@@ -316,17 +266,14 @@
     }
 
     .chartBox {
-        max-width: 50%;
+        display: flex;
+        width: 100%;
         padding-left: 15px;
-    }
-
-    #line-chart {
-        width: 250px !important;
-        height: 200px !important;
     }
 
     .chartResults {
         display: flex;
+        flex-direction: column;
         background-color: #fff;
         justify-content: space-between;
         border: 1px solid #d4d4d4;
@@ -337,7 +284,7 @@
     }
 
     .chartResult-item {
-        border-right: 1px solid #d4d4d4;
+        border-bottom: 1px solid #d4d4d4;
         flex-grow: 1;
     }
 
