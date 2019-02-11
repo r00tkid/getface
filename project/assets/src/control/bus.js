@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
 const bus = new Vue();
-window.$bus = bus;
+Vue.prototype.$bus = bus;
 
 export default bus;

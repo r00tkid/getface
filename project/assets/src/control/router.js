@@ -27,12 +27,12 @@ const router = new Router({
             component: Auth,
             children: [
                 {
-                    path: '/login',
+                    path: 'login',
                     name: 'login',
                     component: () => import('../components/modals/LoginModal')
                 },
                 {
-                    path: '/register',
+                    path: 'register',
                     name: 'register',
                     component: () => import('../components/modals/RegisterModal')
                 },
@@ -49,17 +49,17 @@ const router = new Router({
                     component: () => import('../views/Home')
                 },
                 {
-                    path: '/profile',
+                    path: 'profile',
                     name: 'profile',
                     component: () => import('../views/Profile')
                 },
                 {
-                    path: '/calendar',
+                    path: 'calendar',
                     name: 'calendar',
                     component: () => import('../views/Calendar')
                 },
                 {
-                    path: '/employee',
+                    path: 'employee',
                     name: 'employee',
                     component: () => import('../views/Employee')
                 }

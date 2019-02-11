@@ -1,11 +1,12 @@
 <template>
-    <v-layout row justify-center>
-        <v-dialog v-model="dialog" max-width="450px">
+    <v-layout row justify-center :if="dialog">
+        <v-dialog v-model="modalState" max-width="450px">
             <v-card>
                 <v-card-text>
                     <v-container grid-list-md>
                         <v-layout wrap align-center>
                             <v-flex xs12 class="text-xs-center dialog-header">
+
                                 <span class="subheading bff">ВОССТАНОВИТЬ ПАРОЛЬ</span>
                                 <v-flex xs12>
                                     <v-text-field label="Email указанный при регистрации"
@@ -23,21 +24,23 @@
                                                        sitekey="6LcFAYkUAAAAAEmjE31ouF7BR3fSumdWgeYDURhO" type="flag">
                                         </vue-recaptcha>
                                     </v-layout>
-
                                 </v-flex>
+
                                 <v-flex xs12 d-flex>
                                     <v-btn @click.prevent="submitPasswordReset"
-                                           :disabled="btnDisabled" color="primary lighten-2" class="white--text">
+                                           :disabled="btnDisabled"
+                                           color="primary lighten-2"
+                                           class="white--text">
                                         ВОССТАНОВИТЬ
                                     </v-btn>
                                 </v-flex>
+
                             </v-flex>
                         </v-layout>
                     </v-container>
                 </v-card-text>
             </v-card>
         </v-dialog>
-
     </v-layout>
 </template>
 
@@ -47,28 +50,42 @@
     export default {
         name: "ForgotPasswordModal",
         components: {VueRecaptcha},
+        props: {
+            dialog: {
+                type: Boolean,
+                default: false,
+            }
+        },
         data: () => ({
             btnDisabled: true,
             email: ''
         }),
         computed: {
-            dialog: {
+            modalState: {
                 get() {
-                    return this.$store.getters['modal/forgot'];
+                    return this.dialog;
                 },
                 set(value) {
-                    return this.$store.commit('modal/setForgotPasswordModal', value);
+                    this.$bus.$emit('get-face-forgot-password-modal-state', value);
                 }
             }
         },
-
         mounted() {
             // ReCaptcha script mount
-            let recaptchaScript = document.createElement('script')
-            recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit')
-            recaptchaScript.setAttribute('async', 'true')
-            recaptchaScript.setAttribute('defer', 'true')
-            document.head.appendChild(recaptchaScript)
+            let recaptchaScript = document.createElement('script');
+            recaptchaScript.setAttribute('id', 're-captcha-script');
+            recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit');
+            recaptchaScript.setAttribute('async', 'true');
+            recaptchaScript.setAttribute('defer', 'true');
+            document.head.appendChild(recaptchaScript);
+        },
+        beforeDestroy() {
+            // ReCaptcha script unmount
+            let captcha = document.head.querySelector('#re-captcha-script');
+            captcha && captcha.parentNode.removeChild(captcha);
+
+            let re_captcha = document.head.querySelector("[src*='recaptcha']");
+            re_captcha && re_captcha.parentNode.removeChild(re_captcha);
         },
         methods: {
             enableButton() {
@@ -79,7 +96,6 @@
             },
             submitPasswordReset() {
                 let email = this.email;
-                // Do shit
             }
         }
     }

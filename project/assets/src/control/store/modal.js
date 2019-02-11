@@ -1,4 +1,4 @@
-const Modals = {
+const Modal = {
     namespaced: true,
     state: {
         loginModal: false,
@@ -29,4 +29,4 @@ const Modals = {
     }
 };
 
-export default Modals;
+export default Modal;

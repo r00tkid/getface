@@ -1,6 +1,6 @@
 <template>
-    <v-layout row justify-center>
-        <v-dialog v-model="dialog" persistent max-width="500px">
+    <v-layout row justify-center :if="dialog">
+        <v-dialog v-model="modalState" persistent max-width="500px">
             <v-card>
                 <!--Steppers ahead!-->
                 <!--Header is hidden anyway-->
@@ -102,7 +102,7 @@
                                             </v-btn>
                                         </v-flex>
                                         <v-flex xs12 class="text-xs-center">
-                                            <router-link to="login">У меня уже есть аккаунт</router-link>
+                                            <a @click="openLoginModal">У меня уже есть аккаунт</a>
                                         </v-flex>
 
                                         <v-flex xs12 class="text-xs-center">
@@ -174,7 +174,7 @@
                                             </v-btn>
                                         </v-flex>
                                         <v-flex xs12 class="text-xs-center">
-                                            <router-link to="login">У меня уже есть аккаунт</router-link>
+                                            <a @click="openLoginModal">У меня уже есть аккаунт</a>
                                         </v-flex>
 
                                     </v-layout>
@@ -246,7 +246,7 @@
                                             </v-btn>
                                         </v-flex>
                                         <v-flex xs12 class="text-xs-center">
-                                            <router-link to="login">У меня уже есть аккаунт</router-link>
+                                            <a @click="openLoginModal">У меня уже есть аккаунт</a>
                                         </v-flex>
 
                                     </v-layout>
@@ -263,6 +263,12 @@
 <script>
     export default {
         name: "RegisterModal",
+        props: {
+            dialog: {
+                type: Boolean,
+                default: false,
+            }
+        },
         data() {
             return {
                 checkin: false,
@@ -329,21 +335,15 @@
             }
         },
         computed: {
-            dialog: {
+            modalState: {
                 get() {
-                    return this.$store.getters['modal/register'];
+                    return this.dialog;
                 },
                 set(value) {
-                    return this.$store.commit('modal/setRegisterModal', value);
+                    this.$bus.$emit('get-face-register-modal-state', value);
                 }
             },
 
-        },
-        mounted() {
-            setTimeout(() => this.$store.commit('modal/setRegisterModal', true), 600)
-        },
-        destroyed() {
-            this.$store.commit('modal/setRegisterModal', false);
         },
         methods: {
             nextStep(step) {
@@ -387,12 +387,8 @@
                     email: this.company_email,
                     address: this.company_address || null,
                     phone: this.company_phone || null,
-                }
+                };
 
-                // let data = _.pick(vueData, [
-                //     'company_name', 'company_address', 'company_phone', 'company_email'
-                // ]);
-                // Request
                 this.axios.request({
                     method: 'POST',
                     url: 'company',
@@ -411,6 +407,10 @@
                     });
                     setTimeout(() => noty.close(), 2000);
                 });
+            },
+            openLoginModal() {
+                this.modalState = false;
+                this.$bus.$emit('get-face-login-modal');
             }
         },
         updated() {

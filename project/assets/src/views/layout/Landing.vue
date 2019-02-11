@@ -4,6 +4,10 @@
 
         <router-view></router-view>
 
+        <modal-login :dialog="login"></modal-login>
+        <modal-register :dialog="register"></modal-register>
+        <modal-forgot-pass :dialog="forgot_password"></modal-forgot-pass>
+
         <landing-footer></landing-footer>
     </v-app>
 </template>
@@ -12,11 +16,56 @@
     import LandingHeader from './../../components/layout/landing/Header'
     import LandingFooter from './../../components/layout/landing/Footer'
 
+    import Login from '../../components/modals/auth/LoginModal'
+    import Register from '../../components/modals/auth/RegisterModal'
+    import ForgotPassword from '../../components/modals/auth/ForgotPasswordModal'
+
     export default {
-        name: "Landing",
+        name: "get-face-landing",
+        beforeMount() {
+            this.$bus.$on('get-face-login-modal', this.callLoginModal);
+            this.$bus.$on('get-face-login-modal-state', this.setLoginModalState);
+
+            this.$bus.$on('get-face-forgot-password-modal', this.callForgotPasswordModal);
+            this.$bus.$on('get-face-forgot-password-modal-state', this.setForgotPasswordModalState);
+
+            this.$bus.$on('get-face-register-modal', this.callRegisterModal);
+            this.$bus.$on('get-face-register-modal-state', this.setRegisterModalState);
+        },
+        data() {
+            return {
+                login: false,
+                register: false,
+                forgot_password: false,
+            }
+        },
         components: {
             'landing-header': LandingHeader,
             'landing-footer': LandingFooter,
+
+            'modal-login': Login,
+            'modal-register': Register,
+            'modal-forgot-pass': ForgotPassword,
+        },
+        methods: {
+            callLoginModal() {
+                this.login = !this.login;
+            },
+            setLoginModalState(payload) {
+                this.login = payload[0];
+            },
+            callForgotPasswordModal() {
+                this.forget_password = !this.forget_password;
+            },
+            setForgotPasswordModalState(payload) {
+                this.forget_password = payload[0];
+            },
+            callRegisterModal() {
+                this.register = !this.register;
+            },
+            setRegisterModalState(payload) {
+                this.register = payload[0];
+            },
         }
     }
 </script>

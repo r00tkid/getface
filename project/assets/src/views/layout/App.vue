@@ -10,6 +10,8 @@
 
 <!-- Global project styles -->
 <style>
+    @import url('https://fonts.googleapis.com/css?family=Montserrat');
+
     .v-icon {
         -webkit-touch-callout: none; /* iOS Safari */
         -webkit-user-select: none; /* Safari */

@@ -80,7 +80,7 @@
         },
         methods: {
             logout() {
-                this.$store.dispatch('auth/logout').then(() => this.$router.push('login'))
+                this.$store.dispatch('auth/logout').then(() => this.$router.push({name: 'landing'}))
             }
         }
     }

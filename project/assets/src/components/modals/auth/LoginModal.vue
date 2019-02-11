@@ -1,6 +1,6 @@
 <template>
-    <v-layout row justify-center>
-        <v-dialog v-model="dialog" persistent max-width="500px">
+    <v-layout row justify-center :if="dialog">
+        <v-dialog v-model="modalState" max-width="500px">
             <v-card>
                 <v-card-text>
                     <v-container grid-list-md>
@@ -68,11 +68,14 @@
                                 <a @click="openForgotPassModal">Забыли пароль?</a>
                             </v-flex>
                             <v-flex xs12 class="text-xs-center">
-                                <router-link to="register">Ещё нет аккаунта?</router-link>
+                                <a @click="openRegisterModal">Ещё нет аккаунта?</a>
                             </v-flex>
                             <v-flex xs12 class="text-xs-center">
-                                <p>Создавая аккаут, вы соглашаетесь с нашими <a>Правилами и условиями</a> и <a>Положением
-                                    о конфиденциальности</a></p>
+                                <p>
+                                    Создавая аккаут, вы соглашаетесь с нашими
+                                    <a>Правилами и условиями</a> и
+                                    <a>Положением о конфиденциальности</a>
+                                </p>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -85,6 +88,12 @@
 <script>
     export default {
         name: "LoginModal",
+        props: {
+            dialog: {
+                type: Boolean,
+                default: false,
+            }
+        },
         data() {
             return {
                 checkin: false,
@@ -93,59 +102,61 @@
                 password: '',
             }
         },
-        computed: {
-            dialog: {
-                get() {
-                    return this.$store.getters['modal/login'];
-                },
-                set(value) {
-                    return this.$store.commit('modal/setLoginModal', value);
-                }
-            }
-        },
         methods: {
             openForgotPassModal() {
-                this.$store.commit('modal/setForgotPasswordModal', true);
+                this.modalState = false;
+                this.$bus.$emit('get-face-forgot-password-modal');
+            },
+            openRegisterModal() {
+                this.modalState = false;
+                this.$bus.$emit('get-face-register-modal');
             },
             submitCredentials() {
                 this.checkin = true;
 
                 const vueData = Object.assign({}, this.$data);
-                let data = _.pick(vueData, ['username', 'password', 'remember_me'])
+                let data = _.pick(vueData, ['username', 'password', 'remember_me']);
 
-                let user = this.$store.dispatch('auth/login', data).then((res) => {
-                    this.$router.push('dashboard')
-                }).catch(error => {
-                    if (error.code === 'ECONNABORTED') {
-                        let errorNotification = this.$noty.error("Мы не получили ответа от сервера.", {
+                this.$store.dispatch('auth/login', data)
+                    .then((res) => {
+                        this.$router.push('dashboard')
+                    })
+                    .catch(error => {
+                        if (error.code === 'ECONNABORTED') {
+                            this.$noty.error("Мы не получили ответа от сервера.", {
+                                theme: 'metroui',
+                                timeout: 4000,
+                            });
+
+                            return 'timeout';
+                        }
+
+                        let errors = error.response.data.errors || error.response.data;
+                        let resp = [];
+                        for (let err in errors) {
+                            resp.push(err + ': ' + errors[err].join(', '));
+                        }
+
+                        this.$noty.error("Упс, кажется неправильные данные для входа: <br>" + resp.join("<br>"), {
                             theme: 'metroui',
+                            timeout: 4000,
                         });
-                        setTimeout(() => errorNotification.close(), 4000);
-                        return 'timeout';
-                    }
-
-                    let errors = error.response.data.errors || error.response.data
-                    let resp = [];
-                    for (let err in errors) {
-                        resp.push(err + ': ' + errors[err].join(', '));
-                    }
-                    let errorNotification = this.$noty.error("Упс, кажется неправильные данные для входа: <br>" + resp.join("<br>"), {
-                        theme: 'metroui',
+                    })
+                    .finally(() => {
+                        this.checkin = false;
                     });
-                    setTimeout(() => errorNotification.close(), 4000);
-                }).finally(() => {
-                    this.checkin = false;
-                })
             }
         },
-        mounted() {
-            // Load modal after page loading
-            setTimeout(() => this.$store.commit('modal/setLoginModal', true), 600)
-        },
-        destroyed() {
-            // We are changing modals
-            this.$store.commit('modal/setLoginModal', false);
-        },
+        computed: {
+            modalState: {
+                get() {
+                    return this.dialog;
+                },
+                set(value) {
+                    this.$bus.$emit('get-face-login-modal-state', value);
+                }
+            }
+        }
     }
 </script>
 
