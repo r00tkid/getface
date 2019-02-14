@@ -1,6 +1,6 @@
 <template>
     <v-layout row justify-center :if="dialog">
-        <v-dialog v-model="modalState" persistent max-width="500px">
+        <v-dialog v-model="modalState" max-width="500px" @keydown.esc="modalState = false">
             <v-card>
                 <!--Steppers ahead!-->
                 <!--Header is hidden anyway-->
@@ -262,7 +262,7 @@
 
 <script>
     export default {
-        name: "RegisterModal",
+        name: "get-face-register",
         props: {
             dialog: {
                 type: Boolean,

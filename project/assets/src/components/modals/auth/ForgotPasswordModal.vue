@@ -1,6 +1,6 @@
 <template>
     <v-layout row justify-center :if="dialog">
-        <v-dialog v-model="modalState" max-width="450px">
+        <v-dialog v-model="modalState" max-width="450px" @keydown.esc="modalState = false">
             <v-card>
                 <v-card-text>
                     <v-container grid-list-md>
@@ -14,10 +14,12 @@
                                                   class="mt-3"
                                                   solo
                                                   v-model="email"
-                                                  required></v-text-field>
+                                                  @keyup.enter="submitPasswordReset"
+                                                  required>
+                                    </v-text-field>
                                 </v-flex>
 
-                                <v-flex d-flex justify-center>
+                                <v-flex d-flex justify-center :if="'development' !== projectMode">
                                     <v-layout justify-center>
                                         <vue-recaptcha @verify="enableButton"
                                                        @expired="retry"
@@ -28,7 +30,7 @@
 
                                 <v-flex xs12 d-flex>
                                     <v-btn @click.prevent="submitPasswordReset"
-                                           :disabled="btnDisabled"
+                                           :disabled="'development' !== projectMode ? btnDisabled : false"
                                            color="primary lighten-2"
                                            class="white--text">
                                         ВОССТАНОВИТЬ
@@ -48,17 +50,18 @@
     import VueRecaptcha from 'vue-recaptcha';
 
     export default {
-        name: "ForgotPasswordModal",
+        name: "get-face-forgot-password",
         components: {VueRecaptcha},
         props: {
             dialog: {
                 type: Boolean,
                 default: false,
-            }
+            },
         },
         data: () => ({
             btnDisabled: true,
-            email: ''
+            email: '',
+            projectMode: process.env.NODE_ENV,
         }),
         computed: {
             modalState: {
@@ -67,25 +70,29 @@
                 },
                 set(value) {
                     this.$bus.$emit('get-face-forgot-password-modal-state', value);
-                }
+                },
             }
         },
         mounted() {
-            // ReCaptcha script mount
-            let recaptchaScript = document.createElement('script');
-            recaptchaScript.setAttribute('id', 're-captcha-script');
-            recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit');
-            recaptchaScript.setAttribute('async', 'true');
-            recaptchaScript.setAttribute('defer', 'true');
-            document.head.appendChild(recaptchaScript);
+            if ('development' !== this.projectMode) {
+                // ReCaptcha script mount
+                let recaptchaScript = document.createElement('script');
+                recaptchaScript.setAttribute('id', 're-captcha-script');
+                recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit');
+                recaptchaScript.setAttribute('async', 'true');
+                recaptchaScript.setAttribute('defer', 'true');
+                document.head.appendChild(recaptchaScript);
+            }
         },
         beforeDestroy() {
-            // ReCaptcha script unmount
-            let captcha = document.head.querySelector('#re-captcha-script');
-            captcha && captcha.parentNode.removeChild(captcha);
+            if ('development' !== this.projectMode) {
+                // ReCaptcha script unmount
+                let captcha = document.head.querySelector('#re-captcha-script');
+                captcha && captcha.parentNode.removeChild(captcha);
 
-            let re_captcha = document.head.querySelector("[src*='recaptcha']");
-            re_captcha && re_captcha.parentNode.removeChild(re_captcha);
+                let re_captcha = document.head.querySelector("[src*='recaptcha']");
+                re_captcha && re_captcha.parentNode.removeChild(re_captcha);
+            }
         },
         methods: {
             enableButton() {
@@ -95,8 +102,12 @@
                 this.btnDisabled = true;
             },
             submitPasswordReset() {
+                if (this.btnDisabled) {
+                    return;
+                }
+
                 let email = this.email;
-            }
+            },
         }
     }
 </script>

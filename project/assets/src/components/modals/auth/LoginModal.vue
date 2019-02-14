@@ -1,6 +1,6 @@
 <template>
     <v-layout row justify-center :if="dialog">
-        <v-dialog v-model="modalState" max-width="500px">
+        <v-dialog v-model="modalState" max-width="500px" @keydown.esc="modalState = false">
             <v-card>
                 <v-card-text>
                     <v-container grid-list-md>
@@ -87,7 +87,7 @@
 
 <script>
     export default {
-        name: "LoginModal",
+        name: "get-face-login",
         props: {
             dialog: {
                 type: Boolean,
@@ -122,25 +122,52 @@
                         this.$router.push('dashboard')
                     })
                     .catch(error => {
-                        if (error.code === 'ECONNABORTED') {
-                            this.$noty.error("Мы не получили ответа от сервера.", {
-                                theme: 'metroui',
-                                timeout: 4000,
-                            });
+                        switch (error.response ? error.response.status : error.code) {
+                            case 'ECONNABORTED':
+                                this.$noty.error("Мы не получили ответа от сервера.", {
+                                    theme: 'metroui',
+                                    timeout: 4000,
+                                });
 
-                            return 'timeout';
+                                break;
+                            case 400:
+                                const errors = error.response.data.errors ? error.response.data.errors : error.response.data;
+                                let compiled = '';
+
+                                if (errors) {
+                                    for (let err in errors) {
+                                        compiled += ` ${err}: ${errors[err]}`;
+                                    }
+                                }
+
+                                this.$noty.error(`Данные для входа не верны.${compiled}`, {
+                                    theme: 'metroui',
+                                    timeout: 4000,
+                                });
+
+                                break;
+                            case 404:
+                                this.$noty.error("Пользователь с такими данными не найден.", {
+                                    theme: 'metroui',
+                                    timeout: 4000,
+                                });
+
+                                break;
+                            case 422:
+                                this.$noty.error("Неверный пароль.", {
+                                    theme: 'metroui',
+                                    timeout: 4000,
+                                });
+
+                                break;
+                            default:
+                                this.$noty.error("Неизвестная ошибка сервера.", {
+                                    theme: 'metroui',
+                                    timeout: 4000,
+                                });
                         }
 
-                        let errors = error.response.data.errors || error.response.data;
-                        let resp = [];
-                        for (let err in errors) {
-                            resp.push(err + ': ' + errors[err].join(', '));
-                        }
-
-                        this.$noty.error("Упс, кажется неправильные данные для входа: <br>" + resp.join("<br>"), {
-                            theme: 'metroui',
-                            timeout: 4000,
-                        });
+                        return error.response ? error.response.statusText : error.code;
                     })
                     .finally(() => {
                         this.checkin = false;

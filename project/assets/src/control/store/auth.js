@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import $http from './../axios'
 
 const Auth = {
     namespaced: true,
@@ -17,7 +17,7 @@ const Auth = {
         setToken(state, value) {
             state.token = value.token;
             value.remember ? localStorage.setItem('token', value.token) : sessionStorage.setItem('token', value.token);
-            Vue.prototype.axios.defaults.headers.common['Authorization'] = `Bearer ${value.token}`;
+            $http.defaults.headers.common['Authorization'] = `Bearer ${value.token}`;
         },
         purgeToken(state) {
             state.token = '';
@@ -29,38 +29,38 @@ const Auth = {
         },
         purgeAuth(state) {
             state.authenticated = false;
-            delete Vue.prototype.axios.defaults.headers.common['Authorization'];
+            delete $http.defaults.headers.common['Authorization'];
 
         }
     },
     actions: {
         login: ({commit, state, dispatch}, data) => {
-            return Vue.prototype.axios.post('auth/sign-in', data).then(res => {
-                const token = res.data.token;
-                commit('setToken', {token: token, remember: data.remember_me});
-                dispatch('retrieveUser');
-                return res;
-            }).catch(e => {
-                throw e;
-            });
+            return $http.post('auth/sign-in', data)
+                .then(res => {
+                    const token = res.data.token;
+                    commit('setToken', {token: token, remember: data.remember_me});
+                    dispatch('retrieveUser');
+                    return res;
+                });
         },
         retrieveUser: ({commit, dispatch}) => {
-            return Vue.prototype.axios.get('auth/me').then(res => {
-                commit('setUser', res.data.user);
-                commit('setAuth', true);
-            }).catch(e => {
-                // todo Review this
-                try {
-                    dispatch('refreshToken').then(res => {
-                        return true;
-                    }).catch(e => {
-                        commit('purgeToken');
+            return $http.get('auth/me')
+                .then(res => {
+                    commit('setUser', res.data.user);
+                    commit('setAuth', true);
+                }).catch(e => {
+                    // todo Review this
+                    try {
+                        dispatch('refreshToken').then(res => {
+                            return true;
+                        }).catch(e => {
+                            commit('purgeToken');
+                            throw e;
+                        });
+                    } catch (e) {
                         throw e;
-                    });
-                } catch (e) {
-                    throw e;
-                }
-            })
+                    }
+                })
         },
         logout: ({commit}) => {
             return new Promise((resolve) => {
@@ -71,22 +71,18 @@ const Auth = {
             });
         },
         register: ({commit, dispatch}, data) => {
-            return Vue.prototype.axios.post('auth/sign-up', data).then(res => {
+            return $http.post('auth/sign-up', data).then(res => {
                 const token = res.data.token;
                 commit('setToken', {token: token, remember: true});
                 dispatch('retrieveUser');
-            }).catch(e => {
-                throw e;
-            })
+            });
         },
         refreshToken: ({state, commit, dispatch}) => {
-            return Vue.prototype.axios.post('auth/fresh', {token: state.token}).then(res => {
+            return $http.post('auth/fresh', {token: state.token}).then(res => {
                 const token = res.data.token;
                 commit('setToken', {token: token, remember: true});
                 dispatch('retrieveUser');
-            }).catch(e => {
-                throw e;
-            })
+            });
         }
     },
     getters: {

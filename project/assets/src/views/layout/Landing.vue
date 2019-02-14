@@ -26,11 +26,11 @@
             this.$bus.$on('get-face-login-modal', this.callLoginModal);
             this.$bus.$on('get-face-login-modal-state', this.setLoginModalState);
 
-            this.$bus.$on('get-face-forgot-password-modal', this.callForgotPasswordModal);
-            this.$bus.$on('get-face-forgot-password-modal-state', this.setForgotPasswordModalState);
-
             this.$bus.$on('get-face-register-modal', this.callRegisterModal);
             this.$bus.$on('get-face-register-modal-state', this.setRegisterModalState);
+
+            this.$bus.$on('get-face-forgot-password-modal', this.callForgotPasswordModal);
+            this.$bus.$on('get-face-forgot-password-modal-state', this.setForgotPasswordModalState);
         },
         data() {
             return {
@@ -49,22 +49,22 @@
         },
         methods: {
             callLoginModal() {
-                this.login = !this.login;
+                this.login = true;
             },
             setLoginModalState(payload) {
                 this.login = payload[0];
             },
-            callForgotPasswordModal() {
-                this.forget_password = !this.forget_password;
-            },
-            setForgotPasswordModalState(payload) {
-                this.forget_password = payload[0];
-            },
             callRegisterModal() {
-                this.register = !this.register;
+                this.register = true;
             },
             setRegisterModalState(payload) {
                 this.register = payload[0];
+            },
+            callForgotPasswordModal() {
+                this.forgot_password = true;
+            },
+            setForgotPasswordModalState(payload) {
+                this.forgot_password = payload[0];
             },
         }
     }
