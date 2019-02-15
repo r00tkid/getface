@@ -35,7 +35,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '::1']
 # Mail settings
 EMAIL_HOST_PASSWORD = 'getface-85Ftww34'
 EMAIL_HOST_USER = 'admin@get-face.com'
-EMAIL_HOST = 'getface-mail'
+EMAIL_HOST = 'get-face-mail'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
@@ -216,8 +216,8 @@ WSGI_APPLICATION = 'index.wsgi.get_face'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'getface_stage',
-        'HOST': 'getface_db',
+        'NAME': 'get_face_stage',
+        'HOST': 'get-face-stage-db',
         'PORT': '5432',
         'USER': 'root',
         'PASSWORD': '123456',
