@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Auth from '../views/Auth' // Layout?
 import Dashboard from '../views/layout/Dashboard'
+import Landing from '../views/layout/Landing'
 
 Vue.use(Router);
 
@@ -12,19 +13,26 @@ const router = new Router({
     routes: [
         {
             path: '/',
+            component: Landing,
+            children: [
+                {
+                    path: '',
+                    name: 'landing',
+                    component: () => import('../views/tech/Empty')
+                }
+            ]
+        },
+        {
+            path: '/auth',
             component: Auth,
             children: [
                 {
-                    path: '/',
-                    redirect: '/login'
-                },
-                {
-                    path: '/login',
+                    path: 'login',
                     name: 'login',
                     component: () => import('../components/modals/LoginModal')
                 },
                 {
-                    path: '/register',
+                    path: 'register',
                     name: 'register',
                     component: () => import('../components/modals/RegisterModal')
                 },
@@ -41,17 +49,17 @@ const router = new Router({
                     component: () => import('../views/Home')
                 },
                 {
-                    path: '/profile',
+                    path: 'profile',
                     name: 'profile',
                     component: () => import('../views/Profile')
                 },
                 {
-                    path: '/calendar',
+                    path: 'calendar',
                     name: 'calendar',
                     component: () => import('../views/Calendar')
                 },
                 {
-                    path: '/employee',
+                    path: 'employee',
                     name: 'employee',
                     component: () => import('../views/Employee')
                 }
@@ -82,4 +90,5 @@ router.beforeEach((to, from, next) => {
         next()
     }
 });
+
 export default router;
