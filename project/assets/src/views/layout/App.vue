@@ -53,4 +53,10 @@
         text-transform: none;
         line-height: 15px;
     }
+    .v-btn__content{
+        text-transform: none;
+    }
+    .v-input__slot{
+        border: 1px solid #d4d4d4 !important;
+    }
 </style>
