@@ -29,6 +29,9 @@ class Rate(Base.TimeStumps, Base.SoftDeletion):
         default=False,
     )
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = "Тариф"
         verbose_name_plural = "Тарифы"

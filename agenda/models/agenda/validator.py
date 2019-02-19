@@ -1,5 +1,5 @@
 from index.base.repository import Base
-from company.models import Worker
+from employee.models import Employee
 
 
 class Create(Base.Validator):
@@ -33,7 +33,7 @@ class Create(Base.Validator):
         valid.ValidationChain(
             valid.DataRequired(),
             valid.NumberRange(min=1),
-            valid.Exists(Worker.model(), 'id'),
+            valid.Exists(Employee.model(), 'id'),
         ),
     ])
 

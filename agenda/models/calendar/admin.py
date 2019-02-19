@@ -8,7 +8,7 @@ class Calendar(Base.Admin):
         """
         :type obj: agenda.models.calendar.model.Calendar
         """
-        worker = obj.worker
+        worker = obj.employee
         company = worker.company
 
         return "%s [%s]" % (company.name, str(worker))

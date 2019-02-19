@@ -1,7 +1,15 @@
 from index.base.repository import Base
-from company.models.company.model import Company
 from authentication.models import User
-from company.models import Worker
+from company.models.company.model import Company
+from employee.models.employee.model import Employee
+from employee.models.employee.serializer import BaseEmployee, ExtendedEmployee
+
+
+def get_employee_serializer(name):
+    return {
+        'base': BaseEmployee,
+        'extended': ExtendedEmployee,
+    }[name]
 
 
 class BaseCompany(Base.Serializer):
@@ -15,19 +23,21 @@ class ExtendedCompanyList(Base.ListSerializer):
         for data, instance in zip(self.data, self.instance):
             data['owner'] = User.serializer()(instance=instance.owner).data
 
-    def add_worker_info(self, user=None, field_name='worker'):
+    def add_employee_info(self, user=None, field_name='employee'):
         for data, instance in zip(self.data, self.instance):
-            if not User:
+            if not user:
                 data[field_name] = None
             else:
-                data[field_name] = Worker.serializer()(
-                    instance=Worker.model().objects.filter(user=user, company=instance).first()
+                data[field_name] = BaseEmployee(
+                    instance=Employee.objects.filter(user=user, company=instance).first()
                 ).data
 
-    def add_workers(self, name='base'):
+    def add_employees(self, name='base'):
         for data, instance in zip(self.data, self.instance):
-            data['workers'] = Worker.serializer(name)(
-                instance=Worker.model().objects.filter(company_id=instance.pk),
+            serial = get_employee_serializer(name)
+
+            data['employees'] = serial(
+                instance=Employee.objects.filter(company_id=instance.pk),
                 many=True,
             ).data
 
@@ -39,10 +49,10 @@ class ExtendedCompany(Base.Serializer):
     def add_owner(self):
         self.data['owner'] = User.serializer()(instance=self.instance.owner).data
 
-    def add_workers(self):
-        workers = Worker.model().objects.filter(company_id=self.instance.pk)
+    def add_employees(self):
+        employees = Employee.objects.filter(company_id=self.instance.pk)
 
-        self.data['workers'] = Worker.serializer()(instance=workers, many=True).data
+        self.data['employees'] = BaseEmployee(instance=employees, many=True).data
 
     class Meta:
         model = Company

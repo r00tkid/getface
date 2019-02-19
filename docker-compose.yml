@@ -1,24 +1,59 @@
 version: '3.7'
+
 services:
 
   getface_db:
-    container_name: getface-stage-db
+    container_name: get-face-stage-db
+    domainname: get-face.com
+    hostname: database
     image: postgres:11
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=123456
-      - POSTGRES_DB=getface_stage
+      - POSTGRES_DB=get_face_stage
     volumes:
-      - ./project/db:/var/lib/postgresql
+      - db:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - 5432
     networks:
-      - getface_stage_db_network
+      - get_face
+    restart: unless-stopped
+
+  getface_mail:
+    image: tvial/docker-mailserver:latest
+    container_name: get-face-mail
+    domainname: get-face.com
+    hostname: mail
+    ports:
+      - "25:25"
+      - "587:587"
+    volumes:
+      - ./project/mail/main:/var/mail
+      - ./project/mail/state:/var/mail-state
+      - ./project/mail/config/:/tmp/docker-mailserver/
+      - ./project/mail/mail-cert.crt:/etc/ssl/cert.pem
+      - ./project/mail/mail-cert.key:/etc/ssl/cert.key
+    environment:
+      - ENABLE_SPAMASSASSIN=0
+      - ENABLE_CLAMAV=1
+      - ENABLE_FAIL2BAN=1
+      - ENABLE_POSTGREY=1
+      - POSTMASTER_ADDRESS=admin@get-face.com
+      - ONE_DIR=1
+      - DMS_DEBUG=1
+      - SSL_TYPE=manual
+      - SSL_CERT_PATH=/etc/ssl/cert.pem
+      - SSL_KEY_PATH=/etc/ssl/cert.key
+    networks:
+      - get_face
+    restart: unless-stopped
 
   getface_stage:
     build:
       context: .
-    container_name: getface-stage
+    container_name: get-face-stage
+    domainname: get-face.com
+    hostname: stage
     volumes:
       - ./:/var/www/get-face
       - ./project/override/gunicorn:/usr/local/bin/gunicorn
@@ -27,31 +62,34 @@ services:
     command: >
       bash -c "gunicorn index.wsgi:get_face -c /var/www/get-face/index/gunicorn.py --timeout 30 --graceful-timeout 20"
     working_dir: /var/www/get-face
-    restart: always
     ports:
       - 8090:8090
-    depends_on:
-      - getface_db
     networks:
-      - getface_stage_network
-      - getface_stage_db_network
+      - get_face
+    restart: unless-stopped
 
   getface_nginx:
     image: nginx:1.15
-    container_name: getface-stage-http
+    container_name: get-face-http
+    domainname: get-face.com
+    hostname: nginx
     volumes:
       - ./:/var/www/get-face
       - ./project/nginx.conf:/etc/nginx/conf.d/default.conf
     working_dir: /var/www/get-face
     ports:
       - 9090:9090
-    links:
-      - getface_stage
     networks:
-      - getface_stage_network
+      - get_face
+    restart: unless-stopped
+
+volumes:
+
+  db:
+    driver: local
+    name: get-face-db
 
 networks:
-  getface_stage_network:
-    driver: bridge
-  getface_stage_db_network:
+  get_face:
+    name: get-face
     driver: bridge

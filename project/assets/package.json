@@ -1,6 +1,8 @@
 {
   "name": "assets",
-  "version": "0.1.0",
+  "version": "0.1.0-rc14",
+  "back-version": "0.4a",
+  "project-build": "1124",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

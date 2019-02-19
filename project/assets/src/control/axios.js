@@ -5,18 +5,20 @@ import Vue from "vue";
 
 const digitalocean = 'http://139.59.211.27:9090';
 
-const http = axios.create({
-    baseURL: (window.location.href.includes('localhost') ? digitalocean : '') + '/api/v1/',
-    headers: {
-        'Accept': "application\/json"
-    },
-    timeout: 5000,
-});
+const http = axios
+    .create({
+        baseURL: (window.location.href.includes('localhost') ? digitalocean : '') + '/api/v1/',
+        headers: {
+            'Accept': "application\/json"
+        },
+        timeout: 5000,
+    });
 
 /**
  * @type {AxiosInstance}
  */
-Vue.prototype.axios = http;
+Vue.prototype.$http = http;
+
 if (localStorage.token || sessionStorage.token) {
     const token = localStorage.token || sessionStorage.token;
     http.defaults.headers.common['Authorization'] = `Bearer ${token}`;

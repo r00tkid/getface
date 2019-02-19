@@ -1,5 +1,10 @@
+import uuid, _md5
 from django.contrib.auth.models import AbstractUser
 from index.base.repository import Base
+
+
+def _activation_key() -> str:
+    return _md5.md5(uuid.uuid4().bytes).hexdigest()
 
 
 class User(AbstractUser, Base.CreatedStump):
@@ -23,6 +28,31 @@ class User(AbstractUser, Base.CreatedStump):
         null=False,
         blank=False,
     )
+
+    activation = field.Char(
+        verbose_name="Код активации/восстановления пароля",
+        max_length=255,
+        null=True,
+        editable=False,
+        default=_activation_key
+    )
+
+    def new_activation(self):
+        self.activation = _activation_key()
+        return self.activation
+
+    def check_activation(self, code):
+        if self.activation is None or code is None or code == '':
+            return False
+
+        for a, b in zip((self.activation, code)):
+            if a != b:
+                return False
+        return True
+
+    def get_token(self):
+        from authentication.jwt import create_token
+        return create_token(self)
 
     def __str__(self):
         return "%s %s (%s)" % (self.first_name, self.last_name, self.username) if (

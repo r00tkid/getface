@@ -1,12 +1,14 @@
 import jwt
 from index import settings
-from rest_framework_jwt.serializers import JSONWebTokenSerializer
 from django.db.models import Q
-from django.contrib.auth import authenticate
-from django.utils.translation import ugettext as _
+from rest_framework import status
 from rest_framework import serializers
-from rest_framework_jwt.settings import api_settings
+from django.contrib.auth import authenticate
+from index.base.exceptions import APIException
 from authentication.models.user.model import User
+from django.utils.translation import ugettext as _
+from rest_framework_jwt.settings import api_settings
+from rest_framework_jwt.serializers import JSONWebTokenSerializer
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
@@ -24,9 +26,12 @@ class CustomJWTSerializer(JSONWebTokenSerializer):
     username_field = 'username'
 
     def validate(self, attrs):
+        # credentials (login=email|username|phone)[unique]
+        login = attrs.get("username")
         password = attrs.get("password")
+
         user_obj = User.objects.filter(
-            Q(email=attrs.get("username")) | Q(username=attrs.get("username")) | Q(phone=attrs.get('phone'))
+            Q(email=login) | Q(username=login) | Q(phone=login)
         ).first()
 
         if user_obj is not None:
@@ -40,8 +45,9 @@ class CustomJWTSerializer(JSONWebTokenSerializer):
 
                 if user:
                     if not user.is_active and not user.is_superuser:
-                        msg = _('User account is disabled.')
-                        raise serializers.ValidationError(msg)
+                        raise APIException({
+                            'detail': _('User account is disabled.'),
+                        }, code=409)
 
                     payload = jwt_payload_handler(user)
 
@@ -50,14 +56,24 @@ class CustomJWTSerializer(JSONWebTokenSerializer):
                         'user': user
                     }
                 else:
-                    msg = _('Unable to log in with provided credentials.')
-                    raise serializers.ValidationError(msg)
+                    raise APIException({
+                        'detail': _('Unable to log in with provided credentials.'),
+                    }, code=422)
 
             else:
-                msg = _('Must include "{username_field}" and "password".')
-                msg = msg.format(username_field=self.username_field)
-                raise serializers.ValidationError(msg)
+                raise APIException({
+                    'detail': _(
+                        'Must include "{username_field}" and "password".'
+                    ).format(username_field=self.username_field),
+                }, code=422)
 
         else:
-            msg = _('Account with this email/username does not exists')
-            raise serializers.ValidationError(msg)
+            raise APIException({
+                'detail': _('Account with this email/username/phone does not exists'),
+            }, code=404)
+
+    def update(self, instance, validated_data):
+        super().update(instance, validated_data)
+
+    def create(self, validated_data):
+        super().create(validated_data)

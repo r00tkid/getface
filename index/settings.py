@@ -15,6 +15,8 @@ import os, datetime
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 [LOGS_DIR] = os.path.abspath(os.path.join(BASE_DIR, 'project', 'log')),
+DEFAULT_NAME = "Get Face"
+BASE_URL = "http://139.59.211.27:9090"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -30,8 +32,22 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '::1']
 
-# Application definition
+# Mail settings
+EMAIL_HOST_PASSWORD = 'getface-85Ftww34'
+EMAIL_HOST_USER = 'admin@get-face.com'
+EMAIL_HOST = 'get-face-mail'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
+EMAIL_ADDRESSES = {
+    'main': 'Get Face official <no-response@get-face.com>',
+    'admin': 'Get Face administrator <admin@get-face.com>',
+    'finance': 'Get Face financial <finance@get-face.com>',
+    'info': 'Get Face info <info@get-face.com>',
+}
+
+# Application definition
 FAKER_LOCALE = None  # settings.LANGUAGE_CODE is loaded
 FAKER_PROVIDERS = None  # faker.DEFAULT_PROVIDERS is loaded (all)
 
@@ -51,6 +67,7 @@ INSTALLED_APPS = [
 
     'authentication.apps.AuthenticationConfig',
     'company.apps.CompanyConfig',
+    'employee.apps.EmployeeConfig',
     'agenda.apps.AgendaConfig',
     'tech.apps.TechConfig',
 ]
@@ -172,6 +189,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'static'),
+            os.path.join(BASE_DIR, 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -185,6 +203,11 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATE_PREFIXES = {
+    'mail': 'mail',  # For e-mail templates
+    'page': 'page',  # Fro pages that are not in SPA
+}
+
 WSGI_APPLICATION = 'index.wsgi.get_face'
 
 # Database
@@ -193,8 +216,8 @@ WSGI_APPLICATION = 'index.wsgi.get_face'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'getface_stage',
-        'HOST': 'getface_db',
+        'NAME': 'get_face_stage',
+        'HOST': 'get-face-stage-db',
         'PORT': '5432',
         'USER': 'root',
         'PASSWORD': '123456',

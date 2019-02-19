@@ -86,8 +86,6 @@
 </script>
 
 <style scoped>
-    @import url('https://fonts.googleapis.com/css?family=Montserrat');
-
     .dialog-header, .dialog-header * {
         font-family: 'Montserrat', sans-serif;
     }

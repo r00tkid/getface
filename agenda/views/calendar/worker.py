@@ -1,24 +1,23 @@
-import datetime
 from dateutil import parser
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from company.models import Worker
+from employee.models import Employee
 from agenda.models import Calendar, Agenda
 
 
 @api_view(('POST',))
 def want_to_work(request):
-    worker = Worker.info(request.data.get('worker_id'))
+    employee = Employee.info(request.data.get('employee_id'))
 
-    if request.user.id != worker.instance.user_id:
+    if request.user.id != employee.instance.user_id:
         return Response({
             'detail': 'Access forbidden',
         }, status=status.HTTP_403_FORBIDDEN)
 
     calendar = Calendar.info(request.data.get('calendar_id'))
 
-    if calendar.instance.worker_id != worker.instance.id:
+    if calendar.instance.employee_id != employee.instance.id:
         return Response({
             'detail': 'This calendar not for you',
         }, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -34,9 +33,9 @@ def want_to_work(request):
 
 @api_view(('POST',))
 def get_own_agenda(request):
-    worker = Worker.info(request.data.get('worker_id'))
+    employee = Employee.info(request.data.get('employee_id'))
 
-    if request.user.id != worker.instance.user_id:
+    if request.user.id != employee.instance.user_id:
         return Response({
             'detail': 'Access forbidden',
         }, status=status.HTTP_403_FORBIDDEN)
@@ -47,7 +46,7 @@ def get_own_agenda(request):
     # todo: do
 
     calendar = Calendar.model().objects.filter(
-        worker=worker.instance,
+        employee=employee.instance,
         start__year=start.year,
         start__day=start.day,
         end__year=end.year,
@@ -55,7 +54,7 @@ def get_own_agenda(request):
     )
 
     agenda = Agenda.model().objects.filter(
-        worker=worker.instance,
+        employee=employee.instance,
         start__year=start.year,
         start__day=start.day,
         end__year=end.year,

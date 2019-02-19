@@ -41,3 +41,5 @@ from django.db.models import (
     URLField as URL,
     UUIDField as UUID,
 )
+
+from index.fields.timezone import TimeZoneField as TimeZone

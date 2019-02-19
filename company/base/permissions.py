@@ -1,5 +1,6 @@
 from rest_framework.permissions import IsAuthenticated
-from company.models import Worker, Company
+from employee.models import Employee
+from company.models import Company
 from . import exceptions
 
 
@@ -17,7 +18,7 @@ class CanManageCompany(IsAuthenticated):
             except:
                 raise exceptions.CompanyNotFound("Company with id:[%s] not found." % data.get('company_id'))
 
-            manager = Worker.model().objects.filter(user=user, company_id=data.get('company_id')).first()
+            manager = Employee.model().objects.filter(user=user, company_id=data.get('company_id')).first()
 
             is_owner = user.id == company.owner_id
             is_manager = manager and manager.is_manager and not manager.is_fired
@@ -28,7 +29,7 @@ class CanManageCompany(IsAuthenticated):
         return True
 
 
-class CanManageWorkers(CanManageCompany):
+class CanManageEmployees(CanManageCompany):
     def has_permission(self, request, view):
         if not super().has_permission(request, view):
             return False
@@ -36,21 +37,21 @@ class CanManageWorkers(CanManageCompany):
         data = request.parser_context.get('kwargs', {})
 
         if request.method not in ('POST', 'RESTORE'):
-            if data.get('worker_id', 'no_data') is 'no_data':
+            if data.get('employee_id', 'no_data') is 'no_data':
                 raise exceptions.NotFound
 
             try:
-                Worker.model().objects.get(pk=data.get('worker_id'), company_id=data.get('company_id'))
+                Employee.model().objects.get(pk=data.get('employee_id'), company_id=data.get('company_id'))
             except:
-                raise exceptions.WorkerNotFound("Worker with id:[%s] not found." % data.get('worker_id'))
+                raise exceptions.WorkerNotFound("Employee with id:[%s] not found." % data.get('employee_id'))
 
         if 'RESTORE' == request.method:
-            if data.get('worker_id', 'no_data') is 'no_data':
+            if data.get('employee_id', 'no_data') is 'no_data':
                 raise exceptions.NotFound
 
             try:
-                Worker.model().all_objects.get(pk=data.get('worker_id'), company_id=data.get('company_id'))
+                Employee.model().all_objects.get(pk=data.get('employee_id'), company_id=data.get('company_id'))
             except:
-                raise exceptions.WorkerNotFound("Worker with id:[%s] not found." % data.get('worker_id'))
+                raise exceptions.WorkerNotFound("Employee with id:[%s] not found." % data.get('employee_id'))
 
         return True

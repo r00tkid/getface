@@ -5,8 +5,9 @@
 
             <abn-header></abn-header>
             <v-content>
-                <transition name="zoom"
-                            mode="out-in"
+                <transition
+                        name="zoom"
+                        mode="out-in"
                 >
                     <router-view></router-view>
                 </transition>
@@ -36,7 +37,7 @@
     }
 </script>
 
-<!-- Global project styles -->
+<!-- Dashboard global styles -->
 <style lang="css">
     .input-no-arrows input[type='number'] {
         -moz-appearance: textfield !important;
@@ -68,5 +69,4 @@
             opacity: 1;
         }
     }
-
 </style>

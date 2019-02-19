@@ -1,6 +1,6 @@
 import datetime
 from index.base.repository import Base
-from company.models.worker.model import Worker
+from employee.models.employee.model import Employee
 
 
 class Calendar(Base.TimeStumps, Base.SoftDeletion):
@@ -15,14 +15,14 @@ class Calendar(Base.TimeStumps, Base.SoftDeletion):
         default=None,
     )
 
-    worker = field.Foreign(
-        Worker,
-        verbose_name="Работник",
+    employee = field.Foreign(
+        Employee,
+        verbose_name="Сотрудник",
         on_delete=rel.CASCADE,
-    )  # type: Worker.model()
+    )
 
     def __str__(self):
-        u = self.worker
+        u: Employee = self.employee
 
         return "%s %s [%s]:(%s - %s)" % (
             u.first_name,
@@ -33,5 +33,5 @@ class Calendar(Base.TimeStumps, Base.SoftDeletion):
         )
 
     class Meta:
-        verbose_name = "График работника"
-        verbose_name_plural = "Графики работника"
+        verbose_name = "График сотрудника"
+        verbose_name_plural = "Графики сотрудников"

@@ -80,7 +80,6 @@
             </v-card>
         </v-dialog>
     </v-layout>
-
 </template>
 
 <script>
@@ -150,9 +149,7 @@
     }
 </script>
 
-<style>
-    @import url('https://fonts.googleapis.com/css?family=Montserrat');
-
+<style scoped>
     .dialog-header, .dialog-header * {
         font-family: 'Montserrat', sans-serif;
     }

@@ -13,7 +13,7 @@
             <v-flex xs12>
                 <v-container grid-list-xl fill-height>
                     <v-layout row wrap>
-                        <v-flex xs12 md6 lg3 v-for="i in 12" >
+                        <v-flex xs12 md6 lg3 v-for="i in 12" :key="i">
                             <div @click="loadMonthStats(i-1)" class="vue-date-wrapper">
                                 <date-pick
                                         :value="getCurrMonth(i-1)"
@@ -35,37 +35,37 @@
 </template>
 
 <script>
-  import DatePick from 'vue-date-pick';
-  import 'vue-date-pick/dist/vueDatePick.css';
+    import DatePick from 'vue-date-pick';
+    import 'vue-date-pick/dist/vueDatePick.css';
 
-  export default {
-    name: "Calendar",
-    components: {
-      DatePick
-    },
-    data() {
-      return {
-        date: new Date().toISOString().substr(0, 10),
-        year: new Date().getFullYear().valueOf()
-      }
-    },
-    methods: {
-      getCurrMonth(month) {
-        let date = new Date();
-        date.setFullYear(this.year, month);
-        return date.toISOString().substr(0, 10);
-      },
-      isFutureDate(date) {
-        const currentDate = new Date();
-        return date > currentDate;
-      },
-      loadMonthStats(e) {
-        let [month, year] = [e, this.year];
-        //todo implement this later
-        console.log(month, year);
-      }
+    export default {
+        name: "Calendar",
+        components: {
+            DatePick
+        },
+        data() {
+            return {
+                date: new Date().toISOString().substr(0, 10),
+                year: new Date().getFullYear().valueOf()
+            }
+        },
+        methods: {
+            getCurrMonth(month) {
+                let date = new Date();
+                date.setFullYear(this.year, month);
+                return date.toISOString().substr(0, 10);
+            },
+            isFutureDate(date) {
+                const currentDate = new Date();
+                return date > currentDate;
+            },
+            loadMonthStats(e) {
+                let [month, year] = [e, this.year];
+                //todo implement this later
+                console.log(month, year);
+            }
+        }
     }
-  }
 </script>
 
 <style>
@@ -84,6 +84,7 @@
     .vue-date-wrapper, .vdpInnerWrap, .vdpComponent, .vdpOuterWrap {
         height: 100%;
     }
+
     .vue-date-wrapper {
         cursor: pointer;
     }
