@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  getface_mail:
+    image: tvial/docker-mailserver:latest
+    container_name: get-face-mail
+    domainname: get-face.com
+    hostname: mail
+    ports:
+      - "25:25"
+      - "587:587"
+    volumes:
+      - ./mail/main:/var/mail
+      - ./mail/state:/var/mail-state
+      - ./mail/config/:/tmp/docker-mailserver/
+      - ./mail/mail-cert.crt:/etc/ssl/cert.pem
+      - ./mail/mail-cert.key:/etc/ssl/cert.key
+    environment:
+      - ENABLE_SPAMASSASSIN=0
+      - ENABLE_CLAMAV=1
+      - ENABLE_FAIL2BAN=1
+      - ENABLE_POSTGREY=1
+      - POSTMASTER_ADDRESS=admin@get-face.com
+      - ONE_DIR=1
+      - DMS_DEBUG=1
+      - SSL_TYPE=manual
+      - SSL_CERT_PATH=/etc/ssl/cert.pem
+      - SSL_KEY_PATH=/etc/ssl/cert.key
+    networks:
+      - get_face
+    restart: unless-stopped
+
+networks:
+  get_face:
+    name: get-face
+    driver: bridge

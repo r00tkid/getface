@@ -11,7 +11,7 @@ urlpatterns = [
     path('/worker', auth.employee_sign_up),
     path('/confirm', auth.activate_account),
     path('/sign-in', ObtainJSONWebToken.as_view(serializer_class=CustomJWTSerializer)),
-    path('/fresh', refresh_jwt_token),
+    path('/refresh', refresh_jwt_token),
     path('/lost', auth.reset_password),
     path('/reset', auth.reset_confirm),
 

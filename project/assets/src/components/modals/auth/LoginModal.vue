@@ -55,9 +55,12 @@
                                 ></v-text-field>
                             </v-flex>
                             <v-flex xs12 d-flex>
-                                <v-btn :loading="checkin" @click="submitCredentials" color="primary lighten-2"
-                                       class="white--text"
-                                >
+                                <v-btn :loading="checkin"
+                                       :disabled="checkin"
+                                       @click="submitCredentials"
+                                       @click.prevent="preventLogin"
+                                       color="primary lighten-2"
+                                       class="white--text">
                                     Войти
                                 </v-btn>
                             </v-flex>
@@ -117,9 +120,11 @@
                 const vueData = Object.assign({}, this.$data);
                 let data = _.pick(vueData, ['username', 'password', 'remember_me']);
 
-                this.$store.dispatch('auth/login', data)
+                this.$http('auth.login', data, 'post')
                     .then((res) => {
-                        this.$router.push('dashboard')
+                        const token = res.data.token;
+                        this.$store.commit('auth/setToken', {token: token, remember: data.remember_me});
+                        this.$router.push({name: 'dashboard'});
                     })
                     .catch(error => {
                         switch (error.response ? error.response.status : error.code) {
@@ -172,6 +177,9 @@
                     .finally(() => {
                         this.checkin = false;
                     });
+            },
+            preventLogin() {
+                return !this.checkin;
             }
         },
         computed: {

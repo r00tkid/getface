@@ -19,38 +19,10 @@ services:
       - get_face
     restart: unless-stopped
 
-  getface_mail:
-    image: tvial/docker-mailserver:latest
-    container_name: get-face-mail
-    domainname: get-face.com
-    hostname: mail
-    ports:
-      - "25:25"
-      - "587:587"
-    volumes:
-      - ./project/mail/main:/var/mail
-      - ./project/mail/state:/var/mail-state
-      - ./project/mail/config/:/tmp/docker-mailserver/
-      - ./project/mail/mail-cert.crt:/etc/ssl/cert.pem
-      - ./project/mail/mail-cert.key:/etc/ssl/cert.key
-    environment:
-      - ENABLE_SPAMASSASSIN=0
-      - ENABLE_CLAMAV=1
-      - ENABLE_FAIL2BAN=1
-      - ENABLE_POSTGREY=1
-      - POSTMASTER_ADDRESS=admin@get-face.com
-      - ONE_DIR=1
-      - DMS_DEBUG=1
-      - SSL_TYPE=manual
-      - SSL_CERT_PATH=/etc/ssl/cert.pem
-      - SSL_KEY_PATH=/etc/ssl/cert.key
-    networks:
-      - get_face
-    restart: unless-stopped
-
   getface_stage:
     build:
       context: .
+    image: getface_stage
     container_name: get-face-stage
     domainname: get-face.com
     hostname: stage
@@ -66,6 +38,18 @@ services:
       - 8090:8090
     networks:
       - get_face
+    restart: unless-stopped
+
+  getface_stage_watcher:
+    build:
+      context: ./project/assets
+    container_name: get-face-stage-watcher
+    depends_on:
+      - getface_stage
+    volumes:
+      - ./:/var/www/get-face
+    working_dir: /var/www/get-face/project/assets
+    command: bash -c "npm i && npm run watch > ./../log/npm-watcher.log"
     restart: unless-stopped
 
   getface_nginx:

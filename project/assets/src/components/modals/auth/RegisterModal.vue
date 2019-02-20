@@ -351,31 +351,46 @@
                     this.e1++;
             },
             registerUser() {
-                if (!this.step2Valid)
-                    return false;
                 this.checkin = true;
 
                 let vueData = Object.assign({}, this.$data);
                 let data = _.pick(vueData, [
                     'username', 'email', 'password', 'password_confirmation', 'first_name', 'last_name', 'phone'
-                ])
-                this.$store.dispatch('auth/register', data).then(() => {
-                    // this.$router.push('dashboard');
-                    this.e1 = 3;
-                }).catch(error => {
-                    let errors = error.response.data.errors
-                    let resp = [];
-                    for (let err in errors) {
-                        resp.push(err + ': ' + errors[err].join(', '));
-                    }
-                    let noty = this.$noty.error("Упс, кажется неправильные данные для входа: <br>" + resp.join("<br>"), {
-                        theme: 'metroui',
+                ]);
+
+                this.$http('auth.register', data, 'post')
+                    .then(res => {
+                        this.$noty.success("Удачная регистрация. Данны об активации аккаунта отправлены по почте.", {
+                            theme: 'metroui',
+                            timeout: 4000,
+                        });
+
+                        this.modalState = false;
+                    })
+                    .catch(error => {
+                        let errors = error.response.data.errors;
+                        let resp = [];
+                        for (let err in errors) {
+                            resp.push(err + ': ' + errors[err].join(', '));
+                        }
+
+                        this.$noty.error("Упс, кажется неправильные данные для регистрации: <br>" + resp.join("<br>"), {
+                            theme: 'metroui',
+                            timeout: 2000,
+                        });
+
+                        if (errors.phone && errors.email)
+                            this.$noty.show("Если вы уже регистрировались на сайте, но не получили письма с подтверждением, нажмите сюда.", 'alert', {
+                                theme: 'nest',
+                                timeout: 4000,
+                                layout: 'bottomCenter',
+                            });
+
+                        this.el = 1;
+                    })
+                    .finally(() => {
+                        this.checkin = false;
                     });
-                    // setTimeout(() => this.notifi.close(), 2000);
-                    this.e1 = 1;
-                }).finally(() => {
-                    this.checkin = false;
-                })
             },
             registerCompany() {
                 if (!this.step3Valid)

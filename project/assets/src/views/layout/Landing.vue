@@ -22,6 +22,24 @@
 
     export default {
         name: "get-face-landing",
+        beforeCreate() {
+            if (sessionStorage.getItem('token') || localStorage.getItem('token')) {
+                let user = this.$store.getters['auth/user'];
+
+                if (!user || !user.id) {
+                    this.$http('auth.user')
+                        .then(res => {
+                            this.$store.commit('auth/setUser', res.data);
+                            this.$router.push({name: 'dashboard'});
+                        })
+                        .catch(err => {
+                            this.$store.dispatch('auth/logout').catch(e => {
+                                /* just do nothing */
+                            });
+                        })
+                }
+            }
+        },
         beforeMount() {
             this.$bus.$on('get-face-login-modal', this.callLoginModal);
             this.$bus.$on('get-face-login-modal-state', this.setLoginModalState);

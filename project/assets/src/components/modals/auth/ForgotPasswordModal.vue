@@ -30,7 +30,7 @@
 
                                 <v-flex xs12 d-flex>
                                     <v-btn @click.prevent="submitPasswordReset"
-                                           :disabled="'development' !== projectMode ? btnDisabled : false"
+                                           :disabled="'development' !== projectMode ? btnDisabled : (btnDisabled = false)"
                                            color="primary lighten-2"
                                            class="white--text">
                                         ВОССТАНОВИТЬ
@@ -106,7 +106,38 @@
                     return;
                 }
 
-                let email = this.email;
+                this.$http('auth.password_restore', {email: this.email}, 'post')
+                    .then(res => {
+                        this.$noty.success('Инструкции по восстановлению пароля высланы на почту.', {
+                            theme: 'metroui',
+                            timeout: 2000,
+                        });
+
+                        this.modalState = false;
+                    })
+                    .catch(err => {
+                        switch (err.response ? err.response.status : err.code) {
+                            case 404:
+                                this.$noty.error('Пользователь с такими данными не найден.', {
+                                    theme: 'metroui',
+                                    timeout: 2000,
+                                });
+
+                                break;
+                            case 409:
+                                this.$noty.error('Пользователь с такими данными не найден или аккаунт не активирован.', {
+                                    theme: 'metroui',
+                                    timeout: 2000,
+                                });
+
+                                break;
+                            default:
+                                this.$noty.error('Неизвестная ошибка сервера.', {
+                                    theme: 'metroui',
+                                    timeout: 2000,
+                                });
+                        }
+                    });
             },
         }
     }

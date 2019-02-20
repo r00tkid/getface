@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Auth from '../views/Auth' // Layout?
 import Dashboard from '../views/layout/Dashboard'
 import Landing from '../views/layout/Landing'
 
@@ -23,29 +22,13 @@ const router = new Router({
             ]
         },
         {
-            path: '/auth',
-            component: Auth,
-            children: [
-                {
-                    path: 'login',
-                    name: 'login',
-                    component: () => import('../components/modals/LoginModal')
-                },
-                {
-                    path: 'register',
-                    name: 'register',
-                    component: () => import('../components/modals/RegisterModal')
-                },
-            ]
-        },
-        {
             path: '/dashboard',
             component: Dashboard,
             meta: {requiresAuth: true},
             children: [
                 {
                     path: '',
-                    name: 'home',
+                    name: 'dashboard',
                     component: () => import('../views/Home')
                 },
                 {
@@ -81,7 +64,7 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!localStorage.token && !sessionStorage.token) {
             next({
-                path: '/login',
+                path: '/',
             })
         } else {
             next()

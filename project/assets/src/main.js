@@ -27,7 +27,7 @@ Vue.use(Vuetify, {
     iconfont: 'fa4'
 });
 
-new Vue({
+window.get_face = new Vue({
     router,
     store,
     render: h => h(App)

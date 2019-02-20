@@ -1,23 +1,24 @@
-import $http from './../axios'
-
 const Auth = {
     namespaced: true,
     state: {
         authenticated: false,
         user: {},
-        token: ''
+        companies: {},
+        token: '',
+        vue: null,
+        $http: null,
     },
     mutations: {
         setAuth(state, value) {
             state.authenticated = value;
         },
         setUser(state, value) {
-            state.user = value
+            state.user = value.user;
+            state.companies = value.companies;
         },
         setToken(state, value) {
             state.token = value.token;
             value.remember ? localStorage.setItem('token', value.token) : sessionStorage.setItem('token', value.token);
-            $http.defaults.headers.common['Authorization'] = `Bearer ${value.token}`;
         },
         purgeToken(state) {
             state.token = '';
@@ -25,43 +26,13 @@ const Auth = {
             sessionStorage.removeItem('token');
         },
         purgeUser(state) {
-            state.user = {}
+            state.user = {};
         },
         purgeAuth(state) {
             state.authenticated = false;
-            delete $http.defaults.headers.common['Authorization'];
-
-        }
+        },
     },
     actions: {
-        login: ({commit, state, dispatch}, data) => {
-            return $http.post('auth/sign-in', data)
-                .then(res => {
-                    const token = res.data.token;
-                    commit('setToken', {token: token, remember: data.remember_me});
-                    dispatch('retrieveUser');
-                    return res;
-                });
-        },
-        retrieveUser: ({commit, dispatch}) => {
-            return $http.get('auth/me')
-                .then(res => {
-                    commit('setUser', res.data.user);
-                    commit('setAuth', true);
-                }).catch(e => {
-                    // todo Review this
-                    try {
-                        dispatch('refreshToken').then(res => {
-                            return true;
-                        }).catch(e => {
-                            commit('purgeToken');
-                            throw e;
-                        });
-                    } catch (e) {
-                        throw e;
-                    }
-                })
-        },
         logout: ({commit}) => {
             return new Promise((resolve) => {
                 commit('purgeToken');
@@ -70,28 +41,21 @@ const Auth = {
                 resolve(true);
             });
         },
-        register: ({commit, dispatch}, data) => {
-            return $http.post('auth/sign-up', data).then(res => {
-                const token = res.data.token;
-                commit('setToken', {token: token, remember: true});
-                dispatch('retrieveUser');
-            });
-        },
-        refreshToken: ({state, commit, dispatch}) => {
-            return $http.post('auth/fresh', {token: state.token}).then(res => {
-                const token = res.data.token;
-                commit('setToken', {token: token, remember: true});
-                dispatch('retrieveUser');
-            });
-        }
+        // refreshToken: ({state, commit, dispatch}) => {
+        //     return this.$http.post('auth/fresh', {token: state.token}).then(res => {
+        //         const token = res.data.token;
+        //         commit('setToken', {token: token, remember: true});
+        //         dispatch('retrieveUser');
+        //     });
+        // },
+        // forgotPassword: ({commit, dispatch}, data) => {
+        //     return this.$http.post('auth/lost', data);
+        // },
     },
     getters: {
-        user: state => {
-            return state.user;
-        },
-        isAuth: state => {
-            return state.authenticated;
-        }
+        user: state => state.user,
+        companies: state => state.companies,
+        isAuth: state => state.authenticated,
     }
 };
 

@@ -14,7 +14,6 @@ WORKDIR /
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 RUN apt-get update && apt-get -y install gcc nodejs npm libxml2-dev libxslt1-dev libxslt-dev fortune-mod cowsay \
                                           python-lxml pgloader build-essential git openssh-server nano
-RUN npm i -g npm
 RUN pip install lxml tornado psycopg2-binary inotify
 
 # SSH preparations

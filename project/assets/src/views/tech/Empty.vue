@@ -1,7 +1,9 @@
 <template>
-    <v-container fluid>
-        I'm so empty
-    </v-container>
+    <v-content>
+        <v-container fluid>
+            Empty page [<small>in development</small>]
+        </v-container>
+    </v-content>
 </template>
 
 <script>

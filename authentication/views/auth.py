@@ -61,7 +61,7 @@ def sign_up(request):
             'detail': 'Data has invalid fields.',
             'valid': False,
             'errors': validator.errors,
-        })
+        }, status.HTTP_422_UNPROCESSABLE_ENTITY)
 
     debug = {}
     info = validator.data
