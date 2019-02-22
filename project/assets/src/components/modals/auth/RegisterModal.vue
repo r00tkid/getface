@@ -261,6 +261,8 @@
 </template>
 
 <script>
+    import Noty from 'noty';
+
     export default {
         name: "get-face-register",
         props: {
@@ -379,14 +381,31 @@
                             timeout: 2000,
                         });
 
-                        if (errors.phone && errors.email)
-                            this.$noty.show("Если вы уже регистрировались на сайте, но не получили письма с подтверждением, нажмите сюда.", 'alert', {
-                                theme: 'nest',
-                                timeout: 4000,
-                                layout: 'bottomCenter',
-                            });
+                        let p, e, u;
+                        [p, e, u] = [errors.phone, errors.email, errors.username];
 
-                        this.el = 1;
+                        if (p && e || p && u || e && u) {
+                            let current_noty_window = this.$noty.show("Вы уже регистрировались на сайте, но не получили письма с подтверждением?", 'alert', {
+                                theme: 'nest',
+                                timeout: 6000,
+                                layout: 'bottomCenter',
+                                buttons: [
+                                    Noty.button('Да', 'btn btn-success btn-abn-noty-correct', () => {
+                                        this.modalState = false;
+
+                                        current_noty_window.close();
+
+                                        this.resendMailInvitation(data.email);
+                                    }),
+
+                                    Noty.button('Нет', 'btn btn-error btn-abn-noty-correct', () => {
+                                        current_noty_window.close();
+
+                                        this.e1 = 1;
+                                    })
+                                ]
+                            });
+                        }
                     })
                     .finally(() => {
                         this.checkin = false;
@@ -422,6 +441,34 @@
                     });
                     setTimeout(() => noty.close(), 2000);
                 });
+            },
+            resendMailInvitation(email) {
+                this.$http('auth.resend', {email: email}, 'post')
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(e => {
+                        const res = e.response;
+
+                        switch (res.status) {
+                            case 409:
+                                if (res.data.active) {
+                                    this.$bus.$emit('get-face-forgot-password-modal', {email: email});
+                                    this.$noty.error("Аккаунт уже активирован. Попробуйте воспользоваться формой восстановления пароля.", {
+                                        theme: 'metroui',
+                                        timeout: 3000,
+                                    });
+
+                                    return;
+                                }
+
+                                this.$noty.error("С вашим аккаунтом что-то не так. Пожалуйста, свяжитесь с тех поддержкой.");
+
+                                break;
+                            default:
+                                this.$noty.error(res.data.detail);
+                        }
+                    });
             },
             openLoginModal() {
                 this.modalState = false;

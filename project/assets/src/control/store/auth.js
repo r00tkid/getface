@@ -5,8 +5,6 @@ const Auth = {
         user: {},
         companies: {},
         token: '',
-        vue: null,
-        $http: null,
     },
     mutations: {
         setAuth(state, value) {
@@ -41,16 +39,6 @@ const Auth = {
                 resolve(true);
             });
         },
-        // refreshToken: ({state, commit, dispatch}) => {
-        //     return this.$http.post('auth/fresh', {token: state.token}).then(res => {
-        //         const token = res.data.token;
-        //         commit('setToken', {token: token, remember: true});
-        //         dispatch('retrieveUser');
-        //     });
-        // },
-        // forgotPassword: ({commit, dispatch}, data) => {
-        //     return this.$http.post('auth/lost', data);
-        // },
     },
     getters: {
         user: state => state.user,

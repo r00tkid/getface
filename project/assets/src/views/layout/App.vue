@@ -61,4 +61,8 @@
     .v-input__slot {
         border: 1px solid #d4d4d4 !important;
     }
+
+    .btn-abn-noty-correct {
+        padding: 3px;
+    }
 </style>

@@ -10,6 +10,7 @@ const V1 = {
                     register: 'sign-up',
                     refresh: 'refresh',
                     user: 'me',
+                    resend: 'resend',
 
                     password_restore: 'lost',
                     password_reset: 'reset',

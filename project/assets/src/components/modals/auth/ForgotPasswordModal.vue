@@ -73,6 +73,9 @@
                 },
             }
         },
+        beforeMount() {
+            this.$bus.$on('get-face-forgot-password-modal', this.checkEventPayload);
+        },
         mounted() {
             if ('development' !== this.projectMode) {
                 // ReCaptcha script mount
@@ -100,6 +103,11 @@
             },
             retry() {
                 this.btnDisabled = true;
+            },
+            checkEventPayload(payload) {
+                if (payload && payload.email) {
+                    this.email = payload.email;
+                }
             },
             submitPasswordReset() {
                 if (this.btnDisabled) {

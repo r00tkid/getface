@@ -227,7 +227,6 @@ def reset_password(request):
 @permission_classes((AllowAny,))
 def reset_confirm(request):
     data: dict = request.data
-    print(data.get('id'))
     user: User.model() = User.info(int(data.get('id'))).instance
 
     if not user.check_activation(data.get('activation')) or not user.is_active:
@@ -250,4 +249,34 @@ def reset_confirm(request):
     return Response({
         'detail': 'Password has been reset',
         'token': user.get_token(),
+    })
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))
+def resend_mail_invitation(request):
+    email = request.data.get('email')
+    user: User.model() = User.model().objects.filter(email=email).first()
+
+    if not user or user.is_active:
+        return Response({
+            'detail': 'User not found or already activated.',
+            'active': user.is_active if user else False,
+        }, status=status.HTTP_409_CONFLICT)
+
+    user.new_activation()
+    user.save()
+
+    Sandman(
+        mail_from=settings.EMAIL_ADDRESSES.get('main'),
+        mail_to=user.email,
+        subject="Repeat registration confirmation",
+        template='user%sregister' % os.sep,
+        context={
+            'user': user,
+        }
+    ).start()
+
+    return Response({
+        'detail': 'All is ok'
     })

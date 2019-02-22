@@ -159,7 +159,7 @@
 
                                 break;
                             case 422:
-                                this.$noty.error("Неверный пароль.", {
+                                this.$noty.error("Неверный пароль или ваш аккаунт деактивирован.", {
                                     theme: 'metroui',
                                     timeout: 4000,
                                 });
