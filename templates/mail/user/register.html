@@ -8,7 +8,7 @@
 
 <main class="container-fluid">
     <p>You have been registered {{ user }}</p>
-    <a role="button" href="{{ base_url }}/auth/confirmation/{{ user.id }}.{{ user.activation }}">
+    <a role="button" href="{{ base_url }}/auth/confirmation/{{ user.id }}/{{ user.activation }}">
         Confirm your registration
     </a>
 </main>

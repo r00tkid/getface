@@ -22,6 +22,22 @@ const router = new Router({
             ]
         },
         {
+            path: '/auth',
+            component: Landing,
+            children: [
+                {
+                    path: 'confirmation/:id/:activation',
+                    name: 'auth.confirmation',
+                    component: () => import('../views/auth/ConfirmRegistration'),
+                },
+                {
+                    path: 'new-password/:id/:activation',
+                    name: 'auth.password',
+                    component: () => import('../views/auth/NewPassword'),
+                }
+            ]
+        },
+        {
             path: '/dashboard',
             component: Dashboard,
             meta: {requiresAuth: true},

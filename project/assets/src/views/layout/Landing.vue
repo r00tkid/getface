@@ -1,14 +1,16 @@
 <template>
     <v-app>
-        <landing-header></landing-header>
+        <v-content>
+            <landing-header></landing-header>
 
-        <router-view></router-view>
+            <router-view></router-view>
 
-        <modal-login :dialog="login"></modal-login>
-        <modal-register :dialog="register"></modal-register>
-        <modal-forgot-pass :dialog="forgot_password"></modal-forgot-pass>
+            <modal-login :dialog="login"></modal-login>
+            <modal-register :dialog="register"></modal-register>
+            <modal-forgot-pass :dialog="forgot_password"></modal-forgot-pass>
 
-        <landing-footer></landing-footer>
+            <landing-footer></landing-footer>
+        </v-content>
     </v-app>
 </template>
 

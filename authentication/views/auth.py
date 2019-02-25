@@ -116,7 +116,7 @@ def employee_sign_up(request):
     try:
         employee = Employee.model().objects.get(auth_key=data.get('uuid'))
         user: User.model() = employee.user
-    except Exception as e:
+    except Employee.model().DoesNotExist as e:
         return Response({
             'valid': False,
             'message': 'Did you have been invited successfully?',

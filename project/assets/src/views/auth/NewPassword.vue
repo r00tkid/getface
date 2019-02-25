@@ -1,5 +1,5 @@
 <template>
-    <v-layout row justify-center :if="dialog">
+    <v-layout row justify-center>
         <v-card>
             <v-card-text>
                 <v-container grid-list-md>
@@ -18,7 +18,7 @@
                                 </v-text-field>
                             </v-flex>
 
-                             <v-flex xs12>
+                            <v-flex xs12>
                                 <v-text-field label="Подтверждение пароля"
                                               color="purple"
                                               class="mt-3"
@@ -31,7 +31,6 @@
 
                             <v-flex xs12 d-flex>
                                 <v-btn @click.prevent="submitPasswordReset"
-                                       :disabled="'development' !== projectMode ? btnDisabled : (btnDisabled = false)"
                                        color="primary lighten-2"
                                        class="white--text">
                                     ВОССТАНОВИТЬ
@@ -43,12 +42,33 @@
                 </v-container>
             </v-card-text>
         </v-card>
+
+        <div>
+            <p>{{ user_id }}</p>
+            <p>{{ user_key }}</p>
+        </div>
     </v-layout>
 </template>
 
 <script>
     export default {
-        name: "NewPassword"
+        name: "new-password",
+        data() {
+            return {
+                user_id: Number(this.$route.params.id),
+                user_key: this.$route.params.activation,
+                password: '',
+                password_confirmation: '',
+            };
+        },
+        mounted() {
+            console.log(this.$route.params)
+        },
+        methods: {
+            submitPasswordReset() {
+
+            },
+        }
     }
 </script>
 
