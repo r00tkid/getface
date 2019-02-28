@@ -34,7 +34,7 @@
             <v-list-tile
                     v-for="item in items"
                     :key="item.title"
-                    :to="item.route"
+                    :to="{name: item.name}"
             >
                 <v-list-tile-action>
                     <v-icon>{{ item.icon }}</v-icon>
@@ -70,9 +70,9 @@
             return {
                 drawer: true,
                 items: [
-                    {title: 'Dashboard', icon: 'dashboard', route: 'dashboard'},
-                    {title: 'Calendar', icon: 'calendar_today', route: 'calendar'},
-                    {title: 'Profile', icon: 'account_circle', route: 'profile'},
+                    {title: 'Dashboard', icon: 'dashboard', name: 'dashboard'},
+                    {title: 'Calendar', icon: 'calendar_today', name: 'calendar'},
+                    {title: 'Profile', icon: 'account_circle', name: 'profile'},
                 ],
                 mini: true,
                 right: null

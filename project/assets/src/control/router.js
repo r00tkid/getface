@@ -26,12 +26,12 @@ const router = new Router({
             component: Landing,
             children: [
                 {
-                    path: 'confirmation/:id/:activation',
+                    path: '/confirmation/:id/:activation',
                     name: 'auth.confirmation',
                     component: () => import('../views/auth/ConfirmRegistration'),
                 },
                 {
-                    path: 'new-password/:id/:activation',
+                    path: '/new-password/:id/:activation',
                     name: 'auth.password',
                     component: () => import('../views/auth/NewPassword'),
                 }
@@ -43,7 +43,7 @@ const router = new Router({
             meta: {requiresAuth: true},
             children: [
                 {
-                    path: '',
+                    path: 'main',
                     name: 'dashboard',
                     component: () => import('../views/Home')
                 },
