@@ -9,6 +9,7 @@ import App from './views/layout/App.vue'
 import router from './control/router'
 import store from './control/store'
 import '@fortawesome/fontawesome-free/css/all.css'
+import i18n from './control/i18n'
 
 window._ = require('lodash');
 Vue.config.productionTip = false;
@@ -30,5 +31,6 @@ Vue.use(Vuetify, {
 window.get_face = new Vue({
     router,
     store,
+    i18n,
     render: h => h(App)
 }).$mount('#app');

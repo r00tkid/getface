@@ -227,9 +227,9 @@ def reset_password(request):
 @permission_classes((AllowAny,))
 def reset_confirm(request):
     data: dict = request.data
-    user: User.model() = User.info(int(data.get('id'))).instance
+    user: User.model() = User.info(int(data.get('user_id'))).instance
 
-    if not user.check_activation(data.get('activation')) or not user.is_active:
+    if not user.check_activation(data.get('user_key')) or not user.is_active:
         return Response({
             'detail': 'Already used or user is inactive.',
             'active': user.is_active,

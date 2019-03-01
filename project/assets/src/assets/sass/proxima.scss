@@ -1,0 +1,42 @@
+$proxima: "Proxima Nova", sans-serif;
+$base-url: "~@/assets/fonts/proxima/";
+$base-prefix: "proxima-";
+$extensions: (
+                ('embedded-opentype', '.eot'),
+                ('opentype', '.otf'),
+                ('truetype', '.ttf'),
+                ('woff', '.woff'),
+                ('woff2', '.woff2'),
+);
+$types: (
+                ('thin', 100),
+                ('extra-light', 200),
+                ('light', 300),
+                ('regular', 400),
+                ('medium', 500),
+                ('semi-bold', 600),
+                ('bold', 700),
+                ('extra-bold', 800),
+                ('black', 900),
+);
+
+@each $type in $types {
+
+  @font-face {
+    font-family: $proxima;
+    @each $extension in $extensions {
+      src: url($base-url + nth($extension, 1) + '/' + $base-prefix + nth($type, 1) + nth($extension, 2)) format(nth($extension, 1));
+    }
+    font-weight: nth($type, 2);
+  }
+
+  @font-face {
+    font-family: $proxima;
+    @each $extension in $extensions {
+      src: url($base-url + nth($extension, 1) + '/' + $base-prefix + nth($type, 1) + '-italic' + nth($extension, 2)) format(nth($extension, 1));
+    }
+    font-weight: nth($type, 2);
+    font-style: italic;
+  }
+
+}

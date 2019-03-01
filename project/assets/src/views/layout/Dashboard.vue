@@ -20,9 +20,9 @@
 </template>
 
 <script>
-    import Header from "./../../components/layout/Header"
-    import Footer from "./../../components/layout/Footer"
-    import Sidebar from "./../../components/layout/Sidebar"
+    import Header from "./../../components/layout/dashboard/Header"
+    import Footer from "./../../components/layout/dashboard/Footer"
+    import Sidebar from "./../../components/layout/dashboard/Sidebar"
 
     export default {
         name: "abn-master",

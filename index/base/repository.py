@@ -4,7 +4,7 @@ from rest_framework import serializers
 from django.db import models
 from django.contrib import admin
 
-from index.base.exceptions import NotFound
+from index.base.exceptions import APIException
 from index import settings
 
 
@@ -81,13 +81,13 @@ class Base(object):
             model = obj.get(pk=pk)
         except Exception as e:
             if api_exception:
-                raise NotFound({
+                raise APIException({
                     'detail': '%(model)s id:[%(id)d] has not been found.' % {
                         'model': cls.model()._meta.verbose_name.title(),
                         'id': pk
                     },
                     'debug': str(e) if settings.DEBUG else None,
-                })
+                }, 404)
             else:
                 return None
 

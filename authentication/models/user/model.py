@@ -45,10 +45,7 @@ class User(AbstractUser, Base.CreatedStump):
         if self.activation is None or code is None or code == '':
             return False
 
-        for a, b in zip((self.activation, code)):
-            if a != b:
-                return False
-        return True
+        return self.activation == code
 
     def get_token(self):
         from authentication.jwt import create_token

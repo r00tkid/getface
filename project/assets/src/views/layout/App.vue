@@ -66,3 +66,7 @@
         padding: 3px;
     }
 </style>
+
+<style lang="scss">
+    @import './../../assets/sass/proxima';
+</style>

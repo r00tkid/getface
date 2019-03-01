@@ -1,8 +1,10 @@
 <template>
-    <div>
-        <p>{{ user_id }}</p>
-        <p>{{ user_key }}</p>
-    </div>
+    <v-container fluid>
+        <v-layout justify-center>
+            <p>{{ user_id }}</p>
+            <p>{{ user_key }}</p>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
@@ -17,7 +19,3 @@
         },
     }
 </script>
-
-<style scoped>
-
-</style>

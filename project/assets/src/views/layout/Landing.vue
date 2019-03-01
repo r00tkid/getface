@@ -86,6 +86,9 @@
             setForgotPasswordModalState(payload) {
                 this.forgot_password = payload[0];
             },
+            beatch(payload) {
+                console.log(payload);
+            }
         }
     }
 </script>
