@@ -3,13 +3,7 @@
             class="abn-header"
     >
         <v-flex xs2>
-            <v-select
-                    class="kill-select mt-1"
-                    flat
-                    :items="companies"
-                    solo
-                    v-model="defaultCompany"
-            ></v-select>
+            <get-face-companies></get-face-companies>
         </v-flex>
 
         <v-spacer></v-spacer>
@@ -64,20 +58,17 @@
 <script>
     export default {
         name: "abn-header",
+        components: {
+            "get-face-companies": () => import("./headerParts/Companies")
+        },
         data() {
             return {
-                defaultCompany: 'Company 1',
                 defaultLang: 'ENG',
                 title: "Haze",
                 items: [
                     "RUS",
                     "ENG"
                 ],
-                companies: [
-                    'Company 1',
-                    'Company 2',
-                    'Company 3',
-                ]
             };
         },
         methods: {
@@ -88,7 +79,6 @@
                 return false;
             },
         },
-        computed: {},
     }
 </script>
 

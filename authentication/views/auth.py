@@ -1,4 +1,6 @@
 import os
+from django.db.models import CharField, Value
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -18,7 +20,7 @@ from index import settings
      'DELETE', 'COPY', 'LINK', 'UNLINK', 'PURGE', 'LOCK',
      'UNLOCK', 'PROPFIND', 'VIEW'])
 def self_info(request):
-    companies_owner = Company.serializer('extended')(
+    companies_owner: Company.serializer = Company.serializer('extended')(
         instance=Company.model().objects.filter(owner=request.user),
         many=True
     )
@@ -41,12 +43,31 @@ def self_info(request):
     companies_manager.add_owner()
     companies_manager.add_employee_info(user=request.user, field_name='me')
 
+    owning = companies_owner.data
+    managing = companies_manager.data
+
+    for company in owning:
+        company["rule_level"] = {
+            "title": "Владелец",
+            "type": "owner"
+        }
+
+    for company in managing:
+        company["rule_level"] = {
+            "type": "manager"
+        }
+
+        if company.get('employee'):
+            company["rule_level"]["title"] = "%s [%s]" % (company.get('employee'), "Менеджер")
+        else:
+            company["rule_level"]["title"] = "Менеджер"
+
     return Response({
         'user': User.serializer('extended')(instance=request.user).data,
         'companies': {
-            'owner': companies_owner.data,
+            'owner': owning,
+            'manager': managing,
             'employee': companies_employee.data,
-            'manager': companies_manager.data,
         }
     })
 
@@ -156,21 +177,16 @@ def employee_sign_up(request):
 @permission_classes((AllowAny,))
 def activate_account(request):
     data: dict = request.data
-    print(data.get('id'))
-    user: User.model() = User.info(int(data.get('id'))).instance
+    user: User.model() = User.info(int(data.get('user_id'))).instance
 
-    if not user.check_activation(data.get('activation')) or user.is_active:
+    if not user.check_activation(data.get('user_key')) or user.is_active:
         return Response({
             'detail': 'User already has been activated or secret codes not match.',
             'active': user.is_active,
         }, status=status.HTTP_409_CONFLICT)
 
-    if not user.check_password(data.get('password')):
-        return Response({
-            'detail': 'Passwords not match.',
-        }, status=status.HTTP_403_FORBIDDEN)
-
     user.activation = None
+    user.is_active = True
     user.save()
 
     return Response({
@@ -255,8 +271,15 @@ def reset_confirm(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def resend_mail_invitation(request):
-    email = request.data.get('email')
-    user: User.model() = User.model().objects.filter(email=email).first()
+    if request.data.get('email'):
+        email = request.data.get('email')
+        user: User.model() = User.model().objects.filter(email=email).first()
+    elif request.data.get('user_id'):
+        user: User.model() = User.info(int(request.data.get('user_id'))).instance
+    else:
+        return Response({
+            'detail': 'Data is wrong.',
+        }, status=status.HTTP_406_NOT_ACCEPTABLE)
 
     if not user or user.is_active:
         return Response({

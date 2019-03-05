@@ -13,6 +13,7 @@ class User(Base.Admin):
         'display_is_staff',
         'display_is_super',
         'display_achieves',
+        'activation',
         'display_id',
     )
 

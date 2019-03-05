@@ -11,6 +11,7 @@ const V1 = {
                     refresh: 'refresh',
                     user: 'me',
                     resend: 'resend',
+                    confirmation: 'confirm',
 
                     password_restore: 'lost',
                     password_reset: 'reset',

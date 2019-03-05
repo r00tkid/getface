@@ -11,7 +11,6 @@ import store from './control/store'
 import '@fortawesome/fontawesome-free/css/all.css'
 import i18n from './control/i18n'
 
-window._ = require('lodash');
 Vue.config.productionTip = false;
 
 const settings = require('./../package.json');
@@ -21,6 +20,8 @@ Vue.prototype.versions = {
     'back': settings["back-version"],
     'build': settings["project-build"],
 };
+
+window.collections = require('./other/object').default;
 
 Vue.prototype.$log = console.log;
 

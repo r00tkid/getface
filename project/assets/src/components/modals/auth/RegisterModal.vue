@@ -355,12 +355,7 @@
             registerUser() {
                 this.checkin = true;
 
-                let vueData = Object.assign({}, this.$data);
-                let data = _.pick(vueData, [
-                    'username', 'email', 'password', 'password_confirmation', 'first_name', 'last_name', 'phone'
-                ]);
-
-                this.$http('auth.register', data, 'post')
+                this.$http('auth.register', window.collections.collectObject(this.$data, 'username', 'email', 'password', 'password_confirmation', 'first_name', 'last_name', 'phone'), 'post')
                     .then(res => {
                         this.$noty.success("Удачная регистрация. Данны об активации аккаунта отправлены по почте.", {
                             theme: 'metroui',

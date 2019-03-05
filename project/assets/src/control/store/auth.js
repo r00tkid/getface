@@ -7,26 +7,25 @@ const Auth = {
         token: '',
     },
     mutations: {
-        setAuth(state, value) {
-            state.authenticated = value;
+        setAuth: (state, payload) => {
+            state.authenticated = payload;
         },
-        setUser(state, value) {
-            state.user = value.user;
-            state.companies = value.companies;
+        setUser: (state, payload) => {
+            state.user = payload.user;
+            state.companies = payload.companies;
         },
-        setToken(state, value) {
-            state.token = value.token;
-            value.remember ? localStorage.setItem('token', value.token) : sessionStorage.setItem('token', value.token);
+        setToken: (state, payload) => {
+            state.token = payload.token;
+            localStorage.setItem('token', payload.token);
         },
-        purgeToken(state) {
+        purgeToken: state => {
             state.token = '';
             localStorage.removeItem('token');
-            sessionStorage.removeItem('token');
         },
-        purgeUser(state) {
+        purgeUser: state => {
             state.user = {};
         },
-        purgeAuth(state) {
+        purgeAuth: state => {
             state.authenticated = false;
         },
     },
@@ -44,6 +43,7 @@ const Auth = {
         user: state => state.user,
         companies: state => state.companies,
         isAuth: state => state.authenticated,
+        token: state => state.token,
     }
 };
 

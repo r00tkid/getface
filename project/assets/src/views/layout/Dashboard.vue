@@ -33,22 +33,29 @@
             'kill-sidebar': Sidebar
         },
         mounted() {
-            if (!sessionStorage.getItem('token') || !sessionStorage.getItem('token')) this.$router.push({name: 'landing'});
+            // make debounced check for token in system. If not, push user out.
 
-            let user = this.$store.getters['auth/user'];
+            setTimeout(function (vue) {
+                if (!vue.$store.getters['auth/token'] && !localStorage.getItem('token')) {
+                    vue.$router.push({name: 'landing'})
+                }
 
-            if (!user || !user.id) {
-                this.$http('auth.user')
-                    .then(res => {
-                        this.$store.commit('auth/setUser', res.data);
-                        this.$router.push({name: 'dashboard'});
-                    })
-                    .catch(err => {
-                        this.$store.dispatch('auth/logout').catch(e => {
-                            /* just do nothing */
-                        });
-                    })
-            }
+                let user = vue.$store.getters['auth/user'];
+
+                if (!user || !user.id) {
+                    vue.$http('auth.user')
+                        .then(res => {
+                            vue.$bus.$emit("get-face-updated-companies", res.data.companies);
+                            vue.$store.commit('auth/setUser', res.data);
+                            vue.$router.push({name: 'dashboard'});
+                        })
+                        .catch(err => {
+                            vue.$store.dispatch('auth/logout').catch(e => {
+                                /* just do nothing */
+                            });
+                        })
+                }
+            }, 100, this);
         }
     }
 </script>

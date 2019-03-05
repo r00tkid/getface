@@ -64,13 +64,10 @@
                                     Войти
                                 </v-btn>
                             </v-flex>
-                            <v-flex xs6>
-                                <v-checkbox label="Запомнить меня" color="purple" v-model="remember_me"></v-checkbox>
-                            </v-flex>
-                            <v-flex xs6 class="text-xs-right">
+                            <v-flex xs12 sm6 class="text-xs-center text-sm-right">
                                 <a @click="openForgotPassModal">Забыли пароль?</a>
                             </v-flex>
-                            <v-flex xs12 class="text-xs-center">
+                            <v-flex xs12 sm6 class="text-xs-center text-sm-left">
                                 <a @click="openRegisterModal">Ещё нет аккаунта?</a>
                             </v-flex>
                             <v-flex xs12 class="text-xs-center">
@@ -100,7 +97,6 @@
         data() {
             return {
                 checkin: false,
-                remember_me: false,
                 username: '',
                 password: '',
             }
@@ -117,13 +113,10 @@
             submitCredentials() {
                 this.checkin = true;
 
-                const vueData = Object.assign({}, this.$data);
-                let data = _.pick(vueData, ['username', 'password', 'remember_me']);
-
-                this.$http('auth.login', data, 'post')
+                this.$http('auth.login', window.collections.collectObject(this.$data, 'username', 'password'), 'post')
                     .then((res) => {
                         const token = res.data.token;
-                        this.$store.commit('auth/setToken', {token: token, remember: data.remember_me});
+                        this.$store.commit('auth/setToken', {token: token});
                         this.$router.push({name: 'dashboard'});
                     })
                     .catch(error => {
@@ -217,6 +210,6 @@
     }
 
     .v-text-field > .v-input__control > .v-input__slot:after, .v-text-field > .v-input__control > .v-input__slot:before {
-        width: 0% !important;
+        width: 0 !important;
     }
 </style>
