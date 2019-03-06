@@ -44,6 +44,8 @@ services:
     build:
       context: ./project/assets
     container_name: get-face-stage-watcher
+    ports:
+      - 35729:35729
     depends_on:
       - getface_stage
     volumes:

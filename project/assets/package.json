@@ -32,7 +32,8 @@
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
     "vue-cli-plugin-vuetify": "^0.4.6",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.5.17",
+    "webpack-livereload-plugin": "^2.2.0"
   },
   "postcss": {
     "plugins": {

@@ -1,5 +1,4 @@
 import os
-from django.db.models import CharField, Value
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny

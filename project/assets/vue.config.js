@@ -1,3 +1,5 @@
+var LiveReloadPlugin = require('webpack-livereload-plugin');
+
 function WebpackHooksPlugin(hooks) {
     this.hooks = hooks;
     this.options = {
@@ -47,7 +49,12 @@ module.exports = {
                             });
                         }
                     }
-                ])
+                ]),
+                new LiveReloadPlugin({
+                    host: '127.0.0.1',
+                    appendScriptTag: true,
+                    delay: 1000,
+                }),
             );
         }
     }

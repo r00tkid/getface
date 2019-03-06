@@ -6,7 +6,8 @@
             <get-face-companies></get-face-companies>
         </v-flex>
 
-        <v-spacer></v-spacer>
+        <v-spacer><!-- SPACER --></v-spacer>
+
         <v-flex xs3>
             <v-text-field
                     class="mt-1 normal-border"
@@ -16,10 +17,11 @@
                     label="Поиск"
                     append-icon="search"
                     color="purple"
-
             ></v-text-field>
         </v-flex>
-        <v-spacer></v-spacer>
+
+        <v-spacer><!-- SPACER --></v-spacer>
+
         <v-icon
                 x-large
                 color="grey lighten-1"
@@ -27,10 +29,13 @@
         >
             battery_std
         </v-icon>
-        <v-spacer></v-spacer>
+
+        <v-spacer><!-- SPACER --></v-spacer>
+
         <v-btn large outline color="grey">12 Дней</v-btn>
         <v-btn large class="primary white--text">Оплатить</v-btn>
-        <v-spacer></v-spacer>
+
+        <v-spacer><!-- SPACER --></v-spacer>
 
         <v-btn left class="mr-5" icon>
             <span slot="badge">6</span>
