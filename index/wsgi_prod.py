@@ -14,5 +14,6 @@ sys.path.insert(0, os.path.abspath(os.path.join(PROJECT_ROOT, "..")))
 
 settings_module = "%s.settings_prod" % PROJECT_ROOT.split(os.sep)[-1]
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
+os.environ.setdefault("DJANGO_SETTINGS_ENVIRONMENT", "prod")
 
 get_face = get_wsgi_application()

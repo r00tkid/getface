@@ -1,13 +1,16 @@
+import os
 from threading import Thread as __th
+
+env = os.environ.get("DJANGO_SETTINGS_ENVIRONMENT", "prod")
 
 
 class Sandman(__th):
     def __init__(self, **kwargs):
-        import os, json
+        if "prod" == env:
+            from index import settings_prod as settings
+        else:
+            from index import settings
         from django.core.mail import EmailMessage
-        settings = os.environ.get("DJANGO_SETTINGS_MODULE")
-
-        print(settings)
 
         self.flat = kwargs.get('flat', False)
 
