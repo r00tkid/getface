@@ -1,5 +1,3 @@
-var LiveReloadPlugin = require('webpack-livereload-plugin');
-
 function WebpackHooksPlugin(hooks) {
     this.hooks = hooks;
     this.options = {
@@ -27,6 +25,8 @@ module.exports = {
     css: undefined,
     configureWebpack: config => {
         if (process.env.NODE_ENV === 'development') {
+            let LiveReloadPlugin = require('webpack-livereload-plugin');
+
             if (!config.plugins)
                 config.plugins = [];
 
