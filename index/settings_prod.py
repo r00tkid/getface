@@ -30,7 +30,7 @@ SECRET_KEY = '7751c0)##x&(z94r6*h9076d5izvo#)6-dj3_sor!6i8f5pnl#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '::1']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '::1', 'abnormally.dev']
 
 # Mail settings
 EMAIL_HOST_PASSWORD = 'getface-85Ftww34'
