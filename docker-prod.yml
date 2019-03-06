@@ -1,0 +1,52 @@
+version: '3.7'
+
+services:
+
+  getface_db:
+    container_name: get-face-db
+    domainname: get-face.com
+    hostname: database
+    image: postgres:11
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=get_face_prod
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - 5432
+    networks:
+      - get_face
+    restart: always
+
+  getface_prod:
+    build:
+      context: .
+    image: getface_prod
+    container_name: get-face-prod
+    domainname: get-face.com
+    hostname: stage
+    volumes:
+      - ./:/var/www/get-face
+      - ./project/override/gunicorn:/usr/local/bin/gunicorn
+      - ./project/override/pseudo_init.py:/usr/local/lib/python3.7/site-packages/gunicorn/workers/__init__.py
+      - ./project/override/alternative.py:/usr/local/lib/python3.7/site-packages/gunicorn/workers/alternative.py
+    command: >
+      bash -c "gunicorn index.wsgi_prod:get_face -c /var/www/get-face/index/gunicorn_prod.py --timeout 30 --graceful-timeout 20"
+    working_dir: /var/www/get-face
+    ports:
+      - 8090:8090
+    networks:
+      - get_face
+    restart: always
+
+volumes:
+
+  db:
+    driver: local
+    name: get-face-db
+
+networks:
+  get_face:
+    name: get-face
+    driver: bridge
