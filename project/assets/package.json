@@ -8,7 +8,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --mode=development",
     "watch": "vue-cli-service build --watch --mode=development",
-    "prod": "vue-cli-service build"
+    "prod": "vue-cli-service build --mode=production"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",

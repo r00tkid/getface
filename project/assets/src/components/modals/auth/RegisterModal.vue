@@ -390,7 +390,7 @@
 
                                         current_noty_window.close();
 
-                                        this.resendMailInvitation(this.data.email);
+                                        this.resendMailInvitation();
                                     }),
 
                                     Noty.button('Нет', 'btn btn-error btn-abn-noty-correct', () => {
@@ -436,8 +436,8 @@
                     setTimeout(() => noty.close(), 2000);
                 });
             },
-            resendMailInvitation(email) {
-                this.$http('auth.resend', {email: email}, 'post')
+            resendMailInvitation() {
+                this.$http('auth.resend', {email: this.email}, 'post')
                     .then(res => {
                         console.log(res);
                     })
@@ -447,7 +447,7 @@
                         switch (res.status) {
                             case 409:
                                 if (res.data.active) {
-                                    this.$bus.$emit('get-face-forgot-password-modal', {email: email});
+                                    this.$bus.$emit('get-face-forgot-password-modal', {email: this.email});
                                     this.$noty.error("Аккаунт уже активирован. Попробуйте воспользоваться формой восстановления пароля.", {
                                         theme: 'metroui',
                                         timeout: 3000,

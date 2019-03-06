@@ -123,8 +123,6 @@
                                 break;
                             case 409:
                                 if (res.data.active) {
-                                    this.$bus.$emit('get-face-forgot-password-modal', {email: email});
-
                                     this.$noty.error("Аккаунт уже активирован. Попробуйте воспользоваться формой восстановления пароля.", {
                                         theme: 'metroui',
                                         timeout: 3000,
