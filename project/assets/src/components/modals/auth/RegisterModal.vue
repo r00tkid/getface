@@ -390,7 +390,7 @@
 
                                         current_noty_window.close();
 
-                                        this.resendMailInvitation(data.email);
+                                        this.resendMailInvitation(this.data.email);
                                     }),
 
                                     Noty.button('Нет', 'btn btn-error btn-abn-noty-correct', () => {
@@ -410,7 +410,6 @@
                 if (!this.step3Valid)
                     return false;
 
-                let vueData = Object.assign({}, this.$data);
                 let data = {
                     name: this.company_name,
                     email: this.company_email,
