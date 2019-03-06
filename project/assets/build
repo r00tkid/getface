@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-npm i -g npm
-npm i
 npm run prod
 cd ../../static
 GLOBIGNORE=.gitkeep
