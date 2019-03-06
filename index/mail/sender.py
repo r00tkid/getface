@@ -3,9 +3,11 @@ from threading import Thread as __th
 
 class Sandman(__th):
     def __init__(self, **kwargs):
-        import os
+        import os, json
         from django.core.mail import EmailMessage
-        settings = os.environ['DJANGO_SETTINGS_MODULE']
+        settings = os.environ.get("DJANGO_SETTINGS_MODULE")
+
+        print(settings)
 
         self.flat = kwargs.get('flat', False)
 
