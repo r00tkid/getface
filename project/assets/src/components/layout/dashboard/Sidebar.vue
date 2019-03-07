@@ -10,7 +10,7 @@
             <v-list class="pa-0">
                 <v-list-tile avatar>
                     <v-list-tile-avatar>
-                        <img src="https://randomuser.me/api/portraits/men/85.jpg">
+                        <img :src="face">
                     </v-list-tile-avatar>
 
                     <v-list-tile-content>
@@ -18,9 +18,7 @@
                     </v-list-tile-content>
 
                     <v-list-tile-action>
-                        <v-btn
-                                icon
-                        >
+                        <v-btn icon>
                             <v-icon>chevron_left</v-icon>
                         </v-btn>
                     </v-list-tile-action>
@@ -75,13 +73,20 @@
                     {title: 'Profile', icon: 'account_circle', name: 'profile'},
                 ],
                 mini: true,
-                right: null
+                right: null,
             }
         },
         methods: {
             logout() {
                 this.$store.dispatch('auth/logout').then(() => this.$router.push({name: 'landing'}))
             }
+        },
+        computed: {
+            face: {
+                get() {
+                    return `https://randomuser.me/api/portraits/thumb/men/${(Math.random() * 100) | 0}.jpg`;
+                },
+            },
         }
     }
 </script>

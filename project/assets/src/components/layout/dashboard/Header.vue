@@ -3,58 +3,36 @@
             class="abn-header"
     >
         <v-flex xs2>
-            <get-face-companies></get-face-companies>
+            <get-face-header-companies @companyRights="setRights"></get-face-header-companies>
         </v-flex>
 
         <v-spacer><!-- SPACER --></v-spacer>
 
         <v-flex xs3>
-            <v-text-field
-                    class="mt-1 normal-border"
-                    single-line
-                    flat
-                    solo
-                    label="Поиск"
-                    append-icon="search"
-                    color="purple"
-            ></v-text-field>
+            <get-face-header-search v-if="has_rights"></get-face-header-search>
         </v-flex>
 
         <v-spacer><!-- SPACER --></v-spacer>
 
         <v-icon
+                v-if="has_rights"
                 x-large
                 color="grey lighten-1"
-                class="rotate90"
-        >
+                class="rotate90">
             battery_std
         </v-icon>
 
         <v-spacer><!-- SPACER --></v-spacer>
 
-        <v-btn large outline color="grey">12 Дней</v-btn>
-        <v-btn large class="primary white--text">Оплатить</v-btn>
+        <v-btn large outline color="grey" v-if="has_rights">12 Дней</v-btn>
+        <v-btn large class="primary white--text" v-if="has_rights">Оплатить</v-btn>
 
         <v-spacer><!-- SPACER --></v-spacer>
 
-        <v-btn left class="mr-5" icon>
-            <span slot="badge">6</span>
-            <v-icon
-                    large
-                    color="grey lighten-1"
-            >
-                notification_important
-            </v-icon>
-        </v-btn>
+        <get-face-header-notifications></get-face-header-notifications>
 
         <v-flex xs1>
-            <v-select
-                    class="kill-select"
-                    flat
-                    :items="items"
-                    solo
-                    v-model="defaultLang"
-            ></v-select>
+            <get-face-header-locale></get-face-header-locale>
         </v-flex>
 
     </v-toolbar>
@@ -64,24 +42,24 @@
     export default {
         name: "abn-header",
         components: {
-            "get-face-companies": () => import("./headerParts/Companies")
+            "get-face-header-companies": () => import("./headerParts/Companies"),
+            "get-face-header-search": () => import("./headerParts/Search"),
+            "get-face-header-locale": () => import("./headerParts/Locale"),
+            "get-face-header-notifications": () => import("./headerParts/Notifications"),
         },
         data() {
             return {
-                defaultLang: 'ENG',
-                title: "Haze",
-                items: [
-                    "RUS",
-                    "ENG"
-                ],
+                has_rights: false,
+                messages: 0,
             };
         },
         methods: {
             toggleAside() {
                 this.$bus.$emit('toggle-main-side-bar');
             },
-            isUser() {
-                return false;
+            setRights(payload) {
+                this.$store.commit("auth/setRights", payload);
+                this.has_rights = payload;
             },
         },
     }

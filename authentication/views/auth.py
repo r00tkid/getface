@@ -1,5 +1,7 @@
 import os
 
+from django.db.models.query import Q
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -14,10 +16,7 @@ from index.mail.sender import Sandman
 from index import settings
 
 
-@api_view(
-    ['GET', 'HEAD', 'POST', 'OPTIONS', 'PATCH', 'PUT',
-     'DELETE', 'COPY', 'LINK', 'UNLINK', 'PURGE', 'LOCK',
-     'UNLOCK', 'PROPFIND', 'VIEW'])
+@api_view(['GET', 'HEAD'])
 def self_info(request):
     companies_owner: Company.serializer = Company.serializer('extended')(
         instance=Company.model().objects.filter(owner=request.user),
@@ -25,7 +24,9 @@ def self_info(request):
     )
 
     as_employee = Employee.model().objects.filter(user=request.user).values_list('company_id', flat=True)
-    compare = Company.model().objects.filter(id__in=as_employee).filter(employee__is_fired=False).distinct()
+    compare = Company.model().objects.filter(id__in=as_employee).filter(
+        Q(employee__is_fired=False) & Q(employee__is_active=True)
+    ).distinct()
 
     companies_employee = Company.serializer('extended')(
         instance=compare.filter(employee__is_manager=False),

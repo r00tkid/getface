@@ -18,7 +18,7 @@
 
 <script>
     export default {
-        name: "get-face-companies",
+        name: "get-face-header-companies",
         beforeMount() {
             this.$bus.$on('get-face-updated-companies', this.setCompanies);
 
@@ -42,13 +42,12 @@
             return {
                 company_current: null,
                 companies_arr: [],
-                companies_getter: this.$store.getters["auth/companies"]
             };
         },
         methods: {
             setCompanies(payload) {
                 this.companies = [...(payload.owner), ...(payload.manager), ...(payload.employee)];
-                this.company_current = this.companies.length > 0 ? this.companies[0] : null;
+                this.company_current = this.companies.length > 0 ? this.companies[0].id : null;
             }
         },
         computed: {
@@ -62,9 +61,20 @@
             },
             positionTitle: {
                 get() {
-                    return this.company_current.rule_level ? this.company_current.rule_level.title : null
+                    return this.company_current.rule_level ? this.company_current.rule_level.title : null;
                 }
-            }
+            },
+        },
+        watch: {
+            company_current(val) {
+                if (this.companies.length < 1) return;
+
+                let index = this.companies.findIndex(function (company) {
+                    return val == company.id;
+                });
+
+                this.$emit("companyRights", this.companies && !!this.companies[index].rule_level);
+            },
         },
     }
 </script>

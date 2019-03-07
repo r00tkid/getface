@@ -36,4 +36,10 @@ Object.defineProperty(Vue.prototype, '$locale', {
     }
 });
 
+Object.defineProperty(Vue.prototype, '$fallbackLocale', {
+    get: function () {
+        return i18n.fallbackLocale;
+    }
+});
+
 export default i18n;

@@ -5,6 +5,7 @@ const Auth = {
         user: {},
         companies: {},
         token: '',
+        has_rights: false,
     },
     mutations: {
         setAuth: (state, payload) => {
@@ -28,6 +29,9 @@ const Auth = {
         purgeAuth: state => {
             state.authenticated = false;
         },
+        setRights: (state, payload) => {
+            state.has_rights = payload;
+        }
     },
     actions: {
         logout: ({commit}) => {
@@ -44,6 +48,7 @@ const Auth = {
         companies: state => state.companies,
         isAuth: state => state.authenticated,
         token: state => state.token,
+        hasRights: state => state.has_rights,
     }
 };
 
