@@ -65,7 +65,7 @@
                                                 class="input-shadow"
                                                 background-color="white"
                                                 color="purple"
-                                                box
+                                                solo
                                                 label="Имя"
                                                 outline
                                                 hide-details
@@ -74,7 +74,7 @@
                                                 class="input-shadow"
                                                 background-color="white"
                                                 color="purple"
-                                                box
+                                                solo
                                                 label="Фамилия"
                                                 hide-details
                                         ></v-text-field>
@@ -82,7 +82,7 @@
                                                 class="input-shadow"
                                                 background-color="white"
                                                 color="purple"
-                                                box
+                                                solo
                                                 label="Отчество"
                                                 hide-details
                                         ></v-text-field>
@@ -110,7 +110,7 @@
                                                 prefix="+"
                                                 mask="# (###) ###-##-##"
                                                 placeholder="7 (999) 999-99-99"
-                                                box
+                                                solo
                                                 label="Телефон"
                                                 hide-details
                                         ></v-text-field>
@@ -120,7 +120,7 @@
                                                 color="purple"
                                                 type="email"
                                                 placeholder="infor@example.com"
-                                                box
+                                                solo
                                                 label="Email"
                                                 hide-details
                                         ></v-text-field>
@@ -247,7 +247,7 @@
                         </v-layout>
                     </v-flex>
                     <v-flex lg12>
-                        <v-layout>
+                        <v-layout class="">
                             <v-flex lg3>
                                 <div class="employeeCondition">
                                     <div class="employeeCondition-item">
@@ -276,7 +276,7 @@
                                 </div>
                             </v-flex>
                             <v-flex lg9>
-                                <div class="chartContainer">
+                                <div class="chartContainer chartBottom">
                                     <div class="chartPeriod">Последние 3 месяца</div>
                                     <chart :chartdata="chartData" :options="chartOptions"></chart>
                                 </div>
@@ -410,15 +410,6 @@
 </script>
 
 <style scoped>
-    .chartContainer {
-        position: relative;
-        width: 100%;
-        border: 1px solid #d4d4d4;
-        background-color: #fff;
-        border-radius: 4px 4px 0 0;
-        box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-        0 1px 5px 0 rgba(0, 0, 0, 0.12);
-    }
 
     .chartPeriod {
         width: 100%;
@@ -659,7 +650,7 @@
         line-height: 32px;
     }
 
-    .empoloyeeForms .v-input__control {
+    .empoloyeeForms .v-input {
         margin-bottom: 15px;
     }
 
@@ -691,3 +682,12 @@
         height: 47px;
     }
 </style>
+<style>
+.employeeStat-right #line-chart{
+        height: 250px;
+    }
+.chartBottom #line-chart{
+        height: 140px;
+    }
+</style>
+
