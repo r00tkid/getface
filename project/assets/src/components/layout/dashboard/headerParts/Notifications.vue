@@ -7,8 +7,7 @@
             <template slot="badge">
                 <span v-text="messages"></span>
             </template>
-            <v-icon color="grey lighten-1"
-                    large>
+            <v-icon color="grey lighten-1" large>
                 notification_important
             </v-icon>
         </v-badge>

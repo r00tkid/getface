@@ -115,9 +115,8 @@
 
                 this.$http('auth.login', window.collections.collectObject(this.$data, 'username', 'password'), 'post')
                     .then((res) => {
-                        const token = res.data.token;
-                        this.$store.commit('auth/setToken', {token: token});
-                        this.$router.push({name: 'dashboard'});
+                        this.$store.commit('auth/setToken', {token: res.data.token});
+                        this.$router.push({name: 'dashboard.main'});
                     })
                     .catch(error => {
                         switch (error.response ? error.response.status : error.code) {

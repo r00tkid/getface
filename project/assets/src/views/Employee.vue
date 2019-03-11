@@ -292,8 +292,8 @@
 <script>
     import Progress from "../components/progress/Progress";
     import Chart from "../components/chart/Chart";
-    import OrangeBox from "../components/employeePage/orangeBox";
-    import EmployeeAwards from "../components/employeePage/employeeAwards";
+    import OrangeBox from "../components/employeePage/OrangeBox";
+    import EmployeeAwards from "../components/employeePage/EmployeeAwards";
 
     export default {
         name: "Employee",
@@ -681,13 +681,12 @@
     .v-menu__activator .v-input__slot {
         height: 47px;
     }
-</style>
-<style>
-.employeeStat-right #line-chart{
+
+    .employeeStat-right #line-chart {
         height: 250px;
     }
-.chartBottom #line-chart{
+
+    .chartBottom #line-chart {
         height: 140px;
     }
 </style>
-

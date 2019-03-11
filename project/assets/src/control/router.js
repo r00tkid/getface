@@ -44,24 +44,24 @@ const router = new Router({
             children: [
                 {
                     path: 'main',
-                    name: 'dashboard',
+                    name: 'dashboard.main',
                     component: () => import('../views/Home')
                 },
                 {
                     path: 'profile',
-                    name: 'profile',
+                    name: 'dashboard.profile',
                     component: () => import('../views/Profile')
                 },
                 {
                     path: 'calendar',
-                    name: 'calendar',
+                    name: 'dashboard.calendar',
                     component: () => import('../views/Calendar')
                 },
                 {
                     path: 'employee',
-                    name: 'employee',
+                    name: 'dashboard.employee',
                     component: () => import('../views/Employee')
-                }
+                },
             ]
         },
         {
@@ -77,9 +77,9 @@ const router = new Router({
  */
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (!localStorage.token && !sessionStorage.token) {
+        if (!localStorage.token) {
             next({
-                path: '/',
+                name: 'landing',
             })
         } else {
             next()

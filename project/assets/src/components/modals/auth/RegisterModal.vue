@@ -236,7 +236,7 @@
                                         </v-flex>
 
                                         <v-flex xs12 d-flex>
-                                            <v-btn to="dashboard" color="white lighten-2">
+                                            <v-btn to="dashboard.main" color="white lighten-2">
                                                 Пропустить
                                             </v-btn>
                                             <v-btn @click.prevent="registerCompany" :disabled="!step3Valid"
@@ -427,7 +427,7 @@
                     });
                     setTimeout(() => {
                         noty.close();
-                        this.$router.push('dashboard');
+                        this.$router.push('dashboard.main');
                     }, 2000);
                 }).catch(e => {
                     let noty = this.$noty.error(e.message, {

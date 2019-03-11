@@ -32,9 +32,11 @@
                     this.$http('auth.user')
                         .then(res => {
                             this.$store.commit('auth/setUser', res.data);
-                            this.$router.push({name: 'dashboard'});
+                            this.$router.push({name: 'dashboard.main'});
                         })
                         .catch(err => {
+                            console.log(err);
+
                             this.$store.dispatch('auth/logout').catch(e => {
                                 /* just do nothing */
                             });

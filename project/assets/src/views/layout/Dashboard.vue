@@ -34,7 +34,6 @@
         },
         mounted() {
             // make debounced check for token in system. If not, push user out.
-
             setTimeout(function (vue) {
                 if (!vue.$store.getters['auth/token'] && !localStorage.getItem('token')) {
                     vue.$router.push({name: 'landing'})
@@ -47,9 +46,12 @@
                         .then(res => {
                             vue.$bus.$emit("get-face-updated-companies", res.data.companies);
                             vue.$store.commit('auth/setUser', res.data);
-                            vue.$router.push({name: 'dashboard'});
+
+                            if (!vue.$route.name.includes('dashboard')) vue.$router.push({name: 'dashboard.main'});
                         })
                         .catch(err => {
+                            console.log(err);
+
                             vue.$store.dispatch('auth/logout').catch(e => {
                                 /* just do nothing */
                             });

@@ -68,9 +68,9 @@
             return {
                 drawer: true,
                 items: [
-                    {title: 'Dashboard', icon: 'dashboard', name: 'dashboard'},
-                    {title: 'Calendar', icon: 'calendar_today', name: 'calendar'},
-                    {title: 'Profile', icon: 'account_circle', name: 'profile'},
+                    {title: 'Dashboard', icon: 'dashboard', name: 'dashboard.main'},
+                    {title: 'Calendar', icon: 'calendar_today', name: 'dashboard.calendar'},
+                    {title: 'Profile', icon: 'account_circle', name: 'dashboard.profile'},
                 ],
                 mini: true,
                 right: null,

@@ -12,16 +12,19 @@ const Auth = {
             state.authenticated = payload;
         },
         setUser: (state, payload) => {
+            state.authenticated = !!payload.user;
             state.user = payload.user;
             state.companies = payload.companies;
         },
         setToken: (state, payload) => {
-            state.token = payload.token;
             localStorage.setItem('token', payload.token);
+            state.token = payload.token;
         },
         purgeToken: state => {
-            state.token = '';
+            console.log("Looking for exit");
+
             localStorage.removeItem('token');
+            state.token = '';
         },
         purgeUser: state => {
             state.user = {};

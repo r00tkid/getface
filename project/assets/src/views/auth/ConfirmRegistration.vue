@@ -43,7 +43,7 @@
                     .then(res => {
                         const token = res.data.token;
                         this.$store.commit('auth/setToken', {token: token});
-                        this.$router.push({name: 'dashboard'});
+                        this.$router.push({name: 'dashboard.main'});
                     })
                     .catch(e => {
                         e = e.response;
