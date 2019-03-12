@@ -22,96 +22,11 @@
       <v-flex lg6 xs12>
         <v-layout>
           <v-flex lg6 class="mainStat">
-            <div class="mainStat-row">
-              <div class="statCheckbox mainStatCommon">
-                <input type="checkbox" name="violation" id="violation">
-              </div>
-              <div class="statLabel mainStatCommon">
-                <label for="violation">Нарушений</label>
-              </div>
-              <div class="statTotal mainStatCommon">
-                45
-              </div>
-            </div>
-            <div class="mainStat-row">
-              <div class="statCheckbox mainStatCommon">
-                <input type="checkbox" name="lateness" id="lateness">
-              </div>
-              <div class="statLabel mainStatCommon">
-                <label for="lateness">Опозданий</label>
-              </div>
-              <div class="statTotal mainStatCommon">
-                45
-              </div>
-            </div>
-            <div class="mainStat-row">
-              <div class="statCheckbox mainStatCommon">
-                <input type="checkbox" name="leftEarlier" id="leftEarlier">
-              </div>
-              <div class="statLabel mainStatCommon">
-                <label for="leftEarlier">Ушёл раньше</label>
-              </div>
-              <div class="statTotal mainStatCommon">
-                45
-              </div>
-            </div>
-            <div class="mainStat-row">
-              <div class="statCheckbox mainStatCommon">
-                <input type="checkbox" name="timeDiference" id="timeDiference">
-              </div>
-              <div class="statLabel mainStatCommon">
-                <label for="timeDiference">Разница часов</label>
-              </div>
-              <div class="statTotal mainStatCommon">
-                45
-              </div>
-            </div>
-            <div class="mainStat-row">
-              <div class="statCheckbox mainStatCommon">
-                <input type="checkbox" name="factTime" id="factTime">
-              </div>
-              <div class="statLabel mainStatCommon">
-                <label for="factTime">Факт часов</label>
-              </div>
-              <div class="statTotal mainStatCommon">
-                45
-              </div>
-            </div>
-            <div class="mainStat-row">
-              <div class="statCheckbox mainStatCommon">
-                <input type="checkbox" name="planTime" id="planTime">
-              </div>
-              <div class="statLabel mainStatCommon">
-                <label for="planTime">План часов</label>
-              </div>
-              <div class="statTotal mainStatCommon">
-                45
-              </div>
-            </div>
-            <div class="mainStat-row">
-              <div class="statCheckbox mainStatCommon">
-                <input type="checkbox" name="statMood" id="statMood">
-              </div>
-              <div class="statLabel mainStatCommon">
-                <label for="statMood">Настроение</label>
-              </div>
-              <div class="statTotal mainStatCommon">
-                45
-              </div>
-            </div>
-            <div class="mainStat-row">
-              <div class="statCheckbox mainStatCommon">
-                <input type="checkbox" name="fatigue" id="fatigue">
-              </div>
-              <div class="statLabel mainStatCommon">
-                <label for="fatigue">Усталость</label>
-              </div>
-              <div class="statTotal mainStatCommon">
-                45
-              </div>
-            </div>
+            <home-stat></home-stat>
           </v-flex>
-          <v-flex lg6></v-flex>
+          <v-flex lg6>
+            <home-time-table></home-time-table>
+          </v-flex>
         </v-layout>
       </v-flex>
     </v-layout>
@@ -156,9 +71,10 @@
 </template>
 <script>
 import LineChart from "../components/chart/Chart.vue";
-import MyProgress from "../components/progress/Progress";
 import TimeTable from "../components/timeTable/TimeTable";
 import HomeTable from "../components/homeTable/HomeTable";
+import homeStat from "../components/homeStat.vue";
+import homeTimeTable from "../components/homeTimeTable.vue";
 
 export default {
   name: "abn-home",
@@ -171,9 +87,10 @@ export default {
   },
   components: {
     LineChart,
-    MyProgress,
     TimeTable,
-    HomeTable
+    HomeTable,
+    homeStat,
+    homeTimeTable
   },
   data: () => ({
     departaments: ["test1", "test2", "test3"],
@@ -360,49 +277,5 @@ export default {
   background-color: #fa6d6e;
   margin-left: 0;
 }
-.mainStat-row{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.statCheckbox{
-  flex: 1;
-}
-.statLabel{
-  flex: 3; 
-}
-.statLabel label{
-  padding: 10px;
-  cursor: pointer;
-}
-.statTotal{
-  flex: 2;
-}
-.mainStatCommon{
-  margin: 1px;
-  padding: 12px 0;
-  background-color: #fff;
-  border-radius: 3px;
-  border: 1px solid #d4d4d4;
-}
-.mainStat-row input[type="checkbox"]{
-  opacity: 0;
-  z-index: -1;
-}
-input[type="checkbox"]:checked + label, 
-input[type="checkbox"]:not(:checked) + label,{
-  position: relative;
-  width: 120px;
-}
-input[type="checkbox"]:checked + label:before, 
-input[type="checkbox"]:not(:checked) + label:before,{
-  position: absolute;
-  content: '';
-  width: 18px;
-  height: 18px;
-  left: -50px;
-  top: 0;
-  border: 1px solid #dddddd;
-  background-color: #ffffff;
-}
+
 </style>
