@@ -7,4 +7,7 @@ urlpatterns = [
     path('/turtle', views.turtle),
     path('/fortune', views.fortune),
 
+    path('/user/<int:user_id>', views.user_data_ext),
+    path('/user/<int:user_id>/companies', views.user_data_companies),
+
 ]

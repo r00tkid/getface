@@ -20,6 +20,10 @@ const Auth = {
             localStorage.setItem('token', payload.token);
             state.token = payload.token;
         },
+        setCompanies: (state, payload) => {
+            localStorage.setItem('companies', JSON.stringify(payload.companies));
+            state.companies = payload.companies;
+        },
         purgeToken: state => {
             console.log("Looking for exit");
 
@@ -48,7 +52,13 @@ const Auth = {
     },
     getters: {
         user: state => state.user,
-        companies: state => state.companies,
+        companies: state => {
+            try {
+                return state.companies || JSON.parse(localStorage.getItem('get-face-user-companies'));
+            } catch (e) {
+                return null;
+            }
+        },
         isAuth: state => state.authenticated,
         token: state => state.token,
         hasRights: state => state.has_rights,

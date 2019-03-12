@@ -116,6 +116,8 @@
                 this.$http('auth.login', window.collections.collectObject(this.$data, 'username', 'password'), 'post')
                     .then((res) => {
                         this.$store.commit('auth/setToken', {token: res.data.token});
+                        this.$store.commit('auth/setCompanies', {companies: res.data.companies});
+
                         this.$router.push({name: 'dashboard.main'});
                     })
                     .catch(error => {

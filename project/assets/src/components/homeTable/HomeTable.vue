@@ -170,7 +170,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="checkbox">
+                        <input type="checkbox" aria-label="Select">
                     </td>
                     <td class="nameCell">
                         <div>

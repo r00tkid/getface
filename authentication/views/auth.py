@@ -10,66 +10,40 @@ from rest_framework import status
 from authentication.models import User
 from company.models import Company
 from employee.models import Employee
-from index.base.exceptions import UnprocessableEntity
+from index.base.exceptions import UnprocessableEntity, APIException
 
 from index.mail.sender import Sandman
 from index import settings
 
 
-@api_view(['GET', 'HEAD'])
-def self_info(request):
-    companies_owner: Company.serializer = Company.serializer('extended')(
-        instance=Company.model().objects.filter(owner=request.user),
-        many=True
-    )
+def _user_response(user, with_token=False, with_companies=False, detail="OK"):
+    if not user:
+        raise APIException({
+            'detail': 'No user. Incorrect usage.'
+        }, 417)
 
-    as_employee = Employee.model().objects.filter(user=request.user).values_list('company_id', flat=True)
-    compare = Company.model().objects.filter(id__in=as_employee).filter(
-        Q(employee__is_fired=False) & Q(employee__is_active=True)
-    ).distinct()
+    token = None
+    companies = None
 
-    companies_employee = Company.serializer('extended')(
-        instance=compare.filter(employee__is_manager=False),
-        many=True,
-    )
+    if with_token:
+        token = user.get_token()
 
-    companies_manager = Company.serializer('extended')(
-        instance=compare.filter(employee__is_manager=True),
-        many=True,
-    )
-
-    companies_employee.add_owner()
-    companies_employee.add_employee_info(user=request.user, field_name='me')
-    companies_manager.add_owner()
-    companies_manager.add_employee_info(user=request.user, field_name='me')
-
-    owning = companies_owner.data
-    managing = companies_manager.data
-
-    for company in owning:
-        company["rule_level"] = {
-            "title": "Владелец",
-            "type": "owner"
-        }
-
-    for company in managing:
-        company["rule_level"] = {
-            "type": "manager"
-        }
-
-        if company.get('employee'):
-            company["rule_level"]["title"] = "%s [%s]" % (company.get('employee'), "Менеджер")
-        else:
-            company["rule_level"]["title"] = "Менеджер"
+    if with_companies:
+        companies = Company.model().objects.filter(Q(owner=user) | Q(employee__user=user).add(Q(employee__is_fired=False), Q.AND).add(Q(employee__is_active=True), Q.AND))
+        serializer = Company.serializer("extended")(instance=companies, many=True).add_rights(user, True)
+        companies = serializer.data
 
     return Response({
-        'user': User.serializer('extended')(instance=request.user).data,
-        'companies': {
-            'owner': owning,
-            'manager': managing,
-            'employee': companies_employee.data,
-        }
+        'detail': detail,
+        'token': token,
+        'user': User.serializer("extended" if with_companies else "base")(instance=user).data,
+        'companies': companies,
     })
+
+
+@api_view(['GET', 'HEAD'])
+def self_info(request):
+    return _user_response(request.user, with_companies=True)
 
 
 @api_view(['POST'])
@@ -168,8 +142,9 @@ def employee_sign_up(request):
     employee.save()
 
     return Response({
-        'valid': True,
+        'detail': "OK",
         'token': user.get_token(),
+        'companies': _user_response(user, with_companies=True).data.get('companies')
     }, status=status.HTTP_201_CREATED)
 
 
@@ -189,10 +164,7 @@ def activate_account(request):
     user.is_active = True
     user.save()
 
-    return Response({
-        'detail': 'Account has been activated',
-        'token': user.get_token(),
-    })
+    return _user_response(user, with_token=True, with_companies=True, detail="Account has been activated")
 
 
 @api_view(['POST'])
@@ -262,10 +234,7 @@ def reset_confirm(request):
     user.set_password(data.get('password'))
     user.save()
 
-    return Response({
-        'detail': 'Password has been reset',
-        'token': user.get_token(),
-    })
+    return _user_response(user, True, True, 'New password has been set')
 
 
 @api_view(['POST'])

@@ -23,6 +23,23 @@ class ExtendedCompanyList(Base.ListSerializer):
         for data, instance in zip(self.data, self.instance):
             data['owner'] = User.serializer()(instance=instance.owner).data
 
+        return self
+
+    def add_rights(self, user, add_employee_info=False):
+        for data, instance in zip(self.data, self.instance):
+            employee = Employee.objects.filter(user=user, company=instance).first()
+
+            data['as_employee'] = BaseEmployee(
+                instance=Employee.objects.filter(user=user, company=instance).first()
+            ).data if employee and add_employee_info else None
+
+            data['rights'] = {
+                'is_owner': instance.owner_id == user.id,
+                'is_manager': employee.is_manager if employee else False or instance.owner_id == user.id,
+            }
+
+        return self
+
     def add_employee_info(self, user=None, field_name='employee'):
         for data, instance in zip(self.data, self.instance):
             if not user:
@@ -31,6 +48,8 @@ class ExtendedCompanyList(Base.ListSerializer):
                 data[field_name] = BaseEmployee(
                     instance=Employee.objects.filter(user=user, company=instance).first()
                 ).data
+
+        return self
 
     def add_employees(self, name='base'):
         for data, instance in zip(self.data, self.instance):
@@ -41,8 +60,7 @@ class ExtendedCompanyList(Base.ListSerializer):
                 many=True,
             ).data
 
-    def update(self, instance, validated_data):
-        super().update(instance, validated_data)
+        return self
 
 
 class ExtendedCompany(Base.Serializer):

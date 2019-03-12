@@ -2,7 +2,7 @@
     <v-select
             v-if="companies && companies.length > 0"
             :disabled="companies.length === 1"
-            v-model="company_current"
+            v-model="currentCompany"
             :items="companies"
             item-value="id"
             item-text="name"
@@ -20,62 +20,55 @@
     export default {
         name: "get-face-header-companies",
         beforeMount() {
-            this.$bus.$on('get-face-updated-companies', this.setCompanies);
-
-            let counter = 3;
-
-            function checkCompaniesUntilDone(vue) {
-                if (--counter === 0) {
-                    return; // To not disturb code too many times
-                }
-
-                if (vue.$store.getters["auth/companies"]) {
-                    vue.setCompanies(vue.$store.getters["auth/companies"]);
-                } else {
-                    beat = setTimeout(checkCompaniesUntilDone, 500, this);
-                }
-            }
-
-            let beat = setTimeout(checkCompaniesUntilDone, 500, this);
+            /* Before */
         },
         data() {
             return {
-                company_current: null,
-                companies_arr: [],
+                company_current: undefined,
             };
         },
-        methods: {
-            setCompanies(payload) {
-                this.companies = [...(payload.owner), ...(payload.manager), ...(payload.employee)];
-                this.company_current = this.companies.length > 0 ? this.companies[0].id : null;
-            }
-        },
+        methods: {},
         computed: {
             companies: {
                 get() {
-                    return this.companies_arr;
+                    return this.$store.getters['auth/companies'];
                 },
-                set(companies) {
-                    this.companies_arr = companies;
+            },
+            company: {
+                get() {
+                    const that = this;
+
+                    try {
+                        return this.companies[this.companies.findIndex(function (company) {
+                            return that.company_current == company.id;
+                        })];
+                    } catch (e) {
+                        return undefined;
+                    }
                 }
             },
-            positionTitle: {
+            currentCompany: {
                 get() {
-                    return this.company_current.rule_level ? this.company_current.rule_level.title : null;
-                }
+                    return this.company_current;
+                },
+                set(id) {
+                    this.company_current = id;
+
+                    let company = null;
+
+                    if (id && (company = this.company)) {
+                        this.$bus.$emit("get-face-company-changed", company);
+                    }
+                },
             },
         },
         watch: {
-            company_current(val) {
-                if (this.companies.length < 1) return;
-
-                let index = this.companies.findIndex(function (company) {
-                    return val == company.id;
-                });
-
-                this.$emit("companyRights", this.companies && !!this.companies[index].rule_level);
+            companies(data) {
+                if (data && data.length > 0 && !this.company_current) {
+                    this.currentCompany = data[0].id;
+                }
             },
-        },
+        }
     }
 </script>
 

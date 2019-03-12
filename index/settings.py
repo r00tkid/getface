@@ -16,7 +16,7 @@ import os, datetime
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 [LOGS_DIR] = os.path.abspath(os.path.join(BASE_DIR, 'project', 'log')),
 DEFAULT_NAME = "Get Face"
-BASE_URL = "http://139.59.211.27:9090"
+BASE_URL = "http://127.0.0.1:9090"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
