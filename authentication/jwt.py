@@ -1,8 +1,6 @@
 import jwt
 from index import settings
 from django.db.models import Q
-from rest_framework import status
-from rest_framework import serializers
 from django.contrib.auth import authenticate
 from index.base.exceptions import APIException
 from authentication.models.user.model import User
@@ -47,7 +45,7 @@ class CustomJWTSerializer(JSONWebTokenSerializer):
                     if not user.is_active and not user.is_superuser:
                         raise APIException({
                             'detail': _('User account is disabled.'),
-                        }, code=409)
+                        }, status_code=409)
 
                     payload = jwt_payload_handler(user)
 
@@ -58,19 +56,19 @@ class CustomJWTSerializer(JSONWebTokenSerializer):
                 else:
                     raise APIException({
                         'detail': _('Unable to log in with provided credentials.'),
-                    }, code=422)
+                    }, status_code=422)
 
             else:
                 raise APIException({
                     'detail': _(
                         'Must include "{username_field}" and "password".'
                     ).format(username_field=self.username_field),
-                }, code=422)
+                }, status_code=422)
 
         else:
             raise APIException({
                 'detail': _('Account with this email/username/phone does not exists'),
-            }, code=404)
+            }, status_code=404)
 
     def update(self, instance, validated_data):
         super().update(instance, validated_data)

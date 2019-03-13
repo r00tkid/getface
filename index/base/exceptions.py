@@ -9,9 +9,10 @@ class ToDo(NotImplementedError):
 
 class APIException(RestException):
 
-    def __init__(self, detail=None, code=None):
+    def __init__(self, detail=None, status_code=None, code=None):
         super().__init__(detail)
-        self.status_code = code
+        self.status_code = status_code
+        self.code = code
 
     def __str__(self):
         if isinstance(self.detail, dict):

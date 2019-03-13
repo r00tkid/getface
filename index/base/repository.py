@@ -87,7 +87,7 @@ class Base(object):
                         'id': pk
                     },
                     'debug': str(e) if settings.DEBUG else None,
-                }, 404)
+                }, status_code=404)
             else:
                 return None
 

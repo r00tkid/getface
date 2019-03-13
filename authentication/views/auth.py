@@ -20,7 +20,7 @@ def _user_response(user, with_token=False, with_companies=False, detail="OK"):
     if not user:
         raise APIException({
             'detail': 'No user. Incorrect usage.'
-        }, 417)
+        }, status_code=417)
 
     token = None
     companies = None
