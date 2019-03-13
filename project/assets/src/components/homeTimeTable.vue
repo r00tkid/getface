@@ -100,9 +100,12 @@ export default {};
 }
 .timeTable tfoot td{
   color: #7d6df2;
-}
-.timeTable tfoot td {
   font-size: 31px;
+}
+.timeTable tfoot td button{
+  padding: 10px;
+  width: 100%;
+  outline: none;
 }
 .timeTable th,td{
   border: 1px solid #d4d4d4;

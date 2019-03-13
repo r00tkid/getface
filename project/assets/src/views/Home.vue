@@ -2,12 +2,15 @@
   <v-container grid-list-md text-xs-center fluid class="home-wrap">
     <v-layout row wrap justify-end>
       <v-flex xs12 d-flex>
-        <v-btn outline color="grey">23 янв 2019</v-btn>
-        <v-btn outline color="grey">23 фев 2019</v-btn>
-        <v-btn outline color="grey">Сегодня</v-btn>
-        <v-btn outline color="grey">Неделя</v-btn>
-        <v-btn outline color="purple">Месяц</v-btn>
-        <v-btn outline color="grey">Год</v-btn>
+        <div class="homeDateChage">
+          <v-btn flat small color="purple"><v-icon>navigate_before</v-icon></v-btn>
+          <div class="homeDateVal"><span>23 янв 2019</span>-<span>23 фев 2019</span></div>
+          <v-btn flat small color="purple"><v-icon>navigate_next</v-icon></v-btn>
+        </div>
+        <v-btn color="white">Сегодня</v-btn>
+        <v-btn color="white">Неделя</v-btn>
+        <v-btn color="white">Месяц</v-btn>
+        <v-btn color="white">Год</v-btn>
         <v-btn color="#fa6d6e" dark class="hideAnalitics">Скрыть аналитику</v-btn>
       </v-flex>
     </v-layout>
@@ -276,6 +279,24 @@ export default {
   color: #fff;
   background-color: #fa6d6e;
   margin-left: 0;
+}
+.homeDateChage{
+  display: flex;
+  background-color: #fff;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  border-radius: 2px;
+  height: 36px;
+  margin: 6px 8px;
+}
+.homeDateChage button{
+  margin: 0;
+}
+.homeDateVal{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 </style>

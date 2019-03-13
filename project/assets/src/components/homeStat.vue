@@ -3,56 +3,64 @@
     <div class="mainStat-row">
       <div class="checkBoxContainer statCommon"></div>
       <div class="statCheckbox statCommon">
-        <input type="checkbox" name="violation" id="violation">
-        <label for="violation">Нарушений</label>
+        <input type="checkbox" name="violation1" id="violation1">
+        <label for="violation1">Нарушений</label>
       </div>
       <div class="statTotal statCommon">45</div>
     </div>
     <div class="mainStat-row">
       <div class="checkBoxContainer statCommon"></div>
       <div class="statCheckbox statCommon">
-        <input type="checkbox" name="violation" id="violation">
-        <label for="violation">Нарушений</label>
+        <input type="checkbox" name="violation2" id="violation2">
+        <label for="violation2">Опозданий</label>
       </div>
       <div class="statTotal statCommon">45</div>
     </div>
     <div class="mainStat-row">
       <div class="checkBoxContainer statCommon"></div>
       <div class="statCheckbox statCommon">
-        <input type="checkbox" name="violation" id="violation">
-        <label for="violation">Нарушений</label>
+        <input type="checkbox" name="violation3" id="violation3">
+        <label for="violation3">Ушёл раньше</label>
       </div>
       <div class="statTotal statCommon">45</div>
     </div>
     <div class="mainStat-row">
       <div class="checkBoxContainer statCommon"></div>
       <div class="statCheckbox statCommon">
-        <input type="checkbox" name="violation" id="violation">
-        <label for="violation">Нарушений</label>
+        <input type="checkbox" name="violation4" id="violation4">
+        <label for="violation4">Разница часов</label>
       </div>
       <div class="statTotal statCommon">45</div>
     </div>
     <div class="mainStat-row">
       <div class="checkBoxContainer statCommon"></div>
       <div class="statCheckbox statCommon">
-        <input type="checkbox" name="violation" id="violation">
-        <label for="violation">Нарушений</label>
+        <input type="checkbox" name="violation5" id="violation5">
+        <label for="violation5">Факт часов</label>
       </div>
       <div class="statTotal statCommon">45</div>
     </div>
     <div class="mainStat-row">
       <div class="checkBoxContainer statCommon"></div>
       <div class="statCheckbox statCommon">
-        <input type="checkbox" name="violation" id="violation">
-        <label for="violation">Нарушений</label>
+        <input type="checkbox" name="violation6" id="violation6">
+        <label for="violation6">План часов</label>
       </div>
       <div class="statTotal statCommon">45</div>
     </div>
     <div class="mainStat-row">
       <div class="checkBoxContainer statCommon"></div>
       <div class="statCheckbox statCommon">
-        <input type="checkbox" name="violation" id="violation">
-        <label for="violation">Нарушений</label>
+        <input type="checkbox" name="violation7" id="violation7">
+        <label for="violation7">Настроение</label>
+      </div>
+      <div class="statTotal statCommon">45</div>
+    </div>
+    <div class="mainStat-row">
+      <div class="checkBoxContainer statCommon"></div>
+      <div class="statCheckbox statCommon">
+        <input type="checkbox" name="violation8" id="violation8">
+        <label for="violation8">Усталость</label>
       </div>
       <div class="statTotal statCommon">45</div>
     </div>
@@ -105,7 +113,7 @@ export default {};
   position: absolute;
   transform: rotate(45deg);
   left: -33px;
-  top: 11px;
+  top: 9px;
   font-size: 16px;
   color: #fff;
 }
@@ -118,7 +126,7 @@ export default {};
 .statCommon {
   background-color: #fff;
   border: 1px solid #d4d4d4;
-  height: 50px;
+  height: 46px;
   border-radius: 3px;
   margin-right: 3px;
   display: flex;
