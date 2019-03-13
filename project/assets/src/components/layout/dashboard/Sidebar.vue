@@ -84,7 +84,7 @@
         computed: {
             face: {
                 get() {
-                    return `https://randomuser.me/api/portraits/thumb/men/${(Math.random() * 100) | 0}.jpg`;
+                    return `https://randomuser.me/api/portraits/thumb/${Math.random() > 0.51 ? "men" : "women"}/${(Math.random() * 100) | 0}.jpg`;
                 },
             },
         }
