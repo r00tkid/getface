@@ -1,5 +1,5 @@
 <template>
-    <v-container class="calendar-wrap">
+    <v-container class="calendar-wrap" fluid>
         <v-layout row wrap justify-end>
             <v-flex xs12 lg2 align-center class="text-xs-center">
                 <div class="year-selection">
@@ -11,9 +11,8 @@
         </v-layout>
         <v-layout row wrap justify-end>
             <v-flex xs12>
-                <v-container grid-list-xl fill-height>
                     <v-layout row wrap>
-                        <v-flex xs12 md6 lg3 v-for="i in 12" :key="i">
+                        <v-flex class="calendar-item" xs12 md6 lg3  v-for="i in 12" :key="i">
                             <div @click="loadMonthStats(i-1)" class="vue-date-wrapper">
                                 <date-pick
                                         :value="getCurrMonth(i-1)"
@@ -28,7 +27,6 @@
                             </div>
                         </v-flex>
                     </v-layout>
-                </v-container>
             </v-flex>
         </v-layout>
     </v-container>
@@ -72,7 +70,9 @@
     .calendar-wrap {
         width: 80%;
     }
-
+    .calendar-item{
+        padding: 10px;
+    }
     .vdpArrow {
         display: none;
     }
