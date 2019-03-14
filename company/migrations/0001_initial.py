@@ -7,7 +7,6 @@ import index.fields.timezone.fields
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [

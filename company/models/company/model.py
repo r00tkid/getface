@@ -72,6 +72,16 @@ class Company(Base.models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def time_left(self):
+        from company.models.payment.model import Payment
+
+        last_payment = Payment.objects.filter(details__company=self).last()
+
+        return last_payment.time_left if last_payment else -1
+
+    time_left.fget.short_description = u"Оплаченное время"
+
     class Meta:
         verbose_name = "Компания"
         verbose_name_plural = "Компании"

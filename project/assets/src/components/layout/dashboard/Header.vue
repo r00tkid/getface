@@ -30,8 +30,7 @@
 
         <v-spacer><!-- SPACER --></v-spacer>
 
-        <v-btn large outline color="grey" v-if="is_owner" disabled>12 Дней</v-btn>
-        <v-btn large class="primary white--text" v-if="is_owner">Оплатить</v-btn>
+        <get-face-header-payment v-if="is_owner"></get-face-header-payment>
 
         <v-spacer><!-- SPACER --></v-spacer>
 
@@ -48,10 +47,11 @@
     export default {
         name: "abn-header",
         components: {
+            "get-face-header-notifications": () => import("./headerParts/Notifications"),
             "get-face-header-companies": () => import("./headerParts/Companies"),
+            "get-face-header-payment": () => import("./headerParts/Payment"),
             "get-face-header-search": () => import("./headerParts/Search"),
             "get-face-header-locale": () => import("./headerParts/Locale"),
-            "get-face-header-notifications": () => import("./headerParts/Notifications"),
         },
         beforeMount() {
             this.$bus.$on("get-face-company-changed", this.setRights);

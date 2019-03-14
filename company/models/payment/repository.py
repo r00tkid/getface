@@ -1,9 +1,10 @@
 class Repository:
-    from .model import Payment as __Model
+    from .model import Payment as __Model, PaymentDetails as __Details
     from .admin import PaymentAdmin as __Admin
 
     model = __Model
     admin = __Admin
+    details = __Details
 
     class serializers:
         from .serializer import PaymentSerializer as __Serializer

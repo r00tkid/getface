@@ -79,5 +79,5 @@ class CompanyExtendedSerializer(Base.Serializer):
 
     class Meta:
         model = Company
-        fields = ('id', 'name', 'description', 'address', 'email', 'phone', 'time_zone')
+        fields = ('id', 'name', 'description', 'address', 'email', 'phone', 'time_zone', 'time_left')
         list_serializer_class = CompanyExtendedListSerializer
