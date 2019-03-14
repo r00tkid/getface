@@ -3,19 +3,25 @@
             class="abn-header"
     >
         <v-flex xs2>
-            <get-face-header-companies @companyRights="setRights"></get-face-header-companies>
+            <get-face-header-companies></get-face-header-companies>
         </v-flex>
+
+        <v-btn class="mr-5" icon @click="userSelfUpdate">
+            <v-icon color="grey lighten-1">
+                refresh
+            </v-icon>
+        </v-btn>
 
         <v-spacer><!-- SPACER --></v-spacer>
 
         <v-flex xs3>
-            <get-face-header-search v-if="has_rights"></get-face-header-search>
+            <get-face-header-search v-if="is_manager"></get-face-header-search>
         </v-flex>
 
         <v-spacer><!-- SPACER --></v-spacer>
 
         <v-icon
-                v-if="has_rights"
+                v-if="is_manager"
                 x-large
                 color="grey lighten-1"
                 class="rotate90">
@@ -24,8 +30,8 @@
 
         <v-spacer><!-- SPACER --></v-spacer>
 
-        <v-btn large outline color="grey" v-if="has_rights">12 Дней</v-btn>
-        <v-btn large class="primary white--text" v-if="has_rights">Оплатить</v-btn>
+        <v-btn large outline color="grey" v-if="is_owner" disabled>12 Дней</v-btn>
+        <v-btn large class="primary white--text" v-if="is_owner">Оплатить</v-btn>
 
         <v-spacer><!-- SPACER --></v-spacer>
 
@@ -47,9 +53,13 @@
             "get-face-header-locale": () => import("./headerParts/Locale"),
             "get-face-header-notifications": () => import("./headerParts/Notifications"),
         },
+        beforeMount() {
+            this.$bus.$on("get-face-company-changed", this.setRights);
+        },
         data() {
             return {
-                has_rights: false,
+                owner: false,
+                manager: false,
                 messages: 0,
             };
         },
@@ -57,9 +67,37 @@
             toggleAside() {
                 this.$bus.$emit('toggle-main-side-bar');
             },
-            setRights(payload) {
-                this.$store.commit("auth/setRights", payload);
-                this.has_rights = payload;
+            setRights(company) {
+                if (!company) {
+                    this.is_owner = false;
+                    this.is_manager = false;
+
+                    return;
+                }
+
+                this.is_owner = company.rights ? company.rights.is_owner : false;
+                this.is_manager = company.rights ? company.rights.is_manager : false;
+            },
+            userSelfUpdate() {
+                this.$bus.$emit("get-face-user-self-update");
+            },
+        },
+        computed: {
+            is_owner: {
+                get() {
+                    return this.owner;
+                },
+                set(bool) {
+                    this.owner = bool;
+                },
+            },
+            is_manager: {
+                get() {
+                    return this.manager;
+                },
+                set(bool) {
+                    this.manager = bool;
+                },
             },
         },
     }

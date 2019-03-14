@@ -18,7 +18,7 @@ class CanManageCompany(IsAuthenticated):
             except:
                 raise exceptions.CompanyNotFound("Company with id:[%s] not found." % data.get('company_id'))
 
-            manager = Employee.model().objects.filter(user=user, company_id=data.get('company_id')).first()
+            manager = Employee.model.objects.filter(user=user, company_id=data.get('company_id')).first()
 
             is_owner = user.id == company.owner_id
             is_manager = manager and manager.is_manager and not manager.is_fired
@@ -50,7 +50,7 @@ class CanManageEmployees(CanManageCompany):
                 raise exceptions.NotFound
 
             try:
-                Employee.model().all_objects.get(pk=data.get('employee_id'), company_id=data.get('company_id'))
+                Employee.model.all.get(pk=data.get('employee_id'), company_id=data.get('company_id'))
             except:
                 raise exceptions.WorkerNotFound("Employee with id:[%s] not found." % data.get('employee_id'))
 

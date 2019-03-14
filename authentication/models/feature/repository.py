@@ -1,30 +1,20 @@
-import typing as tp
-from index.base.repository import Base
-
-
-class FeatureRepository(Base):
+class Repository:
     from .model import Feature as __Model
-    from .admin import Feature as __Admin
-    from .validator import Create as __Create, Update as __Update
-    from .serializer import BaseFeature as __BaseFeature
+    from .admin import FeatureAdmin as __Admin
 
-    @classmethod
-    def model(cls) -> tp.Type[__Model]:
-        return cls.__Model
+    model = __Model
+    admin = __Admin
 
-    @classmethod
-    def admin_view(cls) -> tp.Type[__Admin]:
-        return cls.__Admin
+    class serializers:
+        from .serializer import FeatureSerializer as __Serializer
 
-    @classmethod
-    def actions(cls) -> tp.Dict[str, tp.Union[tp.Type[__Create], tp.Type[__Update]]]:
-        return {
-            'create': cls.__Create,
-            'update': cls.__Update,
-        }
+        base = __Serializer
 
-    @classmethod
-    def serializers(cls) -> tp.Dict[str, tp.Union[tp.Type[__BaseFeature]]]:
-        return {
-            'base': cls.__BaseFeature,
-        }
+    class validators:
+        from .validator import (
+            FeatureCreateValidator as __Create,
+            FeatureUpdateValidator as __Update
+        )
+
+        create = __Create
+        update = __Update

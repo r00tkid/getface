@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 
-from authentication.models import User
+from authentication.models import User, get_user_by_id as _get_user
 from company.models import Company
 from employee.models import Employee
 from index.base.exceptions import UnprocessableEntity, APIException
@@ -29,14 +29,16 @@ def _user_response(user, with_token=False, with_companies=False, detail="OK"):
         token = user.get_token()
 
     if with_companies:
-        companies = Company.model().objects.filter(Q(owner=user) | Q(employee__user=user).add(Q(employee__is_fired=False), Q.AND).add(Q(employee__is_active=True), Q.AND))
-        serializer = Company.serializer("extended")(instance=companies, many=True).add_rights(user, True)
+        companies = Company.model.objects.filter(Q(owner=user) | Q(employee__user=user).add(Q(employee__is_fired=False), Q.AND).add(Q(employee__is_active=True), Q.AND))
+        serializer = Company.serializers.extended(instance=companies, many=True).add_rights(user, True)
         companies = serializer.data
+
+    serializer = User.serializers.extended if with_companies else User.serializers.base
 
     return Response({
         'detail': detail,
         'token': token,
-        'user': User.serializer("extended" if with_companies else "base")(instance=user).data,
+        'user': serializer(instance=user).data,
         'companies': companies,
     })
 
@@ -49,7 +51,7 @@ def self_info(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def sign_up(request):
-    validator = User.action('register')(data=request.data)
+    validator = User.validators.create(data=request.data)
 
     if not validator.validate():
         raise UnprocessableEntity({
@@ -61,7 +63,7 @@ def sign_up(request):
     debug = {}
     info = validator.data
 
-    user = User.new({
+    user = User.model(**{
         'username': info.get('username'),
         'email': info.get('email'),
         'first_name': info.get('first_name'),
@@ -98,7 +100,7 @@ def sign_up(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def employee_sign_up(request):
-    validator = Employee.action('register')(data=request.data)
+    validator = Employee.validators.create(data=request.data)
 
     if not validator.validate():
         return Response({
@@ -109,8 +111,8 @@ def employee_sign_up(request):
     data = validator.data
 
     try:
-        employee = Employee.model().objects.get(auth_key=data.get('uuid'))
-        user: User.model() = employee.user
+        employee = Employee.model.objects.get(auth_key=data.get('uuid'))
+        user = employee.user
     except Employee.model().DoesNotExist as e:
         return Response({
             'valid': False,
@@ -152,7 +154,7 @@ def employee_sign_up(request):
 @permission_classes((AllowAny,))
 def activate_account(request):
     data: dict = request.data
-    user: User.model() = User.info(int(data.get('user_id'))).instance
+    user = _get_user(int(data.get('user_id')))
 
     if not user.check_activation(data.get('user_key')) or user.is_active:
         return Response({
@@ -171,7 +173,6 @@ def activate_account(request):
 @permission_classes((AllowAny,))
 def reset_password(request):
     data: dict = request.data
-    model = User.model()
     email = data.get('email')
     debug = {}
 
@@ -181,7 +182,7 @@ def reset_password(request):
             'email': email,
         }, status=status.HTTP_404_NOT_FOUND)
 
-    user: User.model() = model.objects.filter(email=email).first()
+    user: User.model() = User.model.objects.filter(email=email).first()
 
     if not user or not user.is_active:
         return Response({
@@ -215,7 +216,7 @@ def reset_password(request):
 @permission_classes((AllowAny,))
 def reset_confirm(request):
     data: dict = request.data
-    user: User.model() = User.info(int(data.get('user_id'))).instance
+    user = _get_user(int(data.get('user_id')))
 
     if not user.check_activation(data.get('user_key')) or not user.is_active:
         return Response({
@@ -242,9 +243,9 @@ def reset_confirm(request):
 def resend_mail_invitation(request):
     if request.data.get('email'):
         email = request.data.get('email')
-        user: User.model() = User.model().objects.filter(email=email).first()
+        user: User.model() = User.model.objects.filter(email=email).first()
     elif request.data.get('user_id'):
-        user: User.model() = User.info(int(request.data.get('user_id'))).instance
+        user = _get_user(int(request.data.get('user_id')))
     else:
         return Response({
             'detail': 'Data is wrong.',

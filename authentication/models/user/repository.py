@@ -1,31 +1,24 @@
-import typing as tp
-from index.base.repository import Base
-
-
-class UserRepository(Base):
+class Repository:
     from .model import User as __Model
-    from .admin import User as __Admin
-    from .validator import Register as __Register, Update as __Update
-    from .serializer import BaseUser as __BaseUser, ExtendedUser as __ExtendedUser
+    from .admin import UserAdmin as __Admin
 
-    @classmethod
-    def model(cls) -> tp.Type[__Model]:
-        return cls.__Model
+    model = __Model
+    admin = __Admin
 
-    @classmethod
-    def admin_view(cls) -> tp.Type[__Admin]:
-        return cls.__Admin
+    class serializers:
+        from .serializer import (
+            UserSerializer as __Serializer,
+            UserExtendedSerializer as __Extended
+        )
 
-    @classmethod
-    def actions(cls) -> tp.Dict[str, tp.Union[tp.Type[__Register], tp.Type[__Update]]]:
-        return {
-            'register': cls.__Register,
-            'update': cls.__Update,
-        }
+        base = __Serializer
+        extended = __Extended
 
-    @classmethod
-    def serializers(cls) -> tp.Dict[str, tp.Union[tp.Type[__BaseUser], tp.Type[__ExtendedUser]]]:
-        return {
-            'base': cls.__BaseUser,
-            'extended': cls.__ExtendedUser,
-        }
+    class validators:
+        from .validator import (
+            UserCreateValidator as __Create,
+            UserUpdateValidator as __Update
+        )
+
+        create = __Create
+        update = __Update

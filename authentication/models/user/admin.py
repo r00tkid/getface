@@ -1,10 +1,10 @@
 from index.base.repository import Base
 from authentication.models.progress.model import Progress
 
-format_html = Base.Admin.format_html
 
+class UserAdmin(Base.Admin):
+    format_html = Base.Admin.format_html
 
-class User(Base.Admin):
     list_display = (
         'display_full_name',
         'email',
@@ -27,7 +27,7 @@ class User(Base.Admin):
         else:
             name = obj.username
 
-        return format_html(name)
+        return self.format_html(name)
 
     display_full_name.short_description = "ФИО"
 
@@ -42,7 +42,7 @@ class User(Base.Admin):
         else:
             is_ok = "<span class='glyphicon glyphicon-remove' style='color: #922'></span>"
 
-        return format_html(is_ok)
+        return self.format_html(is_ok)
 
     display_is_staff.short_description = "Сотрудник"
 
@@ -52,7 +52,7 @@ class User(Base.Admin):
         else:
             is_ok = "<span class='glyphicon glyphicon-remove' style='color: #922'></span>"
 
-        return format_html(is_ok)
+        return self.format_html(is_ok)
 
     display_is_super.short_description = "Админ"
 
@@ -62,7 +62,7 @@ class User(Base.Admin):
         else:
             is_ok = "<span class='glyphicon glyphicon-remove' style='color: #922'></span>"
 
-        return format_html(is_ok)
+        return self.format_html(is_ok)
 
     display_is_active.short_description = "Актив"
 

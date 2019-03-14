@@ -1,30 +1,20 @@
-import typing as tp
-from index.base.repository import Base
-
-
-class RateRepository(Base):
+class Repository:
     from .model import Rate as __Model
-    from .admin import Rate as __Admin
-    from .validator import Create as __Create, Update as __Update
-    from .serializer import BaseRate as __BaseRate
+    from .admin import RateAdmin as __Admin
 
-    @classmethod
-    def model(cls) -> tp.Type[__Model]:
-        return cls.__Model
+    model = __Model
+    admin = __Admin
 
-    @classmethod
-    def admin_view(cls) -> tp.Type[__Admin]:
-        return cls.__Admin
+    class serializers:
+        from .serializer import RateSerializer as __Serializer
 
-    @classmethod
-    def actions(cls) -> tp.Dict[str, tp.Union[tp.Type[__Create], tp.Type[__Update]]]:
-        return {
-            'create': cls.__Create,
-            'update': cls.__Update,
-        }
+        base = __Serializer
 
-    @classmethod
-    def serializers(cls) -> tp.Dict[str, tp.Union[tp.Type[__BaseRate]]]:
-        return {
-            'base': cls.__BaseRate,
-        }
+    class validators:
+        from .validator import (
+            RateCreateValidator as __Create,
+            RateUpdateValidator as __Update
+        )
+
+        create = __Create
+        update = __Update

@@ -1,5 +1,5 @@
 from index.base.repository import Base
 
 
-class Discount(Base.Admin):
+class DiscountAdmin(Base.Admin):
     list_display = ('name', 'percent')

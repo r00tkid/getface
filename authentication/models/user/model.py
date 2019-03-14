@@ -7,8 +7,8 @@ def _activation_key() -> str:
     return _md5.md5(uuid.uuid4().bytes).hexdigest()
 
 
-class User(AbstractUser, Base.CreatedStump):
-    field = Base.Model.field
+class User(AbstractUser, Base.models.Model):
+    field = Base.models.Model.field
 
     email = field.Email(
         "E-mail",
@@ -35,6 +35,13 @@ class User(AbstractUser, Base.CreatedStump):
         null=True,
         editable=False,
         default=_activation_key
+    )
+
+    timezone = field.TimeZone(
+        verbose_name="Локальное время пользователя",
+        default="UTC",
+        null=False,
+        blank=True,
     )
 
     def new_activation(self):

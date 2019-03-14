@@ -4,9 +4,9 @@ from company.models.rate.model import Rate
 from company.models.discount.model import Discount
 
 
-class Company(Base.TimeStumps, Base.SoftDeletion):
-    field = Base.Model.field
-    rel = Base.Model.rel
+class Company(Base.models.Model):
+    relations = Base.models.Model.relations
+    field = Base.models.Model.field
 
     name = field.Char(
         verbose_name="Название компании",
@@ -44,20 +44,20 @@ class Company(Base.TimeStumps, Base.SoftDeletion):
     owner = field.Foreign(
         User,
         verbose_name="Владелец",
-        on_delete=rel.DO_NOTHING,
+        on_delete=relations.DO_NOTHING,
         null=False,
     )
 
     rate = field.Foreign(
         Rate,
-        on_delete=rel.DO_NOTHING,
+        on_delete=relations.DO_NOTHING,
         null=True,
         blank=True,
     )
 
     discount = field.Foreign(
         Discount,
-        on_delete=rel.SET(None),
+        on_delete=relations.SET(None),
         null=True,
         blank=True,
     )

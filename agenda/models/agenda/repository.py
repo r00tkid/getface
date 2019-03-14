@@ -1,32 +1,20 @@
-from index.base.repository import Base
+class Repository:
+    from .model import Agenda as __Model
+    from .admin import AgendaAdmin as __Admin
 
+    model = __Model
+    admin = __Admin
 
-class AgendaRepository(Base):
-    @classmethod
-    def model(cls):
-        from .model import Agenda
+    class serializers:
+        from .serializer import AgendaSerializer as __Serializer
 
-        return Agenda
+        base = __Serializer
 
-    @classmethod
-    def admin_view(cls):
-        from .admin import Agenda
+    class validators:
+        from .validator import (
+            AgendaCreateValidator as __Create,
+            AgendaUpdateValidator as __Update
+        )
 
-        return Agenda
-
-    @classmethod
-    def actions(cls):
-        from .validator import Create, Update
-
-        return {
-            'create': Create,
-            'update': Update,
-        }
-
-    @classmethod
-    def serializers(cls):
-        from .serializer import BaseAgenda
-
-        return {
-            'base': BaseAgenda,
-        }
+        create = __Create
+        update = __Update

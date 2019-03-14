@@ -1,29 +1,18 @@
-import typing as tp
-from index.base.repository import Base
-
-
-class PositionRepository(Base):
+class Repository:
     from .model import Position as __Model
-    from .validator import Create as __Create, Update as __Update
-    from .serializer import BasePosition as __BasePosition
 
-    @classmethod
-    def model(cls) -> tp.Type[__Model]:
-        return cls.__Model
+    model = __Model
 
-    @classmethod
-    def admin_view(cls):
-        raise NotImplemented
+    class serializers:
+        from .serializer import PositionSerializer as __Serializer
 
-    @classmethod
-    def actions(cls) -> tp.Dict[str, tp.Union[tp.Type[__Create], tp.Type[__Update]]]:
-        return {
-            'create': cls.__Create,
-            'update': cls.__Update,
-        }
+        base = __Serializer
 
-    @classmethod
-    def serializers(cls) -> tp.Dict[str, tp.Union[tp.Type[__BasePosition]]]:
-        return {
-            'base': cls.__BasePosition,
-        }
+    class validators:
+        from .validator import (
+            PositionCreateValidator as __Create,
+            PositionUpdateValidator as __Update
+        )
+
+        create = __Create
+        update = __Update

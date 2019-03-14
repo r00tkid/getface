@@ -1,5 +1,5 @@
 from index.base.repository import Base
 
 
-class Create(Base.Validator):
+class PaymentCreateValidator(Base.Validator):
     pass

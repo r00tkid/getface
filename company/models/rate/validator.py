@@ -1,9 +1,9 @@
 from index.base.repository import Base
 
 
-class Create(Base.Validator):
+class RateCreateValidator(Base.Validator):
     pass
 
 
-class Update(Base.Validator):
+class RateUpdateValidator(Base.Validator):
     pass

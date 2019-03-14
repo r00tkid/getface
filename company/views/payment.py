@@ -1,13 +1,13 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from company.models import Company, Payment, Rate, Discount
+from company.models import Company, Payment, Rate, Discount, get_company_by_id as _get_company
 
 
 @api_view(['POST'])
 def add_payment(request):
-    company = Company.info(request.data.get('company_id'))
+    company = _get_company(request.data.get('company_id'))
 
-    payment = Payment.model()(
+    payment = Payment.model(
         user=request.user,
         rate_id=request.data.get('rate_id'),
         discount_id=company.instance.discount_id,
@@ -17,33 +17,31 @@ def add_payment(request):
 
     payment.save()
 
-    company_model: Company.model() = company.instance
-    company_model.payment = payment
-    company_model.save()
+    company.payment = payment
+    company.save()
 
     return Response({
         'detail': 'Payment has been saved',
-        'company': company.data,
+        'company': Company.serializers.extended(instance=company).data,
     })
 
 
 @api_view(['GET'])
 def payments(request, company_id):
-    payment = Payment.model()
-    company = Company.info(company_id)
+    company = _get_company(company_id)
 
     return Response({
         'detail': 'Payments for [%s] company' % company.instance.name,
-        'payments': Payment.serializer()(instance=payment.objects.filter(company=company.instance), many=True).data
+        'payments': Payment.serializers.base(instance=Payment.model.objects.filter(company=company), many=True).data
     })
 
 
 @api_view(['GET'])
 def company_rate(request, company_id):
-    company = Company.info(company_id)
+    company = _get_company(company_id)
 
     return Response({
         'detail': 'Rate for [%s] company' % company.instance.name,
-        'rate': Rate.serializer()(instance=company.instance.rate).data,
-        'discount': Discount.serializer()(instance=company.instance.discount).data
+        'rate': Rate.serializers.base(instance=company.instance.rate).data,
+        'discount': Discount.serializers.base(instance=company.instance.discount).data
     })

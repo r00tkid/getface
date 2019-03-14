@@ -1,9 +1,10 @@
-from datetime import datetime
-from django.db import models
+from django.db.models import QuerySet as __QuerySet
 
 
-class SoftDeletionQuerySet(models.QuerySet):
+class SoftDeletionQuerySet(__QuerySet):
     def delete(self):
+        from datetime import datetime
+
         return super(SoftDeletionQuerySet, self).update(deleted_at=datetime.now())
 
     def hard_delete(self):

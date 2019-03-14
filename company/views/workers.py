@@ -3,7 +3,7 @@ from company.base.permissions import CanManageCompany
 from rest_framework.response import Response
 from rest_framework import status
 from employee.models import Employee
-from company.models import Company
+from company.models import Company, get_company_by_id as _get_company
 
 
 @api_view(('GET',))
@@ -12,9 +12,9 @@ def get_company_employees(request, company_id):
     query = request.GET
 
     if query.get('all') == '':
-        objects = Employee.model().all
+        objects = Employee.model.all
     else:
-        objects = Employee.model().objects
+        objects = Employee.model.objects
 
     objects = objects.filter(company_id=company_id)
 
@@ -35,7 +35,7 @@ def get_company_employees(request, company_id):
     return Response(
         {
             'detail': 'Employees view',
-            'employees': Employee.serializer('extended')(
+            'employees': Employee.serializers.extended(
                 objects,
                 many=True,
             ).data,
@@ -46,11 +46,11 @@ def get_company_employees(request, company_id):
 @api_view(('GET',))
 # Default auth permission
 def get_user_status(request, company_id):
-    company = Company.info(company_id, 'extended').instance
+    company = _get_company(company_id)
     user = request.user
 
-    employee = Employee.model().objects.filter(user=user, company=company).first()
-    deleted = Employee.model().all.filter(user=user, company=company).first()
+    employee = Employee.model.objects.filter(user=user, company=company).first()
+    deleted = Employee.model.all.filter(user=user, company=company).first()
 
     return Response({
         'is_owner': company.owner_id == user.id,
@@ -64,11 +64,11 @@ def get_user_status(request, company_id):
 @api_view(('GET',))
 # Default auth permission
 def get_user_employee(request, company_id):
-    company = Company.info(company_id, 'extended').Meta.model
+    company = _get_company(company_id)
     user = request.user
-    employee = Employee.model().objects.filter(user=user, company=company).first()
+    employee = Employee.model.objects.filter(user=user, company=company).first()
 
     return Response({
         'detail': 'Your company profile' if employee else 'You are not the part of this company or not in employees',
-        'employee': Employee.serializer('extended')(instance=employee).data if employee else None,
+        'employee': Employee.serializers.extended(instance=employee).data if employee else None,
     }, status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION if employee else status.HTTP_403_FORBIDDEN)

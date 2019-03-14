@@ -8,9 +8,9 @@ from employee.models.position.model import Position
 from employee.models.department.model import Department
 
 
-class Employee(Base.TimeStumps, Base.SoftDeletion):
-    field = Base.Model.field
-    rel = Base.Model.rel
+class Employee(Base.models.Model):
+    relations = Base.models.Model.relations
+    field = Base.models.Model.field
 
     first_name = field.Char(
         max_length=200,
@@ -31,7 +31,7 @@ class Employee(Base.TimeStumps, Base.SoftDeletion):
 
     company = field.Foreign(
         Company,
-        on_delete=rel.CASCADE,
+        on_delete=relations.CASCADE,
         verbose_name="Компания",
         null=False,
         blank=False,
@@ -95,7 +95,7 @@ class Employee(Base.TimeStumps, Base.SoftDeletion):
 
     user = field.Foreign(
         User,
-        on_delete=rel.CASCADE,
+        on_delete=relations.CASCADE,
         verbose_name="Физический пользователь",
         null=True,
         blank=True,
@@ -103,7 +103,7 @@ class Employee(Base.TimeStumps, Base.SoftDeletion):
 
     department = field.Foreign(
         Department,
-        on_delete=rel.SET(None),
+        on_delete=relations.SET(None),
         default=None,
         null=True,
         blank=True,
@@ -111,7 +111,7 @@ class Employee(Base.TimeStumps, Base.SoftDeletion):
 
     position = field.Foreign(
         Position,
-        on_delete=rel.SET(None),
+        on_delete=relations.SET(None),
         default=None,
         null=True,
         blank=True,

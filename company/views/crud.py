@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from company.base.permissions import CanManageCompany
-from company.models import Company
+from company.models import Company, get_company_by_id as _get_company
 
 
 class CompanyActions(APIView):
@@ -10,7 +10,7 @@ class CompanyActions(APIView):
     http_method_names = ['get', 'post', 'put', 'delete', 'restore', 'purge']
 
     def post(self, request):
-        validator = Company.action('create')(data=request.data)
+        validator = Company.validators.create(data=request.data)
 
         if not validator.validate():
             return Response({
@@ -18,18 +18,18 @@ class CompanyActions(APIView):
                 'errors': validator.errors,
             }, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-        company = Company.new(validator.data)
+        company = Company.model(**validator.data)
         company.owner_id = request.user.id
         company.save()
 
         return Response(data={
             'detail': 'Company has been created',
-            'company': Company.serializer()(instance=company).data,
+            'company': Company.serializers.extended(instance=company).data,
         }, status=status.HTTP_201_CREATED)
 
     def get(self, request, company_id):
-        company = Company.model().objects.get(pk=company_id)
-        info = Company.serializer('extended')(instance=company)
+        company = _get_company(company_id)
+        info = Company.serializers.extended(instance=company)
 
         info.add_owner()
         info.add_workers()
@@ -40,7 +40,7 @@ class CompanyActions(APIView):
         })
 
     def put(self, request, company_id):
-        validator = Company.serializer()(data=request.data)
+        validator = Company.validators.update(data=request.data)
 
         if not validator.validate():
             return Response({
@@ -50,7 +50,7 @@ class CompanyActions(APIView):
 
         company = Company.model().objects.get(pk=company_id)
         company.update(validator.data, nullable=False)
-        info = Company.serializer('extended')(instance=company)
+        info = Company.serializers.extended(instance=company)
 
         info.add_owner()
         info.add_workers()
@@ -66,7 +66,7 @@ class CompanyActions(APIView):
 
         return Response(data={
             'detail': 'Company has been deleted',
-            'company': Company.serializer('extended')(instance=company).data,
+            'company': Company.serializers.extended(instance=company).data,
         })
 
     def restore(self, request, company_id):
@@ -75,7 +75,7 @@ class CompanyActions(APIView):
 
         return Response(data={
             'detail': 'Company has been restored',
-            'company': Company.serializer('extended')(instance=company).data,
+            'company': Company.serializers.extended(instance=company).data,
         })
 
     def purge(self, request, company_id):
@@ -84,5 +84,5 @@ class CompanyActions(APIView):
 
         return Response(data={
             'detail': 'Company has been purged',
-            'company': Company.serializer('extended')(instance=company).data,
+            'company': Company.serializers.extended(instance=company).data,
         })

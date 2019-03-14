@@ -2,65 +2,65 @@ from index.base.repository import Base
 from employee.models import Employee
 
 
-class Create(Base.Validator):
+class AgendaCreateValidator(Base.Validator):
     field = Base.Validator.field
-    valid = Base.Validator.valid
+    validation = Base.Validator.validation
 
     start = field.DateTime("Начал", [
-        valid.DataRequired()
+        validation.DataRequired()
     ])
 
     end = field.DateTime("Закончил", [
-        valid.DataRequired()
+        validation.DataRequired()
     ])
 
     active = field.Integer("Активность", [
-        valid.NotRequired(is_string=False),
-        valid.NumberRange(min=0, max=100),
+        validation.NotRequired(is_string=False),
+        validation.NumberRange(min=0, max=100),
     ])
 
     mood = field.Integer("Настроение", [
-        valid.NotRequired(is_string=False),
-        valid.NumberRange(min=0, max=100),
+        validation.NotRequired(is_string=False),
+        validation.NumberRange(min=0, max=100),
     ])
 
     fatigue = field.Integer("Усталость", [
-        valid.NotRequired(is_string=False),
-        valid.NumberRange(min=0, max=100),
+        validation.NotRequired(is_string=False),
+        validation.NumberRange(min=0, max=100),
     ])
 
     worker_id = field.Integer("ID работника", [
-        valid.ValidationChain(
-            valid.DataRequired(),
-            valid.NumberRange(min=1),
-            valid.Exists(Employee.model(), 'id'),
+        validation.ValidationChain(
+            validation.DataRequired(),
+            validation.NumberRange(min=1),
+            validation.Exists(Employee.model(), 'id'),
         ),
     ])
 
 
-class Update(Base.Validator):
+class AgendaUpdateValidator(Base.Validator):
     field = Base.Validator.field
-    valid = Base.Validator.valid
+    validation = Base.Validator.validation
 
     start = field.DateTime("Начал", [
-        valid.NotRequired(allow_empty=False)
+        validation.NotRequired(allow_empty=False)
     ])
 
     end = field.DateTime("Закончил", [
-        valid.NotRequired(allow_empty=False)
+        validation.NotRequired(allow_empty=False)
     ])
 
     active = field.Integer("Активность", [
-        valid.NotRequired(is_string=False),
-        valid.NumberRange(min=0, max=100),
+        validation.NotRequired(is_string=False),
+        validation.NumberRange(min=0, max=100),
     ])
 
     mood = field.Integer("Настроение", [
-        valid.NotRequired(is_string=False),
-        valid.NumberRange(min=0, max=100),
+        validation.NotRequired(is_string=False),
+        validation.NumberRange(min=0, max=100),
     ])
 
     fatigue = field.Integer("Усталость", [
-        valid.NotRequired(is_string=False),
-        valid.NumberRange(min=0, max=100),
+        validation.NotRequired(is_string=False),
+        validation.NumberRange(min=0, max=100),
     ])

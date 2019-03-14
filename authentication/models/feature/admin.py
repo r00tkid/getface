@@ -2,7 +2,7 @@ from index.base.repository import Base
 from authentication.models.progress.model import Progress
 
 
-class Feature(Base.Admin):
+class FeatureAdmin(Base.Admin):
     format_html = Base.Admin.format_html
 
     list_display = (

@@ -1,7 +1,7 @@
 from index.base.repository import Base
 
 
-class Agenda(Base.Admin):
+class AgendaAdmin(Base.Admin):
     list_display = ('display_worker_company', 'display_date', 'display_time_range', 'active', 'mood', 'fatigue',)
 
     def display_worker_company(self, obj):

@@ -5,7 +5,7 @@ from django.http.response import HttpResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from authentication.models import User
+from authentication.models import get_user_by_id
 
 
 @api_view(['GET'])
@@ -46,14 +46,15 @@ def sign_in(request):
 @permission_classes((AllowAny,))
 def sign_up(request):
     from authentication.models import User
-    return Response(base.get_form_fields(User.action('register')))
+    return Response(base.get_form_fields(User.validators.create))
 
 
 @api_view(['GET'])
 @permission_classes((AllowAny,))
 def worker_sign_up(request):
     from employee.models import Employee
-    return Response(base.get_form_fields(Employee.action('register')))
+
+    return Response(base.get_form_fields(Employee.validators.activate))
 
 
 @api_view(['GET'])
@@ -61,7 +62,7 @@ def worker_sign_up(request):
 def user_data_ext(request, user_id):
     from authentication.views.auth import _user_response
 
-    return _user_response(User.info(pk=user_id).instance)
+    return _user_response(get_user_by_id(user_id))
 
 
 @api_view(['GET'])
@@ -69,4 +70,4 @@ def user_data_ext(request, user_id):
 def user_data_companies(request, user_id):
     from authentication.views.auth import _user_response
 
-    return _user_response(User.info(pk=user_id).instance, with_companies=True)
+    return _user_response(get_user_by_id(user_id), with_companies=True)

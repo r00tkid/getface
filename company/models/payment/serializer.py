@@ -1,5 +1,5 @@
 from index.base.repository import Base
 
 
-class BasePayment(Base.Serializer):
+class PaymentSerializer(Base.Serializer):
     pass

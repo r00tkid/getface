@@ -2,35 +2,35 @@ from index.base.repository import Base
 from employee.models import Employee
 
 
-class Create(Base.Validator):
+class CalendarCreateValidator(Base.Validator):
+    validation = Base.Validator.validation
     field = Base.Validator.field
-    valid = Base.Validator.valid
 
     start = field.DateTime("Начало", [
-        valid.DataRequired()
+        validation.DataRequired()
     ])
 
     end = field.DateTime("Конец", [
-        valid.DataRequired()
+        validation.DataRequired()
     ])
 
     worker_id = field.Integer("Работник", [
-        valid.ValidationChain(
-            valid.DataRequired(),
-            valid.NumberRange(min=1),
-            valid.Exists(Employee.model(), 'id'),
+        validation.ValidationChain(
+            validation.DataRequired(),
+            validation.NumberRange(min=1),
+            validation.Exists(Employee.model(), 'id'),
         ),
     ])
 
 
-class Update(Base.Validator):
+class CalendarUpdateValidator(Base.Validator):
+    validation = Base.Validator.validation
     field = Base.Validator.field
-    valid = Base.Validator.valid
 
     start = field.DateTime("Начало", [
-        valid.NotRequired(allow_empty=False)
+        validation.NotRequired(allow_empty=False)
     ])
 
     end = field.DateTime("Конец", [
-        valid.NotRequired(allow_empty=False)
+        validation.NotRequired(allow_empty=False)
     ])

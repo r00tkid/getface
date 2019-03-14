@@ -1,32 +1,20 @@
-from index.base.repository import Base
+class Repository:
+    from .model import Calendar as __Model
+    from .admin import CalendarAdmin as __Admin
 
+    model = __Model
+    admin = __Admin
 
-class CalendarRepository(Base):
-    @classmethod
-    def model(cls):
-        from .model import Calendar
+    class serializers:
+        from .serializer import CalendarSerializer as __Serializer
 
-        return Calendar
+        base = __Serializer
 
-    @classmethod
-    def admin_view(cls):
-        from .admin import Calendar
+    class validators:
+        from .validator import (
+            CalendarCreateValidator as __Create,
+            CalendarUpdateValidator as __Update
+        )
 
-        return Calendar
-
-    @classmethod
-    def actions(cls):
-        from .validator import Create, Update
-
-        return {
-            'create': Create,
-            'update': Update,
-        }
-
-    @classmethod
-    def serializers(cls):
-        from .serializer import BaseCalendar
-
-        return {
-            'base': BaseCalendar
-        }
+        create = __Create
+        update = __Update

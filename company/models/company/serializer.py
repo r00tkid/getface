@@ -1,42 +1,42 @@
 from index.base.repository import Base
-from authentication.models import User
 from company.models.company.model import Company
-from employee.models.employee.model import Employee
-from employee.models.employee.serializer import BaseEmployee, ExtendedEmployee
+from company.models.rate.serializer import RateSerializer
+from authentication.models import User
+from employee.models import Employee
 
 
-def get_employee_serializer(name):
-    return {
-        'base': BaseEmployee,
-        'extended': ExtendedEmployee,
-    }[name]
-
-
-class BaseCompany(Base.Serializer):
+class CompanySerializer(Base.Serializer):
     class Meta:
         model = Company
         fields = ('id', 'name', 'description', 'address', 'email', 'phone')
 
 
-class ExtendedCompanyList(Base.ListSerializer):
+class CompanyExtendedListSerializer(Base.ListSerializer):
     def add_owner(self):
         for data, instance in zip(self.data, self.instance):
-            data['owner'] = User.serializer()(instance=instance.owner).data
+            data['owner'] = User.serializers.base(instance=instance.owner).data
 
         return self
 
     def add_rights(self, user, add_employee_info=False):
         for data, instance in zip(self.data, self.instance):
-            employee = Employee.objects.filter(user=user, company=instance).first()
+            employee = Employee.model.objects.filter(user=user, company=instance).first()
 
-            data['as_employee'] = BaseEmployee(
-                instance=Employee.objects.filter(user=user, company=instance).first()
+            data['as_employee'] = Employee.serializers.base(
+                instance=Employee.model.objects.filter(user=user, company=instance).first()
             ).data if employee and add_employee_info else None
 
             data['rights'] = {
                 'is_owner': instance.owner_id == user.id,
                 'is_manager': employee.is_manager if employee else False or instance.owner_id == user.id,
             }
+
+            # TODO: !!!
+            # company: Company = instance
+            # if data['rights']['is_owner']:
+            #     rate = company.rate
+            #     payment = company
+            #     data['rate'] = RateSerializer(instance=instance.rate).data
 
         return self
 
@@ -45,34 +45,32 @@ class ExtendedCompanyList(Base.ListSerializer):
             if not user:
                 data[field_name] = None
             else:
-                data[field_name] = BaseEmployee(
-                    instance=Employee.objects.filter(user=user, company=instance).first()
+                data[field_name] = Employee.serializers.base(
+                    instance=Employee.model.objects.filter(user=user, company=instance).first()
                 ).data
 
         return self
 
-    def add_employees(self, name='base'):
+    def add_employees(self):
         for data, instance in zip(self.data, self.instance):
-            serial = get_employee_serializer(name)
-
-            data['employees'] = serial(
-                instance=Employee.objects.filter(company_id=instance.pk),
+            data['employees'] = Employee.serializers.extended(
+                instance=Employee.model.objects.filter(company_id=instance.pk),
                 many=True,
             ).data
 
         return self
 
 
-class ExtendedCompany(Base.Serializer):
+class CompanyExtendedSerializer(Base.Serializer):
     def add_owner(self):
-        self.data['owner'] = User.serializer()(instance=self.instance.owner).data
+        self.data['owner'] = User.serializers.base(instance=self.instance.owner).data
 
     def add_employees(self):
-        employees = Employee.objects.filter(company_id=self.instance.pk)
+        employees = Employee.model.objects.filter(company_id=self.instance.pk)
 
-        self.data['employees'] = BaseEmployee(instance=employees, many=True).data
+        self.data['employees'] = Employee.serializers.base(instance=employees, many=True).data
 
     class Meta:
         model = Company
-        fields = ('id', 'name', 'description', 'address', 'email', 'phone')
-        list_serializer_class = ExtendedCompanyList
+        fields = ('id', 'name', 'description', 'address', 'email', 'phone', 'timezone')
+        list_serializer_class = CompanyExtendedListSerializer

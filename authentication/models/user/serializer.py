@@ -3,13 +3,13 @@ from .model import User
 from rest_framework import serializers
 
 
-class BaseUser(Base.Serializer):
+class UserSerializer(Base.Serializer):
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'username')
+        fields = ('id', 'first_name', 'last_name', 'username', 'timezone')
 
 
-class ExtendedUser(Base.Serializer):
+class UserExtendedSerializer(Base.Serializer):
     last_login = serializers.SerializerMethodField()
 
     def get_last_login(self, model):
@@ -29,4 +29,5 @@ class ExtendedUser(Base.Serializer):
             'is_superuser',
             'date_joined',
             'last_login',
+            'timezone',
         )

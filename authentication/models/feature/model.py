@@ -1,8 +1,8 @@
 from index.base.repository import Base
 
 
-class Feature(Base.TimeStumps, Base.SoftDeletion):
-    field = Base.Model.field
+class Feature(Base.models.Model):
+    field = Base.models.Model.field
 
     name = field.Char(
         "Название",

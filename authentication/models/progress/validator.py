@@ -3,12 +3,12 @@ from authentication.models.user.model import User
 from authentication.models.feature.model import Feature
 
 
-class Create(Base.Validator):
+class ProgressCreateValidator(Base.Validator):
+    validation = Base.Validator.validation
     field = Base.Validator.field
-    valid = Base.Validator.valid
 
     user_id = field.Integer("User", [
-        valid.Exists(
+        validation.Exists(
             User,
             'pk',
             'User not found'
@@ -16,7 +16,7 @@ class Create(Base.Validator):
     ])
 
     feature_id = field.Integer("Feature", [
-        valid.Exists(
+        validation.Exists(
             Feature,
             'pk',
             'Feature not found'

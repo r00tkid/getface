@@ -1,29 +1,16 @@
-import typing as tp
-from index.base.repository import Base
-
-
-class DiscountRepository(Base):
+class Repository:
     from .model import Discount as __Model
-    from .admin import Discount as __Admin
-    from .validator import Create as __Create
-    from .serializer import BaseDiscount as __BaseDiscount
+    from .admin import DiscountAdmin as __Admin
 
-    @classmethod
-    def model(cls) -> tp.Type[__Model]:
-        return cls.__Model
+    model = __Model
+    admin = __Admin
 
-    @classmethod
-    def admin_view(cls) -> tp.Type[__Admin]:
-        return cls.__Admin
+    class serializers:
+        from .serializer import DiscountSerializer as __Serializer
 
-    @classmethod
-    def actions(cls) -> tp.Dict[str, tp.Union[tp.Type[__Create]]]:
-        return {
-            'create': cls.__Create,
-        }
+        base = __Serializer
 
-    @classmethod
-    def serializers(cls) -> tp.Dict[str, tp.Union[tp.Type[__BaseDiscount]]]:
-        return {
-            'base': cls.__BaseDiscount,
-        }
+    class validators:
+        from .validator import DiscountCreateValidator as __Create
+
+        create = __Create

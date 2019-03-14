@@ -1,7 +1,7 @@
 from index.base.repository import Base
 
 
-class Calendar(Base.Admin):
+class CalendarAdmin(Base.Admin):
     list_display = ('display_worker_company', 'display_date', 'display_time_range', 'is_wanted',)
 
     def display_worker_company(self, obj):

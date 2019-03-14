@@ -2,9 +2,9 @@ from index.base.repository import Base
 from company.models.company.model import Company
 
 
-class Department(Base.TimeStumps, Base.SoftDeletion):
-    field = Base.Model.field
-    rel = Base.Model.rel
+class Department(Base.models.Model):
+    relations = Base.models.Model.relations
+    field = Base.models.Model.field
 
     name = field.Char(
         verbose_name="Название отдела/цеха",
@@ -15,7 +15,7 @@ class Department(Base.TimeStumps, Base.SoftDeletion):
 
     company = field.Foreign(
         Company,
-        on_delete=rel.CASCADE,
+        on_delete=relations.CASCADE,
         null=False,
         blank=False,
     )

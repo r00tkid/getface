@@ -1,9 +1,9 @@
 from index.base.repository import Base
 
 
-class Discount(Base.TimeStumps, Base.SoftDeletion):
-    field = Base.Model.field
-    rel = Base.Model.rel
+class Discount(Base.models.Model):
+    relations = Base.models.Model.relations
+    field = Base.models.Model.field
 
     name = field.Char(
         verbose_name="Название скидки",

@@ -33,6 +33,8 @@
             'kill-sidebar': Sidebar
         },
         mounted() {
+            this.$bus.$on("get-face-user-self-update", this.updateUserData);
+
             // make debounced check for token in system. If not, push user out.
             setTimeout(function (vue) {
                 if (!vue.$store.getters['auth/token'] && !localStorage.getItem('token')) {
@@ -42,23 +44,31 @@
                 let user = vue.$store.getters['auth/user'];
 
                 if (!user || !user.id) {
-                    vue.$http('auth.user')
-                        .then(res => {
-                            vue.$bus.$emit("get-face-updated-companies", res.data.companies);
-                            vue.$store.commit('auth/setUser', res.data);
-
-                            if (!vue.$route.name.includes('dashboard')) vue.$router.push({name: 'dashboard.main'});
-                        })
-                        .catch(err => {
-                            console.log(err);
-
-                            vue.$store.dispatch('auth/logout').catch(e => {
-                                /* just do nothing */
-                            });
-                        })
+                    vue.updateUserData();
                 }
             }, 100, this);
-        }
+        },
+        methods: {
+            updateUserData() {
+                this.$http('auth.user')
+                    .then(res => {
+                        this.$bus.$emit("get-face-updated-companies", res.data.companies);
+                        this.$store.commit('auth/setUser', res.data);
+
+                        if (!this.$route.name.includes('dashboard')) this.$router.push({name: 'dashboard.main'});
+                    })
+                    .catch(err => {
+                        let code = -1;
+                        console.log(err);
+
+                        if (err.response && (code = err.response.status)) {
+                            (code == 401 || code == 403) && this.$store.dispatch('auth/logout').catch(e => {
+                                /* just do nothing */
+                            });
+                        }
+                    })
+            },
+        },
     }
 </script>
 

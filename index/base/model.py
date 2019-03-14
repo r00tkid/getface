@@ -1,9 +1,9 @@
-from datetime import datetime
-from django.db.models import Model
-from index.base import field
+from django.db.models import Model as __Model
 
 
-class CreatedStump(Model):
+class CreatedStump(__Model):
+    from index.base import field, relations  # do not remove
+
     created_at = field.DateTime('Date record created', auto_now_add=True, null=True)
 
     def update(self, data, nullable=True):
@@ -18,7 +18,9 @@ class CreatedStump(Model):
         abstract = True
 
 
-class UpdatedStump(Model):
+class UpdatedStump(__Model):
+    from index.base import field, relations  # do not remove
+
     updated_at = field.DateTime('Date record updated', auto_now=True, null=True)
 
     def update(self, data, nullable=True):
@@ -38,7 +40,8 @@ class TimeStumps(CreatedStump, UpdatedStump):
         abstract = True
 
 
-class SoftDeletion(Model):
+class SoftDeletion(__Model):
+    from index.base import field, relations  # do not remove
     from index.base.manager import SoftDeletionManager
 
     manager = SoftDeletionManager
@@ -54,6 +57,8 @@ class SoftDeletion(Model):
     )
 
     def delete(self, **kwargs):
+        from datetime import datetime
+
         self.deleted_at = datetime.now()
         self.save()
 
@@ -67,6 +72,13 @@ class SoftDeletion(Model):
             [self.__setattr__(k, v) for k, v in data.items() if v is not None]
 
         self.save(force_update=True)
+
+    class Meta:
+        abstract = True
+
+
+class Model(TimeStumps, SoftDeletion):
+    pass
 
     class Meta:
         abstract = True

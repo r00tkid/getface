@@ -136,8 +136,7 @@
         max-width: 290px;
     }
 
-    th,
-    td {
+    th, td {
         border: 1px solid #d4d4d4;
         border-collapse: collapse;
         background-color: #fff;

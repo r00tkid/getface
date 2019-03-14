@@ -1,14 +1,13 @@
-import datetime
 from index.base.repository import Base
 from employee.models.employee.model import Employee
 
 
-class Agenda(Base.TimeStumps, Base.SoftDeletion):
-    field = Base.Model.field
-    rel = Base.Model.rel
+class Agenda(Base.models.Model):
+    relations = Base.models.Model.relations
+    field = Base.models.Model.field
 
-    start = field.DateTime("Дата начала")  # type: datetime.datetime
-    end = field.DateTime("Дата окончания")  # type: datetime.datetime
+    start = field.DateTime("Дата начала")
+    end = field.DateTime("Дата окончания")
 
     active = field.SmallInteger(
         "Активность",
@@ -28,18 +27,23 @@ class Agenda(Base.TimeStumps, Base.SoftDeletion):
     employee = field.Foreign(
         Employee,
         verbose_name="Сотрудник",
-        on_delete=rel.CASCADE,
+        on_delete=relations.CASCADE,
     )
 
     def __str__(self):
-        u: Employee = self.employee
+        from datetime import datetime
+
+        employee: Employee = self.employee
+        start: datetime = self.start
+        end: datetime = self.end
 
         return "%s %s [%s]:(%s - %s)" % (
-            u.first_name,
-            u.last_name,
-            self.start.date(),
-            self.start.time(),
-            self.end.time(),
+            employee.first_name,
+            employee.last_name,
+
+            start.date(),
+            start.time(),
+            end.time(),
         )
 
     class Meta:

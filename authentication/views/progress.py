@@ -1,14 +1,14 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from authentication.models import Feature, Progress
+from authentication.models import Feature, Progress, get_feature_by_id as _get_feature
 
 
 @api_view(['GET'])
 def add_progress(request, feature_id):
-    Progress.model()(
+    Progress.model(
         user=request.user,
-        feature=Feature.info(feature_id).instance,
+        feature=_get_feature(feature_id),
     ).save()
 
     return Response({
@@ -20,7 +20,7 @@ def add_progress(request, feature_id):
 def remove_progress(request, feature_id):
     Progress.model().objects.get(
         user=request.user,
-        feature=Feature.info(feature_id).instance
+        feature=_get_feature(feature_id)
     ).delete()
 
     return Response({
