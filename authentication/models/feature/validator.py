@@ -5,27 +5,27 @@ class FeatureCreateValidator(Base.Validator):
     validation = Base.Validator.validation
     field = Base.Validator.field
 
-    name = field.String("Feature name", [
-        validation.DataRequired(),
-        validation.Length(min=5, max=256),
+    name = field.string("Feature name", [
+        validation.data_required(),
+        validation.length(min=5, max=256),
     ])
 
-    description = field.TextArea("Feature description", [
-        validation.DataRequired(),
-        validation.Length(min=10, max=5000),
+    description = field.text_area("Feature description", [
+        validation.data_required(),
+        validation.length(min=10, max=5000),
     ])
 
-    link = field.String("Feature link [optional]", [
-        validation.NotRequired(),
-        validation.Length(max=1024),
+    link = field.string("Feature link [optional]", [
+        validation.not_required(),
+        validation.length(max=1024),
     ])
 
-    is_alive = field.Boolean("Display feature to user", [
-        validation.NotRequired(is_string=False),
+    is_alive = field.boolean("Display feature to user", [
+        validation.not_required(is_string=False),
     ])
 
-    is_important = field.Boolean("Important feature", [
-        validation.NotRequired(is_string=False),
+    is_important = field.boolean("Important feature", [
+        validation.not_required(is_string=False),
     ])
 
 
@@ -33,25 +33,25 @@ class FeatureUpdateValidator(Base.Validator):
     validation = Base.Validator.validation
     field = Base.Validator.field
 
-    name = field.String("Feature name", [
-        validation.NotRequired(allow_empty=False),
-        validation.Length(min=5, max=256),
+    name = field.string("Feature name", [
+        validation.not_required(allow_empty=False),
+        validation.length(min=5, max=256),
     ])
 
-    description = field.TextArea("Feature description", [
-        validation.NotRequired(allow_empty=False),
-        validation.Length(min=10, max=5000),
+    description = field.text_area("Feature description", [
+        validation.not_required(allow_empty=False),
+        validation.length(min=10, max=5000),
     ])
 
-    link = field.String("Feature link [optional]", [
-        validation.NotRequired(),
-        validation.Length(max=1024),
+    link = field.string("Feature link [optional]", [
+        validation.not_required(),
+        validation.length(max=1024),
     ])
 
-    is_alive = field.Boolean("Display feature to user", [
-        validation.NotRequired(is_string=False),
+    is_alive = field.boolean("Display feature to user", [
+        validation.not_required(is_string=False),
     ])
 
-    is_important = field.Boolean("Important feature", [
-        validation.NotRequired(is_string=False),
+    is_important = field.boolean("Important feature", [
+        validation.not_required(is_string=False),
     ])

@@ -1,4 +1,5 @@
-import uuid, _md5
+import _md5
+import uuid
 from django.contrib.auth.models import AbstractUser
 from index.base.repository import Base
 
@@ -10,26 +11,26 @@ def _activation_key() -> str:
 class User(AbstractUser, Base.models.Model):
     field = Base.models.Model.field
 
-    email = field.Email(
+    email = field.email(
         "E-mail",
         null=False,
         blank=False,
         unique=True,
     )
 
-    is_active = field.Boolean(
+    is_active = field.boolean(
         "Актив",
         default=True,  # Causes problems with super users if is not set to True. Handle base user active in views.
     )
 
-    phone = field.Char(
+    phone = field.char(
         "Телефон",
         max_length=30,
         null=False,
         blank=False,
     )
 
-    activation = field.Char(
+    activation = field.char(
         verbose_name="Код активации/восстановления пароля",
         max_length=255,
         null=True,
@@ -37,7 +38,7 @@ class User(AbstractUser, Base.models.Model):
         default=_activation_key
     )
 
-    timezone = field.TimeZone(
+    timezone = field.time_zone(
         verbose_name="Локальное время пользователя",
         default="UTC",
         null=False,

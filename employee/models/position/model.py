@@ -3,19 +3,19 @@ from company.models.company.model import Company
 
 
 class Position(Base.models.Model):
-    relations = Base.models.Model.relations
+    relation = Base.models.Model.relation
     field = Base.models.Model.field
 
-    name = field.Char(
+    name = field.char(
         verbose_name="Название должности",
         max_length=255,
         null=False,
         blank=False,
     )
 
-    company = field.Foreign(
+    company = field.foreign(
         Company,
-        on_delete=relations.CASCADE,
+        on_delete=relation.cascade,
         null=False,
         blank=False,
     )

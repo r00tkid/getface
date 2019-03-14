@@ -3,31 +3,31 @@ from employee.models.employee.model import Employee
 
 
 class Agenda(Base.models.Model):
-    relations = Base.models.Model.relations
+    relation = Base.models.Model.relation
     field = Base.models.Model.field
 
-    start = field.DateTime("Дата начала")
-    end = field.DateTime("Дата окончания")
+    start = field.date_time("Дата начала")
+    end = field.date_time("Дата окончания")
 
-    active = field.SmallInteger(
+    active = field.small_integer(
         "Активность",
         default=0,
     )
 
-    mood = field.SmallInteger(
+    mood = field.small_integer(
         "Настроение",
         default=0,
     )
 
-    fatigue = field.SmallInteger(
+    fatigue = field.small_integer(
         "Усталость",
         default=0,
     )
 
-    employee = field.Foreign(
+    employee = field.foreign(
         Employee,
         verbose_name="Сотрудник",
-        on_delete=relations.CASCADE,
+        on_delete=relation.cascade,
     )
 
     def __str__(self):

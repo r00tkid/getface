@@ -4,20 +4,20 @@ from authentication.models.feature.model import Feature
 
 
 class Progress(Base.models.CreatedStump):
-    relations = Base.models.Model.relations
+    relation = Base.models.Model.relation
     field = Base.models.Model.field
 
-    user = field.Foreign(
+    user = field.foreign(
         User,
-        on_delete=relations.CASCADE,
+        on_delete=relation.cascade,
         verbose_name="Пользователь",
         null=False,
         blank=False,
     )
 
-    feature = field.Foreign(
+    feature = field.foreign(
         Feature,
-        on_delete=relations.CASCADE,
+        on_delete=relation.cascade,
         verbose_name="Фича",
         null=False,
         blank=False,

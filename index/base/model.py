@@ -2,9 +2,13 @@ from django.db.models import Model as __Model
 
 
 class CreatedStump(__Model):
-    from index.base import field, relations  # do not remove
+    from index.base.fields import Fields as __Fields
+    from index.base.relations import Relations as __Relations
 
-    created_at = field.DateTime('Date record created', auto_now_add=True, null=True)
+    field = __Fields
+    relation = __Relations
+
+    created_at = field.date_time('Date record created', auto_now_add=True, null=True)
 
     def update(self, data, nullable=True):
         if nullable:
@@ -19,9 +23,13 @@ class CreatedStump(__Model):
 
 
 class UpdatedStump(__Model):
-    from index.base import field, relations  # do not remove
+    from index.base.fields import Fields as __Fields
+    from index.base.relations import Relations as __Relations
 
-    updated_at = field.DateTime('Date record updated', auto_now=True, null=True)
+    field = __Fields
+    relation = __Relations
+
+    updated_at = field.date_time('Date record updated', auto_now=True, null=True)
 
     def update(self, data, nullable=True):
         if nullable:
@@ -41,8 +49,12 @@ class TimeStumps(CreatedStump, UpdatedStump):
 
 
 class SoftDeletion(__Model):
-    from index.base import field, relations  # do not remove
+    from index.base.fields import Fields as __Fields
+    from index.base.relations import Relations as __Relations
     from index.base.manager import SoftDeletionManager
+
+    field = __Fields
+    relation = __Relations
 
     manager = SoftDeletionManager
     objects = manager()
@@ -50,7 +62,7 @@ class SoftDeletion(__Model):
     all = manager(alive_only=False)
 
     # Deleted at field
-    deleted_at = field.DateTime(
+    deleted_at = field.date_time(
         editable=False,
         blank=True,
         null=True,
@@ -78,7 +90,5 @@ class SoftDeletion(__Model):
 
 
 class Model(TimeStumps, SoftDeletion):
-    pass
-
     class Meta:
         abstract = True

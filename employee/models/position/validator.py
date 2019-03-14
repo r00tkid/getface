@@ -6,14 +6,14 @@ class PositionCreateValidator(Base.Validator):
     validation = Base.Validator.validation
     field = Base.Validator.field
 
-    name = field.String('Title', [
-        validation.DataRequired(),
-        validation.Length(min=2, max=200, message="Last name length must be between 2 and 200 characters inclusive."),
+    name = field.string('Title', [
+        validation.data_required(),
+        validation.length(min=2, max=200, message="Last name length must be between 2 and 200 characters inclusive."),
     ], description="Enter department name")
 
-    company_id = field.Integer('Company ID', [
-        validation.DataRequired(),
-        validation.Exists(
+    company_id = field.integer('Company ID', [
+        validation.data_required(),
+        validation.exists(
             Company, 'id'
         ),
     ])

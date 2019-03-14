@@ -33,12 +33,10 @@ def _user_response(user, with_token=False, with_companies=False, detail="OK"):
         serializer = Company.serializers.extended(instance=companies, many=True).add_rights(user, True)
         companies = serializer.data
 
-    serializer = User.serializers.extended if with_companies else User.serializers.base
-
     return Response({
         'detail': detail,
         'token': token,
-        'user': serializer(instance=user).data,
+        'user': User.serializers.extended(instance=user).data,
         'companies': companies,
     })
 

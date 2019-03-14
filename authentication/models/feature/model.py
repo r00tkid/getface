@@ -4,33 +4,33 @@ from index.base.repository import Base
 class Feature(Base.models.Model):
     field = Base.models.Model.field
 
-    name = field.Char(
+    name = field.char(
         "Название",
         max_length=256,
         null=False,
         blank=False,
     )
 
-    link = field.Char(
+    link = field.char(
         "Ссылка",
         max_length=1024,
         null=True,
         blank=True,
     )
 
-    description = field.Text(
+    description = field.text(
         "Описание",
         max_length=5000,
         null=False,
         blank=False,
     )
 
-    is_alive = field.Boolean(
+    is_alive = field.boolean(
         "Существует",
         default=True,
     )
 
-    is_important = field.Boolean(
+    is_important = field.boolean(
         "Важная",
         default=False,
     )

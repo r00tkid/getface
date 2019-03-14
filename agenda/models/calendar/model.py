@@ -3,21 +3,21 @@ from employee.models.employee.model import Employee
 
 
 class Calendar(Base.models.Model):
-    relations = Base.models.Model.relations
+    relation = Base.models.Model.relation
     field = Base.models.Model.field
 
-    start = field.DateTime("Дата начала")
-    end = field.DateTime("Дата окончания")
+    start = field.date_time("Дата начала")
+    end = field.date_time("Дата окончания")
 
-    is_wanted = field.NullBoolean(
+    is_wanted = field.null_boolean(
         "Хочет работать",
         default=None,
     )
 
-    employee = field.Foreign(
+    employee = field.foreign(
         Employee,
         verbose_name="Сотрудник",
-        on_delete=relations.CASCADE,
+        on_delete=relation.cascade,
     )
 
     def __str__(self):

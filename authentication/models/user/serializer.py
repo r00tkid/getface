@@ -1,16 +1,28 @@
 from index.base.repository import Base
 from .model import User
-from rest_framework import serializers
 
 
 class UserSerializer(Base.Serializer):
+    serializers = Base.serializers
+
+    time_zone = serializers.SerializerMethodField()
+
+    def get_time_zone(self, model):
+        return model.timezone.zone
+
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'username', 'timezone')
+        fields = ('id', 'first_name', 'last_name', 'username', 'time_zone')
 
 
 class UserExtendedSerializer(Base.Serializer):
+    serializers = Base.serializers
+
     last_login = serializers.SerializerMethodField()
+    time_zone = serializers.SerializerMethodField()
+
+    def get_time_zone(self, model):
+        return model.timezone.zone
 
     def get_last_login(self, model):
         """@type model: BaseUser"""
@@ -18,6 +30,7 @@ class UserExtendedSerializer(Base.Serializer):
 
     class Meta:
         model = User
+
         fields = (
             'id',
             'first_name',
@@ -29,5 +42,5 @@ class UserExtendedSerializer(Base.Serializer):
             'is_superuser',
             'date_joined',
             'last_login',
-            'timezone',
+            'time_zone',
         )

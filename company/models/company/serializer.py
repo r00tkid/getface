@@ -62,6 +62,13 @@ class CompanyExtendedListSerializer(Base.ListSerializer):
 
 
 class CompanyExtendedSerializer(Base.Serializer):
+    serializers = Base.serializers
+
+    time_zone = serializers.SerializerMethodField()
+
+    def get_time_zone(self, model):
+        return model.timezone.zone
+
     def add_owner(self):
         self.data['owner'] = User.serializers.base(instance=self.instance.owner).data
 
@@ -72,5 +79,5 @@ class CompanyExtendedSerializer(Base.Serializer):
 
     class Meta:
         model = Company
-        fields = ('id', 'name', 'description', 'address', 'email', 'phone', 'timezone')
+        fields = ('id', 'name', 'description', 'address', 'email', 'phone', 'time_zone')
         list_serializer_class = CompanyExtendedListSerializer

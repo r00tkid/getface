@@ -9,45 +9,45 @@ from employee.models.department.model import Department
 
 
 class Employee(Base.models.Model):
-    relations = Base.models.Model.relations
+    relation = Base.models.Model.relation
     field = Base.models.Model.field
 
-    first_name = field.Char(
+    first_name = field.char(
         max_length=200,
         verbose_name="Имя",
     )
 
-    last_name = field.Char(
+    last_name = field.char(
         max_length=200,
         verbose_name="Фамилия",
     )
 
-    phone = field.Char(
+    phone = field.char(
         max_length=200,
         verbose_name="Телефон",
         null=True,
         blank=True,
     )
 
-    company = field.Foreign(
+    company = field.foreign(
         Company,
-        on_delete=relations.CASCADE,
+        on_delete=relation.cascade,
         verbose_name="Компания",
         null=False,
         blank=False,
     )
 
-    is_manager = field.Boolean(
+    is_manager = field.boolean(
         verbose_name="Менеджер",
         default=False,
     )
 
-    is_fired = field.Boolean(
+    is_fired = field.boolean(
         verbose_name="Уволен",
         default=False,
     )
 
-    auth_key = field.UUID(
+    auth_key = field.uuid(
         verbose_name="Уникальный авторизационный ключ",
         editable=False,
         unique=True,
@@ -56,62 +56,62 @@ class Employee(Base.models.Model):
         default=uuid.uuid4,
     )
 
-    email = field.Email(
+    email = field.email(
         verbose_name="E-mail",
         null=True,
         blank=True,
     )
 
-    timezone = field.TimeZone(
+    timezone = field.time_zone(
         verbose_name="Локальное время работника",
         default="UTC",
         null=False,
         blank=True,
     )
 
-    invitation = field.DateTime(
+    invitation = field.date_time(
         verbose_name="Последнее приглашение",
         null=True,
         blank=True,
     )
 
-    is_invited = field.Boolean(
+    is_invited = field.boolean(
         verbose_name="Приглашён",
         null=False,
         default=False,
     )
 
-    is_active = field.Boolean(
+    is_active = field.boolean(
         verbose_name="Активен",
         null=False,
         default=False,
     )
 
-    face_id = field.UUID(
+    face_id = field.uuid(
         verbose_name="Face ID",
         null=True,
         blank=True,
     )
 
-    user = field.Foreign(
+    user = field.foreign(
         User,
-        on_delete=relations.CASCADE,
+        on_delete=relation.cascade,
         verbose_name="Физический пользователь",
         null=True,
         blank=True,
     )
 
-    department = field.Foreign(
+    department = field.foreign(
         Department,
-        on_delete=relations.SET(None),
+        on_delete=relation.set_null,
         default=None,
         null=True,
         blank=True,
     )
 
-    position = field.Foreign(
+    position = field.foreign(
         Position,
-        on_delete=relations.SET(None),
+        on_delete=relation.set_null,
         default=None,
         null=True,
         blank=True,

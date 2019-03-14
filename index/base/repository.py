@@ -8,8 +8,11 @@ class Base(object):
         from index.base.model import CreatedStump, UpdatedStump, TimeStumps, SoftDeletion, Model
 
     class Validator(__Form):
-        from index.base import formfield as field
-        from index.base import validation as validation
+        from index.base.formfields import FormFields as __FormFields
+        from index.base.validations import Validations as __Validations
+
+        field = __FormFields
+        validation = __Validations
 
     class Serializer(serializers.ModelSerializer):
         pass

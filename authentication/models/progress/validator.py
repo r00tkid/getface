@@ -7,16 +7,16 @@ class ProgressCreateValidator(Base.Validator):
     validation = Base.Validator.validation
     field = Base.Validator.field
 
-    user_id = field.Integer("User", [
-        validation.Exists(
+    user_id = field.integer("User", [
+        validation.exists(
             User,
             'pk',
             'User not found'
         )
     ])
 
-    feature_id = field.Integer("Feature", [
-        validation.Exists(
+    feature_id = field.integer("Feature", [
+        validation.exists(
             Feature,
             'pk',
             'Feature not found'

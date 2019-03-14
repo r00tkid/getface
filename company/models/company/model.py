@@ -5,64 +5,64 @@ from company.models.discount.model import Discount
 
 
 class Company(Base.models.Model):
-    relations = Base.models.Model.relations
+    relation = Base.models.Model.relation
     field = Base.models.Model.field
 
-    name = field.Char(
+    name = field.char(
         verbose_name="Название компании",
         max_length=200,
         null=False,
     )
 
-    description = field.Text(
+    description = field.text(
         verbose_name="Описание компании",
         max_length=4000,
         null=True,
         blank=True,
     )
 
-    address = field.Char(
+    address = field.char(
         verbose_name="Адрес компании",
         max_length=512,
         null=True,
         blank=True,
     )
 
-    phone = field.Char(
+    phone = field.char(
         verbose_name="Телефон",
         max_length=32,
         null=True,
         blank=True,
     )
 
-    email = field.Char(
+    email = field.email(
         verbose_name="Почтовый ящик",
         max_length=255,
         null=False,
     )
 
-    owner = field.Foreign(
+    owner = field.foreign(
         User,
         verbose_name="Владелец",
-        on_delete=relations.DO_NOTHING,
+        on_delete=relation.do_nothing,
         null=False,
     )
 
-    rate = field.Foreign(
+    rate = field.foreign(
         Rate,
-        on_delete=relations.DO_NOTHING,
+        on_delete=relation.do_nothing,
         null=True,
         blank=True,
     )
 
-    discount = field.Foreign(
+    discount = field.foreign(
         Discount,
-        on_delete=relations.SET(None),
+        on_delete=relation.set_null,
         null=True,
         blank=True,
     )
 
-    timezone = field.TimeZone(
+    timezone = field.time_zone(
         "Локальное время компании",
         default="UTC",
         null=False,

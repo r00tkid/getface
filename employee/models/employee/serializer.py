@@ -3,16 +3,27 @@ from .model import Employee
 
 
 class EmployeeSerializer(Base.Serializer):
+    serializers = Base.serializers
+
+    time_zone = serializers.SerializerMethodField()
+
+    def get_time_zone(self, model):
+        return model.timezone.zone
+
     class Meta:
         model = Employee
-        fields = ('id', 'first_name', 'last_name', 'email', 'timezone',)
+        fields = ('id', 'first_name', 'last_name', 'email', 'time_zone',)
 
 
 class EmployeeExtendedSerializer(Base.Serializer):
-    serial = Base.Serializer.serializers
+    serializers = Base.serializers
 
-    email = serial.SerializerMethodField('get_worker_email')
-    physical = serial.SerializerMethodField('get_worker_has_physical_user')
+    email = serializers.SerializerMethodField('get_worker_email')
+    physical = serializers.SerializerMethodField('get_worker_has_physical_user')
+    time_zone = serializers.SerializerMethodField()
+
+    def get_time_zone(self, model):
+        return model.timezone.zone
 
     def get_worker_email(self, model):
         if model.email and model.email != "":
@@ -28,4 +39,4 @@ class EmployeeExtendedSerializer(Base.Serializer):
 
     class Meta:
         model = Employee
-        fields = ('id', 'first_name', 'last_name', 'is_fired', 'is_manager', 'email', 'physical', 'timezone',)
+        fields = ('id', 'first_name', 'last_name', 'is_fired', 'is_manager', 'email', 'physical', 'time_zone',)
