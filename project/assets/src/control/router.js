@@ -64,7 +64,7 @@ const router = new Router({
                 },
                 {
                     path: 'cameras',
-                    name: 'cameras',
+                    name: 'dashboard.cameras',
                     component: () => import('../views/Cameras'),
                 },
             ]

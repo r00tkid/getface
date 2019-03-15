@@ -31,23 +31,15 @@ class CompanyExtendedListSerializer(Base.ListSerializer):
                 'is_manager': employee.is_manager if employee else False or instance.owner_id == user.id,
             }
 
+            if not data['rights']['is_owner']:
+                data['time_left'] = 0
+
             # TODO: !!!
             # company: Company = instance
             # if data['rights']['is_owner']:
             #     rate = company.rate
             #     payment = company
             #     data['rate'] = RateSerializer(instance=instance.rate).data
-
-        return self
-
-    def add_employee_info(self, user=None, field_name='employee'):
-        for data, instance in zip(self.data, self.instance):
-            if not user:
-                data[field_name] = None
-            else:
-                data[field_name] = Employee.serializers.base(
-                    instance=Employee.model.objects.filter(user=user, company=instance).first()
-                ).data
 
         return self
 

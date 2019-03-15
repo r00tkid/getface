@@ -30,7 +30,7 @@
 
         <v-spacer><!-- SPACER --></v-spacer>
 
-        <get-face-header-payment v-if="is_owner"></get-face-header-payment>
+        <get-face-header-payment v-show="is_owner"></get-face-header-payment>
 
         <v-spacer><!-- SPACER --></v-spacer>
 
