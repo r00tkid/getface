@@ -440,15 +440,5 @@
     .achievent-img {
         max-height: 50px;
     }
-
-    .employeeStat-right #line-chart {
-        background-color: #fff;
-        height: 82px;
-    }
-
-    .chartBottom #line-chart {
-        background-color: #fff;
-        height: 140px;
-    }
 </style>
 
