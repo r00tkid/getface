@@ -187,14 +187,6 @@
 </script>
 
 <style>
-    .chartContainer {
-        position: relative;
-        width: 100%;
-        border: 1px solid #d4d4d4;
-        border-radius: 4px 4px 0 0;
-        box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-        0 1px 5px 0 rgba(0, 0, 0, 0.12);
-    }
 
     .mainChartContainer {
         width: 100%;
@@ -287,26 +279,5 @@
         color: #fff;
         background-color: #fa6d6e;
         margin-left: 0;
-    }
-
-    .homeDateChage {
-        display: flex;
-        background-color: #fff;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
-        border-radius: 2px;
-        height: 36px;
-        margin: 6px 8px;
-    }
-
-    .homeDateChage button {
-        margin: 0;
-    }
-
-    .homeDateVal {
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 </style>
