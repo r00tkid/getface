@@ -316,7 +316,7 @@
                                 type: "time",
                                 time: {
                                     unit: "day",
-                                    format: "DD M",
+                                    parser: "DD M",
                                 }
                             }
                         ],
