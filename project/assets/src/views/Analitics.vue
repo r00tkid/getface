@@ -119,14 +119,60 @@
         <chart-bar :chartdata="chartData" :options="options"/>
       </v-flex>
       <v-flex class="materialBox" xs5>
-        <h4>Количество клиентов по времени</h4>
-        <p class="mb-1">
-          Среднее количество:
-          <span>450 чел.</span>
-        </p>
+        <v-layout>
+          <v-flex xs8>
+            <h4>Количество клиентов по времени</h4>
+            <p class="mb-1">
+              Среднее количество:
+              <span>450 чел.</span>
+            </p>
+          </v-flex>
+          <v-flex xs4>
+            <v-select :items="groupBy" label="Solo field" solo hide-details></v-select>
+          </v-flex>
+        </v-layout>
         <span class="devider"></span>
         <p class="smallGreyText">Количество пользователей по времени суток</p>
         <heat-map></heat-map>
+      </v-flex>
+    </v-layout>
+    <v-layout>
+      <v-flex class="materialBox mt-2" xs12>
+        <v-layout>
+          <v-flex xs4 d-flex>
+            <div class="statCheckbox statCommon">
+              <input type="checkbox" name="camera1" id="camera1">
+              <label for="camera1">Камера 1</label>
+            </div>
+            <div class="statCheckbox statCommon">
+              <input type="checkbox" name="camera2" id="camera2">
+              <label for="camera2">Камера 2</label>
+            </div>
+            <div class="statCheckbox statCommon">
+              <input type="checkbox" name="camera3" id="camera3">
+              <label for="camera3">Камера 3</label>
+            </div>
+            <div class="statCheckbox statCommon">
+              <input type="checkbox" name="camera4" id="camera4">
+              <label for="camera4">Камера 4</label>
+            </div>
+          </v-flex>
+        </v-layout>
+        <v-layout>
+          <v-flex class="mt-2" xs9>
+            <div class="mainChartContainer">
+              <line-chart :chartdata="chartLineData" :options="chartLineOptions"/>
+            </div>
+          </v-flex>
+          <v-flex class="mt-3 ml-2" xs3>
+            <analitic-stat></analitic-stat>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+    </v-layout>
+    <v-layout>
+      <v-flex class="mt-2" xs12>
+        <analitic-table></analitic-table>
       </v-flex>
     </v-layout>
   </v-container>
@@ -135,11 +181,18 @@
 <script>
 import ChartBar from "../components/chart/ChartBar";
 import HeatMap from "../components/analitics/HeatMap";
+import AnaliticStat from "../components/analitics/AnaliticStat";
+import AnaliticTable from "../components/analitics/AnaliticTable";
+import LineChart from "../components/chart/Chart.vue";
+
 export default {
   name: "Analitics",
   components: {
     ChartBar,
-    HeatMap
+    HeatMap,
+    LineChart,
+    AnaliticStat,
+    AnaliticTable
   },
   data() {
     return {
@@ -211,13 +264,89 @@ export default {
           ]
         },
         legend: { display: false }
+      },
+      chartLineData: {
+        datasets: [
+          {
+            label: "Data One",
+            backgroundColor: "#5ae08f",
+            borderColor: "#5ae08f",
+            lineTension: 0,
+            data: [
+              { x: "01/07/18", y: 25 },
+              { x: "01/08/18", y: 35 },
+              { x: "01/09/18", y: 15 },
+              { x: "01/10/18", y: 20 },
+              { x: "01/11/18", y: 40 },
+              { x: "01/12/18", y: 0 }
+            ],
+            fill: false
+          },
+          {
+            label: "Data One",
+            backgroundColor: "#fbbd21",
+            borderColor: "#fbbd21",
+            lineTension: 0,
+            data: [
+              { x: "01/07/18", y: 10 },
+              { x: "01/08/18", y: 55 },
+              { x: "01/09/18", y: 30 },
+              { x: "01/10/18", y: 20 },
+              { x: "01/11/18", y: 46 },
+              { x: "01/12/18", y: 0 }
+            ],
+            fill: false
+          }
+        ]
+      },
+      chartLineOptions: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+          margin: {
+            left: -50,
+            right: 0,
+            top: 0,
+            bottom: 0
+          }
+        },
+        scales: {
+          xAxes: [
+            {
+              type: "time",
+              time: {
+                unit: "day",
+                format: "DD M",
+              }
+            }
+          ],
+          yAxes: [
+            {
+              ticks: {
+                max: 100,
+                stepSize: 25
+              }
+            }
+          ]
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          cornerRadius: 2,
+          callbacks: {
+            label: tooltipItem =>
+              `${tooltipItem.yLabel}: ${tooltipItem.xLabel}`,
+            title: () => null
+          }
+        }
       }
     };
   }
 };
 </script>
 
-<style>
+<style scoped>
 .devider {
   width: 100%;
   height: 1px;
@@ -252,9 +381,6 @@ export default {
   font-size: 11px;
   color: #000;
   font-weight: 400;
-}
-.groupBtn .v-input__control {
-  min-height: 40px !important;
 }
 .clientImg {
   position: relative;
@@ -297,11 +423,88 @@ export default {
   color: #7d6df2;
   margin-left: 10px;
 }
-.smallGreyText{
+.smallGreyText {
   text-align: center;
   font-size: 10px;
   color: #969696;
   margin-bottom: 0;
 }
+/* checkbox styling */
+
+.statCheckbox {
+  position: relative;
+}
+
+.statCheckbox input[type="checkbox"] + label:before {
+  border: 2px solid #7d6df2;
+  content: "\00a0";
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  margin: 0 0.25em 0 0;
+  padding: 0;
+  border-radius: 3px;
+  vertical-align: top;
+  position: absolute;
+  left: 9px;
+}
+
+.statCheckbox input[type="checkbox"]:checked + label:before {
+  background: linear-gradient(
+    to right top,
+    #7d6df2,
+    #9077f4,
+    #a181f6,
+    #b08bf9,
+    #be96fb
+  );
+  text-align: center;
+}
+
+.statCheckbox input[type="checkbox"]:checked + label:after {
+  font-weight: bold;
+  content: "⅃";
+  position: absolute;
+  transform: rotate(45deg);
+  left: 13px;
+  top: 4px;
+  font-size: 16px;
+  color: #fff;
+}
+
+.statCheckbox input[type="checkbox"]:focus + label::before {
+  outline: rgb(59, 153, 252) auto 5px;
+}
+
+.statTotal {
+  flex: 2;
+}
+
+.statCommon {
+  background-color: #fff;
+  border: 1px solid #d4d4d4;
+  height: 35px;
+  border-radius: 3px;
+  margin-right: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.statCheckbox input[type="checkbox"] {
+  visibility: hidden;
+}
+
+.statCheckbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statCheckbox label {
+  cursor: pointer;
+  font-size: 12px;
+}
+/* checkbox styling */
 </style>
 

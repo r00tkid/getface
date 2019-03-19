@@ -99,6 +99,9 @@ a {
 .gender .v-input__slot {
   border: none !important;
 }
+.v-input__control {
+  min-height: 40px !important;
+}
 .employeeStat-right #line-chart {
   background-color: #fff;
   height: 82px;
