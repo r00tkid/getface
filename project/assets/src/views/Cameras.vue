@@ -3,7 +3,7 @@
     <v-layout>
       <v-flex lg6>
         <v-btn color="primary">
-          <v-icon class="mr-2">add_circle</v-icon>Добавить сотрудника
+          <v-icon class="mr-2">add_circle</v-icon>Добавить камеру
         </v-btn>
         <v-btn outline color="gray">Статистика</v-btn>
       </v-flex>
