@@ -179,11 +179,11 @@
 </template>
 
 <script>
-    import ChartBar from "../components/chart/ChartBar";
+    import LineChart from "../components/charts/Chart.vue";
+    import ChartBar from "../components/charts/ChartBar";
     import HeatMap from "../components/analitics/HeatMap";
     import AnaliticStat from "../components/analitics/AnaliticStat";
     import AnaliticTable from "../components/analitics/AnaliticTable";
-    import LineChart from "../components/chart/Chart.vue";
 
     export default {
         name: "Analitics",
