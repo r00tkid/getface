@@ -133,7 +133,7 @@
 
 <script>
     import Progress from "../components/progress/Progress";
-    import Chart from "../components/chart/Chart";
+    import Chart from "../components/charts/Chart";
     import OrangeBox from "../components/employeePage/OrangeBox";
     import EmployeeAwards from "../components/employeePage/EmployeeAwards";
     import EmployeeFaceId from "../components/employeePage/EmployeeFaceId";
