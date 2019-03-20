@@ -137,7 +137,7 @@
         margin: 6px 8px;
     }
 
-    .homeDateChage button {
+    .homeDateChange button {
         margin: 0;
     }
 
@@ -145,6 +145,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .analiticsContainer .abn-header {
+        width: 87%;
     }
 </style>
 

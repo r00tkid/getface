@@ -83,7 +83,7 @@
                                 type: "time",
                                 time: {
                                     unit: "month",
-                                    parser: "DD/MM/YYYY",
+                                    format: "DD/MM/YYYY",
                                     tooltipFormat: "ll"
                                 }
                             }
@@ -106,7 +106,7 @@
                             title: () => null
                         }
                     }
-                },
+                }
             }
         },
         components: {
