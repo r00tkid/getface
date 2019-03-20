@@ -161,7 +161,67 @@
         <v-layout>
           <v-flex class="mt-2" xs9>
             <div class="mainChartContainer">
-              <line-chart :chartdata="chartLineData" :options="chartLineOptions"/>
+              <v-btn class="addEventBtn" color="white" @click="addEvenShow = !addEvenShow">
+                <v-icon class="mr-2" color="purple">list</v-icon>Добавить событие
+              </v-btn>
+              <div v-show="addEvenShow" class="addEvent">
+                <div class="addEventHeader">
+                  <h4>Добавить собитие</h4>
+                  <v-btn flat icon color="white" @click="addEvenShow = false">
+                    <v-icon size="16">close</v-icon>
+                  </v-btn>
+                </div>
+                <div class="addEventBody materialBox">
+                  <v-menu
+                    ref="datePicker"
+                    :close-on-content-click="false"
+                    v-model="datePicker"
+                    hint="MM/DD/YYYY format"
+                    full-width
+                    color="purple"
+                    :nudge-right="40"
+                    offset-y
+                    :return-value.sync="date"
+                    lazy
+                    min-width="290px"
+                    transition="scale-transition"
+                    hide-details
+                  >
+                    <v-text-field
+                      slot="activator"
+                      v-model="date"
+                      class="input-shadow"
+                      background-color="white"
+                      color="purple"
+                      solo
+                      hide-details
+                      prepend-inner-icon="event"
+                      readonly
+                    ></v-text-field>
+                    <v-date-picker
+                      v-model="date"
+                      no-title
+                      scrollable
+                      color="primary"
+                      header-color="red"
+                    >
+                      <v-spacer></v-spacer>
+                      <v-btn flat color="purple" @click="datePicker = false">Cancel</v-btn>
+                      <v-btn flat color="purple" @click="$refs.datePicker.save(date)">OK</v-btn>
+                    </v-date-picker>
+                  </v-menu>
+                  <p v-show="areaError" class="eventError">Необходимо заполнить описание события</p>
+                  <v-textarea solo class="mt-2" name="input-7-4" v-model="textAreaVal" hide-details></v-textarea>
+                  <v-btn class="ml-0" disable color="white" @click="addAnnotation">Добавить событие</v-btn>
+                </div>
+              </div>
+              <apexchart
+                ref="chart"
+                height="400"
+                type="line"
+                :options="lineOptions"
+                :series="series"
+              ></apexchart>
             </div>
           </v-flex>
           <v-flex class="mt-3 ml-2" xs3>
@@ -183,19 +243,24 @@ import ChartBar from "../components/chart/ChartBar";
 import HeatMap from "../components/analitics/HeatMap";
 import AnaliticStat from "../components/analitics/AnaliticStat";
 import AnaliticTable from "../components/analitics/AnaliticTable";
-import LineChart from "../components/chart/Chart.vue";
+import AnaliticLineChart from "../components/analitics/AnaliticLineChart";
 
 export default {
   name: "Analitics",
   components: {
     ChartBar,
     HeatMap,
-    LineChart,
+    AnaliticLineChart,
     AnaliticStat,
     AnaliticTable
   },
   data() {
     return {
+      date: new Date().toISOString().substr(0, 10),
+      datePicker: false,
+      addEvenShow: false,
+      textAreaVal: "",
+      areaError: false,
       groupBy: ["Все", "Сегодня", "Неделя", "Месяц", "3 месяца"],
       chartData: {
         datasets: [
@@ -265,83 +330,138 @@ export default {
         },
         legend: { display: false }
       },
-      chartLineData: {
-        datasets: [
-          {
-            label: "Data One",
-            backgroundColor: "#5ae08f",
-            borderColor: "#5ae08f",
-            lineTension: 0,
-            data: [
-              { x: "01/07/18", y: 25 },
-              { x: "01/08/18", y: 35 },
-              { x: "01/09/18", y: 15 },
-              { x: "01/10/18", y: 20 },
-              { x: "01/11/18", y: 40 },
-              { x: "01/12/18", y: 0 }
-            ],
-            fill: false
-          },
-          {
-            label: "Data One",
-            backgroundColor: "#fbbd21",
-            borderColor: "#fbbd21",
-            lineTension: 0,
-            data: [
-              { x: "01/07/18", y: 10 },
-              { x: "01/08/18", y: 55 },
-              { x: "01/09/18", y: 30 },
-              { x: "01/10/18", y: 20 },
-              { x: "01/11/18", y: 46 },
-              { x: "01/12/18", y: 0 }
-            ],
-            fill: false
-          }
-        ]
-      },
-      chartLineOptions: {
-        responsive: true,
-        maintainAspectRatio: false,
-        layout: {
-          margin: {
-            left: -50,
-            right: 0,
-            top: 0,
-            bottom: 0
+      lineOptions: {
+        chart: {
+          id: "vuechart-example",
+          toolbar: {
+            show: false
           }
         },
-        scales: {
-          xAxes: [
+        xaxis: {
+          type: "datetime",
+          labels: {
+            format: "dd.MM"
+          }
+        },
+        yaxis: {
+          show: true,
+          showAlways: true,
+          max: 100,
+          tickAmount: 5,
+          axisBorder: {
+            show: true
+          }
+        },
+        stroke: {
+          width: 1.5
+        },
+        legend: {
+          show: false
+        },
+        annotations: {
+          xaxis: [
             {
-              type: "time",
-              time: {
-                unit: "day",
-                format: "DD M",
-              }
-            }
-          ],
-          yAxes: [
-            {
-              ticks: {
-                max: 100,
-                stepSize: 25
+              x: new Date("03/19/2019").getTime(),
+              strokeDashArray: 0,
+              borderColor: "#775DD0",
+              label: {
+                borderColor: "#775DD0",
+                style: {
+                  color: "#fff",
+                  background: "#775DD0"
+                },
+                orientation: "horizontal",
+                text: "X Axis Anno Vertical"
               }
             }
           ]
-        },
-        legend: {
-          display: false
-        },
-        tooltips: {
-          cornerRadius: 2,
-          callbacks: {
-            label: tooltipItem =>
-              `${tooltipItem.yLabel}: ${tooltipItem.xLabel}`,
-            title: () => null
-          }
         }
-      }
+      },
+      series: [
+        {
+          name: "Series 1",
+          data: [
+            {
+              x: "03-17-2019",
+              y: 34
+            },
+            {
+              x: "03-18-2019",
+              y: 43
+            },
+            {
+              x: "03-19-2019",
+              y: 31
+            },
+            {
+              x: "03-20-2019",
+              y: 43
+            },
+            {
+              x: "03-21-2019",
+              y: 33
+            },
+            {
+              x: "03-22-2019",
+              y: 0
+            }
+          ]
+        },
+        {
+          name: "Series 2",
+          data: [
+            {
+              x: "03-17-2019",
+              y: 20
+            },
+            {
+              x: "03-18-2019",
+              y: 35
+            },
+            {
+              x: "03-19-2019",
+              y: 50
+            },
+            {
+              x: "03-20-2019",
+              y: 30
+            },
+            {
+              x: "03-21-2019",
+              y: 60
+            },
+            {
+              x: "03-22-2019",
+              y: 0
+            }
+          ]
+        }
+      ]
     };
+  },
+  methods: {
+    addAnnotation() {
+      if (this.textAreaVal.length == 0) {
+        this.areaError = true;
+      } else {
+        let date = new Date(this.date).toLocaleString("en-US").substr(0, 9);
+        this.areaError = false;
+        this.$refs.chart.addXaxisAnnotation({
+          x: new Date(date).getTime(),
+          strokeDashArray: 0,
+          borderColor: "#775DD0",
+          label: {
+            borderColor: "#775DD0",
+            style: {
+              color: "#fff",
+              background: "#775DD0"
+            },
+            orientation: "horizontal",
+            text: this.textAreaVal
+          }
+        });
+      }
+    }
   }
 };
 </script>
@@ -506,5 +626,57 @@ export default {
   font-size: 12px;
 }
 /* checkbox styling */
+.addEventBtn {
+  position: absolute;
+  top: 27px;
+  left: 50px;
+  z-index: 99;
+  border: 1px solid #000;
+  color: #969696;
+}
+.addEvent {
+  position: absolute;
+  width: 400px;
+  top: 71px;
+  left: 57px;
+  z-index: 99;
+}
+.addEventHeader {
+  background: linear-gradient(
+    to right top,
+    #7d6df2,
+    #9077f4,
+    #a181f6,
+    #b08bf9,
+    #be96fb
+  );
+  color: #fff;
+  padding: 5px;
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+.addEventHeader button {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}
+.addEventBody {
+  border-radius: 0 0 4px 4px;
+}
+.addEvent .v-menu {
+  width: 150px;
+}
+.addEvent .v-input {
+  font-size: 13px !important;
+}
+.eventError {
+  position: absolute;
+  right: 10px;
+  top: 70px;
+  font-size: 10px;
+  color: red;
+}
 </style>
 

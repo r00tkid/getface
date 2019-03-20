@@ -140,6 +140,9 @@ a {
   justify-content: center;
   align-items: center;
 }
+.analiticsContainer .abn-header{
+  width: 87%;
+}
 </style>
 
 <style lang="scss">
