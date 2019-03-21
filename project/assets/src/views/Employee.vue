@@ -58,7 +58,7 @@
                                 <div class="employeeStat-right">
                                     <div class="chartContainer chartSmall">
                                         <div class="chartPeriod">Кол-во нарушений 6 месяцев</div>
-                                        <chart :chartdata="chartData2" :options="chartOptions"></chart>
+                                        <chart :chart_data="chartData2" :chart_options="chartOptions"></chart>
                                     </div>
                                     <v-layout>
                                         <v-flex xs12>
@@ -120,7 +120,7 @@
                             <v-flex lg9>
                                 <div class="chartContainer chartBottom">
                                     <div class="chartPeriod">Последние 3 месяца</div>
-                                    <chart :chartdata="chartData" :options="chartOptions"></chart>
+                                    <chart :chart_data="chartData" :chart_options="chartOptions"></chart>
                                 </div>
                             </v-flex>
                         </v-layout>
@@ -132,8 +132,8 @@
 </template>
 
 <script>
-    import Progress from "../components/progress/Progress";
     import Chart from "../components/charts/Chart";
+    import Progress from "../components/progress/Progress";
     import OrangeBox from "../components/employeePage/OrangeBox";
     import EmployeeAwards from "../components/employeePage/EmployeeAwards";
     import EmployeeFaceId from "../components/employeePage/EmployeeFaceId";
@@ -143,8 +143,8 @@
     export default {
         name: "Employee",
         components: {
-            Progress,
             Chart,
+            Progress,
             OrangeBox,
             EmployeeAwards,
             EmployeeFaceId,
