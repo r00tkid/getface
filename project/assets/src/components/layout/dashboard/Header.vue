@@ -127,7 +127,7 @@
 
     .abn-header {
         align-self: center;
-        width: 80%;
+        width: 90%;
         border-radius: 5px;
         background-color: #fff !important;
     }

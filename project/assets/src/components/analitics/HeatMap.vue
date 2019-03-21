@@ -1,5 +1,5 @@
 <template>
-  <div id="chart">
+  <div id="chartHeatMap">
     <apexchart type="heatmap" :options="chartOptions" :series="series"/>
   </div>
 </template>
@@ -12,49 +12,49 @@ export default {
           name: "Пн.",
           data: this.generateData(23, {
             min: 0,
-            max: 90
+            max: 600
           })
         },
         {
           name: "Вт.",
           data: this.generateData(23, {
             min: 0,
-            max: 90
+            max: 600
           })
         },
         {
           name: "Ср.",
           data: this.generateData(23, {
             min: 0,
-            max: 90
+            max: 600
           })
         },
         {
           name: "Чт.",
           data: this.generateData(23, {
             min: 0,
-            max: 90
+            max: 600
           })
         },
         {
           name: "Пт.",
           data: this.generateData(23, {
             min: 0,
-            max: 90
+            max: 600
           })
         },
         {
           name: "Сб.",
           data: this.generateData(23, {
             min: 0,
-            max: 90
+            max: 600
           })
         },
         {
           name: "Вс.",
           data: this.generateData(23, {
             min: 0,
-            max: 90
+            max: 600
           })
         }
       ],
@@ -62,14 +62,74 @@ export default {
         dataLabels: {
           enabled: false
         },
+        legend:{
+          position: 'bottom',
+          offsetY: -13,
+        },
+        xaxis: {
+          type: 'category',
+          labels: {
+            rotate: -45,
+            style: {
+              fontSize: '11px',
+            },
+            offsetX: 3
+          },
+          tickPlacement: 'between',
+          axisTicks: {
+            show: false
+          },
+          axisBorder:{
+            show: false
+          }
+        },
         plotOptions: {
           heatmap: {
             radius: 5,
-            enableShades: true,
-            shadeIntensity: 0.5,
+            enableShades: false,
+            shadeIntensity: 0.9,
+            colorScale: {
+              ranges: [
+                {
+                  from: 0,
+                  to: 100,
+                  name: "До 100",
+                  color: "#f4f4f4"
+                },
+                {
+                  from: 101,
+                  to: 200,
+                  name: "100-200",
+                  color: "#a3d5fd"
+                },
+                {
+                  from: 201,
+                  to: 300,
+                  name: "200-300",
+                  color: "#a3d5fd"
+                },
+                {
+                  from: 301,
+                  to: 400,
+                  name: "300-400",
+                  color: "#5fa9ea"
+                },
+                {
+                  from: 401,
+                  to: 500,
+                  name: "400-500",
+                  color: "#4292e1"
+                },
+                {
+                  from: 501,
+                  to: 600,
+                  name: "500-600",
+                  color: "#3180d9"
+                }
+              ]
+            }
           }
-        },
-        colors: ["#008FFB"]
+        }
       }
     };
   },
@@ -97,6 +157,9 @@ export default {
 <style>
 .apexcharts-menu-icon {
   display: none;
+}
+#chartHeatMap{
+  margin-top: -32px;
 }
 </style>
 

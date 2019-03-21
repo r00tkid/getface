@@ -118,8 +118,8 @@
         <p class="smallGreyText">Среднее время присутствия</p>
         <chart-bar :chartdata="chartData" :options="options"/>
       </v-flex>
-      <v-flex class="materialBox" xs5>
-        <v-layout>
+      <v-flex class="materialBox pl-0 pr-0" xs5>
+        <v-layout class="pl-2 pr-2">
           <v-flex xs8>
             <h4>Количество клиентов по времени</h4>
             <p class="mb-1">
@@ -334,8 +334,23 @@ export default {
         chart: {
           id: "vuechart-example",
           toolbar: {
-            show: false
+            show: true,
+            tools: {
+              download: true,
+              selection: true,
+              zoom: true,
+              zoomin: true,
+              zoomout: true
+            }
+          },
+          events: {
+            click: function(event, chartContext, config) {
+              console.log(event, chartContext, config);
+              
+            }
           }
+        },
+        tooltip: {
         },
         xaxis: {
           type: "datetime",
@@ -359,22 +374,7 @@ export default {
           show: false
         },
         annotations: {
-          xaxis: [
-            {
-              x: new Date("03/19/2019").getTime(),
-              strokeDashArray: 0,
-              borderColor: "#775DD0",
-              label: {
-                borderColor: "#775DD0",
-                style: {
-                  color: "#fff",
-                  background: "#775DD0"
-                },
-                orientation: "horizontal",
-                text: "X Axis Anno Vertical"
-              }
-            }
-          ]
+          xaxis: []
         }
       },
       series: [
