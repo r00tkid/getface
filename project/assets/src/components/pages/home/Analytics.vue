@@ -83,7 +83,7 @@
                                 type: "time",
                                 time: {
                                     unit: "month",
-                                    format: "DD/MM/YYYY",
+                                    parser: "DD/MM/YYYY",
                                     tooltipFormat: "ll"
                                 }
                             }

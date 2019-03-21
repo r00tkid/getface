@@ -1,11 +1,12 @@
 const Auth = {
     namespaced: true,
     state: {
+        current_company: null,
         authenticated: false,
-        user: {},
+        has_rights: false,
         companies: {},
         token: '',
-        has_rights: false,
+        user: {},
     },
     mutations: {
         setAuth: (state, payload) => {

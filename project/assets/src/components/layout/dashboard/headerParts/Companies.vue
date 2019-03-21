@@ -2,7 +2,7 @@
     <v-select
             v-if="companies && companies.length > 0"
             :disabled="companies.length === 1"
-            v-model="currentCompany"
+            v-model="current_id"
             :items="companies"
             item-value="id"
             item-text="name"
@@ -17,58 +17,68 @@
 </template>
 
 <script>
+    import {createNamespacedHelpers} from 'vuex';
+
+    const {mapState, mapActions} = createNamespacedHelpers('auth');
+
     export default {
         name: "get-face-header-companies",
-        beforeMount() {
-            /* Before */
-        },
         data() {
             return {
-                company_current: undefined,
+                current_company_id: 0,
             };
         },
-        methods: {},
-        computed: {
-            companies: {
-                get() {
-                    return this.$store.getters['auth/companies'];
+        mounted() {
+            /* Mounted */
+        },
+        methods: {
+            ...mapActions({
+                setCurrentCompany: (state, company) => {
+                    state.current_company = company;
                 },
-            },
+            }),
+        },
+        watch: {
+            companies(companies) {
+                if (companies && companies.length > 0 && this.current_company_id === 0) {
+                    this.current_id = companies[0].id;
+                }
+            }
+        },
+        computed: {
+            ...mapState({
+                companies: state => state.companies,
+            }),
             company: {
                 get() {
                     const that = this;
 
                     try {
                         return this.companies[this.companies.findIndex(function (company) {
-                            return that.company_current == company.id;
+                            return that.current_company_id === company.id;
                         })];
                     } catch (e) {
-                        return undefined;
+                        return {id: 0};
                     }
                 }
             },
-            currentCompany: {
+            current_id: {
                 get() {
-                    return this.company_current;
+                    return this.current_company_id;
                 },
-                set(id) {
-                    this.company_current = id;
+                set(company_id) {
+                    this.current_company_id = company_id;
 
                     let company = null;
 
-                    if (id && (company = this.company)) {
+                    if (company_id && (company = this.company)) {
+                        this.setCurrentCompany(company);
+
                         this.$bus.$emit("get-face-company-changed", company);
                     }
                 },
-            },
+            }
         },
-        watch: {
-            companies(data) {
-                if (data && data.length > 0 && !this.company_current) {
-                    this.currentCompany = data[0].id;
-                }
-            },
-        }
     }
 </script>
 

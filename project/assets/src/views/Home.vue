@@ -92,7 +92,7 @@
             rowsPerPageItems: [4, 8, 12],
             pagination: {
                 rowsPerPage: 4
-            }
+            },
         }),
         methods: {
             ...mapMutations([
@@ -108,93 +108,9 @@
 </script>
 
 <style scoped>
-    .purpleText {
-        color: #7d6df2;
-    }
-
-    .mainChartContainer {
-        width: 100%;
-    }
-
-    .purpleText {
-        color: #7d6df2;
-    }
-
-    .main-field {
-        background-color: #fff;
-        height: 80vh;
-        border: #d4d4d4 solid 1px;
-        border-radius: 8px;
-    }
-
     .home-wrap {
         padding: 24px 0;
         width: 80%;
-    }
-
-    .kill-card {
-        width: 100%;
-        font-size: 13px;
-        border-radius: 5px;
-    }
-
-    .kill-card .headline {
-        font-size: 13px !important;
-        line-height: 16px !important;
-    }
-
-    .kill-card * {
-        padding: 2px !important;
-    }
-
-    .charts {
-        display: flex;
-        margin-top: 10px;
-    }
-
-    .chartBox {
-        display: flex;
-        width: 100%;
-        padding-left: 15px;
-    }
-
-    .chartResults {
-        display: flex;
-        flex-direction: column;
-        background-color: #fff;
-        justify-content: space-between;
-        border: 1px solid #d4d4d4;
-        border-radius: 5px;
-        box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-        font-size: 13px;
-    }
-
-    .chartResult-item {
-        border-bottom: 1px solid #d4d4d4;
-        flex-grow: 1;
-    }
-
-    .chartResult-item p {
-        border-bottom: 1px solid #d4d4d4;
-        margin: 0;
-        padding: 2px;
-        font-weight: 600;
-    }
-
-    .chartResult-item span {
-        color: #a3a3a3;
-    }
-
-    .late p {
-        color: #fa6d6e;
-    }
-
-    .gone p {
-        color: #f6a944;
-    }
-
-    .mood p {
-        color: #5ae08f;
     }
 
     .hideAnalytics {
