@@ -489,7 +489,7 @@
 
 <style scoped>
     .dialog-header, .dialog-header * {
-        font-family: 'Montserrat', sans-serif;
+        font-family: 'Proxima Nova', sans-serif;
     }
 
     .v-card__title {

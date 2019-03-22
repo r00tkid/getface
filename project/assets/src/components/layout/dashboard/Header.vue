@@ -1,7 +1,5 @@
 <template>
-    <v-toolbar
-            class="abn-header"
-    >
+    <v-toolbar class="abn-header">
         <v-flex xs2>
             <get-face-header-companies></get-face-header-companies>
         </v-flex>

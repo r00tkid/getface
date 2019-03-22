@@ -48,13 +48,6 @@ class Company(Base.models.Model):
         null=False,
     )
 
-    rate = field.foreign(
-        Rate,
-        on_delete=relation.do_nothing,
-        null=True,
-        blank=True,
-    )
-
     discount = field.foreign(
         Discount,
         on_delete=relation.set_null,
@@ -73,12 +66,18 @@ class Company(Base.models.Model):
         return self.name
 
     @property
-    def time_left(self):
+    def last_payment(self):
         from company.models.payment.model import Payment
 
-        last_payment = Payment.objects.filter(details__company=self).last()
+        return Payment.objects.filter(details__company=self).last()
 
-        return last_payment.time_left if last_payment else -1
+    @property
+    def rate(self):
+        return self.last_payment.details.rate if self.last_payment else None
+
+    @property
+    def time_left(self):
+        return self.last_payment.time_left if self.last_payment else -1
 
     time_left.fget.short_description = u"Оплаченное время"
 

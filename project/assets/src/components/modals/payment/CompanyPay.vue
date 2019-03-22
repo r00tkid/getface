@@ -19,15 +19,6 @@
                                     </v-text-field>
                                 </v-flex>
 
-                                <v-flex d-flex justify-center :if="'development' !== projectMode">
-                                    <v-layout justify-center>
-                                        <vue-recaptcha @verify="enableButton"
-                                                       @expired="retry"
-                                                       sitekey="6LcFAYkUAAAAAEmjE31ouF7BR3fSumdWgeYDURhO" type="flag">
-                                        </vue-recaptcha>
-                                    </v-layout>
-                                </v-flex>
-
                                 <v-flex xs12 d-flex>
                                     <v-btn @click.prevent="submitPasswordReset"
                                            :disabled="'development' !== projectMode ? btnDisabled : (btnDisabled = false)"
@@ -47,11 +38,8 @@
 </template>
 
 <script>
-    import VueRecaptcha from 'vue-recaptcha';
-
     export default {
-        name: "get-face-forgot-password",
-        components: {VueRecaptcha},
+        name: "get-face-company-pay",
         props: {
             dialog: {
                 type: Boolean,
@@ -153,7 +141,7 @@
 
 <style scoped>
     .dialog-header, .dialog-header * {
-        font-family: 'Proxima Nova', sans-serif;
+        font-family: 'Montserrat', sans-serif;
     }
 
     .v-card__title {
