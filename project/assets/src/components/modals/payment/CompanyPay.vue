@@ -1,154 +1,109 @@
 <template>
-    <v-layout row justify-center :if="dialog">
-        <v-dialog v-model="modalState" max-width="450px" @keydown.esc="modalState = false">
-            <v-card>
-                <v-card-text>
-                    <v-container grid-list-md>
-                        <v-layout wrap align-center>
-                            <v-flex xs12 class="text-xs-center dialog-header">
+    <v-dialog v-model="modalState" @keydown.esc="modalState = false" max-width="450px" class="dialog-holder">
+        <v-card>
+            <v-card-text>
+                <v-container grid-list-md>
+                    <v-layout wrap align-center>
+                        <v-flex xs12 class="text-xs-center dialog-header">
 
-                                <span class="subheading bff">ВОССТАНОВИТЬ ПАРОЛЬ</span>
-                                <v-flex xs12>
-                                    <v-text-field label="Email указанный при регистрации"
-                                                  color="purple"
-                                                  class="mt-3"
-                                                  solo
-                                                  v-model="email"
-                                                  @keyup.enter="submitPasswordReset"
-                                                  required>
-                                    </v-text-field>
-                                </v-flex>
+                            <span class="subheading bff">Выберите тариф для "{{ company.name }}"</span>
 
-                                <v-flex xs12 d-flex>
-                                    <v-btn @click.prevent="submitPasswordReset"
-                                           :disabled="'development' !== projectMode ? btnDisabled : (btnDisabled = false)"
-                                           color="primary lighten-2"
-                                           class="white--text">
-                                        ВОССТАНОВИТЬ
-                                    </v-btn>
-                                </v-flex>
 
-                            </v-flex>
-                        </v-layout>
-                    </v-container>
-                </v-card-text>
-            </v-card>
-        </v-dialog>
-    </v-layout>
+                        </v-flex>
+                    </v-layout>
+                </v-container>
+            </v-card-text>
+        </v-card>
+    </v-dialog>
 </template>
 
 <script>
+    import {createNamespacedHelpers} from 'vuex';
+
+    const {mapState, mapMutations} = createNamespacedHelpers('auth');
+
     export default {
         name: "get-face-company-pay",
         props: {
-            dialog: {
+            modal_state: {
                 type: Boolean,
                 default: false,
             },
+            parent: {
+                type: Function,
+                default: undefined,
+            },
         },
-        data: () => ({
-            btnDisabled: true,
-            email: '',
-            projectMode: process.env.NODE_ENV,
-        }),
+        data() {
+            return {
+                projectMode: process.env.NODE_ENV,
+                available_rates: null,
+            }
+        },
         computed: {
+            ...mapState({
+                company: state => state.current_company,
+                rates: state => state.last_fetched_rates,
+            }),
             modalState: {
                 get() {
-                    return this.dialog;
+                    return this.modal_state;
                 },
-                set(value) {
-                    this.$bus.$emit('get-face-forgot-password-modal-state', value);
-                },
+                set(state) {
+                    this.parent().modal_state = state;
+                }
             }
         },
-        beforeMount() {
-            this.$bus.$on('get-face-forgot-password-modal', this.checkEventPayload);
-        },
-        mounted() {
-            if ('development' !== this.projectMode) {
-                // ReCaptcha script mount
-                let recaptchaScript = document.createElement('script');
-                recaptchaScript.setAttribute('id', 're-captcha-script');
-                recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit');
-                recaptchaScript.setAttribute('async', 'true');
-                recaptchaScript.setAttribute('defer', 'true');
-                document.head.appendChild(recaptchaScript);
-            }
-        },
-        beforeDestroy() {
-            if ('development' !== this.projectMode) {
-                // ReCaptcha script unmount
-                let captcha = document.head.querySelector('#re-captcha-script');
-                captcha && captcha.parentNode.removeChild(captcha);
+        watch: {
+            company(new_value, old_value) {
+                if (this.rates) {
+                    this.available_rates = this.rates;
+                } else {
+                    this.getAvailableRates();
+                }
 
-                let re_captcha = document.head.querySelector("[src*='recaptcha']");
-                re_captcha && re_captcha.parentNode.removeChild(re_captcha);
-            }
+                new_value === old_value && this.$log("same");
+            },
         },
         methods: {
-            enableButton() {
-                this.btnDisabled = false;
+            setDefaultRates() {
+                this.available_rates = {name: "Нет данных по тарифам", id: 0, per_month: 0, lifetime: 0}
             },
-            retry() {
-                this.btnDisabled = true;
-            },
-            checkEventPayload(payload) {
-                if (payload && payload.email) {
-                    this.email = payload.email;
-                }
-            },
-            submitPasswordReset() {
-                if (this.btnDisabled) {
-                    return;
-                }
+            getAvailableRates() {
+                const that = this;
 
-                this.$http('auth.password_restore', {email: this.email}, 'post')
+                // asking for rates from server side
+                this.$http("company.rates")
                     .then(res => {
-                        this.$noty.success('Инструкции по восстановлению пароля высланы на почту.', {
-                            theme: 'metroui',
-                            timeout: 2000,
-                        });
-
-                        this.modalState = false;
+                        res.data && res.data.rates && that.setFetchedRates(res.data.rates) || that.setDefaultRates();
                     })
                     .catch(err => {
-                        switch (err.response ? err.response.status : err.code) {
+                        const state = err.response.status || err.status;
+
+                        switch (state) {
                             case 404:
-                                this.$noty.error('Пользователь с такими данными не найден.', {
-                                    theme: 'metroui',
-                                    timeout: 2000,
-                                });
-
+                                that.$log("Achtung, not found");
                                 break;
-                            case 409:
-                                this.$noty.error('Пользователь с такими данными не найден или аккаунт не активирован.', {
-                                    theme: 'metroui',
-                                    timeout: 2000,
-                                });
-
+                            case 403:
+                                that.$log("Achtung, no rights");
+                                break;
+                            case 500:
+                                that.$log("Achtung, server fault");
                                 break;
                             default:
-                                this.$noty.error('Неизвестная ошибка сервера.', {
-                                    theme: 'metroui',
-                                    timeout: 2000,
-                                });
+                                that.$log("Achtung, unknown issue");
                         }
                     });
             },
-        }
+            ...mapMutations([
+                'setFetchedRates',
+            ]),
+        },
     }
 </script>
 
 <style scoped>
-    .dialog-header, .dialog-header * {
-        font-family: 'Montserrat', sans-serif;
-    }
-
-    .v-card__title {
-        padding-bottom: 0px;
-    }
-
-    .bff {
-        font-weight: 900;
+    .dialog-holder {
+        font-family: 'Proxima Nova', sans-serif;
     }
 </style>

@@ -18,8 +18,15 @@ const V1 = {
                 }[resolve];
 
                 return `${base}auth/${route}`;
-            }
-        }
+            },
+            company: (resolve) => {
+                let route = {
+                    rates: 'available-rates',
+                }[resolve];
+
+                return `${base}company/${route}`;
+            },
+        },
     },
     mutations: {},
     getters: {

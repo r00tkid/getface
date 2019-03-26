@@ -1,6 +1,5 @@
 from index.base.repository import Base
 from company.models.company.model import Company
-from company.models.rate.serializer import RateSerializer
 from authentication.models import User
 from employee.models import Employee
 

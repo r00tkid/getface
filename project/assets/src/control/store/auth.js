@@ -1,6 +1,7 @@
 const Auth = {
     namespaced: true,
     state: {
+        last_fetched_rates: null,
         current_company: null,
         authenticated: false,
         has_rights: false,
@@ -39,7 +40,13 @@ const Auth = {
         },
         setRights: (state, payload) => {
             state.has_rights = payload;
-        }
+        },
+        setCurrentCompany: (state, company) => {
+            state.current_company = company;
+        },
+        setFetchedRates: (state, rates) => {
+            state.last_fetched_rates = rates;
+        },
     },
     actions: {
         logout: ({commit}) => {

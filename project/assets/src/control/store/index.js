@@ -8,9 +8,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules: {
+        session: Session,
         auth: Auth,
         v1: V1,
-        session: Session,
     },
     state: {},
     mutations: {},

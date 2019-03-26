@@ -19,7 +19,7 @@
 <script>
     import {createNamespacedHelpers} from 'vuex';
 
-    const {mapState, mapActions} = createNamespacedHelpers('auth');
+    const {mapState, mapMutations} = createNamespacedHelpers('auth');
 
     export default {
         name: "get-face-header-companies",
@@ -32,11 +32,9 @@
             /* Mounted */
         },
         methods: {
-            ...mapActions({
-                setCurrentCompany: (state, company) => {
-                    state.current_company = company;
-                },
-            }),
+            ...mapMutations([
+                'setCurrentCompany'
+            ]),
         },
         watch: {
             companies(companies) {
