@@ -140,6 +140,9 @@ a {
   justify-content: center;
   align-items: center;
 }
+.analiticsContainer .v-input__slot{
+  border: none !important;
+}
 </style>
 
 <style lang="scss">

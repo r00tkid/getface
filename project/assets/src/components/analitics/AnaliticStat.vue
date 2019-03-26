@@ -4,22 +4,22 @@
       <div class="checkBoxContainer statCommon">
         <input class="check" type="checkbox" name="violation1" id="violation1">
       </div>
-      <div class="statCheckbox statCommon" @click="openSelect">
+      <div class="statCheckbox statCommon" data-id="0" @click="openSelect">
         Мужчины до 18
         <span class="selectArrow">⌵</span>
-        <div class="customSelect statCommon">
+        <div v-show="openedSelects[0]" class="customSelect statCommon">
           <ul>
             <li>
-              <input class="check" type="checkbox">
-              <label for>Мужчины до 18</label>
+              <input class="check" type="checkbox" id="mySelect1">
+              <label for="mySelect1">Мужчины до 18</label>
             </li>
             <li>
-              <input class="check" type="checkbox">
-              <label for>Мужчины до 18</label>
+              <input class="check" type="checkbox" id="mySelect2">
+              <label for="mySelect2">Мужчины до 18</label>
             </li>
             <li>
-              <input class="check" type="checkbox">
-              <label for>Мужчины до 18</label>
+              <input class="check" type="checkbox" id="mySelect3">
+              <label for="mySelect3">Мужчины до 18</label>
             </li>
           </ul>
         </div>
@@ -30,22 +30,22 @@
       <div class="checkBoxContainer statCommon">
         <input class="check" type="checkbox" name="violation2" id="violation2">
       </div>
-      <div class="statCheckbox statCommon" @click="openSelect">
+      <div class="statCheckbox statCommon" data-id="1" @click="openSelect">
         Мужчины до 18
         <span class="selectArrow">⌵</span>
-        <div class="customSelect statCommon">
+        <div v-show="openedSelects[1]" class="customSelect statCommon">
           <ul>
             <li>
-              <input class="check" type="checkbox">
-              <label for>Мужчины до 18</label>
+              <input class="check" type="checkbox" id="mySelect4">
+              <label for="mySelect4">Мужчины до 18</label>
             </li>
             <li>
-              <input class="check" type="checkbox">
-              <label for>Мужчины до 18</label>
+              <input class="check" type="checkbox" id="mySelect5">
+              <label for="mySelect5">Мужчины до 18</label>
             </li>
             <li>
-              <input class="check" type="checkbox">
-              <label for>Мужчины до 18</label>
+              <input class="check" type="checkbox" id="mySelect6">
+              <label for="mySelect6">Мужчины до 18</label>
             </li>
           </ul>
         </div>
@@ -56,22 +56,22 @@
       <div class="checkBoxContainer statCommon">
         <input class="check" type="checkbox" name="violation3" id="violation3">
       </div>
-      <div class="statCheckbox statCommon" @click="openSelect">
+      <div class="statCheckbox statCommon" data-id="2" @click="openSelect">
         Мужчины до 18
         <span class="selectArrow">⌵</span>
-        <div class="customSelect statCommon">
+        <div v-show="openedSelects[2]" class="customSelect statCommon">
           <ul>
             <li>
-              <input class="check" type="checkbox">
-              <label for>Мужчины до 18</label>
+              <input class="check" type="checkbox" id="mySelect7">
+              <label for="mySelect7">Мужчины до 18</label>
             </li>
             <li>
-              <input class="check" type="checkbox">
-              <label for>Мужчины до 18</label>
+              <input class="check" type="checkbox" id="mySelect8">
+              <label for="mySelect8">Мужчины до 18</label>
             </li>
             <li>
-              <input class="check" type="checkbox">
-              <label for>Мужчины до 18</label>
+              <input class="check" type="checkbox" id="mySelect9">
+              <label for="mySelect9">Мужчины до 18</label>
             </li>
           </ul>
         </div>
@@ -82,22 +82,22 @@
       <div class="checkBoxContainer statCommon">
         <input class="check" type="checkbox" name="violation4" id="violation4">
       </div>
-      <div class="statCheckbox statCommon" @click="openSelect">
+      <div class="statCheckbox statCommon" data-id="3" @click="openSelect">
         Мужчины до 18
         <span class="selectArrow">⌵</span>
-        <div class="customSelect statCommon">
+        <div v-show="openedSelects[3]" class="customSelect statCommon">
           <ul>
             <li>
-              <input class="check" type="checkbox">
-              <label for>Мужчины до 18</label>
+              <input class="check" type="checkbox" id="mySelect10">
+              <label for="mySelect10">Мужчины до 18</label>
             </li>
             <li>
-              <input class="check" type="checkbox">
-              <label for>Мужчины до 18</label>
+              <input class="check" type="checkbox" id="mySelect11">
+              <label for="mySelect11">Мужчины до 18</label>
             </li>
             <li>
-              <input class="check" type="checkbox">
-              <label for>Мужчины до 18</label>
+              <input class="check" type="checkbox" id="mySelect12">
+              <label for="mySelect12">Мужчины до 18</label>
             </li>
           </ul>
         </div>
@@ -109,13 +109,14 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      openedSelects: [false, false, false, false],
+    };
   },
   methods: {
     openSelect(e) {
-      if (e.target.classList.contains("statCheckbox")) {
-        e.target.querySelector(".customSelect").classList.toggle("show");
-      }
+      let id = e.target.getAttribute('data-id');
+      this.$set(this.openedSelects, id, !this.openedSelects[id]);
     }
   }
 };
@@ -204,7 +205,6 @@ export default {
   position: relative;
 }
 .customSelect {
-  display: none;
   position: absolute;
   width: 100%;
   top: 46px;

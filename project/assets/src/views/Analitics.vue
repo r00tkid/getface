@@ -555,7 +555,7 @@ export default {
   position: relative;
 }
 
-.statCheckbox input[type="checkbox"] + label:before {
+input[type="checkbox"] + label:before {
   border: 2px solid #7d6df2;
   content: "\00a0";
   display: inline-block;
@@ -569,7 +569,7 @@ export default {
   left: 9px;
 }
 
-.statCheckbox input[type="checkbox"]:checked + label:before {
+input[type="checkbox"]:checked + label:before {
   background: linear-gradient(
     to right top,
     #7d6df2,
@@ -581,7 +581,7 @@ export default {
   text-align: center;
 }
 
-.statCheckbox input[type="checkbox"]:checked + label:after {
+input[type="checkbox"]:checked + label:after {
   font-weight: bold;
   content: "⅃";
   position: absolute;
@@ -592,7 +592,7 @@ export default {
   color: #fff;
 }
 
-.statCheckbox input[type="checkbox"]:focus + label::before {
+input[type="checkbox"]:focus + label::before {
   outline: rgb(59, 153, 252) auto 5px;
 }
 
