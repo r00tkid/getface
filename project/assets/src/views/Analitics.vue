@@ -2,7 +2,7 @@
     <v-container class="analiticsContainer" fluid>
         <v-layout>
             <v-flex xs12 d-flex align-self-center>
-                <div class="homeDateChange">
+                <div class="homeDateChage">
                     <v-btn flat small color="purple">
                         <v-icon>navigate_before</v-icon>
                     </v-btn>
@@ -441,7 +441,6 @@
                 } else {
                     let date = new Date(this.date).toLocaleString("en-US").substr(0, 9);
                     this.areaError = false;
-
                     this.$refs.chart.addXaxisAnnotation({
                         x: new Date(date).getTime(),
                         strokeDashArray: 0,
@@ -457,7 +456,6 @@
                             text: '☰'
                         }
                     });
-
                     this.createChartModal(this.annotID, date, this.textAreaVal);
                     this.annotID++;
                 }
@@ -488,6 +486,7 @@
 </script>
 
 <style scoped>
+
     .devider {
         width: 100%;
         height: 1px;
@@ -724,7 +723,9 @@
         font-size: 10px;
         color: red;
     }
+</style>
 
+<style>
     .chartModal {
         background: #fff;
         min-width: 200px;
