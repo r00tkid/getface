@@ -118,8 +118,8 @@
                 <p class="smallGreyText">Среднее время присутствия</p>
                 <chart-bar :chartdata="chartData" :options="options"/>
             </v-flex>
-            <v-flex class="materialBox" xs5>
-                <v-layout>
+            <v-flex class="materialBox pl-0 pr-0" xs5>
+                <v-layout class="pl-2 pr-2">
                     <v-flex xs8>
                         <h4>Количество клиентов по времени</h4>
                         <p class="mb-1">
@@ -262,6 +262,7 @@
                 addEvenShow: false,
                 textAreaVal: "",
                 areaError: false,
+                annotID: 0,
                 groupBy: ["Все", "Сегодня", "Неделя", "Месяц", "3 месяца"],
                 chartData: {
                     datasets: [
@@ -335,13 +336,21 @@
                     chart: {
                         id: "vuechart-example",
                         toolbar: {
-                            show: false
-                        }
+                            show: true,
+                            tools: {
+                                download: true,
+                                selection: true,
+                                zoom: true,
+                                zoomin: true,
+                                zoomout: true
+                            }
+                        },
                     },
+                    tooltip: {},
                     xaxis: {
                         type: "datetime",
                         labels: {
-                            parse: "dd.MM"
+                            format: "dd.MM"
                         }
                     },
                     yaxis: {
@@ -351,7 +360,7 @@
                         tickAmount: 5,
                         axisBorder: {
                             show: true
-                        }
+                        },
                     },
                     stroke: {
                         width: 1.5
@@ -360,22 +369,7 @@
                         show: false
                     },
                     annotations: {
-                        xaxis: [
-                            {
-                                x: new Date("03/19/2019").getTime(),
-                                strokeDashArray: 0,
-                                borderColor: "#775DD0",
-                                label: {
-                                    borderColor: "#775DD0",
-                                    style: {
-                                        color: "#fff",
-                                        background: "#775DD0"
-                                    },
-                                    orientation: "horizontal",
-                                    text: "X Axis Anno Vertical"
-                                }
-                            }
-                        ]
+                        xaxis: []
                     }
                 },
                 series: [
@@ -442,11 +436,12 @@
         },
         methods: {
             addAnnotation() {
-                if (this.textAreaVal.length == 0) {
+                if (this.textAreaVal.length === 0) {
                     this.areaError = true;
                 } else {
                     let date = new Date(this.date).toLocaleString("en-US").substr(0, 9);
                     this.areaError = false;
+
                     this.$refs.chart.addXaxisAnnotation({
                         x: new Date(date).getTime(),
                         strokeDashArray: 0,
@@ -455,13 +450,38 @@
                             borderColor: "#775DD0",
                             style: {
                                 color: "#fff",
-                                background: "#775DD0"
+                                background: "#775DD0",
+                                cssClass: `annot${this.annotID}`
                             },
                             orientation: "horizontal",
-                            text: this.textAreaVal
+                            text: '☰'
                         }
                     });
+
+                    this.createChartModal(this.annotID, date, this.textAreaVal);
+                    this.annotID++;
                 }
+            },
+            createChartModal(id, date, text) {
+                let annot = document.querySelector(`.annot${id}`);
+                let chartModal = document.createElement('div');
+                chartModal.classList.add(`chartModal${id}`);
+                chartModal.classList.add(`chartModal`);
+
+                chartModal.innerHTML = `
+                    <h4 class="modalChartHead">${date}</h4>
+                    <ul class="modalChartList">
+                        <li>${text}</li>
+                    </ul>
+                `;
+
+                document.body.appendChild(chartModal);
+                annot.addEventListener('click', (e) => {
+                    console.log(e);
+                    let x = e.pageX;
+                    let y = e.pageY;
+                    chartModal.setAttribute('style', `top: ${y}px; left: ${x}px;`);
+                })
             }
         }
     };
@@ -573,7 +593,7 @@
         position: relative;
     }
 
-    .statCheckbox input[type="checkbox"] + label:before {
+    input[type="checkbox"] + label:before {
         border: 2px solid #7d6df2;
         content: "\00a0";
         display: inline-block;
@@ -587,7 +607,7 @@
         left: 9px;
     }
 
-    .statCheckbox input[type="checkbox"]:checked + label:before {
+    input[type="checkbox"]:checked + label:before {
         background: linear-gradient(
                 to right top,
                 #7d6df2,
@@ -599,7 +619,7 @@
         text-align: center;
     }
 
-    .statCheckbox input[type="checkbox"]:checked + label:after {
+    input[type="checkbox"]:checked + label:after {
         font-weight: bold;
         content: "⅃";
         position: absolute;
@@ -610,7 +630,7 @@
         color: #fff;
     }
 
-    .statCheckbox input[type="checkbox"]:focus + label::before {
+    input[type="checkbox"]:focus + label::before {
         outline: rgb(59, 153, 252) auto 5px;
     }
 
@@ -703,5 +723,47 @@
         top: 70px;
         font-size: 10px;
         color: red;
+    }
+
+    .chartModal {
+        background: #fff;
+        min-width: 200px;
+        padding: 0;
+        border: 1px solid #ccc;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 4px;
+    }
+
+    .chartModal h4 {
+        color: #fff;
+        background: linear-gradient(
+                to right top,
+                #7d6df2,
+                #9077f4,
+                #a181f6,
+                #b08bf9,
+                #be96fb
+        );
+        padding: 5px 15px;
+    }
+
+    .chartModal ul {
+        padding: 10px 10px 10px 25px;
+        list-style: none;
+    }
+
+    .chartModal ul li {
+        position: relative;
+    }
+
+    .chartModal ul li:before {
+        position: absolute;
+        content: '☷';
+        top: 2px;
+        left: -15px;
+        font-size: 10px;
+        color: #7d6df2;
     }
 </style>

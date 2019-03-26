@@ -52,8 +52,7 @@
         ) !important;
     }
 
-    .orange,
-    .orange--text {
+    .orange, .orange--text {
         color: #f99342 !important;
     }
 
@@ -147,8 +146,8 @@
         align-items: center;
     }
 
-    .analiticsContainer .abn-header {
-        width: 87%;
+    .analiticsContainer .v-input__slot {
+        border: none !important;
     }
 </style>
 

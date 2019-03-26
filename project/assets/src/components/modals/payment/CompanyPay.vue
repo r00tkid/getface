@@ -6,8 +6,7 @@
                     <v-layout wrap align-center>
                         <v-flex xs12 class="text-xs-center dialog-header">
 
-                            <span class="subheading bff">Выберите тариф для "{{ company.name }}"</span>
-
+                            <span class="subheading bff">Выберите тариф для "{{ company && company.name ? company.name : '' }}"</span>
 
                         </v-flex>
                     </v-layout>
