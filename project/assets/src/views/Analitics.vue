@@ -261,6 +261,7 @@ export default {
       addEvenShow: false,
       textAreaVal: "",
       areaError: false,
+      annotID: 0,
       groupBy: ["Все", "Сегодня", "Неделя", "Месяц", "3 месяца"],
       chartData: {
         datasets: [
@@ -343,12 +344,6 @@ export default {
               zoomout: true
             }
           },
-          events: {
-            click: function(event, chartContext, config) {
-              console.log(event, chartContext, config);
-              
-            }
-          }
         },
         tooltip: {
         },
@@ -365,7 +360,7 @@ export default {
           tickAmount: 5,
           axisBorder: {
             show: true
-          }
+          },
         },
         stroke: {
           width: 1.5
@@ -454,19 +449,43 @@ export default {
             borderColor: "#775DD0",
             style: {
               color: "#fff",
-              background: "#775DD0"
+              background: "#775DD0",
+              cssClass: `annot${this.annotID}`
             },
             orientation: "horizontal",
-            text: this.textAreaVal
+            text: '☰'
           }
         });
+        this.createChartModal(this.annotID, date, this.textAreaVal);
+        this.annotID++;
       }
+    },
+    createChartModal(id, date, text){
+      let annot = document.querySelector(`.annot${id}`);
+      let chartModal = document.createElement('div');
+      let myDate = new Date(date);
+      chartModal.classList.add(`chartModal${id}`);
+      chartModal.classList.add(`chartModal`);
+      chartModal.innerHTML = `
+      <h4 class="modalChartHead">${date}</h4>
+      <ul class="modalChartList">
+        <li>${text}</li>
+      </ul>
+      `
+      document.body.appendChild(chartModal);
+      annot.addEventListener('click', (e) => {
+        console.log(e);
+        let x = e.pageX;
+        let y = e.pageY;
+        chartModal.setAttribute('style', `top: ${y}px; left: ${x}px;`);
+      })
     }
   }
 };
 </script>
 
 <style scoped>
+
 .devider {
   width: 100%;
   height: 1px;
@@ -679,4 +698,44 @@ input[type="checkbox"]:focus + label::before {
   color: red;
 }
 </style>
+<style>
+.chartModal{
+  background: #fff;
+  min-width: 200px;
+  padding: 0;
+  border: 1px solid #ccc; 
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 4px;
+}
+.chartModal h4{
+  color: #fff;
+  background: linear-gradient(
+    to right top,
+    #7d6df2,
+    #9077f4,
+    #a181f6,
+    #b08bf9,
+    #be96fb
+  );
+  padding: 5px 15px;
+}
+.chartModal ul{
+  padding: 10px 10px 10px 25px;
+  list-style: none;
+}
+.chartModal ul li{
+  position: relative;
+}
+.chartModal ul li:before{
+  position: absolute;
+  content: '☷';
+  top: 2px;
+  left: -15px;
+  font-size: 10px;
+  color: #7d6df2;
+}
+</style>
+
 

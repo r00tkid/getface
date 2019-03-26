@@ -31,21 +31,21 @@
         <input class="check" type="checkbox" name="violation2" id="violation2">
       </div>
       <div class="statCheckbox statCommon" data-id="1" @click="openSelect">
-        Мужчины до 18
+        Женщины до 18
         <span class="selectArrow">⌵</span>
         <div v-show="openedSelects[1]" class="customSelect statCommon">
           <ul>
             <li>
               <input class="check" type="checkbox" id="mySelect4">
-              <label for="mySelect4">Мужчины до 18</label>
+              <label for="mySelect4">Женщины до 18</label>
             </li>
             <li>
               <input class="check" type="checkbox" id="mySelect5">
-              <label for="mySelect5">Мужчины до 18</label>
+              <label for="mySelect5">Женщины до 18</label>
             </li>
             <li>
               <input class="check" type="checkbox" id="mySelect6">
-              <label for="mySelect6">Мужчины до 18</label>
+              <label for="mySelect6">Женщины до 18</label>
             </li>
           </ul>
         </div>
@@ -56,25 +56,8 @@
       <div class="checkBoxContainer statCommon">
         <input class="check" type="checkbox" name="violation3" id="violation3">
       </div>
-      <div class="statCheckbox statCommon" data-id="2" @click="openSelect">
-        Мужчины до 18
-        <span class="selectArrow">⌵</span>
-        <div v-show="openedSelects[2]" class="customSelect statCommon">
-          <ul>
-            <li>
-              <input class="check" type="checkbox" id="mySelect7">
-              <label for="mySelect7">Мужчины до 18</label>
-            </li>
-            <li>
-              <input class="check" type="checkbox" id="mySelect8">
-              <label for="mySelect8">Мужчины до 18</label>
-            </li>
-            <li>
-              <input class="check" type="checkbox" id="mySelect9">
-              <label for="mySelect9">Мужчины до 18</label>
-            </li>
-          </ul>
-        </div>
+      <div class="statCheckbox statCommon">
+        Среднее время
       </div>
       <div class="statTotal statCommon">45</div>
     </div>
@@ -82,25 +65,26 @@
       <div class="checkBoxContainer statCommon">
         <input class="check" type="checkbox" name="violation4" id="violation4">
       </div>
-      <div class="statCheckbox statCommon" data-id="3" @click="openSelect">
-        Мужчины до 18
-        <span class="selectArrow">⌵</span>
-        <div v-show="openedSelects[3]" class="customSelect statCommon">
-          <ul>
-            <li>
-              <input class="check" type="checkbox" id="mySelect10">
-              <label for="mySelect10">Мужчины до 18</label>
-            </li>
-            <li>
-              <input class="check" type="checkbox" id="mySelect11">
-              <label for="mySelect11">Мужчины до 18</label>
-            </li>
-            <li>
-              <input class="check" type="checkbox" id="mySelect12">
-              <label for="mySelect12">Мужчины до 18</label>
-            </li>
-          </ul>
-        </div>
+      <div class="statCheckbox statCommon">
+        Количество посещений
+      </div>
+      <div class="statTotal statCommon">45</div>
+    </div>
+    <div class="mainStat-row">
+      <div class="checkBoxContainer statCommon">
+        <input class="check" type="checkbox" name="violation4" id="violation4">
+      </div>
+      <div class="statCheckbox statCommon">
+        Чеки
+      </div>
+      <div class="statTotal statCommon">45</div>
+    </div>
+    <div class="mainStat-row">
+      <div class="checkBoxContainer statCommon">
+        <input class="check" type="checkbox" name="violation4" id="violation4">
+      </div>
+      <div class="statCheckbox statCommon">
+        Конверсия
       </div>
       <div class="statTotal statCommon">45</div>
     </div>
