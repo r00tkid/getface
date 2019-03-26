@@ -1,8 +1,8 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from 'vue';
+import Router from 'vue-router';
 
-import Dashboard from '../views/layout/Dashboard'
-import Landing from '../views/layout/Landing'
+import Dashboard from '../views/layout/Dashboard';
+import Landing from '../views/layout/Landing';
 
 Vue.use(Router);
 
@@ -17,7 +17,7 @@ const router = new Router({
                 {
                     path: '',
                     name: 'landing',
-                    component: () => import('../views/tech/Empty')
+                    component: () => import('../views/tech/Empty'),
                 }
             ]
         },
@@ -45,32 +45,27 @@ const router = new Router({
                 {
                     path: 'main',
                     name: 'dashboard.main',
-                    component: () => import('../views/Home')
+                    component: () => import('../views/Analitics'),
                 },
                 {
                     path: 'profile',
                     name: 'dashboard.profile',
-                    component: () => import('../views/Profile')
+                    component: () => import('../views/Profile'),
                 },
                 {
                     path: 'calendar',
                     name: 'dashboard.calendar',
-                    component: () => import('../views/Calendar')
+                    component: () => import('../views/Calendar'),
                 },
                 {
                     path: 'employee',
                     name: 'dashboard.employee',
-                    component: () => import('../views/Employee')
+                    component: () => import('../views/Employee'),
                 },
                 {
                     path: 'cameras',
                     name: 'dashboard.cameras',
                     component: () => import('../views/Cameras'),
-                },
-                {
-                    path: 'analitics',
-                    name: 'dashboard.analitics',
-                    component: () => import('../views/Analitics'),
                 },
             ]
         },
