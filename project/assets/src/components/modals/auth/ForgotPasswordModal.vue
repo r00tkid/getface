@@ -19,18 +19,9 @@
                                     </v-text-field>
                                 </v-flex>
 
-                                <v-flex d-flex justify-center :if="'development' !== projectMode">
-                                    <v-layout justify-center>
-                                        <vue-recaptcha @verify="enableButton"
-                                                       @expired="retry"
-                                                       sitekey="6LcFAYkUAAAAAEmjE31ouF7BR3fSumdWgeYDURhO" type="flag">
-                                        </vue-recaptcha>
-                                    </v-layout>
-                                </v-flex>
-
                                 <v-flex xs12 d-flex>
                                     <v-btn @click.prevent="submitPasswordReset"
-                                           :disabled="'development' !== projectMode ? btnDisabled : (btnDisabled = false)"
+                                           :disabled="btnDisabled"
                                            color="primary lighten-2"
                                            class="white--text">
                                         ВОССТАНОВИТЬ
@@ -47,11 +38,8 @@
 </template>
 
 <script>
-    import VueRecaptcha from 'vue-recaptcha';
-
     export default {
         name: "get-face-forgot-password",
-        components: {VueRecaptcha},
         props: {
             dialog: {
                 type: Boolean,
@@ -59,9 +47,8 @@
             },
         },
         data: () => ({
-            btnDisabled: true,
+            btnDisabled: false,
             email: '',
-            projectMode: process.env.NODE_ENV,
         }),
         computed: {
             modalState: {
@@ -76,34 +63,7 @@
         beforeMount() {
             this.$bus.$on('get-face-forgot-password-modal', this.checkEventPayload);
         },
-        mounted() {
-            if ('development' !== this.projectMode) {
-                // ReCaptcha script mount
-                let recaptchaScript = document.createElement('script');
-                recaptchaScript.setAttribute('id', 're-captcha-script');
-                recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit');
-                recaptchaScript.setAttribute('async', 'true');
-                recaptchaScript.setAttribute('defer', 'true');
-                document.head.appendChild(recaptchaScript);
-            }
-        },
-        beforeDestroy() {
-            if ('development' !== this.projectMode) {
-                // ReCaptcha script unmount
-                let captcha = document.head.querySelector('#re-captcha-script');
-                captcha && captcha.parentNode.removeChild(captcha);
-
-                let re_captcha = document.head.querySelector("[src*='recaptcha']");
-                re_captcha && re_captcha.parentNode.removeChild(re_captcha);
-            }
-        },
         methods: {
-            enableButton() {
-                this.btnDisabled = false;
-            },
-            retry() {
-                this.btnDisabled = true;
-            },
             checkEventPayload(payload) {
                 if (payload && payload.email) {
                     this.email = payload.email;
@@ -113,6 +73,8 @@
                 if (this.btnDisabled) {
                     return;
                 }
+
+                this.btnDisabled = true;
 
                 this.$http('auth.password_restore', {email: this.email}, 'post')
                     .then(res => {
@@ -145,6 +107,9 @@
                                     timeout: 2000,
                                 });
                         }
+                    })
+                    .finally(() => {
+                        this.btnDisabled = false;
                     });
             },
         }

@@ -4,7 +4,10 @@
 
 <script>
     export default {
-        name: "abn-master"
+        name: "abn-master",
+        beforeCreate() {
+            this.$log("If you read this, debug mode on");
+        },
     };
 </script>
 

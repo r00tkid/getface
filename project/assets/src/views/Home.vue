@@ -68,6 +68,7 @@
 
 <script>
     import {createNamespacedHelpers} from 'vuex';
+
     import HomeTable from "../components/homeTable/HomeTable";
     import Analytics from "../components/pages/home/Analytics";
 

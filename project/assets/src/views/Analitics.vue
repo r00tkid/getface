@@ -588,7 +588,6 @@
     }
 
     /* checkbox styling */
-
     .statCheckbox {
         position: relative;
     }
@@ -724,7 +723,9 @@
         font-size: 10px;
         color: red;
     }
+</style>
 
+<style>
     .chartModal {
         background: #fff;
         min-width: 200px;
