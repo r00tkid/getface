@@ -45,7 +45,7 @@ const router = new Router({
                 {
                     path: 'main',
                     name: 'dashboard.main',
-                    component: () => import('../views/Home')
+                    component: () => import('../views/Analitics'),
                 },
                 {
                     path: 'profile',
@@ -70,7 +70,7 @@ const router = new Router({
                 {
                     path: 'analitics',
                     name: 'dashboard.analitics',
-                    component: () => import('../views/Analitics'),
+                    component: () => import('../views/Home'),
                 },
             ]
         },

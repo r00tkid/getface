@@ -69,8 +69,9 @@
                 drawer: true,
                 items: [
                     {title: 'Dashboard', icon: 'dashboard', name: 'dashboard.main'},
-                    {title: 'Calendar', icon: 'calendar_today', name: 'dashboard.calendar'},
-                    {title: 'Profile', icon: 'account_circle', name: 'dashboard.profile'},
+                    // {title: 'Calendar', icon: 'calendar_today', name: 'dashboard.calendar'},
+                    // {title: 'Profile', icon: 'account_circle', name: 'dashboard.profile'},
+                    {title: 'Cameras', icon: 'camera', name: 'dashboard.cameras'},
                 ],
                 mini: true,
                 right: null,
@@ -92,9 +93,6 @@
 </script>
 
 <style>
-    /*
-    todo Not like this pls
-     */
     .kill-sidebar {
         margin-top: 64px !important;
         border-radius: 7px;
