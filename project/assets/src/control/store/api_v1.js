@@ -1,5 +1,9 @@
 const base = '/api/v1/';
 
+function isVariableAFunction(functionToCheck) {
+    return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+}
+
 const V1 = {
     namespaced: true,
     state: {
@@ -21,10 +25,17 @@ const V1 = {
             },
             company: (resolve) => {
                 let route = {
-                    rates: 'available-rates',
+                    rate: (resolve) => {
+                        let route = {
+                            available: 'available',
+                            buy: 'buy',
+                        }[resolve];
+
+                        return `${base}company/rate/${route}`;
+                    },
                 }[resolve];
 
-                return `${base}company/${route}`;
+                return isVariableAFunction(route) ? route : `${base}company/${route}`;
             },
         },
     },

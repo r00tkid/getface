@@ -7,15 +7,13 @@
             <v-content>
                 <transition
                         name="zoom"
-                        mode="out-in"
-                >
+                        mode="out-in">
                     <router-view></router-view>
                 </transition>
             </v-content>
 
             <abn-footer></abn-footer>
         </v-app>
-
     </div>
 </template>
 
@@ -73,7 +71,7 @@
 </script>
 
 <!-- Dashboard global styles -->
-<style lang="css">
+<style>
     .input-no-arrows input[type='number'] {
         -moz-appearance: textfield !important;
     }
