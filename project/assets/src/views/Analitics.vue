@@ -104,7 +104,7 @@
 </template>
 
 <script>
-    import ChartBar from "../components/chart/ChartBar";
+    import ChartBar from "../components/charts/ChartBar";
     import HeatMap from "../components/analitics/HeatMap";
     import AnaliticStat from "../components/analitics/AnaliticStat";
     import AnaliticTable from "../components/analitics/AnaliticTable";
