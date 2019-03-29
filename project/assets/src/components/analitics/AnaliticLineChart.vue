@@ -256,7 +256,7 @@ export default {
 </script>
 <style>
 .addEventBtn {
-  position: absolute;
+  position: absolute !important;
   top: 27px;
   left: 50px;
   z-index: 99;
