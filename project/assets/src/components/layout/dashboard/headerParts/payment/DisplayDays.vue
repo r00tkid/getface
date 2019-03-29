@@ -176,15 +176,6 @@
         watch: {
             get_company(new_company, old_company) {
                 this.setTimeLeft(new_company);
-
-                if (new_company && old_company && new_company.id === old_company.id) {
-                    let index = this.get_companies.findIndex(company => company.id === new_company.id);
-
-                    this.$log(index);
-
-                    // ToDo: complete (no owner status)
-                    this.get_companies[index] = new_company;
-                }
             },
         },
     }

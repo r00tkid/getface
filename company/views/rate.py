@@ -46,8 +46,10 @@ def company_buy_rate(request):
     payment = Payment.model(user=user, discount=company.discount, details=details, info='{"type":"@test"}')
     payment.save()
 
+    serializer = Company.serializers.extended(instance=company)
+    serializer.add_rights(user)
+
     return Response({
         'detail': "Payment successful",
-        # ToDo: owner status
-        'company': Company.serializers.extended(instance=company).data,
+        'company': serializer.data,
     }, 200)

@@ -60,6 +60,12 @@ class CompanyExtendedSerializer(Base.Serializer):
     def get_time_zone(self, model):
         return model.timezone.zone
 
+    def add_rights(self, user):
+        self.data['rights'] = {
+            'is_owner': self.instance.owner_id == user.id,
+            'is_manager': self.instance.owner_id == user.id,
+        }
+
     def add_owner(self):
         self.data['owner'] = User.serializers.base(instance=self.instance.owner).data
 

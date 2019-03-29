@@ -152,6 +152,7 @@
                     .then(res => {
                         if (res && res.data.company) {
                             this.setCurrentCompany(res.data.company);
+                            this.$bus.$emit("get-face-user-self-update");
 
                             this.closeAndClear();
 
