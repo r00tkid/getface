@@ -48,5 +48,6 @@ def company_buy_rate(request):
 
     return Response({
         'detail': "Payment successful",
+        # ToDo: owner status
         'company': Company.serializers.extended(instance=company).data,
     }, 200)

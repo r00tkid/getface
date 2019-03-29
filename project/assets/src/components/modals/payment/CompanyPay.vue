@@ -104,6 +104,7 @@
                         res.data && res.data.rates && this.setFetchedRates(res.data.rates);
 
                         if (with_notify) {
+                            // with_notify there - mouse event if called on @click event (nothing suspicious)
                             this.$noty.success("Тарифы успешно обновлены", {
                                 theme: "bootstrap-v4",
                                 timeout: 1000,
@@ -115,16 +116,31 @@
 
                         switch (state) {
                             case 404:
-                                this.$log("Achtung, not found");
+                                this.$noty.warning("Тарифы не были найдены", {
+                                    theme: "bootstrap-v4",
+                                    timeout: 2000,
+                                });
+
                                 break;
                             case 403:
-                                this.$log("Achtung, no rights");
+                                this.$noty.error("Недостаточно прав", {
+                                    theme: "bootstrap-v4",
+                                    timeout: 2000,
+                                });
+
                                 break;
                             case 500:
-                                this.$log("Achtung, server fault");
+                                this.$noty.error("Ошибка сервера (500)", {
+                                    theme: "bootstrap-v4",
+                                    timeout: 2000,
+                                });
+
                                 break;
                             default:
-                                this.$log("Achtung, unknown issue");
+                                this.$noty.error(`Неизвестная ошибка: ${state}`, {
+                                    theme: "bootstrap-v4",
+                                    timeout: 2000,
+                                });
                         }
                     });
             },
@@ -150,19 +166,40 @@
 
                         switch (state) {
                             case 409:
-                                this.$log("Achtung, already has rate");
+                                this.$noty.warning("Компания уже имеет тариф", {
+                                    theme: "bootstrap-v4",
+                                    timeout: 2000,
+                                });
+
                                 break;
                             case 404:
-                                this.$log("Achtung, not found");
+                                let type = err.response.data.detail.contains('company') ? 'Компания не найдена' : 'Тариф не найден';
+
+                                this.$noty.warning(type, {
+                                    theme: "bootstrap-v4",
+                                    timeout: 2000,
+                                });
+
                                 break;
                             case 403:
-                                this.$log("Achtung, no rights");
+                                this.$noty.error("Недостаточно прав", {
+                                    theme: "bootstrap-v4",
+                                    timeout: 2000,
+                                });
+
                                 break;
                             case 500:
-                                this.$log("Achtung, server fault");
+                                this.$noty.error("Ошибка сервера (500)", {
+                                    theme: "bootstrap-v4",
+                                    timeout: 2000,
+                                });
+
                                 break;
                             default:
-                                this.$log("Achtung, unknown issue");
+                                this.$noty.error(`Неизвестная ошибка: ${state}`, {
+                                    theme: "bootstrap-v4",
+                                    timeout: 2000,
+                                });
                         }
                     })
             },

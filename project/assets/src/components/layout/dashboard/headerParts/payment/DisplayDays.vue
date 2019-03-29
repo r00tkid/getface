@@ -4,11 +4,12 @@
 </template>
 
 <script>
+    import {createNamespacedHelpers} from 'vuex';
+
+    const {mapState} = createNamespacedHelpers('auth');
+
     export default {
         name: "display-days",
-        beforeMount() {
-            this.$bus.$on('get-face-company-changed', this.setTimeLeft);
-        },
         data() {
             return {
                 time_left: `<span style="color: #ff0000">-0 деней</span>`,
@@ -24,10 +25,6 @@
         methods: {
             setTimeLeft(company) {
                 this.changed_company = true;
-
-                if (this.company && this.company.id && !this.t_days) {
-                    this.company.time_left = this.t_hours * 60 * 60 + this.t_minutes * 60 + this.t_seconds;
-                }
 
                 this.c_hours
                     = this.c_minutes
@@ -104,7 +101,9 @@
                                 vue.c_minutes = 59;
                             }
 
-                            if (vue.t_hours < 0) {
+                            vue.company.time_left = vue.t_hours * 60 * 60 + vue.t_minutes * 60 + vue.t_seconds;
+
+                            if (vue.company.time_left < 1) {
                                 clearTimeout(this.timer_counter);
                                 vue.timeless = null;
                                 vue.time_left = `<span style="color: #ff0000">0 деней</span>`;
@@ -168,7 +167,25 @@
                 get() {
                     return `<span style="color: #ff0000">${this.c_hours}:${this.c_minutes}:${this.c_seconds}</span>`;
                 }
-            }
+            },
+            ...mapState({
+                get_company: state => state.current_company,
+                get_companies: state => state.companies,
+            }),
+        },
+        watch: {
+            get_company(new_company, old_company) {
+                this.setTimeLeft(new_company);
+
+                if (new_company && old_company && new_company.id === old_company.id) {
+                    let index = this.get_companies.findIndex(company => company.id === new_company.id);
+
+                    this.$log(index);
+
+                    // ToDo: complete (no owner status)
+                    this.get_companies[index] = new_company;
+                }
+            },
         },
     }
 </script>
