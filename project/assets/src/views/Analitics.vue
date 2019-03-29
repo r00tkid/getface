@@ -215,11 +215,8 @@
                         id: this.annotID,
                         date: new Date(this.date).toLocaleString("en-US").substr(0, 9),
                     };
-
                     this.areaError = false;
-
                     let obj = this.existAnnotations.find(val => val.date == annotationObj.date);
-
                     if (obj == undefined) {
                         this.existAnnotations.push(annotationObj);
                         this.createAnnotation(annotationObj.date, annotationObj.id);
