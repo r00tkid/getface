@@ -4,7 +4,7 @@
       <div class="checkBoxContainer statCommon">
         <input class="check" type="checkbox" name="violation1" id="violation1">
       </div>
-      <div class="statCheckbox statCommon" data-id="0" @click="openSelect">
+      <div class="statCheckbox statCommon" :style="{borderColor: colors[0]}" data-id="0" @click="openSelect">
         Мужчины до 18
         <span class="selectArrow">⌵</span>
         <div v-show="openedSelects[0]" class="customSelect statCommon">
@@ -30,7 +30,7 @@
       <div class="checkBoxContainer statCommon">
         <input class="check" type="checkbox" name="violation2" id="violation2">
       </div>
-      <div class="statCheckbox statCommon" data-id="1" @click="openSelect">
+      <div class="statCheckbox statCommon" :style="{borderColor: colors[1]}" data-id="1" @click="openSelect">
         Женщины до 18
         <span class="selectArrow">⌵</span>
         <div v-show="openedSelects[1]" class="customSelect statCommon">
@@ -56,7 +56,7 @@
       <div class="checkBoxContainer statCommon">
         <input class="check" type="checkbox" name="violation3" id="violation3">
       </div>
-      <div class="statCheckbox statCommon">
+      <div class="statCheckbox statCommon" :style="{borderColor: colors[2]}">
         Среднее время
       </div>
       <div class="statTotal statCommon">45</div>
@@ -65,7 +65,7 @@
       <div class="checkBoxContainer statCommon">
         <input class="check" type="checkbox" name="violation4" id="violation4">
       </div>
-      <div class="statCheckbox statCommon">
+      <div class="statCheckbox statCommon" :style="{borderColor: colors[3]}">
         Количество посещений
       </div>
       <div class="statTotal statCommon">45</div>
@@ -74,7 +74,7 @@
       <div class="checkBoxContainer statCommon">
         <input class="check" type="checkbox" name="violation4" id="violation4">
       </div>
-      <div class="statCheckbox statCommon">
+      <div class="statCheckbox statCommon" :style="{borderColor: colors[4]}">
         Чеки
       </div>
       <div class="statTotal statCommon">45</div>
@@ -83,7 +83,7 @@
       <div class="checkBoxContainer statCommon">
         <input class="check" type="checkbox" name="violation4" id="violation4">
       </div>
-      <div class="statCheckbox statCommon">
+      <div class="statCheckbox statCommon" :style="{borderColor: colors[5]}">
         Конверсия
       </div>
       <div class="statTotal statCommon">45</div>
@@ -92,6 +92,12 @@
 </template>
 <script>
 export default {
+  props: {
+    colors: {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {
       openedSelects: [false, false, false, false],
