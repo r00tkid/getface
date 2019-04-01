@@ -1,5 +1,5 @@
 <template>
-  <hooper :settings="hooperSettings">
+  <hooper :settings="hooperSettings" :infiniteScroll="true">
     <slide>
       <div xs4 class="ourClientSlider-item">
         <h5>Возраст: от 18 до 25 лет</h5>

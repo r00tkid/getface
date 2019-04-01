@@ -52,7 +52,6 @@
         <apexchart ref="chart" height="400" type="line" :options="lineOptions" :series="series"></apexchart>
     </div>
 </template>
-
 <script>
     export default {
         props: {
@@ -74,18 +73,10 @@
                     chart: {
                         id: "vuechart-example",
                         toolbar: {
-                            show: true,
-                            tools: {
-                                download: true,
-                                selection: true,
-                                zoom: true,
-                                zoomin: true,
-                                zoomout: true
-                            }
+                            show: false,
                         }
                     },
                     colors: this.colors,
-                    tooltip: {},
                     xaxis: {
                         type: "datetime",
                         labels: {

@@ -48,21 +48,6 @@ const router = new Router({
                     component: () => import('../views/Analitics'),
                 },
                 {
-                    path: 'profile',
-                    name: 'dashboard.profile',
-                    component: () => import('../views/Profile'),
-                },
-                {
-                    path: 'calendar',
-                    name: 'dashboard.calendar',
-                    component: () => import('../views/Calendar'),
-                },
-                {
-                    path: 'employee',
-                    name: 'dashboard.employee',
-                    component: () => import('../views/Employee'),
-                },
-                {
                     path: 'cameras',
                     name: 'dashboard.cameras',
                     component: () => import('../views/Cameras'),

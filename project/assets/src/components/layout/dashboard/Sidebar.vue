@@ -93,9 +93,6 @@
 </script>
 
 <style>
-    /*
-    todo Not like this pls
-     */
     .kill-sidebar {
         margin-top: 64px !important;
         border-radius: 7px;

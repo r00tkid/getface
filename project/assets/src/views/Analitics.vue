@@ -65,25 +65,23 @@
         </v-layout>
         <v-layout>
             <v-flex class="materialBox mt-2" xs12>
-                <v-layout>
-                    <v-flex xs4 d-flex>
-                        <div class="statCheckbox statCommon">
-                            <input type="checkbox" name="camera1" id="camera1">
-                            <label for="camera1">Камера 1</label>
-                        </div>
-                        <div class="statCheckbox statCommon">
-                            <input type="checkbox" name="camera2" id="camera2">
-                            <label for="camera2">Камера 2</label>
-                        </div>
-                        <div class="statCheckbox statCommon">
-                            <input type="checkbox" name="camera3" id="camera3">
-                            <label for="camera3">Камера 3</label>
-                        </div>
-                        <div class="statCheckbox statCommon">
-                            <input type="checkbox" name="camera4" id="camera4">
-                            <label for="camera4">Камера 4</label>
-                        </div>
-                    </v-flex>
+                <v-layout align-center justify-start row>
+                    <div class="statCheckbox statCommon">
+                        <input type="checkbox" name="camera1" id="camera1">
+                        <label for="camera1">Камера 1</label>
+                    </div>
+                    <div class="statCheckbox statCommon">
+                        <input type="checkbox" name="camera2" id="camera2">
+                        <label for="camera2">Камера 2</label>
+                    </div>
+                    <div class="statCheckbox statCommon">
+                        <input type="checkbox" name="camera3" id="camera3">
+                        <label for="camera3">Камера 3</label>
+                    </div>
+                    <div class="statCheckbox statCommon">
+                        <input type="checkbox" name="camera4" id="camera4">
+                        <label for="camera4">Камера 4</label>
+                    </div>
                 </v-layout>
                 <v-layout>
                     <v-flex class="mt-2" xs9>
@@ -305,8 +303,13 @@
         width: 90%;
     }
 
-    /* checkbox styling */
+    @media only screen and (max-width: 1250px) {
+        .analiticsContainer {
+            width: 100%;
+        }
+    }
 
+    /* checkbox styling */
     .statCheckbox {
         position: relative;
     }
@@ -375,6 +378,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        min-width: 115px;
     }
 
     .statCheckbox label {
@@ -383,4 +387,7 @@
     }
 
     /* checkbox styling */
+    .homeDateVal span {
+        white-space: nowrap;
+    }
 </style>
