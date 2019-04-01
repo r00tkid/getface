@@ -65,8 +65,7 @@
     </v-layout>
     <v-layout>
       <v-flex class="materialBox mt-2" xs12>
-        <v-layout>
-          <v-flex xs4 d-flex>
+        <v-layout align-center justify-start row>
             <div class="statCheckbox statCommon">
               <input type="checkbox" name="camera1" id="camera1">
               <label for="camera1">Камера 1</label>
@@ -83,7 +82,6 @@
               <input type="checkbox" name="camera4" id="camera4">
               <label for="camera4">Камера 4</label>
             </div>
-          </v-flex>
         </v-layout>
         <v-layout>
           <v-flex class="mt-2" xs9>
@@ -301,6 +299,11 @@ export default {
 .analiticsContainer {
   width: 90%;
 }
+@media only screen and (max-width: 1250px){
+  .analiticsContainer {
+    width: 100%;
+  }
+}
 /* checkbox styling */
 
 .statCheckbox {
@@ -371,6 +374,7 @@ input[type="checkbox"]:focus + label::before {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 115px;
 }
 
 .statCheckbox label {
@@ -378,6 +382,9 @@ input[type="checkbox"]:focus + label::before {
   font-size: 12px;
 }
 /* checkbox styling */
+.homeDateVal span{
+  white-space: nowrap;
+}
 </style>
 
 
