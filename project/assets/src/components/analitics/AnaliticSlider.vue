@@ -1,8 +1,8 @@
 <template>
-  <hooper :settings="hooperSettings" :infiniteScroll="true">
+  <hooper ref="hooper" :itemsToShow="3" :infiniteScroll="true">
     <slide>
       <div xs4 class="ourClientSlider-item">
-        <h5>Возраст: от 18 до 25 лет</h5>
+        <h5>от 18 до 25 лет</h5>
         <span>Посещений: 50 (33%)</span>
         <div class="clientImg">
           <img src="@/assets/images/client1.png" alt="client">
@@ -13,8 +13,7 @@
         </div>
         <span>Любимое место</span>
         <p class="ma-0">Камера вестибюля ресторана</p>
-        <span>50%</span>
-        <i class="material-icons helpIcon" title="Подсказка">live_help</i>
+        <span class="clientPlacePerc">50%<i class="material-icons helpIcon" title="Подсказка">live_help</i></span>
         <v-layout class="clientMood">
           <v-flex xs3 class="iconMood">
             <span>😊</span>
@@ -28,7 +27,7 @@
     </slide>
     <slide>
       <div xs4 class="ourClientSlider-item">
-        <h5>Возраст: от 18 до 25 лет</h5>
+        <h5>от 18 до 25 лет</h5>
         <span>Посещений: 50 (33%)</span>
         <div class="clientImg">
           <img src="@/assets/images/client1.png" alt="client">
@@ -39,8 +38,7 @@
         </div>
         <span>Любимое место</span>
         <p class="ma-0">Камера вестибюля ресторана</p>
-        <span>50%</span>
-        <i class="material-icons helpIcon" title="Подсказка">live_help</i>
+        <span class="clientPlacePerc">50%<i class="material-icons helpIcon" title="Подсказка">live_help</i></span>
         <v-layout class="clientMood">
           <v-flex xs3 class="iconMood">
             <span>😊</span>
@@ -54,7 +52,7 @@
     </slide>
     <slide>
       <div xs4 class="ourClientSlider-item">
-        <h5>Возраст: от 18 до 25 лет</h5>
+        <h5>от 18 до 25 лет</h5>
         <span>Посещений: 50 (33%)</span>
         <div class="clientImg">
           <img src="@/assets/images/client1.png" alt="client">
@@ -65,8 +63,7 @@
         </div>
         <span>Любимое место</span>
         <p class="ma-0">Камера вестибюля ресторана</p>
-        <span>50%</span>
-        <i class="material-icons helpIcon" title="Подсказка">live_help</i>
+        <span class="clientPlacePerc">50%<i class="material-icons helpIcon" title="Подсказка">live_help</i></span>
         <v-layout class="clientMood">
           <v-flex xs3 class="iconMood">
             <span>😊</span>
@@ -80,7 +77,7 @@
     </slide>
     <slide>
       <div xs4 class="ourClientSlider-item">
-        <h5>Возраст: от 18 до 25 лет</h5>
+        <h5>от 18 до 25 лет</h5>
         <span>Посещений: 50 (33%)</span>
         <div class="clientImg">
           <img src="@/assets/images/client1.png" alt="client">
@@ -91,34 +88,7 @@
         </div>
         <span>Любимое место</span>
         <p class="ma-0">Камера вестибюля ресторана</p>
-        <span>50%</span>
-        <i class="material-icons helpIcon" title="Подсказка">live_help</i>
-        <v-layout class="clientMood">
-          <v-flex xs3 class="iconMood">
-            <span>😊</span>
-          </v-flex>
-          <v-flex xs9>
-            <span>Настроение</span>
-            <p class="ma-0">Отличное - 80%</p>
-          </v-flex>
-        </v-layout>
-      </div>
-    </slide>
-    <slide>
-      <div xs4 class="ourClientSlider-item">
-        <h5>Возраст: от 18 до 25 лет</h5>
-        <span>Посещений: 50 (33%)</span>
-        <div class="clientImg">
-          <img src="@/assets/images/client1.png" alt="client">
-          <div class="raiting">
-            <img src="@/assets/images/gold.png" alt="gold">
-            <span>ТОП 1</span>
-          </div>
-        </div>
-        <span>Любимое место</span>
-        <p class="ma-0">Камера вестибюля ресторана</p>
-        <span>50%</span>
-        <i class="material-icons helpIcon" title="Подсказка">live_help</i>
+        <span class="clientPlacePerc">50%<i class="material-icons helpIcon" title="Подсказка">live_help</i></span>
         <v-layout class="clientMood">
           <v-flex xs3 class="iconMood">
             <span>😊</span>
@@ -150,7 +120,6 @@ export default {
       }
     };
   },
-  methods: {}
 };
 </script>
 <style scoped>
@@ -212,13 +181,16 @@ export default {
 .helpIcon {
   font-size: 12px;
   color: #7d6df2;
-  margin-left: 10px;
 }
 .smallGreyText {
   text-align: center;
   font-size: 10px;
   color: #969696;
   margin-bottom: 0;
+}
+.clientPlacePerc{
+  display: flex;
+  justify-content: center;
 }
 </style>
 

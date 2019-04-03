@@ -197,6 +197,7 @@ export default {
   align-items: center;
   justify-content: center;
   position: relative;
+  text-align: center;
 }
 .customSelect {
   position: absolute;

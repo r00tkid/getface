@@ -97,7 +97,6 @@
     @keyframes zoom {
         from {
             opacity: 0;
-            transform: scale3d(0.3, 0.3, 0.3);
         }
 
         100% {

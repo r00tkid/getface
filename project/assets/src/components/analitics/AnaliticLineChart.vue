@@ -72,7 +72,7 @@ export default {
         chart: {
           id: "vuechart-example",
           toolbar: {
-            show: false,
+            show: true,
           }
         },
         colors:this.colors,
@@ -188,6 +188,7 @@ export default {
         } else {
           this.updateAnnotation(obj.id, this.textAreaVal);
         }
+        this.addEvenShow = false;
       }
     },
     updateAnnotation(id, text) {
