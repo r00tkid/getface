@@ -33,7 +33,9 @@
                     <span>150</span>
                 </p>
                 <span class="devider"></span>
-                <analitic-slider></analitic-slider>
+                <keep-alive>
+                    <analitic-slider></analitic-slider>
+                </keep-alive>
             </v-flex>
             <v-flex class="materialBox mr-2" xs3>
                 <h4>Возраст клиентов</h4>
@@ -65,24 +67,16 @@
         </v-layout>
         <v-layout>
             <v-flex class="materialBox mt-2" xs12>
-                <v-layout align-center justify-start row>
-                    <div class="statCheckbox statCommon">
-                        <input type="checkbox" name="camera1" id="camera1">
-                        <label for="camera1">Камера 1</label>
-                    </div>
-                    <div class="statCheckbox statCommon">
-                        <input type="checkbox" name="camera2" id="camera2">
-                        <label for="camera2">Камера 2</label>
-                    </div>
-                    <div class="statCheckbox statCommon">
-                        <input type="checkbox" name="camera3" id="camera3">
-                        <label for="camera3">Камера 3</label>
-                    </div>
-                    <div class="statCheckbox statCommon">
-                        <input type="checkbox" name="camera4" id="camera4">
-                        <label for="camera4">Камера 4</label>
-                    </div>
-                </v-layout>
+                <transition name="fade">
+                    <v-layout v-if="updateTags.length" align-center justify-start row>
+                        <template v-for="(tag,i) in updateTags">
+                            <div class="statCheckbox statCommon" :key="i">
+                                <input type="checkbox" v-model="tag.selected" name="camera1" :id="`camera${i}`">
+                                <label :for="`camera${i}`">{{ tag.name }}</label>
+                            </div>
+                        </template>
+                    </v-layout>
+                </transition>
                 <v-layout>
                     <v-flex class="mt-2" xs9>
                         <analitic-line-chart :colors="colorsChart"></analitic-line-chart>
@@ -104,10 +98,11 @@
 <script>
     import ChartBar from "../components/charts/ChartBar";
     import HeatMap from "../components/analitics/HeatMap";
+    // import ChartDataLabels from "chartjs-plugin-datalabels";
     import AnaliticStat from "../components/analitics/AnaliticStat";
     import AnaliticTable from "../components/analitics/AnaliticTable";
-    import AnaliticLineChart from "../components/analitics/AnaliticLineChart";
     import AnaliticSlider from "../components/analitics/AnaliticSlider";
+    import AnaliticLineChart from "../components/analitics/AnaliticLineChart";
 
     export default {
         name: "Analitics",
@@ -122,7 +117,14 @@
         data() {
             return {
                 groupBy: ["Все", "Сегодня", "Неделя", "Месяц", "3 месяца"],
-                colorsChart: ['#38baf5', '#f8bc40', '#e05116', '#6622fd', '#f90018', '#42f422'],
+                colorsChart: [
+                    "#38baf5",
+                    "#f8bc40",
+                    "#e05116",
+                    "#6622fd",
+                    "#f90018",
+                    "#42f422"
+                ],
                 chartData: {
                     datasets: [
                         {
@@ -140,6 +142,26 @@
                     ]
                 },
                 options: {
+                    plugins: {
+                        datalabels: {
+                            color: "#000",
+                            align: "left",
+                            font: {
+                                size: "10"
+                            },
+                            anchor: "end",
+                            formatter: function (value, context) {
+                                let maleVal = context.chart.config.data.datasets[0].data;
+                                let femaleVal = context.chart.config.data.datasets[1].data;
+                                let index = context.dataIndex;
+                                if (context.datasetIndex == 1) {
+                                    return maleVal[index] + femaleVal[index] + "%";
+                                } else {
+                                    return "";
+                                }
+                            }
+                        }
+                    },
                     scales: {
                         xAxes: [
                             {
@@ -194,14 +216,27 @@
                     },
                     tooltips: {
                         callbacks: {
+                            beforeLabel: function (tooltipItem, data) {
+                                let index = tooltipItem.index;
+                                let label = data.datasets[1].label || "";
+                                return `${label}: ${data.datasets[1].data[index]}%`;
+                            },
                             label: function (tooltipItem, data) {
-                                var label = data.datasets[tooltipItem.datasetIndex].label || "";
-                                return `${label}: ${tooltipItem.yLabel}%`;
+                                let index = tooltipItem.index;
+                                let label = data.datasets[0].label || "";
+                                return `${label}:  ${data.datasets[0].data[index]}%`;
+                            },
+                            title: function () {
                             }
-                        }
+                        },
+                        displayColors: false,
+                        backgroundColor: "#fff",
+                        bodyFontColor: "#666",
+                        borderWidth: 1,
+                        borderColor: "#d4d4d4"
                     },
                     legend: {display: false}
-                },
+                }
             };
         },
         methods: {
@@ -211,24 +246,29 @@
                 } else {
                     let annotationObj = {
                         id: this.annotID,
-                        date: new Date(this.date).toLocaleString("en-US").substr(0, 9),
+                        date: new Date(this.date).toLocaleString("en-US").substr(0, 9)
                     };
                     this.areaError = false;
-                    let obj = this.existAnnotations.find(val => val.date == annotationObj.date);
+                    let obj = this.existAnnotations.find(
+                        val => val.date == annotationObj.date
+                    );
                     if (obj == undefined) {
                         this.existAnnotations.push(annotationObj);
                         this.createAnnotation(annotationObj.date, annotationObj.id);
-                        this.createChartModal(annotationObj.id, annotationObj.date, this.textAreaVal);
+                        this.createChartModal(
+                            annotationObj.id,
+                            annotationObj.date,
+                            this.textAreaVal
+                        );
                         this.annotID++;
                     } else {
                         this.updateAnnotation(obj.id, this.textAreaVal);
                     }
-
                 }
             },
             updateAnnotation(id, text) {
                 let modal = document.querySelector(`.chartModal${id}`);
-                let li = document.createElement('LI');
+                let li = document.createElement("LI");
                 li.innerText = text;
                 modal.childNodes[3].appendChild(li);
             },
@@ -276,6 +316,11 @@
                     .addEventListener("click", e => {
                         chartModal.setAttribute("style", `display: none;`);
                     });
+            }
+        },
+        computed: {
+            updateTags() {
+                return this.$store.getters.getCheckedDataTable;
             }
         }
     };

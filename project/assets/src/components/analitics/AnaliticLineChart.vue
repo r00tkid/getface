@@ -73,7 +73,7 @@
                     chart: {
                         id: "vuechart-example",
                         toolbar: {
-                            show: false,
+                            show: true,
                         }
                     },
                     colors: this.colors,
@@ -189,6 +189,7 @@
                     } else {
                         this.updateAnnotation(obj.id, this.textAreaVal);
                     }
+                    this.addEvenShow = false;
                 }
             },
             updateAnnotation(id, text) {
@@ -217,7 +218,6 @@
             createChartModal(id, date, text) {
                 let annot = document.querySelector(`.annot${id}`);
                 let chartModal = document.createElement("div");
-                let myDate = new Date(date);
                 chartModal.classList.add(`chartModal${id}`);
                 chartModal.classList.add(`chartModal`);
                 chartModal.innerHTML = `

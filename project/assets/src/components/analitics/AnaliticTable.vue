@@ -6,8 +6,8 @@
       </li>
       <li class="tableHeaders-item" v-html="headers.name"></li>
       <li class="tableHeaders-item" v-html="headers.amount"></li>
-      <li class="tableHeaders-item" v-html="headers.mood"></li>
-      <li class="tableHeaders-item" v-html="headers.male"></li>
+      <li class="tableHeaders-item average3" v-html="headers.mood"></li>
+      <li class="tableHeaders-item average2" v-html="headers.male"></li>
       <li class="tableHeaders-item average" v-html="headers.female"></li>
       <li class="tableHeaders-item average" v-html="headers.averageTime"></li>
       <li class="tableHeaders-item" v-html="headers.heavyCars"></li>
@@ -23,7 +23,7 @@
       <template slot="items" scope="props">
         <tr @click="props.expanded = !props.expanded">
           <td>
-            <v-checkbox :input-value="props.item.selected" primary hide-details></v-checkbox>
+            <v-checkbox v-model="props.item.selected" primary hide-details></v-checkbox>
           </td>
           <td class="text-xs">{{ props.item.name }}</td>
           <td class="text-xs">{{ props.item.amount }}</td>
@@ -47,9 +47,8 @@
             <tr @click="props.expanded = !props.expanded">
               <td class="text-xs-right">
                 <v-checkbox
-                  class="tableCheckbox"
-                  v-model="props.item.selected"
                   primary
+                  class="tableCheckbox"
                   hide-details
                 ></v-checkbox>
               </td>
@@ -84,65 +83,7 @@ export default {
         heavyCars: "Грузовых <br> автомобилей",
         lightCars: "Легковых <br> автомобилей"
       },
-      mainItems: [
-        {
-          name: "Камера 1",
-          selected: true,
-          amount: "500 чел (15%)",
-          mood: "Плохое-15%",
-          male: "250 чел (50%)",
-          female: "250 чел (50%)",
-          averageTime: "150ч:30м",
-          heavyCars: "250 (50%)",
-          lightCars: "250 (50%)"
-        },
-        {
-          name: "Камера 2",
-          selected: true,
-          amount: "500 чел (15%)",
-          mood: "Плохое-15%",
-          male: "250 чел (50%)",
-          female: "250 чел (50%)",
-          averageTime: "150ч:30м",
-          heavyCars: "250 (50%)",
-          lightCars: "250 (50%)"
-        },
-        {
-          name: "Зона 1",
-          selected: true,
-          amount: "500 чел (15%)",
-          mood: "Плохое-15%",
-          male: "250 чел (50%)",
-          female: "250 чел (50%)",
-          averageTime: "150ч:30м",
-          heavyCars: "250 (50%)",
-          lightCars: "250 (50%)",
-          items: [
-            {
-              name: "Камера 5",
-              selected: true,
-              amount: "500 чел (15%)",
-              mood: "Плохое-15%",
-              male: "250 чел (50%)",
-              female: "250 чел (50%)",
-              averageTime: "150ч:30м",
-              heavyCars: "250 (50%)",
-              lightCars: "250 (50%)"
-            },
-            {
-              name: "Камера 6",
-              selected: true,
-              amount: "500 чел (15%)",
-              mood: "Плохое-15%",
-              male: "250 чел (50%)",
-              female: "250 чел (50%)",
-              averageTime: "150ч:30м",
-              heavyCars: "250 (50%)",
-              lightCars: "250 (50%)"
-            }
-          ]
-        }
-      ]
+      mainItems: []
     };
   },
   methods: {
@@ -158,6 +99,9 @@ export default {
         this.pagination.descending = false;
       }
     }
+  },
+  created(){
+    this.mainItems = this.$store.getters.getAllDataTable;
   }
 };
 </script>
@@ -189,6 +133,14 @@ export default {
 .average{
   position: relative;
   left: 24px;
+}
+.average2{
+  position: relative;
+  left: 10px;
+}
+.average3{
+  position: relative;
+  left: 5px;
 }
 </style>
 
