@@ -29,6 +29,7 @@
 
         <v-spacer v-if="display_search"><!-- SPACER --></v-spacer>
 
+        <!-- ToDo: move this shit into toolbox -->
         <v-btn class="mr-5" icon @click="toggleAside" v-if="$vuetify.breakpoint.xs">
             <v-icon color="grey darken-2">
                 code
