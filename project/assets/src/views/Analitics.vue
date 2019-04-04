@@ -215,24 +215,80 @@ export default {
           ]
         },
         tooltips: {
-          callbacks: {
-            beforeLabel: function(tooltipItem, data) {
-              let index = tooltipItem.index;
-              let label = data.datasets[1].label || "";
-              return `${label}: ${data.datasets[1].data[index]}%`;
-            },
-            label: function(tooltipItem, data) {
-              let index = tooltipItem.index;
-              let label = data.datasets[0].label || "";
-              return `${label}:  ${data.datasets[0].data[index]}%`;
-            },
-            title: function() {}
-          },
-          displayColors: false,
-          backgroundColor: "#fff",
-          bodyFontColor: "#666",
-          borderWidth: 1,
-          borderColor: "#d4d4d4"
+          enabled: false,
+          custom: function(tooltipModel) {
+            let tooltipEl = document.getElementById("chartjs-tooltip");
+
+            if (!tooltipEl) {
+              tooltipEl = document.createElement("div");
+              tooltipEl.id = "chartjs-tooltip";
+              document.body.appendChild(tooltipEl);
+            }
+            if (tooltipModel.dataPoints) {
+              let index = tooltipModel.dataPoints[0].index;
+              let maleVal = this._data.datasets[0].data[index];
+              let femaleVal = this._data.datasets[1].data[index];
+
+              // Tooltip Element
+
+              // Create element on first render
+
+              // Hide if no tooltip
+              if (tooltipModel.opacity === 0) {
+                tooltipEl.style.opacity = 0;
+                return;
+              }
+
+              // Set caret Position
+              tooltipEl.classList.remove("above", "below", "no-transform");
+              if (tooltipModel.yAlign) {
+                tooltipEl.classList.add(tooltipModel.yAlign);
+              } else {
+                tooltipEl.classList.add("no-transform");
+              }
+
+              function getBody(bodyItem) {
+                return bodyItem.lines;
+              }
+
+              // Set Text
+              if (tooltipModel.body) {
+                let bodyLines = tooltipModel.body.map(getBody);
+
+                let innerHtml = "";
+
+                bodyLines.forEach(function(body, i) {
+                  innerHtml += `<div class="tooltipGender tooltipMale"><small>◉</small><p>Мужчины: &nbsp;100чел.</p><span>${maleVal}%</span></div>
+                                <div class="tooltipGender tooltipFemale"><small>◉</small><p>Женщины: 100чел.</p><span>${femaleVal}%</span></div>
+                                <div class="tooltipCommon">Общее количество: 200чел.</div>`;
+                });
+
+                tooltipEl.innerHTML = innerHtml;
+              }
+              // `this` will be the overall tooltip
+              let position = this._chart.canvas.getBoundingClientRect();
+
+              // Display, position, and set styles for font
+              tooltipEl.style.opacity = 1;
+              tooltipEl.style.position = "absolute";
+              tooltipEl.style.left =
+                position.left + window.pageXOffset + tooltipModel.caretX + "px";
+              tooltipEl.style.top =
+                position.top + window.pageYOffset + tooltipModel.caretY + "px";
+              tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
+              tooltipEl.style.fontSize = tooltipModel.bodyFontSize + "px";
+              tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle;
+              tooltipEl.style.padding =
+                tooltipModel.yPadding + "px " + tooltipModel.xPadding + "px";
+              tooltipEl.style.pointerEvents = "none";
+              tooltipEl.style.background = "#fff";
+              tooltipEl.style.border = "1px solid #ccc";
+              tooltipEl.style.borderRadius = "4px";
+              tooltipEl.style.color = "#969696";
+            } else {
+              tooltipEl.style.opacity = 0;
+            }
+          }
         },
         legend: { display: false }
       }
@@ -430,6 +486,7 @@ input[type="checkbox"]:focus + label::before {
   white-space: nowrap;
 }
 </style>
+
 
 
 

@@ -141,6 +141,9 @@ export default {
       ]
     },
     chartOptions: {
+      plugins: {
+        datalabels: false
+      },
       responsive: true,
       maintainAspectRatio: false,
       layout: {
