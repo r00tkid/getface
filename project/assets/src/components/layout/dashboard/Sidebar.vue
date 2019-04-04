@@ -1,10 +1,12 @@
 <template>
     <v-navigation-drawer
             class="kill-sidebar"
-            mini-variant
             v-model="drawer"
-            height="400px"
-            absolute
+            :height="400"
+            :mobile-break-point="720"
+            mini-variant
+            fixed
+            app
     >
         <v-toolbar flat class="transparent">
             <v-list class="pa-0">
@@ -43,10 +45,10 @@
                 </v-list-tile-content>
             </v-list-tile>
         </v-list>
+
         <v-spacer></v-spacer>
 
-
-        <v-list>
+        <v-list style="justify-self: end">
             <v-list-tile @click="logout">
                 <v-list-tile-action>
                     <v-icon>logout</v-icon>
@@ -64,6 +66,9 @@
 <script>
     export default {
         name: "Sidebar",
+        mounted() {
+            this.$bus.$on('toggle-main-side-bar', this.toggleMe);
+        },
         data() {
             return {
                 drawer: true,
@@ -80,7 +85,10 @@
         methods: {
             logout() {
                 this.$store.dispatch('auth/logout').then(() => this.$router.push({name: 'landing'}))
-            }
+            },
+            toggleMe() {
+                this.drawer = !this.drawer;
+            },
         },
         computed: {
             face: {
@@ -92,24 +100,27 @@
     }
 </script>
 
-<style>
-    /*
-    todo Not like this pls
-     */
+<style scoped>
     .kill-sidebar {
-        margin-top: 64px !important;
-        border-radius: 7px;
-        /*border: 1px #dfdfdf solid;*/
-        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
-        /*top: 50%;*/
         display: flex;
-        flex-direction: column;
-        /*transform: translateY(-50%) !important;*/
-
-        /*transform: translateY(13vw) !important;*/
+        flex-flow: column nowrap;
+        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        transform: translate(0, 50%) !important;
     }
 
-    .primary--text.v-list__tile--active {
+    .kill-sidebar.v-navigation-drawer--is-mobile.v-navigation-drawer--open {
+        transform: translate(0, 50%) !important;
+    }
+
+    .kill-sidebar.v-navigation-drawer--is-mobile {
+        transform: translate(-101%, 50%) !important;
+    }
+</style>
+
+<style>
+    .kill-sidebar .primary--text.v-list__tile--active {
         color: #7d6df2 !important;
     }
 </style>

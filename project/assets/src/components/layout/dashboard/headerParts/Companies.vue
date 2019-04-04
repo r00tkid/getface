@@ -7,7 +7,7 @@
             item-value="id"
             item-text="name"
             hide-selected
-            class="kill-select mt-1 get-face-nova"
+            class="kill-select mt-1 get-face-nova minimal-width"
             solo
             flat
     ></v-select>
@@ -83,5 +83,9 @@
 <style scoped>
     .get-face-nova {
         font-family: "Proxima Nova", sans-serif;
+    }
+
+    .minimal-width {
+        min-width: 151px;
     }
 </style>

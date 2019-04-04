@@ -1,20 +1,19 @@
 <template>
-    <div>
-        <v-app>
-            <kill-sidebar></kill-sidebar>
+    <v-app>
+        <abn-header></abn-header>
 
-            <abn-header></abn-header>
-            <v-content>
-                <transition
-                        name="zoom"
-                        mode="out-in">
-                    <router-view></router-view>
-                </transition>
-            </v-content>
+        <kill-sidebar></kill-sidebar>
 
-            <abn-footer></abn-footer>
-        </v-app>
-    </div>
+        <div class="main-content-pusher"></div>
+
+        <transition
+                name="zoom"
+                mode="out-in">
+            <router-view></router-view>
+        </transition>
+
+        <abn-footer></abn-footer>
+    </v-app>
 </template>
 
 <script>
@@ -72,6 +71,10 @@
 
 <!-- Dashboard global styles -->
 <style>
+    .main-content-pusher {
+        height: 3.5rem;
+    }
+
     .input-no-arrows input[type='number'] {
         -moz-appearance: textfield !important;
     }

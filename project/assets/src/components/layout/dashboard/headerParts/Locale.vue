@@ -2,7 +2,7 @@
     <v-select
             v-model="currentLang"
             :items="items"
-            class="kill-select"
+            class="kill-select minimal-width"
             item-value="locale"
             item-text="visual"
             hide-selected
@@ -37,3 +37,9 @@
         },
     }
 </script>
+
+<style scoped>
+    .minimal-width {
+        min-width: 71px !important;
+    }
+</style>

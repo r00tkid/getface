@@ -1,5 +1,5 @@
 <template>
-    <v-footer :fixed="true" app class="abn-footer">
+    <v-footer :fixed="true" class="abn-footer" app>
         <span>GetFace &copy; {{ currentYear === 2018 ? currentYear : `2018 - ${currentYear}` }}</span>
         <span class="abn-versions">
             <table style="border-collapse: collapse">
