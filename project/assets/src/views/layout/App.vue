@@ -52,7 +52,8 @@
         ) !important;
     }
 
-    .orange, .orange--text {
+    .orange,
+    .orange--text {
         color: #f99342 !important;
     }
 

@@ -410,6 +410,7 @@
     }
 
     /* checkbox styling */
+
     .statCheckbox {
         position: relative;
     }
