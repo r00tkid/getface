@@ -69,8 +69,7 @@
                 drawer: true,
                 items: [
                     {title: 'Dashboard', icon: 'dashboard', name: 'dashboard.main'},
-                    {title: 'Calendar', icon: 'calendar_today', name: 'dashboard.calendar'},
-                    {title: 'Profile', icon: 'account_circle', name: 'dashboard.profile'},
+                    {title: 'Cameras', icon: 'camera', name: 'dashboard.cameras'},
                 ],
                 mini: true,
                 right: null,
