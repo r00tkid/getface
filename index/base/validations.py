@@ -194,20 +194,20 @@ class Validations:
 
                 raise ValidationError(message % dict(min=self.min, max=self.max))
 
-    email = __Email
+    validation_chain = __ValidationChain
     data_required = __DataRequired
-    equal_to = __EqualTo
-    ip_address = __IPAddress
-    length = __Length
-    regexp = __Regexp
-    url = __URL
-    any_of = __AnyOf
-    none_of = __NoneOf
-    mac_address = __MacAddress
     not_required = __NotRequired
+    number_range = __NumberRange
+    mac_address = __MacAddress
+    expiration = __Expiration
+    ip_address = __IPAddress
+    equal_to = __EqualTo
+    none_of = __NoneOf
+    length = __Length
     unique = __Unique
     exists = __Exists
-    validation_chain = __ValidationChain
-    expiration = __Expiration
+    regexp = __Regexp
+    any_of = __AnyOf
+    email = __Email
     uuid = __UUID
-    number_range = __NumberRange
+    url = __URL

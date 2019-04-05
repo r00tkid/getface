@@ -1,5 +1,5 @@
-from index.base.repository import Base
 from authentication.models.user.model import User
+from index.base.repository import Base
 
 
 class UserCreateValidator(Base.Validator):

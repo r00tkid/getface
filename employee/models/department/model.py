@@ -7,7 +7,7 @@ class Department(Base.models.Model):
     field = Base.models.Model.field
 
     name = field.char(
-        verbose_name="Название отдела/цеха",
+        verbose_name="Название отдела",
         max_length=255,
         null=False,
         blank=False,

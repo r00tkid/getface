@@ -1,6 +1,6 @@
-from index.base.repository import Base
-from authentication.models.user.model import User
 from authentication.models.feature.model import Feature
+from authentication.models.user.model import User
+from index.base.repository import Base
 
 
 class Progress(Base.models.CreatedStump):

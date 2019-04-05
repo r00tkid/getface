@@ -1,5 +1,5 @@
-from index.base.repository import Base
 from company.models.company.model import Company
+from index.base.repository import Base
 from authentication.models import User
 from employee.models import Employee
 

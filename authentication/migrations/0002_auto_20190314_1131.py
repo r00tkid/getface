@@ -5,7 +5,6 @@ import index.fields.timezone.fields
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('authentication', '0001_initial'),
     ]

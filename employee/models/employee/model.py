@@ -1,11 +1,12 @@
 import uuid
-from datetime import datetime
+
 from index.base.repository import Base
+
+from employee.models.department.model import Department
+from employee.models.position.model import Position
 from authentication.models.user.model import User
 from company.models.company.model import Company
-
-from employee.models.position.model import Position
-from employee.models.department.model import Department
+from datetime import datetime
 
 
 class Employee(Base.models.Model):

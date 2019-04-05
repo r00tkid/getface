@@ -1,5 +1,5 @@
-from index.base.repository import Base
 from authentication.models.progress.model import Progress
+from index.base.repository import Base
 
 
 class FeatureAdmin(Base.Admin):

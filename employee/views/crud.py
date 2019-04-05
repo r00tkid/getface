@@ -1,9 +1,11 @@
 import uuid
-from rest_framework import status
-from rest_framework.views import APIView
+
 from rest_framework.response import Response
-from authentication.models import User
+from rest_framework.views import APIView
+from rest_framework import status
+
 from employee.models import Employee, get_employee_by_id as _get_employee
+from authentication.models import User
 
 
 class EmployeeActions(APIView):

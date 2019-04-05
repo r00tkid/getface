@@ -20,9 +20,6 @@
                 <v-btn color="#fa6d6e" dark class="hideAnalytics" @click="swapAnalytics()">Скрыть аналитику</v-btn>
             </v-flex>
         </v-layout>
-        <v-layout row wrap justify-end v-show="!getAnalytics">
-            <v-btn color="#fa6d6e" dark class="hideAnalytics" @click="swapAnalytics()">Показать аналитику</v-btn>
-        </v-layout>
 
         <get-face-home-analytics></get-face-home-analytics>
 
@@ -56,6 +53,8 @@
 
                 <v-btn class="primary lighten-1 white--text">Отправить ссылку на Face ID</v-btn>
                 <v-btn class="primary lighten-1 white--text">Отправить График</v-btn>
+
+                <v-btn color="#fa6d6e" v-show="!getAnalytics" dark class="hideAnalytics" @click="swapAnalytics()">Показать аналитику</v-btn>
             </v-flex>
         </v-layout>
         <v-layout>
@@ -67,10 +66,9 @@
 </template>
 
 <script>
-    import {createNamespacedHelpers} from 'vuex';
-
     import HomeTable from "../components/homeTable/HomeTable";
     import Analytics from "../components/pages/home/Analytics";
+    import {createNamespacedHelpers} from 'vuex';
 
     const {mapState, mapMutations} = createNamespacedHelpers('session/pages/main');
 

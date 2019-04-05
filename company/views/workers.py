@@ -1,9 +1,9 @@
 from rest_framework.decorators import api_view, permission_classes
+from company.models import get_company_by_id as _get_company
 from company.base.permissions import CanManageCompany
 from rest_framework.response import Response
-from rest_framework import status
 from employee.models import Employee
-from company.models import Company, get_company_by_id as _get_company
+from rest_framework import status
 
 
 @api_view(('GET',))

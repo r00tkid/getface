@@ -1,6 +1,6 @@
+from company.models import Company, Payment, Rate, Discount, get_company_by_id as _get_company
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from company.models import Company, Payment, Rate, Discount, get_company_by_id as _get_company
 
 
 @api_view(['POST'])

@@ -1,9 +1,9 @@
 import pytz
 
 from django.core.exceptions import ValidationError
+from django.utils.encoding import force_text
 from django.db import models
 from django.utils import six
-from django.utils.encoding import force_text
 
 from .utils import is_pytz_instance
 

@@ -1,8 +1,8 @@
-from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from company.base.permissions import CanManageCompany
 from company.models import Company, get_company_by_id as _get_company
+from company.base.permissions import CanManageCompany
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
 
 
 class CompanyActions(APIView):

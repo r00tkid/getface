@@ -1,10 +1,13 @@
 import jwt
+
 from index import settings
+from index.base.exceptions import APIException
+
 from django.db.models import Q
 from django.contrib.auth import authenticate
-from index.base.exceptions import APIException
-from authentication.models.user.model import User
 from django.utils.translation import ugettext as _
+
+from authentication.models.user.model import User
 from rest_framework_jwt.settings import api_settings
 from rest_framework_jwt.serializers import JSONWebTokenSerializer
 

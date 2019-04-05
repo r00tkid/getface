@@ -1,11 +1,13 @@
 import subprocess
-from tech import base
+
+from authentication.models import get_user_by_id
 from index.mail import sender
-from django.http.response import HttpResponse
+from tech import base
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
+from django.http.response import HttpResponse
 from rest_framework.response import Response
-from authentication.models import get_user_by_id
 
 
 @api_view(['GET'])

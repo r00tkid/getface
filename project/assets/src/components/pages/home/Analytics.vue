@@ -21,10 +21,10 @@
 </template>
 
 <script>
-    import {createNamespacedHelpers} from 'vuex';
     import LineChart from "../../charts/Chart";
     import HomeTimeTable from "./analytics/HomeTimeTable";
     import HomeStat from "./analytics/HomeStat";
+    import {createNamespacedHelpers} from 'vuex';
 
     const {mapState} = createNamespacedHelpers('session/pages/main');
 

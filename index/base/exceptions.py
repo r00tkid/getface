@@ -1,5 +1,5 @@
-from rest_framework import status
 from rest_framework.exceptions import APIException as RestException
+from rest_framework import status
 
 
 class ToDo(NotImplementedError):
@@ -15,6 +15,14 @@ class APIException(RestException):
 class NotFound(APIException):
     status_code = status.HTTP_404_NOT_FOUND
     default_detail = "Not found"
+
+    def __init__(self, detail=None, code=None):
+        if not detail:
+            detail = {
+                'detail': self.default_detail,
+            }
+
+        super().__init__(detail, status.HTTP_404_NOT_FOUND, code)
 
 
 class UnprocessableEntity(APIException):

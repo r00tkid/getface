@@ -90,7 +90,8 @@ class Payment(Base.models.Model):
     details = field.one_to_one(
         PaymentDetails,
         on_delete=relation.protect,
-        verbose_name="Детали"
+        verbose_name="Детали",
+        related_name="payment",
     )
 
     @property

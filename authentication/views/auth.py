@@ -7,10 +7,10 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 
-from authentication.models import User, get_user_by_id as _get_user
-from company.models import Company
-from employee.models import Employee
 from index.base.exceptions import UnprocessableEntity, APIException
+from authentication.models import User, get_user_by_id as _get_user
+from employee.models import Employee
+from company.models import Company
 
 from index.mail.sender import Sandman
 from index import settings

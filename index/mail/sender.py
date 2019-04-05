@@ -1,4 +1,5 @@
 import os
+
 from threading import Thread as __th
 
 env = os.environ.get("DJANGO_SETTINGS_ENVIRONMENT", "prod")

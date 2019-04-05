@@ -1,6 +1,5 @@
 from index.base.repository import Base
 from authentication.models.user.model import User
-from company.models.rate.model import Rate
 from company.models.discount.model import Discount
 
 

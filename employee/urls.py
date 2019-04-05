@@ -1,5 +1,5 @@
-from django.urls import path
 from employee.views.crud import EmployeeActions
+from django.urls import path
 
 urlpatterns = [
     path('/worker', EmployeeActions.as_view()),  # Create worker (POST)

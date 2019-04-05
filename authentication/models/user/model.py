@@ -1,5 +1,6 @@
-import _md5
 import uuid
+import _md5
+
 from django.contrib.auth.models import AbstractUser
 from index.base.repository import Base
 

@@ -1,4 +1,4 @@
-<template>
+        <template>
     <v-layout row justify-center :if="dialog">
         <v-dialog v-model="modalState" max-width="450px" @keydown.esc="modalState = false">
             <v-card>

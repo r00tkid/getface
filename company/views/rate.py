@@ -1,7 +1,7 @@
+from company.models import Rate, Company, Payment
 from index.base.exceptions import APIException
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from company.models import Rate, Company, Payment
 from authentication.models import User
 
 

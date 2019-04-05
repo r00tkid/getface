@@ -1,4 +1,4 @@
-<template>
+    <template>
     <v-toolbar fixed dence class="thin-toolbar" color="white">
 
         <v-flex xs2>
@@ -108,7 +108,7 @@
                 get() {
                     return this.is_manager && !this.$vuetify.breakpoint.mdAndDown;
                 },
-            }
+            },
         },
     }
 </script>

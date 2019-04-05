@@ -1,7 +1,7 @@
+from authentication.models import Progress, get_feature_by_id as _get_feature
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from authentication.models import Feature, Progress, get_feature_by_id as _get_feature
 
 
 @api_view(['GET'])

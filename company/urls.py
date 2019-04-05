@@ -1,6 +1,6 @@
-from django.urls import path
-from company.views import workers, rate
 from company.views.crud import CompanyActions
+from company.views import workers, rate
+from django.urls import path
 
 urlpatterns = [
     # Companies
