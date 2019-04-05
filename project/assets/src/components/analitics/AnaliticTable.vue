@@ -22,8 +22,10 @@
     >
       <template slot="items" scope="props">
         <tr @click="props.expanded = !props.expanded">
-          <td>
-            <v-checkbox v-model="props.item.selected" primary hide-details></v-checkbox>
+          <td class="expandedCell">
+            <span v-if="props.item.items&&!props.expanded"><v-icon>keyboard_arrow_down</v-icon></span>
+            <span v-if="props.item.items&&props.expanded"><v-icon>keyboard_arrow_up</v-icon></span>
+            <v-checkbox v-model="props.item.selected" primary hide-details :class="{average: props.item.items}"></v-checkbox>
           </td>
           <td class="text-xs">{{ props.item.name }}</td>
           <td class="text-xs">{{ props.item.amount }}</td>
@@ -108,7 +110,7 @@ export default {
 <style scoped>
 .tableCheckbox {
   position: relative;
-  left: 20px;
+  left: 25px;
 }
 .tableHeaders {
   display: flex;
@@ -141,6 +143,13 @@ export default {
 .average3{
   position: relative;
   left: 5px;
+}
+.expandedCell{
+  position: relative;
+}
+.expandedCell span{
+  position: absolute;
+  top: 10px;
 }
 </style>
 
