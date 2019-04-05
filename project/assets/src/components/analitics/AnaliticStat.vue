@@ -11,8 +11,8 @@
         @click="openSelect"
       >
         Мужчины до 18
-        <i v-if="!openedSelects[0]" class="material-icons">arrow_drop_down</i>
-        <i v-else class="material-icons">arrow_drop_up</i>
+        <i data-id="0" v-if="!openedSelects[0]" class="material-icons">arrow_drop_down</i>
+        <i data-id="0" v-else class="material-icons">arrow_drop_up</i>
         <div v-show="openedSelects[0]" class="customSelect statCommon">
           <ul>
             <li>
@@ -43,8 +43,8 @@
         @click="openSelect"
       >
         Женщины до 18
-        <i v-if="!openedSelects[1]" class="material-icons">arrow_drop_down</i>
-        <i v-else class="material-icons">arrow_drop_up</i>
+        <i data-id="1" v-if="!openedSelects[1]" class="material-icons">arrow_drop_down</i>
+        <i data-id="1" v-else class="material-icons">arrow_drop_up</i>
         <div v-show="openedSelects[1]" class="customSelect statCommon">
           <ul>
             <li>
@@ -104,7 +104,7 @@ export default {
   },
   data() {
     return {
-      openedSelects: [false, false, false, false]
+      openedSelects: [false, false]
     };
   },
   methods: {
