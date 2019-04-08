@@ -67,16 +67,15 @@
     </v-layout>
     <v-layout>
       <v-flex class="materialBox mt-2" xs12>
-        <transition name="fade">
-          <v-layout v-if="updateTags.length" align-center justify-start row>
-            <template v-for="(tag,i) in updateTags">
+        <v-layout v-if="tags.length" align-center justify-start row>
+            <template v-for="(tag,i) in tags">
               <div class="statCheckbox statCommon" :key="i">
                 <input type="checkbox" v-model="tag.selected" name="camera1" :id="`camera${i}`">
                 <label :for="`camera${i}`">{{ tag.name }}</label>
               </div>
             </template>
-          </v-layout>
-        </transition>
+        </v-layout>
+
         <v-layout>
           <v-flex class="mt-2" xs9>
             <analitic-line-chart :colors="colorsChart"></analitic-line-chart>
@@ -358,7 +357,6 @@ export default {
       `;
       document.body.appendChild(chartModal);
       annot.addEventListener("click", e => {
-        console.log(e);
         let x = e.pageX;
         let y = e.pageY;
         chartModal.setAttribute(
@@ -374,8 +372,21 @@ export default {
     }
   },
   computed: {
-    updateTags() {
-      return this.$store.getters.getCheckedDataTable;
+    tags() {
+      let data = this.$store.getters.getAllDataTable;
+      let selected = [];
+      data.forEach(elem => {
+        if (elem.items == undefined && elem.selected == true) {
+          selected.push(elem);
+        } else if (elem.items != undefined && elem.selected == true) {
+          elem.items.forEach(item => {
+            if(item.selected == true){
+              selected.push(item);
+            }
+          });
+        }
+      });
+      return selected;
     }
   }
 };

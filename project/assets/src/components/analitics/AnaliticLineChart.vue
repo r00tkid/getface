@@ -72,10 +72,29 @@ export default {
         chart: {
           id: "vuechart-example",
           toolbar: {
-            show: true,
+            show: true
+          },
+          events: {
+            zoomed: function(chartContext, { xaxis, yaxis }) {
+              let modals = document.querySelectorAll(".chartModal");
+              let annot;
+              let chartModal;
+              for (let i = 0; i < modals.length; i++) {
+                annot = document.querySelector(`.annot${i}`);
+                chartModal = document.querySelector(`.chartModal${i}`);
+                annot.addEventListener("click", e => {
+                  let x = e.pageX;
+                  let y = e.pageY;
+                  chartModal.setAttribute(
+                    "style",
+                    `top: ${y}px; left: ${x}px; display: block;`
+                  );
+                });
+              }
+            }
           }
         },
-        colors:this.colors,
+        colors: this.colors,
         xaxis: {
           type: "datetime",
           labels: {
@@ -91,6 +110,41 @@ export default {
             show: true
           }
         },
+        tooltip: {
+          custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            let date = w.config.series[0].data[dataPointIndex].x;
+            let data = w.config.series;
+            let colors = w.globals.colors;
+            let div = document.createElement("div");
+            let h4 = document.createElement("h4");
+            let ul = document.createElement("ul");
+            h4.innerHTML = `${date}`;
+            div.classList.add("lineTooltip");
+            for (let i = 0; i < data.length; i++) {
+              let li = document.createElement("li");
+              if(dataPointIndex > 0){
+                if(series[i][dataPointIndex] > series[i][dataPointIndex - 1]){
+                  li.innerHTML = `<span class="tooltipCircle" style="background-color:${colors[i]}"></span><p>${data[i].name}:</p><span>100</span><span><small class="valueArrow raise">↑</small>${
+                    series[i][dataPointIndex]
+                  }</span>`;
+                } else {
+                  li.innerHTML = `<span class="tooltipCircle" style="background-color:${colors[i]}"></span><p>${data[i].name}:</p><span>100</span><span><small class="valueArrow fall">↓</small>${
+                    series[i][dataPointIndex]
+                  }</span>`;
+                }
+              } else{
+                li.innerHTML = `<span class="tooltipCircle" style="background-color:${colors[i]}"></span><p>${data[i].name}:</p><span>100</span><span>${
+                    series[i][dataPointIndex]
+                  }</span>`;
+              }
+              
+              ul.append(li);
+            }
+            div.append(h4);
+            div.append(ul);
+            return div.outerHTML;
+          }
+        },
         stroke: {
           width: 1.5
         },
@@ -103,7 +157,7 @@ export default {
       },
       series: [
         {
-          name: "Series 1",
+          name: "Мужчины",
           data: [
             {
               x: "03-17-2019",
@@ -132,7 +186,7 @@ export default {
           ]
         },
         {
-          name: "Series 2",
+          name: "Женщины",
           data: [
             {
               x: "03-17-2019",
@@ -344,6 +398,48 @@ export default {
   left: -15px;
   font-size: 10px;
   color: #7d6df2;
+}
+.apexcharts-tooltip.light {
+  border: 1px solid #e3e3e3;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+.lineTooltip {
+  padding: 5px;
+  min-width: 150px;
+  border-radius: 5px;
+}
+.lineTooltip h4{
+  border-bottom: 1px solid rgb(150, 150, 150);
+  font-weight: normal;
+}
+.lineTooltip ul {
+  list-style: none;
+  padding: 0;
+}
+.lineTooltip li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.lineTooltip li p {
+  margin: 0;
+}
+.tooltipCircle{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.valueArrow{
+  font-size: 20px;
+}
+.raise{
+  color: green;
+}
+.fall{
+  color: red;
 }
 </style>
 

@@ -16,14 +16,25 @@
     <v-data-table
       hide-headers
       :headers-length="headersLength"
-      :items="mainItems"
+      :items="tableItems"
       item-key="name"
       hide-actions
     >
       <template slot="items" scope="props">
         <tr @click="props.expanded = !props.expanded">
-          <td>
-            <v-checkbox v-model="props.item.selected" primary hide-details></v-checkbox>
+          <td class="expandedCell">
+            <span v-if="props.item.items&&!props.expanded">
+              <v-icon>keyboard_arrow_down</v-icon>
+            </span>
+            <span v-if="props.item.items&&props.expanded">
+              <v-icon>keyboard_arrow_up</v-icon>
+            </span>
+            <v-checkbox
+              v-model="props.item.selected"
+              primary
+              hide-details
+              @change="selectGroup($event, props.item.id)"
+            ></v-checkbox>
           </td>
           <td class="text-xs">{{ props.item.name }}</td>
           <td class="text-xs">{{ props.item.amount }}</td>
@@ -50,6 +61,7 @@
                   primary
                   class="tableCheckbox"
                   hide-details
+                  v-model="props.item.selected"
                 ></v-checkbox>
               </td>
               <td class="text-xs">{{ props.item.name }}</td>
@@ -82,8 +94,7 @@ export default {
         averageTime: "Среднее время присутствия",
         heavyCars: "Грузовых <br> автомобилей",
         lightCars: "Легковых <br> автомобилей"
-      },
-      mainItems: []
+      }
     };
   },
   methods: {
@@ -98,17 +109,30 @@ export default {
         this.pagination.sortBy = column;
         this.pagination.descending = false;
       }
+    },
+    selectGroup(checked, id) {
+      if (checked == true && this.tableItems[id].items != undefined) {
+        this.tableItems[id].items.forEach(el => {
+          el.selected = true;
+        })
+      } else if (checked == false && this.tableItems[id].items != undefined){
+        this.tableItems[id].items.forEach(el => {
+          el.selected = false;
+        })
+      }
     }
   },
-  created(){
-    this.mainItems = this.$store.getters.getAllDataTable;
+  computed: {
+    tableItems() {
+      return this.$store.getters.getAllDataTable;
+    }
   }
 };
 </script>
 <style scoped>
 .tableCheckbox {
   position: relative;
-  left: 20px;
+  left: 25px;
 }
 .tableHeaders {
   display: flex;
@@ -130,17 +154,25 @@ export default {
 .settings-item {
   flex: 1;
 }
-.average{
+.average {
   position: relative;
   left: 24px;
 }
-.average2{
+.average2 {
   position: relative;
   left: 10px;
 }
-.average3{
+.average3 {
   position: relative;
   left: 5px;
+}
+.expandedCell {
+  position: relative;
+}
+.expandedCell span {
+  position: absolute;
+  top: 11px;
+  right: 25px;
 }
 </style>
 

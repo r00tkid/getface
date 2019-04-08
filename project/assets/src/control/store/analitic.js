@@ -3,6 +3,7 @@ const Analitic = {
         dataTable: [
             {
                 name: "Камера 1",
+                id: 0,
                 selected: true,
                 amount: "500 чел (15%)",
                 mood: "Плохое-15%",
@@ -14,6 +15,7 @@ const Analitic = {
             },
             {
                 name: "Камера 2",
+                id: 1,
                 selected: true,
                 amount: "500 чел (15%)",
                 mood: "Плохое-15%",
@@ -25,6 +27,7 @@ const Analitic = {
             },
             {
                 name: "Зона 1",
+                id: 2,
                 selected: false,
                 amount: "500 чел (15%)",
                 mood: "Плохое-15%",
@@ -36,7 +39,7 @@ const Analitic = {
                 items: [
                     {
                         name: "Камера 5",
-                        selected: true,
+                        selected: false,
                         amount: "500 чел (15%)",
                         mood: "Плохое-15%",
                         male: "250 чел (50%)",
@@ -47,7 +50,7 @@ const Analitic = {
                     },
                     {
                         name: "Камера 6",
-                        selected: true,
+                        selected: false,
                         amount: "500 чел (15%)",
                         mood: "Плохое-15%",
                         male: "250 чел (50%)",
@@ -70,9 +73,6 @@ const Analitic = {
         getAllDataTable: state => {
             return state.dataTable;
         },
-        getCheckedDataTable: state => {
-            return state.dataTable.filter(data => data.selected);
-        }
     }
 };
 
