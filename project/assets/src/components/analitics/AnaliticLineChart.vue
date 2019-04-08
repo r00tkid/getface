@@ -115,7 +115,6 @@ export default {
             let date = w.config.series[0].data[dataPointIndex].x;
             let data = w.config.series;
             let colors = w.globals.colors;
-            //console.log(w);
             let div = document.createElement("div");
             let h4 = document.createElement("h4");
             let ul = document.createElement("ul");
