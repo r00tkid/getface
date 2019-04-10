@@ -59,10 +59,10 @@ class Development(Configuration):
         'holding.apps.HoldingConfig',
         'job.apps.JobConfig',
         'pay.apps.PaymentConfig',
-        'cam.apps.CameraConfig',
+        # 'cam.apps.CameraConfig',
     ]
 
-    AUTH_USER_MODEL = 'auth.User'
+    AUTH_USER_MODEL = 'entry.User'
 
     LOGGING = {
         'version': 1,

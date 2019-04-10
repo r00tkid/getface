@@ -6,18 +6,16 @@ class Payment(_Model):
     from django.db.models.fields import related as _related
     from django.db.models import deletion as _deletion
 
-    from entry.models.user.model import User as _User
     user = _related.ForeignKey(
-        _User,
+        'entry.User',
         on_delete=_deletion.DO_NOTHING,
         verbose_name="Платильщик",
         null=True,
         blank=True,
     )
 
-    from pay.models.discount.model import Discount as _Discount
     discount = _related.ForeignKey(
-        _Discount,
+        'pay.Discount',
         on_delete=_deletion.SET_NULL,
         null=True,
         blank=True,

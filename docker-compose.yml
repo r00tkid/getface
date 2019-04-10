@@ -32,7 +32,7 @@ services:
       - ./project/override/pseudo_init.py:/usr/local/lib/python3.7/site-packages/gunicorn/workers/__init__.py
       - ./project/override/alternative.py:/usr/local/lib/python3.7/site-packages/gunicorn/workers/alternative.py
     command: >
-      bash -c "gunicorn index.wsgi:get_face -c /var/www/get-face/index/gunicorn.py --timeout 30 --graceful-timeout 20"
+      bash -c "gunicorn app.wsgi:get_face -c /var/www/get-face/index/gunicorn.py --timeout 30 --graceful-timeout 20"
     working_dir: /var/www/get-face
     ports:
       - 8091:8091

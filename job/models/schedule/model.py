@@ -7,9 +7,8 @@ class Schedule(_Model):
     from django.db.models import fields as _field
     from app.fields import timezone as _timezone
 
-    from holding.models import Employee as _Employee
     employee = _related.ForeignKey(
-        _Employee,
+        'holding.Employee',
         on_delete=_deletion.SET_NULL,
         null=True,
         blank=False,  # For admin panel?
@@ -40,19 +39,19 @@ class Schedule(_Model):
     def employee_fullname(self):
         return "%s %s" % (self.employee.first_name, self.employee.last_name)
 
-    employee_fullname.short_description = "Сотрудник"
+    employee_fullname.fget.short_description = "Сотрудник"
 
     @property
     def company(self):
         return self.employee.company
 
-    company.short_description = "Компания"
+    company.fget.short_description = "Компания"
 
     @property
     def company_name(self):
         return self.company.name
 
-    company_name.short_description = "Компания"
+    company_name.fget.short_description = "Компания"
 
     def __str__(self):
         return "%s %s [%s]:(%s - %s)" % (

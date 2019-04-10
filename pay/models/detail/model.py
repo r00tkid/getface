@@ -7,26 +7,23 @@ class PaymentDetails(_Model):
     from django.db.models import fields as _field
     from datetime import datetime as _dt
 
-    from holding.models.company.model import Company as _Company
     company = _related.ForeignKey(
-        _Company,
+        'holding.Company',
         on_delete=_deletion.CASCADE,
         null=False,
         blank=False,
     )
 
-    from pay.models.rate.model import Rate as _Rate
     rate = _related.ForeignKey(
-        _Rate,
+        'pay.Rate',
         on_delete=_deletion.CASCADE,
         verbose_name="Выбранный тариф",
         null=False,
         blank=False,
     )
 
-    from pay.models.discount.model import Discount as _Discount
     discount = _related.ForeignKey(
-        _Discount,
+        'pay.Discount',
         on_delete=_deletion.CASCADE,
         null=True,
         blank=False,

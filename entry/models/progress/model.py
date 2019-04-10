@@ -4,11 +4,9 @@ from app.base.model import Model as _Model
 class Progress(_Model):
     from django.db.models.fields import related as _related
     from django.db.models import deletion as _deletion
-    from entry.models.feature.model import Feature as _Feature
-    from entry.models.user.model import User as _User
 
     user = _related.ForeignKey(
-        _User,
+        'entry.User',
         on_delete=_deletion.CASCADE,
         verbose_name="Пользователь",
         null=False,
@@ -16,7 +14,7 @@ class Progress(_Model):
     )
 
     feature = _related.ForeignKey(
-        _Feature,
+        'entry.Feature',
         on_delete=_deletion.CASCADE,
         verbose_name="Фича",
         null=False,

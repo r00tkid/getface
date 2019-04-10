@@ -1,6 +1,5 @@
 from rest_framework.permissions import IsAuthenticated
-from employee.models import Employee
-from company.models import Company
+from holding.models import Company, Employee
 from app.base import exceptions
 
 
@@ -13,14 +12,8 @@ class CanManageCompany(IsAuthenticated):
         user = request.user
 
         if 'POST' != request.method or data.get('company_id', False):
-            try:
-                company = Company.model().objects.get(pk=data.get('company_id'))
-            except:
-                raise exceptions.APIException({
-                    'detail': "Company with id:[%s] not found." % data.get('company_id'),
-                }, 404)
-
-            manager = Employee.model.objects.filter(user=user, company_id=data.get('company_id')).first()
+            company = Company.get_by_id(data.get('company_id'))
+            manager = Employee.objects.filter(user=user, company=company).first()
 
             is_owner = user.id == company.owner_id
             is_manager = manager and manager.is_manager and not manager.is_fired
@@ -43,10 +36,10 @@ class CanManageEmployees(CanManageCompany):
                 raise exceptions.NotFound
 
             try:
-                Employee.model().objects.get(pk=data.get('employee_id'), company_id=data.get('company_id'))
+                Employee.objects.get(pk=data.get('employee_id'), company_id=data.get('company_id'))
             except:
                 raise exceptions.APIException({
-                    'detail': "Employee with id:[%s] not found." % data.get('employee_id'),
+                    'detail': "Employee with id:[%s] not found or company is wrong." % data.get('employee_id'),
                 }, 404)
 
         if 'RESTORE' == request.method:
@@ -54,7 +47,7 @@ class CanManageEmployees(CanManageCompany):
                 raise exceptions.NotFound
 
             try:
-                Employee.model.all.get(pk=data.get('employee_id'), company_id=data.get('company_id'))
+                Employee.all.get(pk=data.get('employee_id'), company_id=data.get('company_id'))
             except:
                 raise exceptions.APIException({
                     'detail': "Employee with id:[%s] not found." % data.get('employee_id'),

@@ -13,9 +13,8 @@ class Department(_Model):
         blank=False,
     )
 
-    from holding.models import Company as _Company
     company = _related.ForeignKey(
-        _Company,
+        'holding.Company',
         on_delete=_deletion.CASCADE,
         null=False,
         blank=False,

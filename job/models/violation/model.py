@@ -6,9 +6,8 @@ from django.db.models import deletion as _deletion
 
 
 class Violation(_Model):
-    from holding.models.employee.model import Employee as _Employee
     employee = _related.ForeignKey(
-        _Employee,
+        'holding.Employee',
         on_delete=_deletion.SET_NULL,
         null=True,
         blank=False,  # For admin panel?
@@ -40,7 +39,7 @@ class Violation(_Model):
     def employee_fullname(self):
         return "%s %s" % (self.employee.first_name, self.employee.last_name)
 
-    employee_fullname.short_description = "Сотрудник"
+    employee_fullname.fget.short_description = "Сотрудник"
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if self.timezone is None:

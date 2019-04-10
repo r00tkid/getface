@@ -79,8 +79,16 @@ class SoftDeletion(__Model):
 
 class Model(TimeStumps, SoftDeletion):
 
-    def get(self):
-        pass
+    @classmethod
+    def get_by_id(cls, model_id, raise_exception=True):
+        from .exceptions import NotFound
+
+        model_obj = cls.objects.filter(pk=model_id).first()
+
+        if not model_obj and raise_exception:
+            raise NotFound()
+
+        return model_obj
 
     class Meta:
         abstract = True

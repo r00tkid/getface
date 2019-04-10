@@ -24,9 +24,8 @@ class Employee(_Model):
         blank=True,
     )
 
-    from holding.models import Company as _Company
     company = _related.ForeignKey(
-        _Company,
+        'holding.Company',
         on_delete=_deletion.CASCADE,
         verbose_name="Компания",
         null=False,
@@ -91,18 +90,16 @@ class Employee(_Model):
         blank=True,
     )
 
-    from entry.models import User as _User
     user = _related.ForeignKey(
-        _User,
+        'entry.User',
         on_delete=_deletion.CASCADE,
         verbose_name="Физический пользователь",
         null=True,
         blank=True,
     )
 
-    from holding.models import Department as _Department
     department = _related.ForeignKey(
-        _Department,
+        'holding.Department',
         on_delete=_deletion.SET_NULL,
         default=None,
         null=True,
@@ -110,9 +107,8 @@ class Employee(_Model):
         related_name="employees",
     )
 
-    from holding.models import Position as _Position
     position = _related.ForeignKey(
-        _Position,
+        'holding.Position',
         on_delete=_deletion.SET_NULL,
         default=None,
         null=True,
