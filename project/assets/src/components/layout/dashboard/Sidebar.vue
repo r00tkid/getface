@@ -70,6 +70,7 @@
                 items: [
                     {title: 'Dashboard', icon: 'dashboard', name: 'dashboard.main'},
                     {title: 'Cameras', icon: 'camera', name: 'dashboard.cameras'},
+                    {title: 'Client', icon: 'user', name: 'dashboard.client'},
                 ],
                 mini: true,
                 right: null,

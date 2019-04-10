@@ -52,12 +52,12 @@ const router = new Router({
                     name: 'dashboard.cameras',
                     component: () => import('../views/Cameras'),
                 },
+                {
+                    path: 'client',
+                    name: 'dashboard.client',
+                    component: () => import('../views/Client'),
+                },
             ]
-        },
-        {
-            path: '/ghost',
-            name: 'ghost',
-            component: () => import('../views/Ghost'),
         },
     ],
 });
