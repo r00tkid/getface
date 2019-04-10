@@ -1,11 +1,10 @@
+from holding.models import Employee, Company, CompanyExtendedSerializer  # Check
 from rest_framework.decorators import api_view, permission_classes
 from app.base.exceptions import UnprocessableEntity, APIException
-from entry.models import User, UserExtendedSerializer, get_user as _get_user
+from entry.models import User, UserExtendedSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from employee.models import Employee  # Check
 from django.db.models.query import Q
-from company.models import Company  # Check
 from rest_framework import status
 from django.conf import settings
 from app.mail import Sandman
@@ -25,8 +24,8 @@ def _user_response(user, with_token=False, with_companies=False, detail="OK"):
         token = user.get_token()
 
     if with_companies:
-        companies = Company.model.objects.filter(Q(owner=user) | Q(employee__user=user).add(Q(employee__is_fired=False), Q.AND).add(Q(employee__is_active=True), Q.AND))
-        serializer = Company.serializers.extended(instance=companies, many=True).add_rights(user)
+        companies = Company.objects.filter(Q(owner=user) | Q(employee__user=user).add(Q(employee__is_fired=False), Q.AND).add(Q(employee__is_active=True), Q.AND))
+        serializer = CompanyExtendedSerializer(instance=companies, many=True).add_rights(user)
         companies = serializer.data
 
     return Response({
@@ -45,17 +44,18 @@ def self_info(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def sign_up(request):
-    validator = User.validators.create(data=request.data)
-
-    if not validator.validate():
-        raise UnprocessableEntity({
-            'detail': 'Data has invalid fields.',
-            'valid': False,
-            'errors': validator.errors,
-        }, status.HTTP_422_UNPROCESSABLE_ENTITY)
+    # ToDo: this
+    # validator = User.validators.create(data=request.data)
+    #
+    # if not validator.validate():
+    #     raise UnprocessableEntity({
+    #         'detail': 'Data has invalid fields.',
+    #         'valid': False,
+    #         'errors': validator.errors,
+    #     }, status.HTTP_422_UNPROCESSABLE_ENTITY)
 
     debug = {}
-    info = validator.data
+    info = request.data
 
     user = User(**{
         'username': info.get('username'),
@@ -94,20 +94,21 @@ def sign_up(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def employee_sign_up(request):
-    validator = Employee.validators.create(data=request.data)
+    # ToDo: this
+    # validator = Employee.validators.create(data=request.data)
+    #
+    # if not validator.validate():
+    #     return Response({
+    #         'valid': False,
+    #         'errors': validator.errors,
+    #     }, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-    if not validator.validate():
-        return Response({
-            'valid': False,
-            'errors': validator.errors,
-        }, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-
-    data = validator.data
+    data = request.data
 
     try:
-        employee = Employee.model.objects.get(auth_key=data.get('uuid'))
+        employee = Employee.objects.get(auth_key=data.get('uuid'))
         user = employee.user
-    except Employee.model().DoesNotExist as e:
+    except Employee.DoesNotExist as e:
         return Response({
             'valid': False,
             'message': 'Did you have been invited successfully?',
@@ -147,8 +148,8 @@ def employee_sign_up(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def activate_account(request):
-    data: dict = request.data
-    user = _get_user(int(data.get('user_id')))
+    data = request.data
+    user = User.get_by_id(int(data.get('user_id')))
 
     if not user.check_activation(data.get('user_key')) or user.is_active:
         return Response({
@@ -209,8 +210,8 @@ def reset_password(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def reset_confirm(request):
-    data: dict = request.data
-    user = _get_user(int(data.get('user_id')))
+    data = request.data
+    user = User.get_by_id(int(data.get('user_id')))
 
     if not user.check_activation(data.get('user_key')) or not user.is_active:
         return Response({
@@ -239,7 +240,7 @@ def resend_mail_invitation(request):
         email = request.data.get('email')
         user = User.objects.filter(email=email).first()
     elif request.data.get('user_id'):
-        user = _get_user(int(request.data.get('user_id')))
+        user = User.get_by_id(int(request.data.get('user_id')))
     else:
         return Response({
             'detail': 'Data is wrong.',

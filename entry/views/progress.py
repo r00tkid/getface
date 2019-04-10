@@ -1,4 +1,4 @@
-from entryentication.models import Progress, get_feature_by_id as _get_feature
+from entry.models import Progress, Feature
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -6,9 +6,9 @@ from rest_framework import status
 
 @api_view(['GET'])
 def add_progress(request, feature_id):
-    Progress.model(
+    Progress(
         user=request.user,
-        feature=_get_feature(feature_id),
+        feature=Feature.get_by_id(feature_id),
     ).save()
 
     return Response({
@@ -18,9 +18,9 @@ def add_progress(request, feature_id):
 
 @api_view(['DELETE'])
 def remove_progress(request, feature_id):
-    Progress.model().objects.get(
+    Progress.objects.get(
         user=request.user,
-        feature=_get_feature(feature_id)
+        feature=Feature.get_by_id(feature_id)
     ).delete()
 
     return Response({

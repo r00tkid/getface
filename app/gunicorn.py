@@ -1,18 +1,5 @@
 import os
-
-# [IMPORT] settings
-from importlib.util import spec_from_loader, module_from_spec
-from importlib.machinery import SourceFileLoader
-
-spec = spec_from_loader(
-    "settings",
-    SourceFileLoader(
-        "settings",
-        os.path.join(os.path.dirname(os.path.abspath(__file__)), 'settings.py')
-    ))
-settings = module_from_spec(spec)
-spec.loader.exec_module(settings)
-# [END] settings
+from django.conf import settings
 
 chdir = settings.BASE_DIR
 worker_class = 'alternative'

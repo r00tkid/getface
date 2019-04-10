@@ -7,12 +7,12 @@ class Rate(_Model):
 
     name = _field.CharField(
         "Название",
-        max_length=256,
+        max_length=128,
         null=False,
         blank=False,
     )
 
-    description = _field.CharField(
+    description = _field.TextField(
         "Описание",
         null=False,
         blank=False,

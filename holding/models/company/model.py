@@ -45,6 +45,7 @@ class Company(_Model):
         verbose_name="Владелец",
         on_delete=_deletion.DO_NOTHING,
         null=False,
+        related_name="owner",
     )
 
     discount = _related.ForeignKey(

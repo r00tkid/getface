@@ -162,7 +162,7 @@ class Development(Configuration):
     }
 
     MIDDLEWARE = [
-        'index.middleware.SimpleMiddleware',
+        'app.middleware.SimpleMiddleware',
         'django.middleware.locale.LocaleMiddleware',
         'django.middleware.security.SecurityMiddleware',
         'django.middleware.common.CommonMiddleware',
@@ -172,7 +172,7 @@ class Development(Configuration):
         'django.contrib.messages.middleware.MessageMiddleware',
     ]
 
-    ROOT_URLCONF = 'index.urls'
+    ROOT_URLCONF = 'app.urls'
 
     TEMPLATES = [
         {
@@ -198,7 +198,7 @@ class Development(Configuration):
         'page': 'page',  # For pages that are not in SPA
     }
 
-    WSGI_APPLICATION = 'index.wsgi.get_face'
+    WSGI_APPLICATION = 'app.wsgi.get_face'
 
     # Database
     # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
