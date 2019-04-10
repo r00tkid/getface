@@ -41,7 +41,6 @@ class Company(_Model):
     )
 
     from holding.models.employee.model import Employee as _Employee
-
     owner = _related.ForeignKey(
         _Employee,  # Changed company owner from user to employee because of the system flow
         verbose_name="Владелец",
@@ -50,7 +49,6 @@ class Company(_Model):
     )
 
     from pay.models.discount.model import Discount as _Discount
-
     discount = _related.ForeignKey(
         _Discount,
         on_delete=_deletion.SET_NULL,

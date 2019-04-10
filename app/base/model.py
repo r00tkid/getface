@@ -78,5 +78,9 @@ class SoftDeletion(__Model):
 
 
 class Model(TimeStumps, SoftDeletion):
+
+    def get(self):
+        pass
+
     class Meta:
         abstract = True

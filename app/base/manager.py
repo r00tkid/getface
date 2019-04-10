@@ -8,7 +8,7 @@ class SoftDeletionManager(__Manager):
         super(SoftDeletionManager, self).__init__(*args, **kwargs)
 
     def get_queryset(self):
-        from index.base.query import SoftDeletionQuerySet
+        from app.base.query import SoftDeletionQuerySet
 
         if self.dead_only:
             return SoftDeletionQuerySet(self.model).exclude(deleted_at=None)

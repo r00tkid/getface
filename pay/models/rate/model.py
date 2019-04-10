@@ -1,43 +1,38 @@
 from app.base.model import Model as _Model
-from django.db.models import fields as _field
-from app.fields import timezone as _timezone
-from django.db.models.fields import related as _related
-from django.db.models import deletion as _deletion
 
 
-class Rate(Base.models.Model):
-    from datetime import timedelta
+class Rate(_Model):
+    from django.db.models import fields as _field
+    from datetime import timedelta as _td
 
-    field = Base.models.Model.field
-
-    name = field.char(
+    name = _field.CharField(
         "Название",
         max_length=256,
         null=False,
         blank=False,
     )
 
-    description = field.text(
+    description = _field.CharField(
         "Описание",
         null=False,
         blank=False,
     )
 
-    per_month = field.float(
+    per_month = _field.FloatField(
         "Цена за месяц",
         null=False,
         blank=False,
     )
 
-    is_archived = field.boolean(
+    is_archived = _field.BooleanField(
         "Архивный",
         null=False,
         default=False,
     )
 
-    lifetime = field.duration(
+    lifetime = _field.DurationField(
         "Время действия тарифа",
-        default=timedelta(days=30)
+        default=_td(days=30),
     )
 
     def __str__(self):

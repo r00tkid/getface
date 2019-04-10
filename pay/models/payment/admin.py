@@ -1,6 +1,5 @@
 from django.contrib.admin import ModelAdmin as _Admin
-from django.utils.html import format_html as _format
 
 
-class PaymentAdmin(Base.Admin):
+class PaymentAdmin(_Admin):
     list_display = ('company', 'user', 'rate', 'discount',)

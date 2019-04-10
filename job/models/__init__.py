@@ -1,11 +1,22 @@
-from job.models.schedule.model import Schedule
-from job.models.schedule.serializers import ScheduleSerializer
-from job.models.schedule.admin import ScheduleAdmin
+# All imports here is for Django to see those models and for better use experience
+from job.models.schedule import Schedule, ScheduleAdmin, ScheduleSerializer
+from job.models.logbook import Logbook, LogbookAdmin, LogbookSerializer
+from job.models.violation import Violation, ViolationAdmin, ViolationSerializer
 
-from job.models.sked.model import Sked
-from job.models.sked.serializers import SkedSerializer
-from job.models.sked.admin import SkedAdmin
+# Getters
+from app.base.helpers import get_model as __get
 
-from job.models.volation.model import Volation
-from job.models.volation.serializers import VolationSerializer
-from job.models.volation.admin import VolationAdmin
+
+@__get(model=Schedule)
+def get_schedule(id, raise_exception=True, obj=None) -> Schedule:
+    return obj
+
+
+@__get(model=Logbook)
+def get_logbook(id, raise_exception=True, obj=None) -> Logbook:
+    return obj
+
+
+@__get(model=Violation)
+def get_violation(id, raise_exception=True, obj=None) -> Violation:
+    return obj

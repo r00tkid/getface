@@ -1,15 +1,23 @@
-from pay.models.payment.model import Payment
-from pay.models.payment.serializers import PaymentSerializer
-from pay.models.payment.admin import PaymentAdmin
+# All imports here is for Django to see those models and for better use experience
+from pay.models.payment import Payment, PaymentAdmin, PaymentSerializer
+from pay.models.detail import PaymentDetails, PaymentDetailsAdmin, PaymentDetailsSerializer
+from pay.models.discount import Discount, DiscountAdmin, DiscountSerializer
+from pay.models.rate import Rate, RateAdmin, RateSerializer
 
-from pay.models.detail.model import PaymentDetails
-from pay.models.detail.serializers import PaymentDetailsSerializer
-from pay.models.detail.admin import PaymentDetailsAdmin
+# Getters
+from app.base.helpers import get_model as __get
 
-from pay.models.discount.model import Discount
-from pay.models.discount.serializers import DiscountSerializer
-from pay.models.discount.admin import DiscountAdmin
 
-from pay.models.rate.model import Rate
-from pay.models.rate.serializers import RateSerializer
-from pay.models.rate.admin import RateAdmin
+@__get(model=Payment)
+def get_payment(id, raise_exception=True, obj=None) -> Payment:
+    return obj
+
+
+@__get(model=Discount)
+def get_discount(id, raise_exception=True, obj=None) -> Discount:
+    return obj
+
+
+@__get(model=Rate)
+def get_rate(id, raise_exception=True, obj=None) -> Rate:
+    return obj

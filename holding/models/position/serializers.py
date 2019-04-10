@@ -1,10 +1,9 @@
-from rest_framework.serializers import SerializerMethodField as _Method
 from rest_framework.serializers import ModelSerializer as _Serializer
 
-from .model import Position
 
-
-class PositionSerializer(Base.Serializer):
+class PositionSerializer(_Serializer):
     class Meta:
-        model = Position
+        from .model import Position as _Position
+
+        model = _Position
         fields = ('name', 'company', 'id')

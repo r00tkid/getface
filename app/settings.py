@@ -1,5 +1,4 @@
 import os, datetime
-
 from configurations import Configuration
 
 
@@ -56,7 +55,7 @@ class Development(Configuration):
         'rest_framework',
         'rest_framework_jwt',
 
-        'auth.apps.AuthenticationConfig',
+        'entry.apps.AuthenticationConfig',
         'holding.apps.HoldingConfig',
         'job.apps.JobConfig',
         'pay.apps.PaymentConfig',

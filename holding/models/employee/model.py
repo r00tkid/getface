@@ -25,13 +25,13 @@ class Employee(_Model):
     )
 
     from holding.models import Company as _Company
-
     company = _related.ForeignKey(
         _Company,
         on_delete=_deletion.CASCADE,
         verbose_name="Компания",
         null=False,
         blank=False,
+        related_name="employees",
     )
 
     is_manager = _field.BooleanField(
@@ -45,7 +45,6 @@ class Employee(_Model):
     )
 
     import uuid as _uuid
-
     auth_key = _field.UUIDField(
         verbose_name="Уникальный авторизационный ключ",
         editable=False,
@@ -92,8 +91,7 @@ class Employee(_Model):
         blank=True,
     )
 
-    from auth.models import User as _User
-
+    from entry.models import User as _User
     user = _related.ForeignKey(
         _User,
         on_delete=_deletion.CASCADE,
@@ -103,23 +101,23 @@ class Employee(_Model):
     )
 
     from holding.models import Department as _Department
-
     department = _related.ForeignKey(
         _Department,
         on_delete=_deletion.SET_NULL,
         default=None,
         null=True,
         blank=True,
+        related_name="employees",
     )
 
     from holding.models import Position as _Position
-
     position = _related.ForeignKey(
         _Position,
         on_delete=_deletion.SET_NULL,
         default=None,
         null=True,
         blank=True,
+        related_name="employees",
     )
 
     def clear_face_id(self):

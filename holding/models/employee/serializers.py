@@ -1,8 +1,6 @@
 from rest_framework.serializers import SerializerMethodField as _Method
 from rest_framework.serializers import ModelSerializer as _Serializer
 
-from .model import Employee
-
 
 class EmployeeSerializer(_Serializer):
     time_zone = _Method
@@ -11,7 +9,9 @@ class EmployeeSerializer(_Serializer):
         return model.timezone.zone
 
     class Meta:
-        model = Employee
+        from .model import Employee as _Employee
+
+        model = _Employee
         fields = ('id', 'first_name', 'last_name', 'email', 'time_zone',)
 
 
@@ -36,5 +36,7 @@ class EmployeeExtendedSerializer(_Serializer):
         return bool(model.user_id)
 
     class Meta:
-        model = Employee
+        from .model import Employee as _Employee
+
+        model = _Employee
         fields = ('id', 'first_name', 'last_name', 'is_fired', 'is_manager', 'email', 'physical', 'time_zone',)

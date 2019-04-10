@@ -1,10 +1,9 @@
-from rest_framework.serializers import SerializerMethodField as _Method
 from rest_framework.serializers import ModelSerializer as _Serializer
 
-from .model import Discount
 
-
-class DiscountSerializer(Base.Serializer):
+class DiscountSerializer(_Serializer):
     class Meta:
-        model = Discount
+        from .model import Discount as _Discount
+
+        model = _Discount
         fields = ('id', 'name', 'percent',)
