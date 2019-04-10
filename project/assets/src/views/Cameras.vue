@@ -1,14 +1,17 @@
 <template>
   <v-container fluid class="cameraPageContainer">
     <v-layout>
-      <v-flex lg6>
-        <v-btn color="primary">
+      <v-flex class="createCamera-box" lg6>
+        <v-btn color="primary" @click="isCameraModal = !isCameraModal">
           <v-icon class="mr-2">add_circle</v-icon>Добавить камеру
         </v-btn>
         <v-btn outline color="gray">Статистика</v-btn>
+        <div v-show="isCameraModal">
+          <add-camera></add-camera>
+        </div>
       </v-flex>
       <v-flex lg6 class="changeViewContainer">
-        <v-btn dark color="get-orange">
+        <v-btn @click="isCreateViewModal = !isCreateViewModal" dark color="get-orange">
           <v-icon class="mr-2">add_circle</v-icon>Создать зону видимости
         </v-btn>
         <v-btn outline color="gray" @click="hideViews = !hideViews">Вид</v-btn>
@@ -43,13 +46,16 @@
             </div>
           </div>
         </transition>
+        <div v-show="isCreateViewModal">
+          <create-view></create-view>
+        </div>
       </v-flex>
     </v-layout>
     <v-layout class="mt-2">
       <v-flex lg3 d-flex class="camerasListContainer">
         <div class="camerasList">
           <div class="searchCamera">
-            <v-text-field label="Solo" solo></v-text-field>
+            <v-text-field hide-details label="Search" solo></v-text-field>
             <v-btn class="ma-0" color="primary">
               <v-icon>search</v-icon>
             </v-btn>
@@ -63,22 +69,24 @@
       </v-flex>
       <v-flex lg9 class="pl-2">
         <div class="videoGrid" :class="activeView">
-          <div class="videoGrid-item videoGrid-item--first"></div>
-          <div class="videoGrid-item videoGrid-item--second"></div>
-          <div class="videoGrid-item"></div>
-          <div class="videoGrid-item"></div>
-          <div class="videoGrid-item"></div>
-          <div class="videoGrid-item"></div>
-          <div class="videoGrid-item"></div>
-          <div class="videoGrid-item"></div>
-          <div class="videoGrid-item"></div>
-          <div class="videoGrid-item"></div>
-          <div class="videoGrid-item"></div>
-          <div class="videoGrid-item"></div>
-          <div class="videoGrid-item"></div>
-          <div class="videoGrid-item"></div>
-          <div class="videoGrid-item"></div>
-          <div class="videoGrid-item"></div>
+          <template v-for="(camera, i) in cameras">
+            <div :key="i" :class="{'videoGrid-item--first':  i == 0, 'videoGrid-item--second':  i == 1}" class="videoGrid-item">
+              <div class="cameraOverlay">
+                <div class="cameraOverlay-top">
+                  <div>
+                    <h4>Camera №{{camera.id + 1}}</h4>
+                    <v-icon class="removeCamera">close</v-icon>
+                  </div>
+                </div>
+                <div class="cameraOverlay-bottom">
+                  <v-btn color="primary">Изменить</v-btn>
+                  <v-btn color="primary">
+                    <v-icon>zoom_out_map</v-icon>
+                  </v-btn>
+                </div>
+              </div>
+            </div>
+          </template>
         </div>
       </v-flex>
     </v-layout>
@@ -86,12 +94,58 @@
 </template>
 
 <script>
+import AddCamera from "../components/cameras/AddCamera";
+import CreateView from "../components/cameras/CreateView";
 export default {
+  components: {
+    AddCamera,
+    CreateView
+  },
   name: "Cameras",
   data() {
     return {
       class: 1,
-      hideViews: true
+      hideViews: true,
+      isCameraModal: false,
+      isCreateViewModal: false,
+      cameras: [
+        {
+          id: 0
+        },
+        {
+          id: 1
+        },
+        {
+          id: 2
+        },
+        {
+          id: 3
+        },
+        {
+          id: 4
+        },
+        {
+          id: 5
+        },
+        {
+          id: 6
+        },
+        {
+          id: 7
+        },
+        {
+          id: 8
+        },
+        {
+          id: 9
+        },
+        {
+          id: 10
+        },
+        {
+          id: 11
+        }
+      ]
     };
   },
   methods: {
@@ -108,10 +162,17 @@ export default {
 </script>
 
 <style>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .3s;
+.changeViewContainer {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
 }
-.fade-enter, .fade-leave-to{
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 .v-text-field.v-text-field--solo .v-input__control {
@@ -138,9 +199,7 @@ export default {
   right: 26px;
   top: 0;
 }
-.changeViewContainer {
-  display: flex;
-  justify-content: flex-end;
+.createCamera-box {
   position: relative;
 }
 .viewHiddenBox {
@@ -173,6 +232,7 @@ export default {
   transform: scale(1.1);
 }
 .camerasList {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -203,6 +263,9 @@ export default {
   display: flex;
   min-height: 50px;
 }
+.searchCamera button {
+  height: 40px;
+}
 .videoListBox {
   min-height: 150px;
   width: 100%;
@@ -223,9 +286,43 @@ export default {
   overflow-y: auto;
   display: grid;
   grid-gap: 10px;
+  overflow-x: hidden;
 }
 .videoGrid-item {
   background-color: #ccc;
+  position: relative;
+}
+.cameraOverlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s;
+}
+.cameraOverlay:hover {
+  opacity: 1;
+}
+.cameraOverlay-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+.cameraOverlay-top {
+  display: flex;
+  position: relative;
+  text-align: center;
+  justify-content: center;
+  padding: 10px 0;
+  background-color: rgba(256, 256, 256, 0.6);
+}
+.removeCamera {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: red !important;
+  cursor: pointer;
 }
 .view1 {
   grid-template-columns: 1fr 1fr;

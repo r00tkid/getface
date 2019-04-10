@@ -72,6 +72,11 @@ const router = new Router({
                     name: 'dashboard.analitics',
                     component: () => import('../views/Analitics'),
                 },
+                {
+                    path: 'client',
+                    name: 'dashboard.client',
+                    component: () => import('../views/Client'),
+                },
             ]
         },
         {
