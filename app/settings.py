@@ -55,11 +55,12 @@ class Development(Configuration):
         'rest_framework',
         'rest_framework_jwt',
 
+        'common.apps.CommonConfig',
         'entry.apps.AuthenticationConfig',
         'holding.apps.HoldingConfig',
         'job.apps.JobConfig',
         'pay.apps.PaymentConfig',
-        # 'cam.apps.CameraConfig',
+        'cam.apps.CameraConfig',
     ]
 
     AUTH_USER_MODEL = 'entry.User'
@@ -162,7 +163,6 @@ class Development(Configuration):
     }
 
     MIDDLEWARE = [
-        'app.middleware.SimpleMiddleware',
         'django.middleware.locale.LocaleMiddleware',
         'django.middleware.security.SecurityMiddleware',
         'django.middleware.common.CommonMiddleware',
@@ -207,7 +207,7 @@ class Development(Configuration):
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'get_face_stage',
-            'HOST': 'get-face-stage-db',
+            'HOST': 'get-face-db',
             'PORT': '5432',
             'USER': 'root',
             'PASSWORD': '123456',

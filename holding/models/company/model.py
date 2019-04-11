@@ -75,6 +75,8 @@ class Company(_Model):
     def rate(self):
         return self.last_payment.details.rate if self.last_payment else None
 
+    rate.fget.short_description = u'Тариф'
+
     @property
     def time_left(self):
         return self.last_payment.time_left if self.last_payment else -1

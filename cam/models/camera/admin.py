@@ -1,2 +1,5 @@
 from django.contrib.admin import ModelAdmin as _Admin
-from django.utils.html import format_html as _format
+
+
+class CameraAdmin(_Admin):
+    list_display = ("name", "ip_address", "is_active", "company", "zone", "timezone")

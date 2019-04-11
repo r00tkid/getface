@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   getface_db:
-    container_name: get-face-stage-db
+    container_name: get-face-db
     domainname: get-face.com
     hostname: database
     image: postgres:11
@@ -26,6 +26,10 @@ services:
     container_name: get-face-stage
     domainname: get-face.com
     hostname: stage
+    environment:
+      - DJANGO_SETTINGS_MODULE=app.settings
+      - DJANGO_ENVIRONMENT_MOD=dev
+      - DJANGO_CONFIGURATION=Development
     volumes:
       - ./:/var/www/get-face
       - ./project/override/gunicorn:/usr/local/bin/gunicorn

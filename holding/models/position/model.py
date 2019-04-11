@@ -14,9 +14,9 @@ class Position(_Model):
 
     company = _related.ForeignKey(
         'holding.Company',
-        on_delete=_deletion.CASCADE,
-        null=False,
-        blank=False,
+        on_delete=_deletion.SET_NULL,
+        null=True,
+        blank=True,
         related_name="positions",
     )
 

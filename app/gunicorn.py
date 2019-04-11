@@ -1,16 +1,23 @@
 import os
-from django.conf import settings
 
-chdir = settings.BASE_DIR
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LOGS_DIR = os.path.abspath(os.path.join(BASE_DIR, 'project', 'log'))
+
+if os.environ.get('DJANGO_ENVIRONMENT_MOD') == 'dev':
+    DEBUG = True
+else:
+    DEBUG = False
+
+chdir = BASE_DIR
 worker_class = 'alternative'
 backlog = 2048
 
-if settings.DEBUG:
+if DEBUG:
     bind = '0.0.0.0:8091'
 else:
     bind = '0.0.0.0:8090'
 
-workers = 1 if settings.DEBUG else (2 * os.cpu_count() + 1)
+workers = 1 if DEBUG else (2 * os.cpu_count() + 1)
 worker_connections = 1000
 timeout = 30
 keepalive = 2
@@ -25,8 +32,7 @@ max_requests_jitter = 1500
 daemon = False
 
 raw_env = [
-    'DJANGO_SECRET_KEY=%s' % settings.SECRET_KEY,
-    'PROJECT_ROOT=%s' % settings.BASE_DIR,
+    'PROJECT_ROOT=%s' % BASE_DIR,
 ]
 
 pidfile = None
@@ -35,10 +41,9 @@ user = None
 group = None
 tmp_upload_dir = None
 
-errorlog = os.path.join(settings.LOGS_DIR, 'gunicorn.debug.log') if settings.DEBUG \
-    else os.path.join(settings.LOGS_DIR, 'gunicorn.error.log')
-accesslog = os.path.join(settings.LOGS_DIR, 'gunicorn.access.log')
-loglevel = 'debug' if settings.DEBUG else 'info'
+errorlog = os.path.join(LOGS_DIR, 'gunicorn.debug.log') if DEBUG else os.path.join(LOGS_DIR, 'gunicorn.error.log')
+accesslog = os.path.join(LOGS_DIR, 'gunicorn.access.log')
+loglevel = 'debug' if DEBUG else 'info'
 access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
 
 proc_name = 'gunicorn'

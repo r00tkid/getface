@@ -1,2 +1,5 @@
 from django.contrib.admin import ModelAdmin as _Admin
-from django.utils.html import format_html as _format
+
+
+class VideoAdmin(_Admin):
+    list_display = ("id", "filename", "start", "duration", "camera", "timezone")

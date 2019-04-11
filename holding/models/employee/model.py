@@ -26,10 +26,10 @@ class Employee(_Model):
 
     company = _related.ForeignKey(
         'holding.Company',
-        on_delete=_deletion.CASCADE,
+        on_delete=_deletion.SET_NULL,
         verbose_name="Компания",
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
         related_name="employees",
     )
 

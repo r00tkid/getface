@@ -27,6 +27,8 @@ services:
     domainname: get-face.com
     hostname: stage
     environment:
+      - DJANGO_SETTINGS_MODULE=app.settings
+      - DJANGO_ENVIRONMENT_MOD=prod
       - DJANGO_CONFIGURATION=Production
     volumes:
       - ./:/var/www/get-face
