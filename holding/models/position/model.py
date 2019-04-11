@@ -36,9 +36,8 @@ class PositionToDepartment(_Model):
         blank=False,
     )
 
-    from holding.models import Department as _Department
     department = _related.ForeignKey(
-        _Department,
+        'holding.Department',
         on_delete=_deletion.CASCADE,
         null=False,
         blank=False,
