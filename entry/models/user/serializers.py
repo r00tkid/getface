@@ -3,6 +3,77 @@ from rest_framework.serializers import ModelSerializer as _Serializer
 from .model import User as _User
 
 
+class UserRegisterSerializer(_Serializer):
+    from rest_framework import serializers as _se
+    from rest_framework import validators as _val
+
+    email = _se.EmailField(
+        required=True,
+        allow_null=False,
+        allow_blank=False,
+        min_length=6,
+        source='user.email',
+        validators=[
+            _val.UniqueValidator(queryset=_User.objects.all())
+        ]
+    )
+
+    phone = _se.IntegerField(
+        required=True,
+        allow_null=False,
+        source='user.phone',
+        validators=[
+            _val.UniqueValidator(queryset=_User.objects.all())
+        ]
+    )
+
+    password = _se.CharField(
+        min_length=6,
+        write_only=True,
+    )
+
+    first_name = _se.CharField(
+        min_length=3,
+    )
+
+    last_name = _se.CharField(
+        min_length=3,
+    )
+
+    from django.db import transaction as _trans
+
+    @_trans.atomic()
+    def create(self, validated_data):
+        from django.conf import settings
+
+        user = _User.objects.create(**validated_data)
+        user.set_password(validated_data['password'])
+
+        if settings.DEBUG:
+            user.is_active = True
+
+        user.save()
+
+        if not settings.DEBUG:
+            import os
+            from app.mail import Sandman
+
+            Sandman(
+                mail_from=settings.EMAIL_ADDRESSES.get('main'),
+                mail_to=user.email,
+                subject="Registration",
+                template='user%sregister' % os.sep,
+                context={
+                    'user': user,
+                }
+            ).start()
+
+        return user
+
+    class Meta:
+        model = _User
+
+
 class UserSerializer(_Serializer):
     time_zone = _Method()
 
