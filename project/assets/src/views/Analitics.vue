@@ -81,7 +81,7 @@
             <analitic-line-chart :colors="colorsChart"></analitic-line-chart>
           </v-flex>
           <v-flex class="mt-3 ml-2" xs3>
-            <analitic-stat :colors="colorsChart"></analitic-stat>
+            <analitic-stat @toggleseries="toggleSeries($event)" :colors="colorsChart"></analitic-stat>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -294,6 +294,11 @@ export default {
     };
   },
   methods: {
+    toggleSeries(e){
+      console.log('analitic');
+      
+      this.seriesIndex = e;
+    },
     addAnnotation() {
       if (this.textAreaVal.length == 0) {
         this.areaError = true;

@@ -7,18 +7,33 @@
             <h3 class="mb-2">Профиль</h3>
             <v-divider class="mb-2"></v-divider>
             <small>E-mail</small>
-            <v-text-field class="mb-2" hide-details v-model="email" solo></v-text-field>
+            <v-text-field readonly class="mb-2" hide-details v-model="profile.email" solo></v-text-field>
             <small>Название компании</small>
             <v-text-field
               hide-details
               class="editable-input mb-2"
-              v-model="company"
+              v-model="profile.company.value"
               solo
               type="text"
+              :readonly="profile.company.readonly"
             >
               <template slot="append">
-                <v-btn class="input-btn" fab dark small color="primary">
-                  <v-icon dark>edit</v-icon>
+                <v-btn
+                  @click="changeData($event)"
+                  data-btn="company"
+                  class="input-btn"
+                  fab
+                  dark
+                  small
+                  color="primary"
+                >
+                  <v-icon v-if="profile.company.readonly" dark>
+                    edit
+                  </v-icon>
+                  <v-icon v-else dark>
+                    save
+                  </v-icon>
+                  
                 </v-btn>
               </template>
             </v-text-field>
@@ -26,14 +41,28 @@
             <v-text-field
               hide-details
               class="editable-input mb-3"
-              v-model="value"
+              v-model="profile.phone.value"
               mask="+# ### ### ####"
               solo
               type="text"
+              :readonly="profile.phone.readonly"
             >
               <template slot="append">
-                <v-btn class="input-btn" fab dark small color="primary">
-                  <v-icon dark>edit</v-icon>
+                <v-btn
+                  @click="changeData($event)"
+                  data-btn="phone"
+                  class="input-btn"
+                  fab
+                  dark
+                  small
+                  color="primary"
+                >
+                  <v-icon v-if="profile.phone.readonly" dark>
+                    edit
+                  </v-icon>
+                  <v-icon v-else dark>
+                    save
+                  </v-icon>
                 </v-btn>
               </template>
             </v-text-field>
@@ -78,7 +107,10 @@
             </div>
           </v-flex>
           <v-flex>
-              <v-btn class="fullWidthBtn mt-3 deleteProfile" large color="primary">Удалить профиль и все<br> связанные с ним данные</v-btn>
+            <v-btn class="fullWidthBtn mt-3 deleteProfile" large color="primary">
+              Удалить профиль и все
+              <br>связанные с ним данные
+            </v-btn>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -90,9 +122,17 @@ export default {
   name: "Client",
   data() {
     return {
-      email: "test@test.com",
-      value: "70505552234",
-      company: "AntHouse",
+      profile: {
+        email: "test@test.com",
+        phone: {
+          value: "70505552234",
+          readonly: true
+        },
+        company: {
+          value: "AntHouse",
+          readonly: true
+        }
+      },
       changePass: {
         oldPass: "",
         newPass: "",
@@ -102,7 +142,14 @@ export default {
       city: ["Москва", "Минск", "Рига"]
     };
   },
-  methods: {}
+  methods: {
+    changeData(e) {
+      let id = e.target.parentNode.parentNode.getAttribute("data-btn");
+      console.log(this.profile[id]);
+      this.profile[id].readonly = !this.profile[id].readonly;
+      
+    }
+  }
 };
 </script>
 <style scoped>
@@ -150,8 +197,8 @@ export default {
   text-align: left;
   padding: 5px;
 }
-.deleteProfile{
-    height: 50px;
+.deleteProfile {
+  height: 50px;
 }
 </style>
 

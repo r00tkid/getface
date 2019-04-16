@@ -1,5 +1,31 @@
 const Analitic = {
     state: {
+        activeChartLine: [
+            {
+                name: 'Мужчины',
+                selected: true,
+            },
+            {
+                name: 'Женщины',
+                selected: true,
+            },
+            {
+                name: 'Среднее время',
+                selected: true,
+            },
+            {
+                name: 'Количество поcещений',
+                selected: false,
+            },
+            {
+                name: 'Чеки',
+                selected: false,
+            },
+            {
+                name: 'Конверсия',
+                selected: false,
+            },
+        ],
         dataTable: [
             {
                 name: "Камера 1",
@@ -64,7 +90,9 @@ const Analitic = {
         ]
     },
     mutations: {
-
+        changeActiveChartLine(state, index){
+            state.activeChartLine[index].selected = !state.activeChartLine[index].selected;
+        }
     },
     actions: {
 
@@ -73,6 +101,9 @@ const Analitic = {
         getAllDataTable: state => {
             return state.dataTable;
         },
+        getActiveChartLine: state => {
+            return state.activeChartLine;
+        }
     }
 };
 
