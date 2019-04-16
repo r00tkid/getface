@@ -2,7 +2,7 @@
   <div>
     <div class="mainStat-row">
       <div class="checkBoxContainer statCommon">
-        <input class="check" type="checkbox" name="violation1" id="violation1">
+        <input @click="changeChart($event)" v-model="activeChartLine[0].selected" class="check" type="checkbox" name="violation1" id="violation1">
       </div>
       <div
         class="statCheckbox statCommon"
@@ -34,7 +34,7 @@
     </div>
     <div class="mainStat-row">
       <div class="checkBoxContainer statCommon">
-        <input class="check" type="checkbox" name="violation2" id="violation2">
+        <input @click="changeChart($event)" v-model="activeChartLine[1].selected" class="check" type="checkbox" name="violation2" id="violation2">
       </div>
       <div
         class="statCheckbox statCommon"
@@ -66,28 +66,28 @@
     </div>
     <div class="mainStat-row">
       <div class="checkBoxContainer statCommon">
-        <input class="check" type="checkbox" name="violation3" id="violation3">
+        <input @click="changeChart($event)" v-model="activeChartLine[2].selected" class="check" type="checkbox" name="violation3" id="violation3">
       </div>
       <div class="statCheckbox statCommon" :style="{borderColor: colors[2]}">Среднее время</div>
       <div class="statTotal statCommon">45</div>
     </div>
     <div class="mainStat-row">
       <div class="checkBoxContainer statCommon">
-        <input class="check" type="checkbox" name="violation4" id="violation4">
+        <input @click="changeChart($event)"  v-model="activeChartLine[3].selected" class="check" type="checkbox" name="violation4" id="violation4">
       </div>
       <div class="statCheckbox statCommon" :style="{borderColor: colors[3]}">Количество посещений</div>
       <div class="statTotal statCommon">45</div>
     </div>
     <div class="mainStat-row">
       <div class="checkBoxContainer statCommon">
-        <input class="check" type="checkbox" name="violation4" id="violation4">
+        <input @click="changeChart($event)" v-model="activeChartLine[4].selected" class="check" type="checkbox" name="violation4" id="violation4">
       </div>
       <div class="statCheckbox statCommon" :style="{borderColor: colors[4]}">Чеки</div>
       <div class="statTotal statCommon">45</div>
     </div>
     <div class="mainStat-row">
       <div class="checkBoxContainer statCommon">
-        <input class="check" type="checkbox" name="violation4" id="violation4">
+        <input @click="changeChart($event)" v-model="activeChartLine[5].selected" class="check" type="checkbox" name="violation4" id="violation4">
       </div>
       <div class="statCheckbox statCommon" :style="{borderColor: colors[5]}">Конверсия</div>
       <div class="statTotal statCommon">45</div>
@@ -95,6 +95,7 @@
   </div>
 </template>
 <script>
+
 export default {
   props: {
     colors: {
@@ -111,6 +112,16 @@ export default {
     openSelect(e) {
       let id = e.target.getAttribute("data-id");
       this.$set(this.openedSelects, id, !this.openedSelects[id]);
+    },
+    changeChart(e){
+      let index = e.target.id.substr(-1,1);
+      this.$bus.$emit('toggleChart', index - 1);
+      this.$store.commit('changeActiveChartLine', index - 1);
+    }
+  },
+  computed: {
+    activeChartLine(){
+      return this.$store.getters.getActiveChartLine;
     }
   }
 };

@@ -103,8 +103,8 @@ export default {
         },
         yaxis: {
           show: true,
-          showAlways: true,
           max: 100,
+          min: 0,
           tickAmount: 5,
           axisBorder: {
             show: true
@@ -112,31 +112,38 @@ export default {
         },
         tooltip: {
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
-            let date = w.config.series[0].data[dataPointIndex].x;
-            let data = w.config.series;
-            let colors = w.globals.colors;
+            let data = w.config.series.filter(elem => elem.data.length > 0); // get not hiden line data
+            let date = w.config.series[seriesIndex].data[dataPointIndex].x; // get date for title
+            let colors = w.globals.colors.slice(0 ,w.config.series.length); //get colors for our lines
             let div = document.createElement("div");
             let h4 = document.createElement("h4");
             let ul = document.createElement("ul");
+            
+            let filtColors = colors.filter((color,i) => { //get colors for not hidden lines
+              if(w.config.series[i].data.length > 0){
+                return color;
+              }
+            })
+
             h4.innerHTML = `${date}`;
             div.classList.add("lineTooltip");
+
+            // create LI for tooltip 
             for (let i = 0; i < data.length; i++) {
               let li = document.createElement("li");
+              let arrow = '';
               if(dataPointIndex > 0){
-                if(series[i][dataPointIndex] > series[i][dataPointIndex - 1]){
-                  li.innerHTML = `<span class="tooltipCircle" style="background-color:${colors[i]}"></span><p>${data[i].name}:</p><span>100</span><span><small class="valueArrow raise">↑</small>${
-                    series[i][dataPointIndex]
-                  }</span>`;
-                } else {
-                  li.innerHTML = `<span class="tooltipCircle" style="background-color:${colors[i]}"></span><p>${data[i].name}:</p><span>100</span><span><small class="valueArrow fall">↓</small>${
-                    series[i][dataPointIndex]
-                  }</span>`;
+                if(series[i][dataPointIndex] > series[i][dataPointIndex - 1]){ //if previous data higher than current
+                  arrow = '<small class="valueArrow raise">↑</small>';
+                } else { //if previous data lower than current
+                  arrow = '<small class="valueArrow fall">↓</small>';
                 }
-              } else{
-                li.innerHTML = `<span class="tooltipCircle" style="background-color:${colors[i]}"></span><p>${data[i].name}:</p><span>100</span><span>${
-                    series[i][dataPointIndex]
-                  }</span>`;
+              } else{ //if previous data equal than current
+                  arrow = '';
               }
+              li.innerHTML = `<span class="tooltipCircle" style="background-color:${filtColors[i]}"></span><p>${data[i].name}:</p><span>100</span><span>${arrow}${
+                    data[i].data[dataPointIndex].y
+                  }</span>`;
               
               ul.append(li);
             }
@@ -213,6 +220,35 @@ export default {
               y: 0
             }
           ]
+        },
+        {
+          name: "Ср. время",
+          data: [
+            {
+              x: "03-17-2019",
+              y: 25
+            },
+            {
+              x: "03-18-2019",
+              y: 45
+            },
+            {
+              x: "03-19-2019",
+              y: 60
+            },
+            {
+              x: "03-20-2019",
+              y: 20
+            },
+            {
+              x: "03-21-2019",
+              y: 50
+            },
+            {
+              x: "03-22-2019",
+              y: 0
+            }
+          ]
         }
       ]
     };
@@ -282,7 +318,6 @@ export default {
       `;
       document.body.appendChild(chartModal);
       annot.addEventListener("click", e => {
-        console.log(e);
         let x = e.pageX;
         let y = e.pageY;
         chartModal.setAttribute(
@@ -295,8 +330,21 @@ export default {
         .addEventListener("click", e => {
           chartModal.setAttribute("style", `display: none;`);
         });
+    },
+    listenEvent(){
+      this.$bus.$on('toggleChart', (index) => {
+        let lineName = this.series[index].name;
+        console.log(lineName);
+        
+        this.$refs.chart.toggleSeries(lineName);
+      })
     }
+
+  },
+  created(){
+    this.listenEvent();
   }
+  
 };
 </script>
 <style>

@@ -1,8 +1,8 @@
 <template>
-  <v-container fluid class="cameraPageContainer">
+  <v-container @click="closeAll($event)" fluid class="cameraPageContainer">
     <v-layout>
       <v-flex class="createCamera-box" lg6>
-        <v-btn color="primary" @click="isCameraModal = !isCameraModal">
+        <v-btn color="primary" @click.stop="isCameraModal = !isCameraModal">
           <v-icon class="mr-2">add_circle</v-icon>Добавить камеру
         </v-btn>
         <v-btn outline color="gray">Статистика</v-btn>
@@ -11,7 +11,7 @@
         </div>
       </v-flex>
       <v-flex lg6 class="changeViewContainer">
-        <v-btn @click="isCreateViewModal = !isCreateViewModal" dark color="get-orange">
+        <v-btn @click.stop="isCreateViewModal = !isCreateViewModal" dark color="get-orange">
           <v-icon class="mr-2">add_circle</v-icon>Создать зону видимости
         </v-btn>
         <v-btn outline color="gray" @click="hideViews = !hideViews">Вид</v-btn>
@@ -151,6 +151,10 @@ export default {
   methods: {
     changeViewGrid(e) {
       this.class = e.target.dataset.imgnum;
+    },
+    closeAll(e){
+      this.isCreateViewModal = false;
+      this.isCameraModal = false;
     }
   },
   computed: {

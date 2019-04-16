@@ -32,6 +32,7 @@ Vue.prototype.$log = console.log;
 Vue.use(Vuetify, {
     iconfont: 'fa4'
 });
+Vue.prototype.$bus = new Vue();
 
 window.get_face = new Vue({
     router,
