@@ -12,7 +12,7 @@ class UserRegisterSerializer(_Serializer):
         allow_null=False,
         allow_blank=False,
         min_length=6,
-        source='user.email',
+        max_length=256,
         validators=[
             _val.UniqueValidator(queryset=_User.objects.all())
         ]
@@ -21,7 +21,6 @@ class UserRegisterSerializer(_Serializer):
     phone = _se.IntegerField(
         required=True,
         allow_null=False,
-        source='user.phone',
         validators=[
             _val.UniqueValidator(queryset=_User.objects.all())
         ]
@@ -33,11 +32,18 @@ class UserRegisterSerializer(_Serializer):
     )
 
     first_name = _se.CharField(
-        min_length=3,
+        min_length=2,
+        max_length=256,
     )
 
     last_name = _se.CharField(
-        min_length=3,
+        min_length=2,
+        max_length=256,
+    )
+
+    username = _se.CharField(
+        min_length=4,
+        max_length=256,
     )
 
     from django.db import transaction as _trans
@@ -50,28 +56,18 @@ class UserRegisterSerializer(_Serializer):
         user.set_password(validated_data['password'])
 
         if settings.DEBUG:
-            user.is_active = True
-
-        user.save()
+            user.activate()
+        else:
+            user.save()
 
         if not settings.DEBUG:
-            import os
-            from app.mail import Sandman
-
-            Sandman(
-                mail_from=settings.EMAIL_ADDRESSES.get('main'),
-                mail_to=user.email,
-                subject="Registration",
-                template='user%sregister' % os.sep,
-                context={
-                    'user': user,
-                }
-            ).start()
+            user.mail_activation()
 
         return user
 
     class Meta:
         model = _User
+        fields = ('email', 'phone', 'password', 'first_name', 'last_name', 'username')
 
 
 class UserSerializer(_Serializer):

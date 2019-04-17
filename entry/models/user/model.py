@@ -1,8 +1,10 @@
-import uuid
-import _md5
-
 from django.contrib.auth.models import AbstractUser as _Abstract
 from app.base.model import Model as _Model
+from app.mail import Sandman as _mail
+from django.conf import settings
+import os as _os
+import uuid
+import _md5
 
 
 def _activation_key() -> str:
@@ -18,6 +20,7 @@ class User(_Abstract, _Model):
         null=False,
         blank=False,
         unique=True,
+        max_length=256,
     )
 
     is_active = _field.BooleanField(
@@ -57,6 +60,18 @@ class User(_Abstract, _Model):
 
         return self.activation == code
 
+    def activate(self):
+        """ Modificates user activation and save """
+        self.is_active = True
+        self.activation = None
+        self.save()
+
+    def deactivate(self):
+        """ Modificates user activation and save """
+        self.is_active = False
+        self.activation = None
+        self.save()
+
     def get_token(self):
         from entry.jwt import create_token
         return create_token(self)
@@ -67,6 +82,40 @@ class User(_Abstract, _Model):
         ) else (
                 "%s" % self.username
         )
+
+    # Mails part
+    def mail_activation(self):
+        _mail(
+            mail_from=settings.EMAIL_ADDRESSES.get('main'),
+            mail_to=self.email,
+            subject="Registration",
+            template='user%sregister' % _os.sep,
+            context={
+                'user': self,
+            }
+        ).start()
+
+    def mail_activation_resend(self):
+        _mail(
+            mail_from=settings.EMAIL_ADDRESSES.get('main'),
+            mail_to=self.email,
+            subject="Repeat registration mail",
+            template='user%sregister' % _os.sep,
+            context={
+                'user': self,
+            }
+        ).start()
+
+    def mail_reset_password(self):
+        _mail(
+            mail_from=settings.EMAIL_ADDRESSES.get('main'),
+            mail_to=self.email,
+            subject="Password restoration",
+            template='user%snew_password' % _os.sep,
+            context={
+                'user': self,
+            }
+        ).start()
 
     class Meta(_Abstract.Meta):
         swappable = 'AUTH_USER_MODEL'

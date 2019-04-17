@@ -5,7 +5,9 @@ urlpatterns = [
     path('/v1', include([
         path('/auth', include('entry.urls')),
         path('/company', include('holding.urls')),
-        path('/agenda', include('job.urls')),
-        # path('/camera', include('cam.urls')),
+
+        path('/job', include('job.urls')),
+        path('/camera', include('cam.urls')),
+        path('/payment', include('pay.urls')),
     ]))
 ]

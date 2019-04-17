@@ -1,7 +1,7 @@
-from holding.models import Employee, Company, CompanyExtendedSerializer  # Check
+from entry.models import User, UserExtendedSerializer, UserRegisterSerializer
+from holding.models import Employee, Company, CompanyExtendedSerializer
 from rest_framework.decorators import api_view, permission_classes
-from app.base.exceptions import UnprocessableEntity, APIException
-from entry.models import User, UserExtendedSerializer
+from app.base.exceptions import APIException, UnprocessableEntity
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.db.models.query import Q
@@ -44,50 +44,31 @@ def self_info(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def sign_up(request):
-    # ToDo: this
-    # validator = User.validators.create(data=request.data)
-    #
-    # if not validator.validate():
-    #     raise UnprocessableEntity({
-    #         'detail': 'Data has invalid fields.',
-    #         'valid': False,
-    #         'errors': validator.errors,
-    #     }, status.HTTP_422_UNPROCESSABLE_ENTITY)
+    register = UserRegisterSerializer(data=request.data)
 
-    debug = {}
-    info = request.data
+    if not register.is_valid():
+        raise UnprocessableEntity({
+            'detail': 'Data has errors',
+            'errors': register.errors,
+        })
 
-    user = User(**{
-        'username': info.get('username'),
-        'email': info.get('email'),
-        'first_name': info.get('first_name'),
-        'last_name': info.get('last_name'),
-        'phone': info.get('phone'),
-        'is_active': False,
-    })
-
-    user.set_password(info.get('password'))
-    user.save()
-
-    Sandman(
-        mail_from=settings.EMAIL_ADDRESSES.get('main'),
-        mail_to=user.email,
-        subject="Registration",
-        template='user%sregister' % os.sep,
-        context={
-            'user': user,
-        }
-    ).start()
+    user = register.save()
 
     if settings.DEBUG:
-        debug['user'] = {}
-        debug['user']['id'] = user.id
-        debug['user']['activation'] = user.activation
+        return Response({
+            'detail': 'You have been registered.',
+            'valid': True,
+            'debug': {
+                'user': {
+                    'id': user.id,
+                    'activation': 'has been activated [debug]',
+                }
+            },
+        }, status=status.HTTP_201_CREATED)
 
     return Response({
-        'valid': True,
         'detail': 'You have been registered.',
-        'debug': debug if settings.DEBUG else None,
+        'valid': True,
     }, status=status.HTTP_201_CREATED)
 
 
