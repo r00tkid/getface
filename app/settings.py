@@ -44,6 +44,7 @@ class Development(Configuration):
     INSTALLED_APPS = [
         'django.contrib.contenttypes',
         'django.contrib.staticfiles',
+        'django.contrib.messages',
 
         'bootstrap_admin',
         'django.contrib.sessions',

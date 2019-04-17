@@ -1,4 +1,4 @@
-FROM python:3.7.2
+FROM python:3.7.3
 MAINTAINER Polshchyn Kyrylo <abnormally.dev@gmail.com>
 
 ENV PYTHONUNBUFFERED 1
@@ -27,6 +27,9 @@ RUN ssh-keyscan -t rsa bitbucket.org > /root/.ssh/known_hosts
 RUN ssh-agent bash -c "ssh-add ~/.ssh/id_rsa"
 RUN git config --global user.name "GetFace"
 RUN git config --global user.email "getface.development@gmail.com"
+
+WORKDIR /var/www/get-face
+ADD .git/ /var/www/get-face/.git/
 RUN git config core.filemode false
 
 EXPOSE 8091
