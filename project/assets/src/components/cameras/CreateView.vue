@@ -39,7 +39,7 @@
     </v-layout>
     <v-layout>
       <v-flex>
-        <v-btn class="mr-2 ml-0" outline color="gray">Удалить</v-btn>
+        <v-btn class="mr-2 ml-0" outline color="gray">Отменить</v-btn>
         <v-btn color="primary">Сохранить</v-btn>
       </v-flex>
     </v-layout>

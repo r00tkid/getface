@@ -25,14 +25,14 @@
       <v-flex lg6 xs12>
         <v-layout row wrap justify-start>
           <div class="mainChartContainer">
-            <line-chart :chartdata="chartData" :options="chartOptions"/>
+            <line-chart :enableEvent="false" :series="getLineSeries" :colors="colorsChart"/>
           </div>
         </v-layout>
       </v-flex>
       <v-flex lg6 xs12>
         <v-layout>
           <v-flex lg6 class="mainStat">
-            <home-stat></home-stat>
+            <home-stat :items="getStat" :colors="colorsChart"></home-stat>
           </v-flex>
           <v-flex lg6>
             <home-time-table></home-time-table>
@@ -81,10 +81,10 @@
 </template>
 
 <script>
-import LineChart from "../components/chart/Chart.vue";
+import LineChart from "../components/LineChart";
 import TimeTable from "../components/timeTable/TimeTable";
 import HomeTable from "../components/homeTable/HomeTable";
-import HomeStat from "../components/HomeStat";
+import HomeStat from "../components/ToggleStat";
 import HomeTimeTable from "../components/HomeTimeTable";
 
 export default {
@@ -104,6 +104,16 @@ export default {
     HomeTimeTable
   },
   data: () => ({
+    colorsChart: [
+      "#38baf5",
+      "#f8bc40",
+      "#e05116",
+      "#6622fd",
+      "#f90018",
+      "#42f422",
+      "#E91E63",
+      "#CDDC39"
+    ],
     departaments: ["test1", "test2", "test3"],
     value: [200, 675, 410, 390, 310, 460, 250, 240],
     chartData: {
@@ -188,7 +198,15 @@ export default {
     pagination: {
       rowsPerPage: 4
     }
-  })
+  }),
+  computed: {
+    getStat(){
+      return this.$store.getters.getHomeStat;
+    },
+    getLineSeries(){
+      return this.$store.getters.getSeries;
+    }
+  },
 };
 </script>
 
@@ -210,7 +228,7 @@ export default {
 
 .home-wrap {
   padding: 24px 0;
-  width: 80%;
+  width: 85%;
 }
 
 .kill-card {

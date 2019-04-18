@@ -78,10 +78,10 @@
 
         <v-layout>
           <v-flex class="mt-2" xs9>
-            <analitic-line-chart :colors="colorsChart"></analitic-line-chart>
+            <analitic-line-chart :series="getLineSeries" :enableEvent="true" :colors="colorsChart"></analitic-line-chart>
           </v-flex>
           <v-flex class="mt-3 ml-2" xs3>
-            <analitic-stat @toggleseries="toggleSeries($event)" :colors="colorsChart"></analitic-stat>
+            <analitic-stat :items="getStat" @toggleseries="toggleSeries($event)" :colors="colorsChart"></analitic-stat>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -97,9 +97,9 @@
 <script>
 import ChartBar from "../components/chart/ChartBar";
 import HeatMap from "../components/analitics/HeatMap";
-import AnaliticStat from "../components/analitics/AnaliticStat";
+import AnaliticStat from "../components/ToggleStat";
 import AnaliticTable from "../components/analitics/AnaliticTable";
-import AnaliticLineChart from "../components/analitics/AnaliticLineChart";
+import AnaliticLineChart from "../components/LineChart";
 import AnaliticSlider from "../components/analitics/AnaliticSlider";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
@@ -295,86 +295,8 @@ export default {
   },
   methods: {
     toggleSeries(e){
-      console.log('analitic');
-      
       this.seriesIndex = e;
     },
-    addAnnotation() {
-      if (this.textAreaVal.length == 0) {
-        this.areaError = true;
-      } else {
-        let annotationObj = {
-          id: this.annotID,
-          date: new Date(this.date).toLocaleString("en-US").substr(0, 9)
-        };
-        this.areaError = false;
-        let obj = this.existAnnotations.find(
-          val => val.date == annotationObj.date
-        );
-        if (obj == undefined) {
-          this.existAnnotations.push(annotationObj);
-          this.createAnnotation(annotationObj.date, annotationObj.id);
-          this.createChartModal(
-            annotationObj.id,
-            annotationObj.date,
-            this.textAreaVal
-          );
-          this.annotID++;
-        } else {
-          this.updateAnnotation(obj.id, this.textAreaVal);
-        }
-      }
-    },
-    updateAnnotation(id, text) {
-      let modal = document.querySelector(`.chartModal${id}`);
-      let li = document.createElement("LI");
-      li.innerText = text;
-      modal.childNodes[3].appendChild(li);
-    },
-    createAnnotation(date, id) {
-      this.$refs.chart.addXaxisAnnotation({
-        x: new Date(date).getTime(),
-        strokeDashArray: 0,
-        borderColor: "#775DD0",
-        label: {
-          borderColor: "#775DD0",
-          style: {
-            color: "#fff",
-            background: "#775DD0",
-            cssClass: `annot${id}`
-          },
-          orientation: "horizontal",
-          text: "☰"
-        }
-      });
-    },
-    createChartModal(id, date, text) {
-      let annot = document.querySelector(`.annot${id}`);
-      let chartModal = document.createElement("div");
-      let myDate = new Date(date);
-      chartModal.classList.add(`chartModal${id}`);
-      chartModal.classList.add(`chartModal`);
-      chartModal.innerHTML = `
-      <h4 class="modalChartHead">${date}<span class="modalChartClose modalChartClose${id}">✕<span></h4>
-      <ul class="modalChartList">
-        <li>${text}</li>
-      </ul>
-      `;
-      document.body.appendChild(chartModal);
-      annot.addEventListener("click", e => {
-        let x = e.pageX;
-        let y = e.pageY;
-        chartModal.setAttribute(
-          "style",
-          `top: ${y}px; left: ${x}px; display: block;`
-        );
-      });
-      document
-        .querySelector(`.modalChartClose${id}`)
-        .addEventListener("click", e => {
-          chartModal.setAttribute("style", `display: none;`);
-        });
-    }
   },
   computed: {
     tags() {
@@ -392,6 +314,12 @@ export default {
         }
       });
       return selected;
+    },
+    getStat(){
+      return this.$store.getters.getStat;
+    },
+    getLineSeries(){
+      return this.$store.getters.getLineSeries;
     }
   }
 };
