@@ -7,33 +7,35 @@ from rest_framework.response import Response
 from django.db.models.query import Q
 from rest_framework import status
 from django.conf import settings
-from app.mail import Sandman
-import os
 
 
-def _user_response(user, with_token=False, with_companies=False, detail="OK"):
+def _user_response(user, with_token=False, with_companies=False, detail='OK', status_code=status.HTTP_200_OK):
+    response = {}
+
     if not user:
         raise APIException({
             'detail': 'No user. Incorrect usage.'
-        }, status_code=417)
-
-    token = None
-    companies = None
+        }, status_code=status.HTTP_417_EXPECTATION_FAILED)
 
     if with_token:
-        token = user.get_token()
+        response['token'] = user.get_token()
 
     if with_companies:
-        companies = Company.objects.filter(Q(owner=user) | Q(employee__user=user).add(Q(employee__is_fired=False), Q.AND).add(Q(employee__is_active=True), Q.AND))
-        serializer = CompanyExtendedSerializer(instance=companies, many=True).add_rights(user)
-        companies = serializer.data
+        companies = Company.objects.filter(
+            Q(owner__user=user) |
+            Q(employees__user=user).add(Q(employees__is_fired=False), Q.AND).add(Q(employees__is_active=True), Q.AND)
+        )
 
-    return Response({
-        'detail': detail,
-        'token': token,
-        'user': UserExtendedSerializer(instance=user).data,
-        'companies': companies,
-    })
+        if companies.count() > 0:
+            response['companies'] = CompanyExtendedSerializer(instance=companies, many=True).add_rights(user).data
+
+    response['detail'] = detail
+    response['user'] = UserExtendedSerializer(instance=user).data
+
+    return Response(
+        data=response,
+        status=status_code,
+    )
 
 
 @api_view(['GET', 'HEAD'])
@@ -47,10 +49,10 @@ def sign_up(request):
     register = UserRegisterSerializer(data=request.data)
 
     if not register.is_valid():
-        raise UnprocessableEntity({
+        raise APIException({
             'detail': 'Data has errors',
             'errors': register.errors,
-        })
+        }, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
     user = register.save()
 
@@ -149,10 +151,9 @@ def activate_account(request):
 @permission_classes((AllowAny,))
 def reset_password(request):
     data: dict = request.data
-    email = data.get('email')
-    debug = {}
+    email = data.get('email', '').strip()
 
-    if not email:
+    if email == '':
         return Response({
             'detail': 'Ups, something goes wrong',
             'email': email,
@@ -165,23 +166,7 @@ def reset_password(request):
             'detail': 'Are you sure that you activate your account?'
         }, status=status.HTTP_409_CONFLICT)
 
-    user.new_activation()
-    user.save()
-
-    if settings.DEBUG:
-        debug['user'] = {}
-        debug['user']['id'] = user.id
-        debug['user']['activation'] = user.activation
-
-    Sandman(
-        mail_from=settings.EMAIL_ADDRESSES.get('main'),
-        mail_to=user.email,
-        subject="Password restoration",
-        template='user%snew_password' % os.sep,
-        context={
-            'user': user,
-        }
-    ).start()
+    user.mail_reset_password()
 
     return Response({
         'detail': 'Change password action has been activated.'
@@ -233,18 +218,7 @@ def resend_mail_invitation(request):
             'active': user.is_active if user else False,
         }, status=status.HTTP_409_CONFLICT)
 
-    user.new_activation()
-    user.save()
-
-    Sandman(
-        mail_from=settings.EMAIL_ADDRESSES.get('main'),
-        mail_to=user.email,
-        subject="Repeat registration confirmation",
-        template='user%sregister' % os.sep,
-        context={
-            'user': user,
-        }
-    ).start()
+    user.mail_activation_resend()
 
     return Response({
         'detail': 'All is ok'

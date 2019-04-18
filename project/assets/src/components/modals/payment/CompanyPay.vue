@@ -99,7 +99,7 @@
                 this.available_rates = {name: "Нет данных по тарифам", id: 0, per_month: 0, lifetime: 0}
             },
             getAvailableRates(with_notify = false) {
-                this.$http("company.rate.available")
+                this.$http("payment.rate.available")
                     .then(res => {
                         res.data && res.data.rates && this.setFetchedRates(res.data.rates);
 
@@ -145,7 +145,7 @@
                     });
             },
             payForRate() {
-                this.$http("company.rate.buy", {
+                this.$http("payment.rate.buy", {
                     company_id: this.company.id,
                     rate_id: this.checked_rate.id,
                 }, "post")

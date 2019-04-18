@@ -3,7 +3,7 @@ from rest_framework.serializers import ModelSerializer as _Serializer
 
 
 class EmployeeSerializer(_Serializer):
-    time_zone = _Method
+    time_zone = _Method()
 
     def get_time_zone(self, model):
         return model.timezone.zone

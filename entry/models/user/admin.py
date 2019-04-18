@@ -13,6 +13,7 @@ class UserAdmin(_Admin):
         'display_is_super',
         'display_achieves',
         'activation',
+        'is_banned',
         'display_id',
     )
 

@@ -1,13 +1,13 @@
 from django.contrib.auth.models import AbstractUser as _Abstract
 from app.base.model import Model as _Model
-from app.mail import Sandman as _mail
-from django.conf import settings
+from app.mail import Sandman as _Mail
 import os as _os
-import uuid
-import _md5
 
 
 def _activation_key() -> str:
+    import _md5
+    import uuid
+
     return _md5.md5(uuid.uuid4().bytes).hexdigest()
 
 
@@ -16,27 +16,22 @@ class User(_Abstract, _Model):
     from app.fields import timezone as _timezone
 
     email = _field.EmailField(
-        "E-mail",
+        verbose_name='E-mail',
         null=False,
         blank=False,
         unique=True,
         max_length=256,
     )
 
-    is_active = _field.BooleanField(
-        "Актив",
-        default=True,  # Causes problems with super users if is not set to True. Handle base user active in views.
-    )
-
     phone = _field.CharField(
-        "Телефон",
+        verbose_name='Телефон',
         max_length=30,
         null=False,
         blank=False,
     )
 
     activation = _field.CharField(
-        verbose_name="Код активации/восстановления пароля",
+        verbose_name='Код активации/восстановления пароля',
         max_length=255,
         null=True,
         editable=False,
@@ -44,10 +39,20 @@ class User(_Abstract, _Model):
     )
 
     timezone = _timezone.TimeZoneField(
-        verbose_name="Локальное время пользователя",
-        default="UTC",
+        verbose_name='Локальное время пользователя',
+        default='UTC',
         null=False,
         blank=True,
+    )
+
+    is_active = _field.BooleanField(
+        verbose_name='Активирован',
+        default=True,  # Causes problems with super users if is not set to True. Handle base user active in views.
+    )
+
+    is_banned = _field.BooleanField(
+        verbose_name='Забанен',
+        default=False,
     )
 
     def new_activation(self):
@@ -83,39 +88,45 @@ class User(_Abstract, _Model):
                 "%s" % self.username
         )
 
+    def reactivate(self):
+        self.new_activation()
+        self.save()
+
     # Mails part
-    def mail_activation(self):
-        _mail(
+    def mail_default(self, subject, template):
+        from django.conf import settings
+
+        _Mail(
             mail_from=settings.EMAIL_ADDRESSES.get('main'),
             mail_to=self.email,
-            subject="Registration",
-            template='user%sregister' % _os.sep,
+            subject=subject,
+            template=template,
             context={
                 'user': self,
             }
         ).start()
+
+    def mail_activation(self):
+        self.mail_default(
+            template='user%sregister' % _os.sep,
+            subject="Registration",
+        )
 
     def mail_activation_resend(self):
-        _mail(
-            mail_from=settings.EMAIL_ADDRESSES.get('main'),
-            mail_to=self.email,
-            subject="Repeat registration mail",
+        self.reactivate()
+
+        self.mail_default(
             template='user%sregister' % _os.sep,
-            context={
-                'user': self,
-            }
-        ).start()
+            subject="Repeat registration mail",
+        )
 
     def mail_reset_password(self):
-        _mail(
-            mail_from=settings.EMAIL_ADDRESSES.get('main'),
-            mail_to=self.email,
-            subject="Password restoration",
+        self.reactivate()
+
+        self.mail_default(
             template='user%snew_password' % _os.sep,
-            context={
-                'user': self,
-            }
-        ).start()
+            subject="Password restoration",
+        )
 
     class Meta(_Abstract.Meta):
         swappable = 'AUTH_USER_MODEL'
