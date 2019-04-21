@@ -1,3 +1,4 @@
+from app.base.exceptions import APIException as _APIException
 from app.base.model import Model as _Model
 from django.db.models import fields as _field
 from django.db.models.fields import related as _related
@@ -20,8 +21,22 @@ class Position(_Model):
         related_name="positions",
     )
 
+    is_protected = _field.BooleanField(
+        verbose_name='Неудаляемая должность',
+        default=False,
+    )
+
     def __str__(self):
         return self.name
+
+    def delete(self, **kwargs):
+        if self.is_protected:
+            raise _APIException({
+                'detail': 'Protected',
+                'protected': True,
+            }, status_code=403)
+
+        super(Position, self).delete(**kwargs)
 
     class Meta:
         verbose_name = "Должность"
@@ -34,6 +49,7 @@ class PositionToDepartment(_Model):
         on_delete=_deletion.CASCADE,
         null=False,
         blank=False,
+        related_name="departments",
     )
 
     department = _related.ForeignKey(
@@ -49,4 +65,4 @@ class PositionToDepartment(_Model):
 
     class Meta:
         verbose_name = "Должность к отделу"
-        verbose_name_plural = "Должности к отделу"
+        verbose_name_plural = "Должности к отделам"

@@ -2,6 +2,14 @@ from rest_framework.serializers import SerializerMethodField as _Method
 from rest_framework.serializers import ModelSerializer as _Serializer
 
 
+class EmployeeCreateSerializer(_Serializer):
+    pass
+
+
+class EmployeeUpdateSerializer(_Serializer):
+    pass
+
+
 class EmployeeSerializer(_Serializer):
     time_zone = _Method()
 

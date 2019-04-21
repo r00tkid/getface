@@ -80,13 +80,13 @@ class SoftDeletion(__Model):
 class Model(TimeStumps, SoftDeletion):
 
     @classmethod
-    def get_by_id(cls, model_id, raise_exception=True):
+    def get_by_id(cls, model_id, raise_exception=True, message=None):
         from .exceptions import NotFound
 
         model_obj = cls.objects.filter(pk=model_id).first()
 
         if not model_obj and raise_exception:
-            raise NotFound()
+            raise NotFound(detail=message)
 
         return model_obj
 

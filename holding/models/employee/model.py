@@ -60,7 +60,7 @@ class Employee(_Model):
     )
 
     timezone = _timezone.TimeZoneField(
-        verbose_name="Локальное время работника",
+        verbose_name="Пояс",
         default="UTC",
         null=False,
         blank=True,
@@ -151,6 +151,42 @@ class Employee(_Model):
             return "%(username)s" % ttl
         else:
             return "Employee №[%d]" % self.id
+
+    @classmethod
+    def create_from_user(cls, user, **kwargs):
+        """
+        :type user: entry.models.User
+        """
+        from factory.faker import faker
+
+        fake = faker.Faker(locale='ru_RU')
+
+        employee = cls(
+            user=user,
+
+            first_name=user.first_name if user.first_name else fake.first_name(),
+            last_name=user.last_name if user.last_name else fake.last_name(),
+            timezone=user.timezone,
+            phone=user.phone,
+            email=user.email,
+            is_active=True,
+            **kwargs
+        )
+
+        employee.save()
+
+        return employee
+
+    def set_position(self, position, department=None):
+        self.position = position
+
+        if not department and not self.department:
+            related = position.departments.first()
+
+            if related:
+                self.department = related.department
+        elif department:
+            self.department = department
 
     class Meta:
         verbose_name = "Сотрудник"

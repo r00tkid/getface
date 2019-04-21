@@ -91,18 +91,18 @@ def employee_sign_up(request):
     try:
         employee = Employee.objects.get(auth_key=data.get('uuid'))
         user = employee.user
-    except Employee.DoesNotExist as e:
-        return Response({
+    except Employee.DoesNotExist:
+        raise APIException({
             'valid': False,
             'message': 'Did you have been invited successfully?',
-        }, status=status.HTTP_404_NOT_FOUND)
+        }, status_code=status.HTTP_404_NOT_FOUND)
 
     if request.user:
         if employee.user_id != request.user.id:
-            return Response({
+            raise APIException({
                 'valid': False,
-                'message': "Get log out to perform this action."
-            }, status=status.HTTP_403_FORBIDDEN)
+                'message': "Get log out to perform this action.",
+            }, status_code=status.HTTP_403_FORBIDDEN)
 
         employee.auth_key = None
         employee.save()

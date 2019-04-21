@@ -1,3 +1,3 @@
 from .model import Employee
 from .admin import EmployeeAdmin
-from .serializers import EmployeeSerializer, EmployeeExtendedSerializer
+from .serializers import EmployeeSerializer, EmployeeExtendedSerializer, EmployeeCreateSerializer, EmployeeUpdateSerializer

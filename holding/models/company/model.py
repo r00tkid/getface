@@ -19,7 +19,7 @@ class CompanyCreator(_Model):
         related_name='companies',
     )
 
-    physical = _related.OneToOneField(
+    physical = _related.ForeignKey(
         to='entry.User',
         on_delete=_deletion.DO_NOTHING,
         verbose_name='Физический пользователь',
@@ -43,7 +43,7 @@ class Company(_Model):
 
     name = _field.CharField(
         verbose_name='Название компании',
-        max_length=200,
+        max_length=255,
         null=False,
     )
 
@@ -116,6 +116,18 @@ class Company(_Model):
         return self.last_payment.time_left if self.last_payment else -1
 
     time_left.fget.short_description = u"Оплаченное время"
+
+    @property
+    def employee_amount(self):
+        return self.employees.count()
+
+    employee_amount.fget.short_description = u"Сотрудников"
+
+    @property
+    def departments_amount(self):
+        return self.departments.count()
+
+    departments_amount.fget.short_description = u"Отделов"
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         creation = True

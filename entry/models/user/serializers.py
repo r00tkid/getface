@@ -46,9 +46,9 @@ class UserRegisterSerializer(_Serializer):
         max_length=256,
     )
 
-    from django.db import transaction as _trans
+    from django.db import transaction as _ts
 
-    @_trans.atomic()
+    @_ts.atomic
     def create(self, validated_data):
         from django.conf import settings
 

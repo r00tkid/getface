@@ -105,20 +105,18 @@ class Validations:
             self.column = column
             self.message = message
 
-            if type(expiration).__name__ == 'str':
-                self.expiration = parser.parse(expiration)
-            elif type(now).__name__ == 'datetime':
-                self.expiration = expiration
+            def check_set(param, value):
+                if isinstance(value, str):
+                    setattr(self, param, parser.parse(value))
+                elif isinstance(expiration, datetime):
+                    setattr(self, param, value)
+
+            check_set('expiration', expiration)
 
             if not now:
                 self.now = datetime.now()
             else:
-                if type(now).__name__ == 'str':
-                    self.now = parser.parse(now)
-                elif type(now).__name__ == 'datetime':
-                    self.now = now
-                else:
-                    raise TypeError("Unexpected [now] type")
+                check_set('now', now)
 
         def __call__(self, form, field):
             from wtforms import ValidationError
@@ -181,8 +179,7 @@ class Validations:
             except:
                 raise ValidationError("Field must be a number.")
 
-            if data is None or (self.min is not None and data < self.min) or \
-                    (self.max is not None and data > self.max):
+            if data is None or (self.min is not None and data < self.min) or (self.max is not None and data > self.max):
                 message = self.message
                 if message is None:
                     if self.max is None:
