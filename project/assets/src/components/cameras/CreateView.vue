@@ -1,52 +1,86 @@
 <template>
   <div class="createViewArea materialBox">
     <v-layout>
-      <v-flex xs6>
+      <v-flex xs8>
         <span class="mb-2">Название зоны</span>
         <v-text-field hide-details placeholder="Название.." solo></v-text-field>
       </v-flex>
-      <v-flex xs6 d-flex align-end>
-        <v-btn class="ma-0 ml-2" outline small color="gray">Отметить все</v-btn>
-        <v-btn class="ma-0 ml-1" outline small color="gray">Снять все</v-btn>
+      <v-flex xs4 d-flex align-end>
+        <v-btn class="ma-0 ml-2" outline color="gray" @click="checkAll(true)">
+          <span v-if="checkFlag">Снять все</span>
+          <span v-else>Отметить все</span>
+          </v-btn>
       </v-flex>
     </v-layout>
     <v-layout class="mt-2">
       <v-flex>
         <span>Список камер</span>
         <ul class="modalCameraList">
-          <li>
-            <input type="checkbox" id="camera1">
-            <label for="camera1">Камера 1</label>
-          </li>
-          <li>
-            <input type="checkbox" id="camera2">
-            <label for="camera2">Камера 2</label>
-          </li>
-          <li>
-            <input type="checkbox" id="camera3">
-            <label for="camera3">Камера 3</label>
-          </li>
-          <li>
-            <input type="checkbox" id="camera4">
-            <label for="camera4">Камера 4</label>
-          </li>
-          <li>
-            <input type="checkbox" id="camera5">
-            <label for="camera5">Камера 5</label>
+          <li v-for="(camera,i) in cameras" :key="i">
+            <input type="checkbox" :id="'camera'+ i" v-model="camera.checked">
+            <label :for="'camera'+ i">{{camera.name}}</label>
           </li>
         </ul>
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex>
-        <v-btn class="mr-2 ml-0" outline color="gray">Удалить</v-btn>
         <v-btn color="primary">Сохранить</v-btn>
       </v-flex>
     </v-layout>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  data(){
+    return {
+      checkFlag: false,
+      cameras: [
+        {
+          name: 'Камера 1',
+          checked: false
+        },
+        {
+          name: 'Камера 2',
+          checked: false
+        },
+        {
+          name: 'Камера 3',
+          checked: false
+        },
+        {
+          name: 'Камера 4',
+          checked: false
+        },
+        {
+          name: 'Камера 5',
+          checked: false
+        },
+        {
+          name: 'Камера 6',
+          checked: false
+        },
+        {
+          name: 'Камера 7',
+          checked: false
+        },
+        {
+          name: 'Камера 8',
+          checked: false
+        },
+      ]
+    }
+  },
+  methods: {
+    checkAll(){
+      let arr = this.cameras;
+      this.checkFlag = !this.checkFlag
+      arr.forEach((elem,i) => {
+        elem.checked = !elem.checked;
+      })
+    }
+  }
+};
 </script>
 <style scoped>
 .createViewArea {

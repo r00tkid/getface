@@ -1,51 +1,53 @@
 <template>
   <div class="mainChartContainer">
-    <v-btn class="addEventBtn" color="white" @click="addEvenShow = !addEvenShow">
-      <v-icon class="mr-2" color="purple">list</v-icon>Добавить событие
-    </v-btn>
-    <div v-show="addEvenShow" class="addEvent">
-      <div class="addEventHeader">
-        <h4>Добавить собитие</h4>
-        <v-btn flat icon color="white" @click="addEvenShow = false">
-          <v-icon size="16">close</v-icon>
-        </v-btn>
-      </div>
-      <div class="addEventBody materialBox">
-        <v-menu
-          ref="datePicker"
-          :close-on-content-click="false"
-          v-model="datePicker"
-          hint="MM/DD/YYYY format"
-          full-width
-          color="purple"
-          :nudge-right="40"
-          offset-y
-          :return-value.sync="date"
-          lazy
-          min-width="290px"
-          transition="scale-transition"
-          hide-details
-        >
-          <v-text-field
-            slot="activator"
-            v-model="date"
-            class="input-shadow"
-            background-color="white"
+    <div v-if="enableEvent">
+      <v-btn class="addEventBtn" color="white" @click="addEvenShow = !addEvenShow">
+        <v-icon class="mr-2" color="purple">list</v-icon>Добавить событие
+      </v-btn>
+      <div v-show="addEvenShow" class="addEvent">
+        <div class="addEventHeader">
+          <h4>Добавить собитие</h4>
+          <v-btn flat icon color="white" @click="addEvenShow = false">
+            <v-icon size="16">close</v-icon>
+          </v-btn>
+        </div>
+        <div class="addEventBody materialBox">
+          <v-menu
+            ref="datePicker"
+            :close-on-content-click="false"
+            v-model="datePicker"
+            hint="MM/DD/YYYY format"
+            full-width
             color="purple"
-            solo
+            :nudge-right="40"
+            offset-y
+            :return-value.sync="date"
+            lazy
+            min-width="290px"
+            transition="scale-transition"
             hide-details
-            prepend-inner-icon="event"
-            readonly
-          ></v-text-field>
-          <v-date-picker v-model="date" no-title scrollable color="primary" header-color="red">
-            <v-spacer></v-spacer>
-            <v-btn flat color="purple" @click="datePicker = false">Cancel</v-btn>
-            <v-btn flat color="purple" @click="$refs.datePicker.save(date)">OK</v-btn>
-          </v-date-picker>
-        </v-menu>
-        <p v-show="areaError" class="eventError">Необходимо заполнить описание события</p>
-        <v-textarea solo class="mt-2" name="input-7-4" v-model="textAreaVal" hide-details></v-textarea>
-        <v-btn class="ml-0" disable color="white" @click="addAnnotation">Добавить событие</v-btn>
+          >
+            <v-text-field
+              slot="activator"
+              v-model="date"
+              class="input-shadow"
+              background-color="white"
+              color="purple"
+              solo
+              hide-details
+              prepend-inner-icon="event"
+              readonly
+            ></v-text-field>
+            <v-date-picker v-model="date" no-title scrollable color="primary" header-color="red">
+              <v-spacer></v-spacer>
+              <v-btn flat color="purple" @click="datePicker = false">Cancel</v-btn>
+              <v-btn flat color="purple" @click="$refs.datePicker.save(date)">OK</v-btn>
+            </v-date-picker>
+          </v-menu>
+          <p v-show="areaError" class="eventError">Необходимо заполнить описание события</p>
+          <v-textarea solo class="mt-2" name="input-7-4" v-model="textAreaVal" hide-details></v-textarea>
+          <v-btn class="ml-0" disable color="white" @click="addAnnotation">Добавить событие</v-btn>
+        </div>
       </div>
     </div>
     <apexchart ref="chart" height="400" type="line" :options="lineOptions" :series="series"></apexchart>
@@ -56,6 +58,18 @@ export default {
   props: {
     colors: {
       type: Array,
+      required: true
+    },
+    options: {
+      type: Object,
+      required: false
+    },
+    series: {
+      type: Array,
+      required: true
+    },
+    enableEvent: {
+      type: Boolean,
       required: true
     }
   },
@@ -114,37 +128,43 @@ export default {
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
             let data = w.config.series.filter(elem => elem.data.length > 0); // get not hiden line data
             let date = w.config.series[seriesIndex].data[dataPointIndex].x; // get date for title
-            let colors = w.globals.colors.slice(0 ,w.config.series.length); //get colors for our lines
+            let colors = w.globals.colors.slice(0, w.config.series.length); //get colors for our lines
             let div = document.createElement("div");
             let h4 = document.createElement("h4");
             let ul = document.createElement("ul");
-            
-            let filtColors = colors.filter((color,i) => { //get colors for not hidden lines
-              if(w.config.series[i].data.length > 0){
+
+            let filtColors = colors.filter((color, i) => {
+              //get colors for not hidden lines
+              if (w.config.series[i].data.length > 0) {
                 return color;
               }
-            })
+            });
 
             h4.innerHTML = `${date}`;
             div.classList.add("lineTooltip");
 
-            // create LI for tooltip 
+            // create LI for tooltip
             for (let i = 0; i < data.length; i++) {
               let li = document.createElement("li");
-              let arrow = '';
-              if(dataPointIndex > 0){
-                if(series[i][dataPointIndex] > series[i][dataPointIndex - 1]){ //if previous data higher than current
+              let arrow = "";
+              if (dataPointIndex > 0) {
+                if (series[i][dataPointIndex] > series[i][dataPointIndex - 1]) {
+                  //if previous data higher than current
                   arrow = '<small class="valueArrow raise">↑</small>';
-                } else { //if previous data lower than current
+                } else {
+                  //if previous data lower than current
                   arrow = '<small class="valueArrow fall">↓</small>';
                 }
-              } else{ //if previous data equal than current
-                  arrow = '';
+              } else {
+                //if previous data equal than current
+                arrow = "";
               }
-              li.innerHTML = `<span class="tooltipCircle" style="background-color:${filtColors[i]}"></span><p>${data[i].name}:</p><span>100</span><span>${arrow}${
-                    data[i].data[dataPointIndex].y
-                  }</span>`;
-              
+              li.innerHTML = `<span class="tooltipCircle" style="background-color:${
+                filtColors[i]
+              }"></span><p>${data[i].name}:</p><span>100</span><span>${arrow}${
+                data[i].data[dataPointIndex].y
+              }</span>`;
+
               ul.append(li);
             }
             div.append(h4);
@@ -161,96 +181,7 @@ export default {
         annotations: {
           xaxis: []
         }
-      },
-      series: [
-        {
-          name: "Мужчины",
-          data: [
-            {
-              x: "03-17-2019",
-              y: 34
-            },
-            {
-              x: "03-18-2019",
-              y: 43
-            },
-            {
-              x: "03-19-2019",
-              y: 31
-            },
-            {
-              x: "03-20-2019",
-              y: 43
-            },
-            {
-              x: "03-21-2019",
-              y: 33
-            },
-            {
-              x: "03-22-2019",
-              y: 0
-            }
-          ]
-        },
-        {
-          name: "Женщины",
-          data: [
-            {
-              x: "03-17-2019",
-              y: 20
-            },
-            {
-              x: "03-18-2019",
-              y: 35
-            },
-            {
-              x: "03-19-2019",
-              y: 50
-            },
-            {
-              x: "03-20-2019",
-              y: 30
-            },
-            {
-              x: "03-21-2019",
-              y: 60
-            },
-            {
-              x: "03-22-2019",
-              y: 0
-            }
-          ]
-        },
-        {
-          name: "Ср. время",
-          data: [
-            {
-              x: "03-17-2019",
-              y: 25
-            },
-            {
-              x: "03-18-2019",
-              y: 45
-            },
-            {
-              x: "03-19-2019",
-              y: 60
-            },
-            {
-              x: "03-20-2019",
-              y: 20
-            },
-            {
-              x: "03-21-2019",
-              y: 50
-            },
-            {
-              x: "03-22-2019",
-              y: 0
-            }
-          ]
-        }
-      ]
+      }
     };
   },
   methods: {
@@ -331,20 +262,16 @@ export default {
           chartModal.setAttribute("style", `display: none;`);
         });
     },
-    listenEvent(){
-      this.$bus.$on('toggleChart', (index) => {
+    listenEvent() {
+      this.$bus.$on("toggleChart", index => {
         let lineName = this.series[index].name;
-        console.log(lineName);
-        
         this.$refs.chart.toggleSeries(lineName);
-      })
+      });
     }
-
   },
-  created(){
+  created() {
     this.listenEvent();
   }
-  
 };
 </script>
 <style>
@@ -458,7 +385,7 @@ export default {
   min-width: 150px;
   border-radius: 5px;
 }
-.lineTooltip h4{
+.lineTooltip h4 {
   border-bottom: 1px solid rgb(150, 150, 150);
   font-weight: normal;
 }
@@ -474,19 +401,19 @@ export default {
 .lineTooltip li p {
   margin: 0;
 }
-.tooltipCircle{
+.tooltipCircle {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   display: inline-block;
 }
-.valueArrow{
+.valueArrow {
   font-size: 20px;
 }
-.raise{
+.raise {
   color: green;
 }
-.fall{
+.fall {
   color: red;
 }
 </style>

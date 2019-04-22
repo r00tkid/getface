@@ -25,14 +25,14 @@
       <v-flex lg6 xs12>
         <v-layout row wrap justify-start>
           <div class="mainChartContainer">
-            <line-chart :chartdata="chartData" :options="chartOptions"/>
+            <line-chart :enableEvent="false" :series="getLineSeries" :colors="colorsChart"/>
           </div>
         </v-layout>
       </v-flex>
       <v-flex lg6 xs12>
         <v-layout>
           <v-flex lg6 class="mainStat">
-            <home-stat></home-stat>
+            <home-stat :items="getStat" :colors="colorsChart"></home-stat>
           </v-flex>
           <v-flex lg6>
             <home-time-table></home-time-table>
@@ -81,10 +81,10 @@
 </template>
 
 <script>
-import LineChart from "../components/chart/Chart.vue";
+import LineChart from "../components/LineChart";
 import TimeTable from "../components/timeTable/TimeTable";
 import HomeTable from "../components/homeTable/HomeTable";
-import HomeStat from "../components/HomeStat";
+import HomeStat from "../components/ToggleStat";
 import HomeTimeTable from "../components/HomeTimeTable";
 
 export default {
@@ -104,91 +104,30 @@ export default {
     HomeTimeTable
   },
   data: () => ({
+    colorsChart: [
+      "#38baf5",
+      "#f8bc40",
+      "#e05116",
+      "#6622fd",
+      "#f90018",
+      "#42f422",
+      "#E91E63",
+      "#CDDC39"
+    ],
     departaments: ["test1", "test2", "test3"],
-    value: [200, 675, 410, 390, 310, 460, 250, 240],
-    chartData: {
-      datasets: [
-        {
-          label: "Data One",
-          backgroundColor: "#5ae08f",
-          borderColor: "#5ae08f",
-          lineTension: 0,
-          data: [
-            { x: "01/07/18", y: 25 },
-            { x: "01/08/18", y: 35 },
-            { x: "01/09/18", y: 15 },
-            { x: "01/10/18", y: 20 },
-            { x: "01/11/18", y: 40 },
-            { x: "01/12/18", y: 30 }
-          ],
-          fill: false
-        },
-        {
-          label: "Data One",
-          backgroundColor: "#fbbd21",
-          borderColor: "#fbbd21",
-          lineTension: 0,
-          data: [
-            { x: "01/07/18", y: 10 },
-            { x: "01/08/18", y: 55 },
-            { x: "01/09/18", y: 30 },
-            { x: "01/10/18", y: 20 },
-            { x: "01/11/18", y: 46 },
-            { x: "01/12/18", y: 60 }
-          ],
-          fill: false
-        }
-      ]
-    },
-    chartOptions: {
-      plugins: {
-        datalabels: false
-      },
-      responsive: true,
-      maintainAspectRatio: false,
-      layout: {
-        margin: {
-          left: -50,
-          right: 0,
-          top: 0,
-          bottom: 0
-        }
-      },
-      scales: {
-        xAxes: [
-          {
-            type: "time",
-            time: {
-              unit: "month",
-              format: "DD/MM/YYYY",
-              tooltipFormat: "ll"
-            }
-          }
-        ],
-        yAxes: [
-          {
-            ticks: {
-              max: 100
-            }
-          }
-        ]
-      },
-      legend: {
-        display: false
-      },
-      tooltips: {
-        cornerRadius: 2,
-        callbacks: {
-          label: tooltipItem => `${tooltipItem.yLabel}: ${tooltipItem.xLabel}`,
-          title: () => null
-        }
-      }
-    },
     rowsPerPageItems: [4, 8, 12],
     pagination: {
       rowsPerPage: 4
     }
-  })
+  }),
+  computed: {
+    getStat(){
+      return this.$store.getters.getHomeStat;
+    },
+    getLineSeries(){
+      return this.$store.getters.getSeries;
+    }
+  },
 };
 </script>
 
@@ -210,7 +149,7 @@ export default {
 
 .home-wrap {
   padding: 24px 0;
-  width: 80%;
+  width: 85%;
 }
 
 .kill-card {

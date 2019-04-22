@@ -6,7 +6,7 @@
           <v-icon class="mr-2">add_circle</v-icon>Добавить камеру
         </v-btn>
         <v-btn outline color="gray">Статистика</v-btn>
-        <div v-show="isCameraModal">
+        <div v-show="isCameraModal"  @click.stop="stopProp($event)">
           <add-camera></add-camera>
         </div>
       </v-flex>
@@ -46,7 +46,7 @@
             </div>
           </div>
         </transition>
-        <div v-show="isCreateViewModal">
+        <div v-show="isCreateViewModal" @click.stop="stopProp($event)">
           <create-view></create-view>
         </div>
       </v-flex>
@@ -155,7 +155,8 @@ export default {
     closeAll(e){
       this.isCreateViewModal = false;
       this.isCameraModal = false;
-    }
+    },
+    stopProp(e){}
   },
   computed: {
     activeView() {
