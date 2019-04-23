@@ -305,7 +305,7 @@ export default {
       data.forEach(elem => {
         if (elem.items == undefined && elem.selected == true) {
           selected.push(elem);
-        } else if (elem.items != undefined && elem.selected == true) {
+        } else if (elem.items) {
           elem.items.forEach(item => {
             if(item.selected == true){
               selected.push(item);
