@@ -11,7 +11,9 @@ import store from './control/store'
 import '@fortawesome/fontawesome-free/css/all.css'
 import i18n from './control/i18n'
 import VueApexCharts from 'vue-apexcharts'
+import VueDragDrop from 'vue-drag-drop';
 
+Vue.use(VueDragDrop)
 Vue.use(VueApexCharts)
 Vue.component('apexchart', VueApexCharts)
 

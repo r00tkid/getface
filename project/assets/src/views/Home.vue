@@ -73,8 +73,11 @@
       </v-flex>
     </v-layout>
     <v-layout>
-      <v-flex xs12>
+      <v-flex xs6 class="pa-0">
         <home-table></home-table>
+      </v-flex>
+      <v-flex xs6 class="pa-0">
+        <calendar-table></calendar-table>
       </v-flex>
     </v-layout>
   </v-container>
@@ -82,8 +85,8 @@
 
 <script>
 import LineChart from "../components/LineChart";
-import TimeTable from "../components/timeTable/TimeTable";
 import HomeTable from "../components/homeTable/HomeTable";
+import CalendarTable from "../components/homeTable/CalendarTable";
 import HomeStat from "../components/ToggleStat";
 import HomeTimeTable from "../components/HomeTimeTable";
 
@@ -98,10 +101,10 @@ export default {
   },
   components: {
     LineChart,
-    TimeTable,
     HomeTable,
     HomeStat,
-    HomeTimeTable
+    HomeTimeTable,
+    CalendarTable
   },
   data: () => ({
     colorsChart: [

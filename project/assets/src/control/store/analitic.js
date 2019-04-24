@@ -40,6 +40,7 @@ const Analitic = {
                     {
                         name: "Камера 5",
                         selected: false,
+                        id: 2.0,
                         amount: "500 чел (15%)",
                         mood: "Плохое-15%",
                         male: "250 чел (50%)",
@@ -51,6 +52,7 @@ const Analitic = {
                     {
                         name: "Камера 6",
                         selected: false,
+                        id: 2.1,
                         amount: "500 чел (15%)",
                         mood: "Плохое-15%",
                         male: "250 чел (50%)",

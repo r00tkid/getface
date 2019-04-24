@@ -111,6 +111,7 @@ export default {
       }
     },
     selectGroup(checked, id) {
+      
       if (checked == true && this.tableItems[id].items != undefined) {
         this.tableItems[id].items.forEach(el => {
           el.selected = true;
