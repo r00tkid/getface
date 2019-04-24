@@ -57,6 +57,11 @@ const router = new Router({
                     name: 'dashboard.client',
                     component: () => import('../views/Client'),
                 },
+                {
+                    path: 'old-board',
+                    name: 'old.main',
+                    component: () => import('../views/Home'),
+                },
             ]
         },
     ],
