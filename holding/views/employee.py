@@ -25,14 +25,14 @@ def create(request):
 class EmployeeCrudView(APIView):
     http_method_names = ('get', 'update', 'delete',)
 
-    def get(self, request, company_id):
+    def get(self, request, pk):
         return Response({
             'detail': 'Found',
-            'company': EmployeeExtendedSerializer(instance=Employee.get_by_id(company_id)).data,
+            'company': EmployeeExtendedSerializer(instance=Employee.get_by_id(pk)).data,
         })
 
-    def update(self, request, company_id):
-        updating = EmployeeUpdateSerializer(instance=Employee.get_by_id(company_id), data=request.data)
+    def update(self, request, pk):
+        updating = EmployeeUpdateSerializer(instance=Employee.get_by_id(pk), data=request.data)
 
         if not updating.is_valid():
             raise APIException({
@@ -45,8 +45,8 @@ class EmployeeCrudView(APIView):
             'company': EmployeeExtendedSerializer(instance=updating.save()).data
         })
 
-    def delete(self, request, company_id):
+    def delete(self, request, pk):
         return Response({
             'detail': 'Deleted',
-            'deleted': Employee.get_by_id(company_id).delete(),
+            'deleted': Employee.get_by_id(pk).delete(),
         })

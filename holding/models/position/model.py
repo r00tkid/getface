@@ -26,6 +26,14 @@ class Position(_Model):
         default=False,
     )
 
+    @property
+    def department_id(self):
+        department = self.departments.first()
+
+        if department:
+            return department.id
+        return department
+
     def __str__(self):
         return self.name
 

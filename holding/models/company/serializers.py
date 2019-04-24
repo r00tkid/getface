@@ -169,12 +169,10 @@ class CompanyExtendedSerializer(_Serializer):
     time_zone = _Method()
 
     def get_time_zone(self, model):
-        from pytz import timezone
-
         if isinstance(model.timezone, str):
             return model.timezone
         else:
-            return timezone(model.timezone).zone
+            return model.timezone.zone
 
     def add_rights(self, user):
         from holding.models import Employee

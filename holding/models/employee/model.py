@@ -129,6 +129,11 @@ class Employee(_Model):
         self.invitation = datetime.now()
         return old
 
+    def activate(self):
+        self.is_invited = True
+        self.is_active = True
+        self.auth_key = None
+
     def __str__(self):
         user = self.user
         ttl = {}
@@ -192,3 +197,35 @@ class Employee(_Model):
         verbose_name = "Сотрудник"
         verbose_name_plural = "Сотрудники"
         unique_together = (('user', 'company'),)
+
+    def create_user(self, username=None):
+        """
+        Creates user from employee, save it and send email if application not in debug mode
+        :type username: str
+        """
+        from django.conf import settings
+        from entry.models import User
+
+        if not self.auth_key and not username:
+            raise AttributeError('No username provided or can\'t be get from auth')
+
+        user = User(
+            username=username if username else self.auth_key,
+            first_name=self.first_name,
+            last_name=self.last_name,
+            email=self.email,
+            phone=self.phone,
+            timezone=self.timezone,
+        )
+
+        user.save()
+        self.user = user
+
+        if user.email and not settings.DEBUG:
+            user.mail_activation()
+
+        if settings.DEBUG:
+            user.activate()
+            self.activate()
+
+        return user

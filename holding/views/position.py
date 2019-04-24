@@ -1,4 +1,4 @@
-from holding.models import Position, PositionSerializer
+from holding.models import Position, PositionSerializer, PositionUpdateSerializer, PositionCreateSerializer
 from rest_framework.decorators import api_view
 from app.base.exceptions import APIException
 from rest_framework.response import Response
@@ -8,7 +8,7 @@ from rest_framework import status
 
 @api_view(['CREATE'])
 def create(request):
-    creating = PositionSerializer(data=request.data)
+    creating = PositionCreateSerializer(data=request.data)
 
     if not creating.is_valid():
         raise APIException({
@@ -16,11 +16,9 @@ def create(request):
             'errors': creating.errors,
         }, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-    creating.save()
-
     return Response({
         'detail': 'Created',
-        'company': creating.data,
+        'company': PositionSerializer(instance=creating.save()).data,
     })
 
 
@@ -34,8 +32,7 @@ class PositionCrudView(APIView):
         })
 
     def update(self, request, pk):
-        # ToDo: (Ack) update serializer
-        updating = PositionSerializer(instance=Position.get_by_id(pk), data=request.data)
+        updating = PositionUpdateSerializer(instance=Position.get_by_id(pk), data=request.data)
 
         if not updating.is_valid():
             raise APIException({
@@ -43,11 +40,9 @@ class PositionCrudView(APIView):
                 'errors': updating.errors,
             }, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-        updating.save()
-
         return Response({
             'detail': 'Updated',
-            'company': updating.data,
+            'company': PositionSerializer(instance=updating.save()).data,
         })
 
     def delete(self, request, pk):
