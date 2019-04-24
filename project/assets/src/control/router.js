@@ -59,7 +59,7 @@ const router = new Router({
                 },
                 {
                     path: 'old-board',
-                    name: 'old.main',
+                    name: 'dashboard.old',
                     component: () => import('../views/Home'),
                 },
             ]
