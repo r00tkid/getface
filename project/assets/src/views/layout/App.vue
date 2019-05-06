@@ -55,7 +55,8 @@
         ) !important;
     }
 
-    .orange, .orange--text {
+    .orange,
+    .orange--text {
         color: #f99342 !important;
     }
 
@@ -127,7 +128,7 @@
         0 1px 5px 0 rgba(0, 0, 0, 0.12);
     }
 
-    .homeDateChange {
+    .homeDateChage {
         display: flex;
         background-color: #fff;
         justify-content: space-between;
@@ -139,7 +140,7 @@
         margin: 6px 8px;
     }
 
-    .homeDateChange button {
+    .homeDateChage button {
         margin: 0;
     }
 
@@ -152,6 +153,49 @@
     .analiticsContainer .v-input__slot {
         border: none !important;
     }
+
+    /* analitic global style */
+    .tooltipGender {
+        font-size: 16px;
+        display: flex;
+    }
+
+    .tooltipGender span {
+        border-left: 1px solid #ccc;
+        padding: 5px;
+        margin-left: 5px;
+    }
+
+    .tooltipGender p {
+        margin: 0;
+        padding: 5px 0;
+    }
+
+    .tooltipFemale {
+        margin-bottom: 5px;
+    }
+
+    .tooltipFemale small {
+        color: #f8bc40;
+        padding: 5px 5px;
+    }
+
+    .tooltipMale {
+        border-bottom: 1px solid #ccc;
+    }
+
+    .tooltipMale small {
+        color: #38baf5;
+        padding: 5px 5px;
+    }
+
+    .tooltipCommon {
+        margin-top: 5px;
+        border-top: 1px solid #ccc;
+        padding-top: 5px;
+    }
+
+    /* analitic global style */
 </style>
 
 <style lang="scss">

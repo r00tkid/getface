@@ -58,7 +58,7 @@
                                 <div class="employeeStat-right">
                                     <div class="chartContainer chartSmall">
                                         <div class="chartPeriod">Кол-во нарушений 6 месяцев</div>
-                                        <chart :chart_data="chartData2" :chart_options="chartOptions"></chart>
+                                        <chart :chartdata="chartData2" :options="chartOptions"></chart>
                                     </div>
                                     <v-layout>
                                         <v-flex xs12>
@@ -93,7 +93,8 @@
                             <v-flex lg3>
                                 <div class="employeeCondition">
                                     <div class="employeeCondition-item">
-                                        <div class="conditionText">Вероятность
+                                        <div class="conditionText">
+                                            Вероятность
                                             <br>увольнения
                                         </div>
                                         <div class="emotion">
@@ -120,7 +121,7 @@
                             <v-flex lg9>
                                 <div class="chartContainer chartBottom">
                                     <div class="chartPeriod">Последние 3 месяца</div>
-                                    <chart :chart_data="chartData" :chart_options="chartOptions"></chart>
+                                    <chart :chartdata="chartData" :options="chartOptions"></chart>
                                 </div>
                             </v-flex>
                         </v-layout>
@@ -135,10 +136,10 @@
     import Chart from "../components/charts/Chart";
     import Progress from "../components/progress/Progress";
     import OrangeBox from "../components/employeePage/OrangeBox";
-    import EmployeeAwards from "../components/employeePage/EmployeeAwards";
-    import EmployeeFaceId from "../components/employeePage/EmployeeFaceId";
     import EmployeeFire from "../components/employeePage/EmployeeFire";
     import EmployeeForms from "../components/employeePage/EmployeeForms";
+    import EmployeeAwards from "../components/employeePage/EmployeeAwards";
+    import EmployeeFaceId from "../components/employeePage/EmployeeFaceId";
 
     export default {
         name: "Employee",
@@ -146,10 +147,10 @@
             Chart,
             Progress,
             OrangeBox,
-            EmployeeAwards,
-            EmployeeFaceId,
             EmployeeFire,
             EmployeeForms,
+            EmployeeAwards,
+            EmployeeFaceId,
         },
         data() {
             return {
@@ -209,6 +210,9 @@
                 chartOptions: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    plugins: {
+                        datalabels: false
+                    },
                     scales: {
                         xAxes: [
                             {
@@ -441,4 +445,3 @@
         max-height: 50px;
     }
 </style>
-
