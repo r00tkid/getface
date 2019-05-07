@@ -1,4 +1,4 @@
-FROM python:3.7.2
+FROM python:3.7.3
 MAINTAINER Polshchyn Kyrylo <abnormally.dev@gmail.com>
 
 ENV PYTHONUNBUFFERED 1
@@ -11,7 +11,7 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 WORKDIR /
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
 RUN apt-get update && apt-get -y install gcc nodejs npm libxml2-dev libxslt1-dev libxslt-dev fortune-mod cowsay \
                                           python-lxml pgloader build-essential git openssh-server nano
 RUN pip install lxml tornado psycopg2-binary inotify
@@ -27,6 +27,9 @@ RUN ssh-keyscan -t rsa bitbucket.org > /root/.ssh/known_hosts
 RUN ssh-agent bash -c "ssh-add ~/.ssh/id_rsa"
 RUN git config --global user.name "GetFace"
 RUN git config --global user.email "getface.development@gmail.com"
-# RUN git config --global core.filemode false
 
-EXPOSE 8090
+WORKDIR /var/www/get-face
+ADD .git/ /var/www/get-face/.git/
+RUN git config core.filemode false
+
+EXPOSE 8091

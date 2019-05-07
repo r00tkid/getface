@@ -23,7 +23,7 @@ const V1 = {
 
                 return `${base}auth/${route}`;
             },
-            company: (resolve) => {
+            payment: (resolve) => {
                 let route = {
                     rate: (resolve) => {
                         let route = {
@@ -31,11 +31,11 @@ const V1 = {
                             buy: 'buy',
                         }[resolve];
 
-                        return `${base}company/rate/${route}`;
+                        return `${base}payment/rate/${route}`;
                     },
                 }[resolve];
 
-                return isVariableAFunction(route) ? route : `${base}company/${route}`;
+                return isVariableAFunction(route) ? route : `${base}payment/${route}`;
             },
         },
     },

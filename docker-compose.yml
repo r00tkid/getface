@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   getface_db:
-    container_name: get-face-stage-db
+    container_name: get-face-db
     domainname: get-face.com
     hostname: database
     image: postgres:11
@@ -26,16 +26,20 @@ services:
     container_name: get-face-stage
     domainname: get-face.com
     hostname: stage
+    environment:
+      - DJANGO_SETTINGS_MODULE=app.settings
+      - DJANGO_ENVIRONMENT_MOD=dev
+      - DJANGO_CONFIGURATION=Development
     volumes:
       - ./:/var/www/get-face
       - ./project/override/gunicorn:/usr/local/bin/gunicorn
       - ./project/override/pseudo_init.py:/usr/local/lib/python3.7/site-packages/gunicorn/workers/__init__.py
       - ./project/override/alternative.py:/usr/local/lib/python3.7/site-packages/gunicorn/workers/alternative.py
     command: >
-      bash -c "gunicorn index.wsgi:get_face -c /var/www/get-face/index/gunicorn.py --timeout 30 --graceful-timeout 20"
+      bash -c "gunicorn app.wsgi:get_face -c /var/www/get-face/app/gunicorn.py --timeout 30 --graceful-timeout 20"
     working_dir: /var/www/get-face
     ports:
-      - 8090:8090
+      - 8091:8091
     networks:
       - get_face
     restart: unless-stopped

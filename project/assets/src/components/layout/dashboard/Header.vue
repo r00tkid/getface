@@ -1,4 +1,4 @@
-    <template>
+<template>
     <v-toolbar fixed dence class="thin-toolbar" color="white">
 
         <v-flex xs2>
@@ -35,6 +35,8 @@
                 code
             </v-icon>
         </v-btn>
+
+        <v-spacer v-if="!display_search"><!-- SPACER --></v-spacer>
 
         <get-face-header-payment v-show="is_owner"></get-face-header-payment>
 
