@@ -10,7 +10,7 @@
     >
         <v-toolbar flat class="transparent">
             <v-list class="pa-0">
-                <v-list-tile avatar>
+                <v-list-tile avatar :to="{name: 'dashboard.profile'}">
                     <v-list-tile-avatar>
                         <img :src="face">
                     </v-list-tile-avatar>
@@ -75,7 +75,6 @@
                 items: [
                     {title: 'Dashboard', icon: 'dashboard', name: 'dashboard.main'},
                     {title: 'Calendar', icon: 'calendar_today', name: 'dashboard.calendar'},
-                    {title: 'Profile', icon: 'account_circle', name: 'dashboard.profile'},
                     {title: 'Cameras', icon: 'camera', name: 'dashboard.cameras'},
                 ],
                 mini: true,

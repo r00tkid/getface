@@ -2,7 +2,7 @@
     <v-container grid-list-md text-xs-center fluid class="home-wrap">
         <v-layout row wrap justify-end v-show="getAnalytics">
             <v-flex xs12 d-flex>
-                <div class="homeDateChange">
+                <div class="homeDateChage">
                     <v-btn flat small color="purple">
                         <v-icon>navigate_before</v-icon>
                     </v-btn>
@@ -21,11 +21,8 @@
                 <v-btn color="#fa6d6e" dark class="hideAnalytics" @click="swapAnalytics()">Скрыть аналитику</v-btn>
             </v-flex>
         </v-layout>
-        <!-- ToDo: fixme -->
-        <v-layout row wrap justify-end v-show="!getAnalytics">
-            <v-btn color="#fa6d6e" dark class="hideAnalytics" @click="swapAnalytics()">Показать аналитику</v-btn>
-        </v-layout>
-        <v-layout row wrap justify-start>
+
+        <v-layout row wrap justify-start v-show="getAnalytics">
             <v-flex lg6 xs12>
                 <v-layout row wrap justify-start>
                     <div class="mainChartContainer">
@@ -42,92 +39,50 @@
                         <home-time-table></home-time-table>
                     </v-flex>
                 </v-layout>
-                <!-- ToDo: fixme -->
+            </v-flex>
+        </v-layout>
 
-                <get-face-home-analytics></get-face-home-analytics>
+        <v-layout row wrap justify-start align-baseline>
+            <v-flex xs2>
+                <v-select
+                        class="kill-select mt-1"
+                        :items="departments"
+                        solo
+                        placeholder="Выбор подразделения"
+                ></v-select>
+            </v-flex>
+            <v-flex xs2>
+                <v-text-field
+                        class="mt-1 normal-border"
+                        single-line
+                        flat
+                        solo
+                        label="Поиск"
+                        append-icon="search"
+                        color="purple"
+                ></v-text-field>
+            </v-flex>
+            <v-flex xs8 justify-start>
+                <v-chip label>
+                    <span left class="mr-1">13</span>Сотрудников
+                </v-chip>
+                <v-chip label>
+                    <v-icon color="purple">settings</v-icon>
+                </v-chip>
 
-                <!-- ToDo: fixme -->
-                <v-layout row wrap justify-start align-baseline>
-                    <v-flex xs2>
-                        <v-select
-                                class="kill-select mt-1"
-                                :items="departments"
-                                solo
-                                placeholder="Выбор подразделения"
-                        ></v-select>
-                    </v-flex>
-                    <v-flex xs2>
-                        <v-text-field
-                                class="mt-1 normal-border"
-                                single-line
-                                flat
-                                solo
-                                label="Поиск"
-                                append-icon="search"
-                                color="purple"
-                        ></v-text-field>
-                    </v-flex>
-                    <v-flex xs8 justify-start>
-                        <v-chip label>
-                            <span left class="mr-1">13</span>Сотрудников
-                        </v-chip>
-                        <v-chip label>
-                            <v-icon color="purple">settings</v-icon>
-                        </v-chip>
+                <v-btn class="primary lighten-1 white--text">Отправить ссылку на Face ID</v-btn>
+                <v-btn class="primary lighten-1 white--text">Отправить График</v-btn>
 
-                        <v-btn class="primary lighten-1 white--text">Отправить ссылку на Face ID</v-btn>
-                        <v-btn class="primary lighten-1 white--text">Отправить График</v-btn>
+                <v-btn color="#fa6d6e" v-show="!getAnalytics" dark class="hideAnalytics" @click="swapAnalytics()">Показать аналитику</v-btn>
+            </v-flex>
+        </v-layout>
 
-                        <v-btn color="#fa6d6e" v-show="!getAnalytics" dark class="hideAnalytics" @click="swapAnalytics()">Показать аналитику</v-btn>
-                    </v-flex>
-                </v-layout>
-                <v-layout>
-                    <v-flex xs12>
-                        <home-table></home-table>
-                    </v-flex>
-                </v-layout>
-                <!-- ToDo: fixme -->
-                <v-layout row wrap justify-start align-baseline>
-                    <v-flex xs2>
-                        <v-select
-                                class="kill-select mt-1"
-                                :items="departments"
-                                solo
-                                placeholder="Выбор подразделения"
-                        ></v-select>
-                    </v-flex>
-                    <v-flex xs2>
-                        <v-text-field
-                                class="mt-1 normal-border"
-                                single-line
-                                flat
-                                solo
-                                label="Поиск"
-                                append-icon="search"
-                                color="purple"
-                        ></v-text-field>
-                    </v-flex>
-                    <v-flex xs8 justify-start>
-                        <v-chip label>
-                            <span left class="mr-1">13</span>&nbsp;Сотрудников
-                        </v-chip>
-                        <v-chip label>
-                            <v-icon color="purple">settings</v-icon>
-                        </v-chip>
-
-                        <v-btn class="primary lighten-1 white--text">Отправить ссылку на Face ID</v-btn>
-                        <v-btn class="primary lighten-1 white--text">Отправить График</v-btn>
-                    </v-flex>
-                </v-layout>
-                <v-layout>
-                    <v-flex xs6 class="pa-0">
-                        <home-table></home-table>
-                    </v-flex>
-                    <v-flex xs6 class="pa-0">
-                        <calendar-table></calendar-table>
-                    </v-flex>
-                </v-layout>
-                <!-- ToDo: fixme -->
+        <v-layout>
+            <v-flex xs6 class="pa-0">
+                <home-table></home-table>
+            </v-flex>
+            <v-flex xs6 class="pa-0">
+                <calendar-table></calendar-table>
             </v-flex>
         </v-layout>
     </v-container>

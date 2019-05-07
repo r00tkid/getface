@@ -45,22 +45,27 @@ const router = new Router({
                 {
                     path: 'main',
                     name: 'dashboard.main',
-                    component: () => import('../views/Analitics'),
+                    component: () => import('../views/Home')
+                },
+                {
+                    path: 'profile',
+                    name: 'dashboard.profile',
+                    component: () => import('../views/Profile')
+                },
+                {
+                    path: 'calendar',
+                    name: 'dashboard.calendar',
+                    component: () => import('../views/Calendar')
+                },
+                {
+                    path: 'employee',
+                    name: 'dashboard.employee',
+                    component: () => import('../views/Employee')
                 },
                 {
                     path: 'cameras',
                     name: 'dashboard.cameras',
                     component: () => import('../views/Cameras'),
-                },
-                {
-                    path: 'client',
-                    name: 'dashboard.client',
-                    component: () => import('../views/Client'),
-                },
-                {
-                    path: 'old-board',
-                    name: 'dashboard.old',
-                    component: () => import('../views/Home'),
                 },
             ]
         },
