@@ -27,8 +27,7 @@
             </template>
             <template v-else>
               <drop class="drop" @drop="handleDrop" @dragover="dragEnd(i,k,l)">
-                <div>{{item.arrived}}</div>
-                <div>{{item.left}}</div>
+                <div class="addTime" @click="addTime($event,i,k,l)"><v-icon medium color="purple">add_circle</v-icon></div>
               </drop>
             </template>
           </td>
@@ -39,6 +38,7 @@
 </template>
 
 <script>
+import { log } from 'util';
 export default {
   data() {
     return {
@@ -129,12 +129,13 @@ export default {
       }
     },
     handleDrop(data, event, ) {
-      this.$set(this.tableData[this.indexes[0]].items[this.indexes[1]], this.indexes[2], data.item)
-      console.log(data);
-      
+      this.$set(this.tableData[this.indexes[0]].items[this.indexes[1]], this.indexes[2], data.item);
     },
     dragEnd(...rest){
       this.indexes = [...rest]
+    },
+    addTime(e,i,k,l){
+      console.log(e.target.getBoundingClientRect());
     }
   },
   created() {
@@ -225,6 +226,7 @@ table {
 }
 
 .come {
+  background: linear-gradient(to top, #3dcb73, #84fcb5);
   background-color: #5adf8e;
 }
 
@@ -272,6 +274,18 @@ table {
 
 .tableContainer::-webkit-resizer {
   background-color: #969696;
+}
+.addTime{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s;
+}
+.addTime:hover{
+  opacity: 1;
 }
 </style>
 
