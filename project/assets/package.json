@@ -1,5 +1,5 @@
 {
-  "name": "assets",
+  "name": "front-face",
   "version": "0.1.0-rc25",
   "back-version": "0.6b",
   "project-build": "2349",
@@ -50,5 +50,9 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 10"
-  ]
+  ],
+  "description": "## Project setup ``` npm install ```",
+  "main": "main.js",
+  "author": "",
+  "license": "ISC"
 }

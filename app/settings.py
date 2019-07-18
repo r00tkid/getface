@@ -208,10 +208,10 @@ class Development(Configuration):
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'get_face_stage',
-            'HOST': 'get-face-db',
+            'HOST': 'localhost',
             'PORT': '5432',
-            'USER': 'root',
-            'PASSWORD': '123456',
+            'USER': 'shaman',
+            'PASSWORD': 'q1w2e3r4',
             'DEFAULT_CHARSET': 'utf8mb4',
         }
     }

@@ -1,6 +1,5 @@
 FROM python:3.7.3
 MAINTAINER Polshchyn Kyrylo <abnormally.dev@gmail.com>
-
 ENV PYTHONUNBUFFERED 1
 ADD ./project/requirements.txt /var/www/get-face/project/requirements.txt
 ADD ./project/get-face.key /var/www/get-face/project/get-face.key
@@ -33,3 +32,8 @@ ADD .git/ /var/www/get-face/.git/
 RUN git config core.filemode false
 
 EXPOSE 8091
+WORKDIR /home/shaman/workspace/get-face/
+CMD exec gunicorn --pythonpath=./ --bind 0.0.0.0:8000 app.wsgi:get_face
+#CMD exec gunicorn app.wsgi:get_face --timeout 30 --bind 0.0.0.0:8000 --workers 3 --chdir /home/shaman/workspace/get-face/
+#gunicorn app.wsgi:get_face -c /var/www/get-face/index/gunicorn.py --timeout 30 --graceful-timeout 20
+# ENTRYPOINT ["django"]
