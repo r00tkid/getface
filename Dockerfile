@@ -33,7 +33,9 @@ RUN git config core.filemode false
 
 EXPOSE 8091
 WORKDIR /home/shaman/workspace/get-face/
-CMD exec gunicorn --pythonpath=./ --bind 0.0.0.0:8000 app.wsgi:get_face
-#CMD exec gunicorn app.wsgi:get_face --timeout 30 --bind 0.0.0.0:8000 --workers 3 --chdir /home/shaman/workspace/get-face/
-#gunicorn app.wsgi:get_face -c /var/www/get-face/index/gunicorn.py --timeout 30 --graceful-timeout 20
+CMD exec gunicorn app.wsgi:get_face --timeout 30 --graceful-timeout 20
+# CMD exec gunicorn --pythonpath=/home/shaman/miniconda3/envs/get_face/bin/ app.wsgi:get_face --timeout 30 --bind 0.0.0.0:8000 --chdir /home/shaman/workspace/get-face/
+# CMD exec gunicorn --pythonpath=./ --bind 0.0.0.0:8000 app.wsgi:get_face
+# CMD exec gunicorn /home/shaman/workspace/get-face/app.wsgi:get_face --timeout 30 --bind 0.0.0.0:8000 --reload --chdir /home/shaman/workspace/get-face/
+# gunicorn app.wsgi:get_face -c /var/www/get-face/index/gunicorn.py --timeout 30 --graceful-timeout 20
 # ENTRYPOINT ["django"]
