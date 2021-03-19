@@ -1,6 +1,6 @@
 Django==2.2
 django_extensions==2.1.6
-djangorestframework==3.9.2
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 django-configurations==2.1
 faker==1.0.4
